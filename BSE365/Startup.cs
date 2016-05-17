@@ -1,10 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 [assembly: OwinStartup(typeof(BSE365.Web.Startup))]
 namespace BSE365.Web
@@ -15,7 +13,11 @@ namespace BSE365.Web
         {
             HttpConfiguration config = new HttpConfiguration();
 
-            //Unity
+            ////Mvc
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            ////Unity
             ConfigureUnity(config);
 
             ////Web Api

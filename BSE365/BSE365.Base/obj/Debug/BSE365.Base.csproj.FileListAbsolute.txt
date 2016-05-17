@@ -3,16 +3,8 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\BSE365.Base.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\BSE365.Base.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.SqlServer.dll
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.xml
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.SqlServer.xml
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.dll
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\LinqKit.dll
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\LinqKit.pdb
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\LinqKit.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.ServiceLocation.dll
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.Configuration.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.dll
@@ -24,6 +16,12 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Net.Http.We
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.WebHost.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\WebActivatorEx.dll
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.xml
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\EntityFramework.SqlServer.xml
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\LinqKit.pdb
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\LinqKit.xml
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.Configuration.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\Microsoft.Practices.Unity.RegistrationByConvention.xml
@@ -34,4 +32,6 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Net.Http.Fo
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Net.Http.WebRequest.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.WebHost.xml
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.dll
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.csprojResolveAssemblyReference.cache
