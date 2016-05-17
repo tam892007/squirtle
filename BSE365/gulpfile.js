@@ -13,11 +13,20 @@ var paths = {
         'bower_components/bootstrap/dist/js/bootstrap.js',     
         'bower_components/angular/angular.js',
         'bower_components/ui-router/release/angular-ui-router.js',
-        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js'
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+        'bower_components/angular-local-storage/dist/angular-local-storage.js'
     ],
     'MainApp': [
         'app/main/*.js',
         'app/main/**/*.js',
+    ],
+    'CommonApp': [
+        'app/common/*.js',
+        'app/common/**/*.js',
+    ],
+    'AuthApp': [
+        'app/authentication/*.js',
+        'app/authentication/**/*.js',
     ]
 };
 
@@ -35,8 +44,21 @@ gulp.task('MainAppJS', function () {
         .pipe(gulp.dest('Scripts'));
 });
 
+gulp.task('CommonAppJS', function () {
+    return gulp.src(paths['CommonApp'])
+        .pipe(concat('CommonApp.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('Scripts'));
+});
 
-gulp.task('js', ['CommonJS', 'MainAppJS'], function () {
+gulp.task('AuthAppJS', function () {
+    return gulp.src(paths['AuthApp'])
+        .pipe(concat('AuthApp.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('Scripts'));
+});
+
+gulp.task('js', ['CommonJS', 'MainAppJS', 'CommonAppJS', 'AuthAppJS'], function () {
     //nothing to do here
 });
 
@@ -67,6 +89,8 @@ var LiveReloadLessPath = [
 var LiveReloadJSPath = [
     paths['CommonJS'],
     paths['MainAppJS'],
+    paths['CommonAppJS'],
+    paths['AuthAppJS'],
     'Gulpfile.js'
 ];
 

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSE365.Base", "BSE365.Base\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSE365.Repository", "BSE365.Repository\BSE365.Repository.csproj", "{3FBEEC6E-E95A-4C5F-BEA6-E7F69C41F61F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BSE365.Common", "..\BSE365.Common\BSE365.Common.csproj", "{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,16 @@ Global
 		{3FBEEC6E-E95A-4C5F-BEA6-E7F69C41F61F}.Release|ARM.ActiveCfg = Release|Any CPU
 		{3FBEEC6E-E95A-4C5F-BEA6-E7F69C41F61F}.Release|x64.ActiveCfg = Release|Any CPU
 		{3FBEEC6E-E95A-4C5F-BEA6-E7F69C41F61F}.Release|x86.ActiveCfg = Release|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Release|x64.ActiveCfg = Release|Any CPU
+		{B06FE56E-DDE5-459E-9B0D-90EDCD38B2E2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

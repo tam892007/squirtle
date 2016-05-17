@@ -32,6 +32,6 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Net.Http.Fo
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Net.Http.WebRequest.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\bin\Debug\System.Web.Http.WebHost.xml
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.csprojResolveAssemblyReference.cache
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.pdb
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Base\obj\Debug\BSE365.Base.csprojResolveAssemblyReference.cache

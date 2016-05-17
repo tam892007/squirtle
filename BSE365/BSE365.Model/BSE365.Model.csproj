@@ -40,9 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\BaseEntity.cs" />
+    <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Config.cs" />
+    <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserInfo.cs" />
+    <Compile Include="Enum\ApplicationTypes.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

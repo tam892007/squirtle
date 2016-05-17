@@ -20,9 +20,15 @@ namespace BSE365.Web
             ////Unity
             ConfigureUnity(config);
 
+            ////OAuth
+            ConfigureOAuth(app);
+
             ////Web Api
             ConfigureWebApi(config);
             app.UseWebApi(config);
+
+            //Database
+            DatabaseInitializer();
         }
     }
 }

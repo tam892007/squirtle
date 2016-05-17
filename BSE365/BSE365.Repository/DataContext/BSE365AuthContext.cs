@@ -12,5 +12,7 @@ namespace BSE365.Repository.DataContext
         }
 
         public virtual DbSet<UserInfo> UserInfos { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
     }
 }

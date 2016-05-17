@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BSE365.Model.Entities
 {
-    public class UserInfo
+    public class UserInfo: BaseEntity
     {
         [Required]   
         public string DisplayName { get; set; }

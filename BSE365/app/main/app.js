@@ -1,4 +1,4 @@
-﻿var mainApp = angular.module('mainApp', ["ui.router"]);
+﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -6,7 +6,21 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
 
     $stateProvider
         .state('home', {
-            url: "/",
-            templateUrl: 'app/main/home/home.html',
-        })
+                url: "/",
+                templateUrl: 'app/main/home/home.html',
+            })
+        .state('login', {
+            url: "/login",
+            templateUrl: 'app/authentication/login/login.html',
+            controller: 'loginController'
+            })
+
 }]);
+
+mainApp.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptorService');
+}]);
+
+mainApp.run(['authService', function (authService) {
+    authService.fillAuthData();
+}])

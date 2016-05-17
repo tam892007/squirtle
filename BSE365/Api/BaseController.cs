@@ -3,6 +3,7 @@ using System.Web.Http;
 
 namespace BSE365.Api
 {
+    [Authorize]
     public class BaseController : ApiController
     {
         protected readonly IUnitOfWorkAsync UnitOfWorkAsync;
