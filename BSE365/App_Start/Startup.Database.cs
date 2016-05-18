@@ -11,9 +11,9 @@ namespace BSE365.Web
             Database.SetInitializer(new DataInitializer());
         }
 
-        public class DataInitializer : DropCreateDatabaseIfModelChanges<BSE365Context>
+        public class DataInitializer : DropCreateDatabaseIfModelChanges<BSE365AuthContext>
         {
-            protected override void Seed(BSE365Context context)
+            protected override void Seed(BSE365AuthContext context)
             {
                 try
                 {

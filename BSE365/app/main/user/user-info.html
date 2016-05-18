@@ -1,0 +1,63 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Profile</h3>
+                </div>
+                <div class="panel-body">
+                    Profile here
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Edit Information</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="id">ID:</label>
+                            <input type="text" class="form-control" id="id" ng-model="user.id">
+                        </div>
+                        <div class="form-group">
+                            <label for="parentId">Parent ID:</label>
+                            <input type="text" class="form-control" id="parentId" ng-model="user.parentId">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Password:</label>
+                            <input type="password" class="form-control" id="pwd">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Display Name:</label>
+                            <input type="text" class="form-control" id="name" ng-model="user.displayName">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input type="text" class="form-control" id="phone" ng-model="user.phoneNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" ng-model="user.email">
+                        </div>
+                        <div class="form-group">
+                            <label for="bankNumber">Bank Number:</label>
+                            <input type="text" class="form-control" id="bankNumber" ng-model="user.bankNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="bankName">Bank Name:</label>
+                            <input type="text" class="form-control" id="bankName" ng-model="user.bankName">
+                        </div>
+                        <div class="form-group">
+                            <label for="bankBranch">Bank Branch:</label>
+                            <input type="text" class="form-control" id="bankBranch" ng-model="user.bankBranch">
+                        </div>
+                        <button type="submit" class="btn btn-default">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

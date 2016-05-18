@@ -10,7 +10,6 @@ authApp.controller('loginController', ['$scope', '$location', 'authService', 'ng
     $scope.message = "";
 
     $scope.login = function () {
-        console.log(123);
         authService.login($scope.loginData).then(function (response) {
 
             $location.path('/');

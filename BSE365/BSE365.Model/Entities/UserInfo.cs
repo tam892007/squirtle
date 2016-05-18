@@ -14,5 +14,19 @@ namespace BSE365.Model.Entities
 
         [Required]
         public string Email { get; set; }
+
+        public string ParentId { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        public string BankNumber { get; set; }
+
+        [Required]
+        public string BankName { get; set; }
+
+        [Required]
+        public string BankBranch { get; set; }
     }
 }

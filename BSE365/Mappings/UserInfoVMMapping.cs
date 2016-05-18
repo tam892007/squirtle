@@ -1,0 +1,30 @@
+﻿using BSE365.Model.Entities;
+using BSE365.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace BSE365.Mappings
+{
+    public static class UserInfoVMMapping
+    {
+        public static UserInfoViewModel ToViewModel(this User model)
+        {
+            if (model == null || model.UserInfo == null) return null;
+            var result = new UserInfoViewModel
+            {
+                Id = model.Id,
+                DisplayName = model.UserInfo.DisplayName,
+                Email = model.UserInfo.Email,
+                ParentId = model.UserInfo.ParentId,
+                PhoneNumber = model.UserInfo.PhoneNumber,
+                BankNumber = model.UserInfo.BankNumber,
+                BankName = model.UserInfo.BankName,
+                BankBranch = model.UserInfo.BankBranch
+            };
+
+            return result;
+        }        
+    }
+}

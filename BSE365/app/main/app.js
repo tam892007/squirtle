@@ -1,4 +1,4 @@
-﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp']);
+﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp', 'ngResource']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -14,7 +14,16 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             templateUrl: 'app/authentication/login/login.html',
             controller: 'loginController'
             })
-
+        .state('pin', {
+            url: "/pin",
+            templateUrl: 'app/main/pin/pin.html',
+            controller: 'pinController'
+        })
+        .state('user', {
+            url: "/user",
+            templateUrl: 'app/main/user/user-info.html',
+            controller: 'userController'
+        })
 }]);
 
 mainApp.config(['$httpProvider', function ($httpProvider) {

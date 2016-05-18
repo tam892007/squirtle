@@ -1,10 +1,12 @@
-﻿using BSE365.Common.Helper;
+﻿using BSE365.Common.Constants;
+using BSE365.Common.Helper;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
 using BSE365.Repository.Repositories;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -84,21 +86,36 @@ namespace BSE365.Web.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            using (AuthRepository _repo = new AuthRepository())
-            {
-                var user = await _repo.FindUser(context.UserName, context.Password);
+            ////Validate user credential
 
-                if (user == null)
+            var role = UserRolesText.User;
+            var userId = string.Empty;
+
+            if (context.UserName == ConfigurationManager.AppSettings[WebConfigKey.SystemAdmin] && context.Password == ConfigurationManager.AppSettings[WebConfigKey.SystemPassword])
+            {
+                role = UserRolesText.SuperAdmin;
+                userId = ConfigurationManager.AppSettings[WebConfigKey.SystemAdminId];
+            }
+            else
+            {
+                using (AuthRepository _repo = new AuthRepository())
                 {
-                    context.SetError("invalid_grant", "The user name or password is incorrect.");
-                    return;
+                    var user = await _repo.FindUser(context.UserName, context.Password);
+
+                    if (user == null)
+                    {
+                        context.SetError("invalid_grant", "The user name or password is incorrect.");
+                        return;
+                    }
+
+                    userId = user.Id;
                 }
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, "user"));
-            identity.AddClaim(new Claim("sub", context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Role, role));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));  ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
                 {

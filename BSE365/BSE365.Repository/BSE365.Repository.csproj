@@ -73,6 +73,7 @@
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
     <Compile Include="Mappings\ConfigMapping.cs" />
+    <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Repositories\AuthRepository.cs" />
   </ItemGroup>
   <ItemGroup />
