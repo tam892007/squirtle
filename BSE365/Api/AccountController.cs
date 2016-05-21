@@ -18,6 +18,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using BSE365.Mappings;
 
 namespace BSE365.Api
 {
@@ -37,22 +38,14 @@ namespace BSE365.Api
         }
 
         // POST api/Account/Register
-        [AllowAnonymous]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterUserViewModel userModel)
         {
-            if (!ModelState.IsValid)
+            var result = await _repo.RegisterUser(userModel.UserName, userModel.Password, userModel.UserInfo.ToModel());
+        
+            if (!result.IsSuccessful)
             {
-                return BadRequest(ModelState);
-            }
-
-            IdentityResult result = await _repo.RegisterUser(userModel.UserName, userModel.Password);
-
-            IHttpActionResult errorResult = GetErrorResult(result);
-
-            if (errorResult != null)
-            {
-                return errorResult;
+                return BadRequest();
             }
 
             return Ok();

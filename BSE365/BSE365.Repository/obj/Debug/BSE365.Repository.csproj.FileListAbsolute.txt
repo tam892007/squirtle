@@ -2,6 +2,7 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Repos
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Repository.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Repository.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Base.dll
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Common.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Model.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\EntityFramework.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\EntityFramework.SqlServer.dll
@@ -9,6 +10,7 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.As
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.AspNet.Identity.EntityFramework.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\LinqKit.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Common.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Base.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\BSE365.Model.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\EntityFramework.xml
@@ -20,5 +22,7 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\LinqKit.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.csprojResolveAssemblyReference.cache
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.InitialCreate.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.csproj.GenerateResource.Cache
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.pdb

@@ -5,6 +5,8 @@ using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.WebApi;
 using System;

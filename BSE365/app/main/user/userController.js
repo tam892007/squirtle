@@ -6,14 +6,13 @@ mainApp.controller('userController', ['$scope', 'userService', function ($scope,
     }
 
     $scope.init = function () {
-        $scope.user = {};
-        $scope.formMode = 0; ////Display Mode 
-
-        ////Get User Profile
-        $scope.getCurrentUserProfile().then(function (res) {
-            $scope.user = res;
-            console.log(res);
-        });
+        $scope.currentUser = $scope.currentUser || null;
+        ////Get User Profile if needed
+        if ($scope.currentUser == null) {
+            $scope.getCurrentUserProfile().then(function (res) {
+                $scope.currentUser = res;
+            });
+        }
     }
 
     $scope.init();

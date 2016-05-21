@@ -1,4 +1,5 @@
-﻿using BSE365.Common.Constants;
+﻿using BSE365.Base.Repositories;
+using BSE365.Common.Constants;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
@@ -18,11 +19,6 @@ namespace BSE365.Api
     {
         private UserProfileRepository _repo = null;
 
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
-
         public UserProfileController()
         {
             _repo = new UserProfileRepository();
@@ -33,6 +29,14 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> GetCurrent()
         {
             var result = await GetCurrentUserProfile();
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetCurrentPin")]
+        public async Task<IHttpActionResult> GetCurrentPin()
+        {
+            var result = await GetCurrentUserPinInfo();
             return Ok(result);
         }
 
@@ -47,28 +51,17 @@ namespace BSE365.Api
         }
 
         private async Task<UserInfoViewModel> GetCurrentUserProfile()
-        {
-            if (User.IsInRole(UserRolesText.SuperAdmin))
-            {
-                return GetSystemAdminProfile();
-            }
-
+        {            
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             return user.ToViewModel();
         }
 
-        private UserInfoViewModel GetSystemAdminProfile() {
-            return new UserInfoViewModel
-            {
-                Id = ConfigurationManager.AppSettings[WebConfigKey.SystemAdminId],
-                DisplayName = ConfigurationManager.AppSettings[WebConfigKey.SystemName],
-                Email = ConfigurationManager.AppSettings[WebConfigKey.SystemEmail],
-                PhoneNumber = ConfigurationManager.AppSettings[WebConfigKey.SystemName],
-                BankBranch = ConfigurationManager.AppSettings[WebConfigKey.SystemBankBranch],
-                BankNumber = ConfigurationManager.AppSettings[WebConfigKey.SystemBankNumber],
-                BankName = ConfigurationManager.AppSettings[WebConfigKey.SystemBankName],
-            };
+        private async Task<PinBalanceViewModel> GetCurrentUserPinInfo()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await _repo.FindUser(userId);
+            return user.ToPinBalanceViewModel();
         }
     }
 }

@@ -20,9 +20,20 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             controller: 'pinController'
         })
         .state('user', {
+            abstract: true,
             url: "/user",
             templateUrl: 'app/main/user/user-info.html',
             controller: 'userController'
+        })
+        .state('user.default', {   
+            url: "/",
+            templateUrl: 'app/main/user/user-info.default.html',
+            controller: 'userDefaultController'
+        })
+        .state('user.register', {
+            url: "/register",
+            templateUrl: 'app/main/user/user-info.register.html',
+            controller: 'userRegisterController'
         })
 }]);
 

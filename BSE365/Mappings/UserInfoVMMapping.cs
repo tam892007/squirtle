@@ -25,6 +25,23 @@ namespace BSE365.Mappings
             };
 
             return result;
+        }
+
+        public static UserInfo ToModel(this UserInfoViewModel viewModel)
+        {
+            if (viewModel == null) return null;
+            var result = new UserInfo
+            {
+                DisplayName = viewModel.DisplayName,
+                Email = viewModel.Email,
+                ParentId = viewModel.ParentId,
+                PhoneNumber = viewModel.PhoneNumber,
+                BankNumber = viewModel.BankNumber,
+                BankName = viewModel.BankName,
+                BankBranch = viewModel.BankBranch
+            };
+
+            return result;
         }        
     }
 }

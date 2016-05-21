@@ -86,35 +86,22 @@ namespace BSE365.Web.Providers
 
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
-            ////Validate user credential
-
-            var role = UserRolesText.User;
             var userId = string.Empty;
+            using (AuthRepository _repo = new AuthRepository())
+            {
+                var user = await _repo.FindUser(context.UserName, context.Password);
 
-            if (context.UserName == ConfigurationManager.AppSettings[WebConfigKey.SystemAdmin] && context.Password == ConfigurationManager.AppSettings[WebConfigKey.SystemPassword])
-            {
-                role = UserRolesText.SuperAdmin;
-                userId = ConfigurationManager.AppSettings[WebConfigKey.SystemAdminId];
-            }
-            else
-            {
-                using (AuthRepository _repo = new AuthRepository())
+                if (user == null)
                 {
-                    var user = await _repo.FindUser(context.UserName, context.Password);
-
-                    if (user == null)
-                    {
-                        context.SetError("invalid_grant", "The user name or password is incorrect.");
-                        return;
-                    }
-
-                    userId = user.Id;
+                    context.SetError("invalid_grant", "The user name or password is incorrect.");
+                    return;
                 }
-            }
 
+                userId = user.Id;
+            }
+            
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Role, role));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));  ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
 
             var props = new AuthenticationProperties(new Dictionary<string, string>

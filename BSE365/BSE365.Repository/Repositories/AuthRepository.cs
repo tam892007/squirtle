@@ -1,9 +1,11 @@
-﻿using BSE365.Model.Entities;
+﻿using BSE365.Common;
+using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,14 +23,19 @@ namespace BSE365.Repository.Repositories
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
 
-        public async Task<IdentityResult> RegisterUser(string userName, string password)
+        public async Task<BusinessResult<User>> RegisterUser(string userName, string password, UserInfo info)
         {
             User user = new User
             {
-                UserName = userName
-            };
+                UserName = userName,
+                UserInfo = info,
+            };            
 
-            var result = await _userManager.CreateAsync(user, password);
+            var identityResult = await _userManager.CreateAsync(user, password);
+
+            var result = new BusinessResult<User>();
+            result.Result = user;
+            result.IsSuccessful = identityResult.Succeeded;
 
             return result;
         }
