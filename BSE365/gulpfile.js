@@ -15,7 +15,10 @@ var paths = {
         'bower_components/ui-router/release/angular-ui-router.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-local-storage/dist/angular-local-storage.js'
+        'bower_components/angular-local-storage/dist/angular-local-storage.js',
+        'bower_components/angular-smart-table/dist/smart-table.js',
+        'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
+        'bower_components/underscore/underscore.js'
     ],
     'MainApp': [
         'app/main/*.js',
@@ -67,6 +70,7 @@ gulp.task('js', ['CommonJS', 'MainAppJS', 'CommonAppJS', 'AuthAppJS'], function 
 gulp.task('less', function () {
     return gulp.src([
             'bower_components/bootstrap/less/bootstrap.less',
+            'bower_components/angular-ui-tree/dist/angular-ui-tree.css',
             'content/main.less',
     ])
         .pipe(sourcemaps.init())

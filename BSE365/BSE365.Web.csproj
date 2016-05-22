@@ -213,13 +213,17 @@
     <Content Include="app\main\pin\pinService.js" />
     <Content Include="app\main\user\user-info.default.html" />
     <Content Include="app\main\user\user-info.html" />
+    <Content Include="app\main\user\user-info.tree.html" />
     <Content Include="app\main\user\user-info.register.html" />
+    <Content Include="app\main\user\userTreeController.js" />
     <Content Include="app\main\user\userRegisterController.js" />
     <Content Include="app\main\user\userDefaultController.js" />
     <Content Include="app\main\user\userController.js" />
     <Content Include="app\main\user\userService.js" />
+    <Content Include="Content\angular-ui-tree.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\main.css" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\AuthApp.js" />
     <Content Include="Scripts\Common.js" />
@@ -233,6 +237,7 @@
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\ConfigController.cs" />
+    <Content Include="app\common\underscoreModule.js" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\Startup.Database.cs" />
@@ -274,6 +279,11 @@
     <Content Include="Content\style\site.less" />
     <Content Include="Content\main.less" />
     <Content Include="Content\main.css.map" />
+    <Content Include="Content\angular-ui-tree.css.map" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

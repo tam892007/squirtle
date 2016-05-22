@@ -1,27 +1,28 @@
-﻿using BSE365.Common;
-using BSE365.Common.Constants;
+﻿using BSE365.Base.Repositories.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using System.Configuration;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace BSE365.Api
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/pin")]
     public class PinController : ApiController
     {
         private UserProfileRepository _repo = null;
+        IRepositoryAsync<PinTransactionHistory> _historyRepo;
 
-        public PinController()
+        public PinController(IRepositoryAsync<PinTransactionHistory> historyRepo)
         {
             _repo = new UserProfileRepository();
+            _historyRepo = historyRepo;
         }
 
         [HttpPost]
@@ -37,6 +38,20 @@ namespace BSE365.Api
             {
                 return BadRequest();
             }
+        }
+
+        [Route("GetAll")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAll()
+        {
+            var result = await GetAllAsync();
+            return Ok(result);
+        }
+
+        private async Task<IEnumerable<PinTransactionViewModel>> GetAllAsync()
+        {
+            var transactionHistories = await _historyRepo.Queryable().OrderByDescending(x => x.CreatedDate).ToListAsync();
+            return transactionHistories.Select(x => x.ToViewModel());
         }
 
         private async Task<ResultViewModel<PinBalanceViewModel>> TransferAsync(PinTransactionViewModel transactionVM)

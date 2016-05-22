@@ -13,4 +13,9 @@ namespace BSE365.ViewModels
         public string Note { get; set; }
         public string Code { get; set; }
     }
+
+    public class PinTransactionHistoryViewModel : PinTransactionViewModel
+    {
+        public DateTime CreatedDate { get; set; }
+    }
 }

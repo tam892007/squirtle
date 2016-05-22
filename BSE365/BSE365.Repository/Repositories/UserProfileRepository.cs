@@ -4,7 +4,10 @@ using BSE365.Repository.DataContext;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BSE365.Repository.Repositories
@@ -28,6 +31,13 @@ namespace BSE365.Repository.Repositories
             return user;             
         }
 
+        public async Task<IEnumerable<User>> FindChildren(string id)
+        {
+            var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).ToListAsync();
+
+            return users;
+        }
+
         public async Task<BusinessResult<User>> TransferPin(PinTransaction transaction)
         {
             var result = new BusinessResult<User>();
@@ -38,10 +48,28 @@ namespace BSE365.Repository.Repositories
                 {
                     var user = await FindUser(transaction.FromId);
                     user.TransferPin(transaction.Amount);
-                    identityResult = await _userManager.UpdateAsync(user);                    
-                    dbTransaction.Commit();
-                    result.IsSuccessful = identityResult.Succeeded;
-                    result.Result = user;
+                    identityResult = await _userManager.UpdateAsync(user);
+
+                    if (identityResult.Succeeded)
+                    {
+                        var history = new PinTransactionHistory
+                        {
+                            FromId = transaction.FromId,
+                            ToId = transaction.ToId,
+                            Amount = transaction.Amount,
+                            Code = transaction.Code,
+                            Note = transaction.Note,
+                            CreatedDate = DateTime.Now,
+                        };
+
+                        _ctx.PinTransactionHistories.Add(history);
+                        await _ctx.SaveChangesAsync();                       
+
+                        dbTransaction.Commit();
+
+                        result.IsSuccessful = identityResult.Succeeded;
+                        result.Result = user;
+                    }                                       
                 }
                 catch (Exception ex)
                 {

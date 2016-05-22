@@ -23,6 +23,8 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.Pr
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\bin\Debug\Microsoft.Practices.ServiceLocation.xml
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.csprojResolveAssemblyReference.cache
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.InitialCreate.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.PinTransactionHistory.resources
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.csproj.GenerateResource.Cache
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.pdb
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.InitialCreate.resources

@@ -1,13 +1,10 @@
-﻿using BSE365.Base.Repositories;
-using BSE365.Common.Constants;
-using BSE365.Mappings;
+﻿using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
-using System.Configuration;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -33,6 +30,14 @@ namespace BSE365.Api
         }
 
         [HttpGet]
+        [Route("GetChildren")]
+        public async Task<IHttpActionResult> GetChildren(string id)
+        {
+            var result = await GetChildrenAsync(id);
+            return Ok(result);
+        }     
+
+        [HttpGet]
         [Route("GetCurrentPin")]
         public async Task<IHttpActionResult> GetCurrentPin()
         {
@@ -55,6 +60,12 @@ namespace BSE365.Api
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             return user.ToViewModel();
+        }
+
+        private async Task<IEnumerable<UserInfoViewModel>> GetChildrenAsync(string id)
+        {
+            var result = await _repo.FindChildren(id);
+            return result.Select(x => x.ToViewModel());
         }
 
         private async Task<PinBalanceViewModel> GetCurrentUserPinInfo()

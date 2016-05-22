@@ -7,6 +7,7 @@
         <title>@ViewBag.Title</title>
         <link href="Content/bootstrap.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
         <link href="Content/main.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+        <link href="Content/angular-ui-tree.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
     </head>
     <body data-ng-app="mainApp">
 
@@ -32,6 +33,7 @@
                             <ul class="dropdown-menu">
                                 <li><a ui-sref="user.default">Profile</a></li>
                                 <li><a ui-sref="user.register">Introduce new user</a></li>
+                                <li><a ui-sref="user.tree">User Tree</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Nav header</li>
                                 <li><a href="#">Separated link</a></li>

@@ -78,7 +78,16 @@
     <Compile Include="BSE365AuthContextMigration\201605190927397_InitialCreate.Designer.cs">
       <DependentUpon>201605190927397_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.Designer.cs">
+      <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
+    <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.cs" />
+    <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.Designer.cs">
+      <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
@@ -89,6 +98,12 @@
   <ItemGroup>
     <EmbeddedResource Include="BSE365AuthContextMigration\201605190927397_InitialCreate.resx">
       <DependentUpon>201605190927397_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.resx">
+      <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201605221122420_InitialCreate.resx">
+      <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

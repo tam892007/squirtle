@@ -22,6 +22,22 @@ namespace BSE365.Mappings
             };
 
             return result;
+        }
+
+        public static PinTransactionHistoryViewModel ToViewModel(this PinTransactionHistory model)
+        {
+            if (model == null) return null;
+            var result = new PinTransactionHistoryViewModel
+            {
+                FromId = model.FromId,
+                ToId = model.ToId,
+                Amount = model.Amount,
+                Note = model.Note,
+                Code = model.Code,
+                CreatedDate = model.CreatedDate,
+            };
+
+            return result;
         }        
     }
 }

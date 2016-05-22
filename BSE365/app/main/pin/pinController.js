@@ -4,11 +4,21 @@ mainApp.controller('pinController', ['$scope', 'userService', 'pinService', func
         return userService.getCurrentUserPinInfo().$promise;
     }
 
+    $scope.getCurrentUserPinTransactionHistory = function () {
+        return pinService.getCurrentUserHistory().$promise;
+    }
+
     $scope.init = function () {
         $scope.currentPinBalance = {};
+
+        $scope.transactionHistories = [];
         
         $scope.getCurrentUserPinInfo().then(function (res) {
             $scope.currentPinBalance = res;
+        });
+
+        $scope.getCurrentUserPinTransactionHistory().then(function (res) {
+            $scope.transactionHistories = res;
         });
 
         $scope.transaction = {};

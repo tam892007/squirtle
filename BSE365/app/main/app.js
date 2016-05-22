@@ -1,4 +1,4 @@
-﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp', 'ngResource']);
+﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -35,6 +35,11 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             templateUrl: 'app/main/user/user-info.register.html',
             controller: 'userRegisterController'
         })
+        .state('user.tree', {
+            url: "/tree",
+            templateUrl: 'app/main/user/user-info.tree.html',
+            controller: 'userTreeController'
+        })
 }]);
 
 mainApp.config(['$httpProvider', function ($httpProvider) {
@@ -44,3 +49,7 @@ mainApp.config(['$httpProvider', function ($httpProvider) {
 mainApp.run(['authService', function (authService) {
     authService.fillAuthData();
 }])
+
+mainApp.config(['treeConfig', function (treeConfig) {
+    treeConfig.defaultCollapsed = true; // collapse nodes by default
+}]);
