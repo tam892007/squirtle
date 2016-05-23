@@ -26,9 +26,16 @@ namespace BSE365.Repository.Repositories
 
         public async Task<User> FindUser(string id)
         {
-            User user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
 
             return user;             
+        }
+
+        public async Task<User> FindUserByName(string name)
+        {
+            var user = await _userManager.FindByNameAsync(name);
+
+            return user;
         }
 
         public async Task<IEnumerable<User>> FindChildren(string id)
@@ -41,20 +48,27 @@ namespace BSE365.Repository.Repositories
         public async Task<BusinessResult<User>> TransferPin(PinTransaction transaction)
         {
             var result = new BusinessResult<User>();
-            IdentityResult identityResult = null;
+            IdentityResult giverResult = null;
+            IdentityResult receiverResult = null;
+
             using (var dbTransaction = _ctx.Database.BeginTransaction(IsolationLevel.RepeatableRead))
             {
                 try
                 {
                     var user = await FindUser(transaction.FromId);
                     user.TransferPin(transaction.Amount);
-                    identityResult = await _userManager.UpdateAsync(user);
+                    giverResult = await _userManager.UpdateAsync(user);
 
-                    if (identityResult.Succeeded)
+                    var receiver = await FindUserByName(transaction.ToId);
+                    receiver.ReceivePin(transaction.Amount);
+                    receiverResult = await _userManager.UpdateAsync(receiver);
+
+                    if (giverResult.Succeeded && receiverResult.Succeeded)
                     {
                         var history = new PinTransactionHistory
                         {
                             FromId = transaction.FromId,
+                            FromName = transaction.FromName,
                             ToId = transaction.ToId,
                             Amount = transaction.Amount,
                             Code = transaction.Code,
@@ -67,15 +81,40 @@ namespace BSE365.Repository.Repositories
 
                         dbTransaction.Commit();
 
-                        result.IsSuccessful = identityResult.Succeeded;
+                        result.IsSuccessful = giverResult.Succeeded;
                         result.Result = user;
-                    }                                       
+                    }
+                    else
+                    {
+                        dbTransaction.Rollback();
+                    }                 
                 }
                 catch (Exception ex)
                 {
                     dbTransaction.Rollback();
                 }
             }
+
+            return result;
+        }
+
+        public async Task<BusinessResult<User>> UpdateUserInfo(string userId, UserInfo info)
+        {
+            var user = await FindUser(userId);
+            
+            ////Only update legal information
+            user.UserInfo.DisplayName = info.DisplayName;
+            user.UserInfo.PhoneNumber = info.PhoneNumber;
+            user.UserInfo.Email = info.Email;
+            user.UserInfo.BankBranch = info.BankBranch;
+            user.UserInfo.BankNumber = info.BankNumber;
+            user.UserInfo.BankName = info.BankName;
+
+            var identityResult = await _userManager.UpdateAsync(user);
+
+            var result = new BusinessResult<User>();
+            result.IsSuccessful = identityResult.Succeeded;
+            result.Result = user;
 
             return result;
         }

@@ -82,10 +82,18 @@
     <Compile Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.Designer.cs">
       <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.Designer.cs">
+      <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.cs" />
     <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.Designer.cs">
       <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.cs" />
+    <Compile Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.Designer.cs">
+      <DependentUpon>201605230943536_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -102,8 +110,14 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.resx">
       <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.resx">
+      <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605221122420_InitialCreate.resx">
       <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.resx">
+      <DependentUpon>201605230943536_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

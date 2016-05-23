@@ -1,6 +1,7 @@
 namespace BSE365.Repository.BSE365AuthContextMigration
 {
     using BSE365.Common.Constants;
+    using BSE365.Common.Helper;
     using BSE365.Model.Entities;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
@@ -34,6 +35,10 @@ namespace BSE365.Repository.BSE365AuthContextMigration
             };
 
             _userManager.Create(user, SystemAdmin.Password);
+
+            user.UserName = Utilities.StandardizeUserId(user.UserInfo.Id);
+
+            _userManager.Update(user);
         }
     }
 }

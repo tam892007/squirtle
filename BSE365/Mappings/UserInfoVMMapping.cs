@@ -15,6 +15,7 @@ namespace BSE365.Mappings
             var result = new UserInfoViewModel
             {
                 Id = model.Id,
+                UserName = model.UserName,
                 DisplayName = model.UserInfo.DisplayName,
                 Email = model.UserInfo.Email,
                 ParentId = model.UserInfo.ParentId,

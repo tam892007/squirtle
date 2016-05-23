@@ -1,4 +1,5 @@
-﻿using BSE365.Mappings;
+﻿using BSE365.Common;
+using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
@@ -27,6 +28,21 @@ namespace BSE365.Api
         {
             var result = await GetCurrentUserProfile();
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("UpdateCurrent")]
+        public async Task<IHttpActionResult> UpdateCurrent(UserInfoViewModel viewModel)
+        {
+            var result = await UpdateCurrentAsync(viewModel);
+            if (result.IsSuccessful)
+            {
+                return Ok(result.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
@@ -59,7 +75,15 @@ namespace BSE365.Api
         {            
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
-            return user.ToViewModel();
+            var viewModel = user.ToViewModel();
+
+            if (user.UserInfo != null && !string.IsNullOrEmpty(user.UserInfo.ParentId))
+            {
+                var parentUser = await _repo.FindUser(user.UserInfo.ParentId);
+                viewModel.ParentName = parentUser.UserName;
+            }
+            
+            return viewModel;
         }
 
         private async Task<IEnumerable<UserInfoViewModel>> GetChildrenAsync(string id)
@@ -73,6 +97,13 @@ namespace BSE365.Api
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             return user.ToPinBalanceViewModel();
+        }
+
+        private async Task<ResultViewModel<UserInfoViewModel>> UpdateCurrentAsync(UserInfoViewModel vm)
+        {            
+            var userId = User.Identity.GetUserId();
+            var result = await _repo.UpdateUserInfo(userId, vm.ToModel());
+            return result.ToResultViewModel<UserInfoViewModel, User>(x => x.ToViewModel());
         }
     }
 }

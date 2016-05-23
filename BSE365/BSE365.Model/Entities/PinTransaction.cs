@@ -10,6 +10,8 @@ namespace BSE365.Model.Entities
     {
         public string FromId { get; set; }
 
+        public string FromName { get; set; }
+
         public string ToId { get; set; }
 
         public int Amount { get; set; }

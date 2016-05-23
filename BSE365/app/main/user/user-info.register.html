@@ -5,16 +5,8 @@
     <div class="panel-body">
         <form role="form" data-ng-submit="registerUser()">
             <div class="form-group">
-                <label for="id">ID:</label>
-                <input type="text" class="form-control" id="id" data-ng-model="newUser.id">
-            </div>
-            <div class="form-group">
                 <label for="parentId">Parent ID:</label>
-                <input type="text" class="form-control" id="parentId" data-ng-model="currentUser.id">
-            </div>
-            <div class="form-group">
-                <label for="userName">User Name:</label>
-                <input type="text" class="form-control" id="userName" data-ng-model="newUser.userName">
+                <input type="text" class="form-control" id="parentId" data-ng-model="currentUser.userName" readonly>
             </div>
             <div class="form-group">
                 <label for="pwd">Password:</label>

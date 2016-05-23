@@ -1,4 +1,5 @@
 ﻿using BSE365.Common;
+using BSE365.Common.Helper;
 using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
 using Microsoft.AspNet.Identity;
@@ -27,11 +28,17 @@ namespace BSE365.Repository.Repositories
         {
             User user = new User
             {
-                UserName = userName,
+                UserName = Guid.NewGuid().ToString().Replace("-", string.Empty), ////temporary unique name
                 UserInfo = info,
             };            
 
             var identityResult = await _userManager.CreateAsync(user, password);
+
+            if (identityResult.Succeeded)
+            {
+                user.UserName = Utilities.StandardizeUserId(user.UserInfo.Id);
+                identityResult = await _userManager.UpdateAsync(user);
+            }
 
             var result = new BusinessResult<User>();
             result.Result = user;

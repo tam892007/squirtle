@@ -28,3 +28,5 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repos
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.dll
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.InitialCreate.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.AddFromNameColumnToPinTransactionHistory.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.AddFromNameColumnToPinTransactionHistory.resources

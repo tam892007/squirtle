@@ -208,6 +208,7 @@
     <Content Include="app\common\app.js" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\home\home.html" />
+    <Content Include="app\main\index\indexController.js" />
     <Content Include="app\main\pin\pinController.js" />
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
