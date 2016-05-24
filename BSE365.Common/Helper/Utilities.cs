@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using BSE365.Common.Constants;
+using System;
 using System.Security.Cryptography;
-using System.Web;
 
 namespace BSE365.Common.Helper
 {
@@ -17,6 +15,12 @@ namespace BSE365.Common.Helper
             byte[] byteHash = hashAlgorithm.ComputeHash(byteValue);
 
             return Convert.ToBase64String(byteHash);
+        }
+
+        public static string StandardizeUserId(object userName)
+        {
+            if (userName == null) return string.Empty;
+            return Convert.ToString(userName).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
         }
     }
 }
