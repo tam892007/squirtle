@@ -33,7 +33,9 @@ var paths = {
     'AuthApp': [
         'app/authentication/*.js',
         'app/authentication/**/*.js',
-    ]
+    ],
+    'images': "Content/images/",
+    'fonts': "fonts/"
 };
 
 gulp.task('CommonJS', function () {
@@ -82,11 +84,24 @@ gulp.task('less', function () {
         .pipe(gulp.dest('Content'));
 });
 
+//gulp.task("images", function () {
+//    return gulp.src([paths['images'] + "**/*.*", paths['images'] + "**/*"])
+//        .pipe(gulp.dest(paths.dist + "images/"));
+//});
+
+//gulp.task("fonts", function () {
+//    return gulp.src(paths['fonts'] + "*")
+//        .pipe(gulp.dest(paths.dist + "fonts/"));
+//});
+
 //Watch change
 gulp.task('watch', ['less', 'js'], function () {
     gulp.watch('Content/**/*.less', ['less']);
     gulp.watch('app/**/*.js', ['js']);
     gulp.watch('app/**/**/*.js', ['js']);
+    //gulp.watch('Content/images/*.jpg', ['jpg']);
+    //gulp.watch('Content/images/*.png', ['png']);
+    //gulp.watch('fonts/*.ttf', ['ttf']);
 });
 
 var LiveReloadLessPath = [
