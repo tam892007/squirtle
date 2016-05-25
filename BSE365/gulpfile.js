@@ -18,7 +18,9 @@ var paths = {
         'bower_components/angular-local-storage/dist/angular-local-storage.js',
         'bower_components/angular-smart-table/dist/smart-table.js',
         'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-        'bower_components/underscore/underscore.js'
+        'bower_components/underscore/underscore.js',
+        'bower_components/angular-file-upload/dist/angular-file-upload.js',
+        'bower_components/ngImgCrop/compile/unminified/ng-img-crop.js',
     ],
     'MainApp': [
         'app/main/*.js',
@@ -37,7 +39,7 @@ var paths = {
 gulp.task('CommonJS', function () {
     return gulp.src(paths['Common'])
         .pipe(concat('Common.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('Scripts'));
 });
 
@@ -71,6 +73,7 @@ gulp.task('less', function () {
     return gulp.src([
             'bower_components/bootstrap/less/bootstrap.less',
             'bower_components/angular-ui-tree/dist/angular-ui-tree.css',
+            'bower_components/ngImgCrop/compile/unminified/ng-img-crop.css',
             'content/main.less',
     ])
         .pipe(sourcemaps.init())

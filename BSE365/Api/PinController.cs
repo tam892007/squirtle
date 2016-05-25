@@ -12,6 +12,7 @@ using System.Web.Http;
 
 namespace BSE365.Api
 {
+    [Authorize]
     [RoutePrefix("api/pin")]
     public class PinController : ApiController
     {

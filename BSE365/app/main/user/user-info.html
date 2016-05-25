@@ -6,7 +6,9 @@
                     <h3 class="panel-title">Profile</h3>
                 </div>
                 <div class="panel-body">
-                    <label data-ng-bind="currentUser.displayName"></label>
+                    <div class="avatar-frame">
+                        <img http-src="{{currentUser.avatar.url}}">
+                    </div>
                 </div>
             </div>
         </div>

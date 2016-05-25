@@ -21,7 +21,6 @@ E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Owin.Security.OAuth.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.ServiceLocation.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.Configuration.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.dll
-E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.Mvc.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.RegistrationByConvention.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.WebApi.dll
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Web.Infrastructure.dll
@@ -62,7 +61,6 @@ E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.ServiceLocation.
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.ServiceLocation.xml
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.xml
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.Configuration.xml
-E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.Mvc.xml
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.RegistrationByConvention.xml
 E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Practices.Unity.WebApi.xml
 E:\SharePoint\BSE365\Development\BSE365\bin\Newtonsoft.Json.xml
@@ -82,3 +80,4 @@ E:\SharePoint\BSE365\Development\BSE365\bin\LinqKit.xml
 E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.Web.csprojResolveAssemblyReference.cache
 E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.dll
 E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.pdb
+E:\SharePoint\BSE365\Development\BSE365\bin\Unity.Mvc5.dll

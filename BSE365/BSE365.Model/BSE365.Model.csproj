@@ -42,6 +42,7 @@
     <Compile Include="Entities\BaseEntity.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Config.cs" />
+    <Compile Include="Entities\Image.cs" />
     <Compile Include="Entities\PinTransactionHistory.cs" />
     <Compile Include="Entities\PinTransaction.cs" />
     <Compile Include="Entities\RefreshToken.cs" />

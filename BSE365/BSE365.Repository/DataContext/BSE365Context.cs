@@ -15,6 +15,8 @@ namespace BSE365.Repository.DataContext
 
         public virtual DbSet<PinTransactionHistory> PinTransactionHistories { get; set; }
 
+        public virtual DbSet<Image> Images { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ConfigMapping());

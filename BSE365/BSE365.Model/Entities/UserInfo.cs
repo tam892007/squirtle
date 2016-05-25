@@ -28,5 +28,9 @@ namespace BSE365.Model.Entities
 
         [Required]
         public string BankBranch { get; set; }
+
+        public int? AvatarId { get; set; }
+
+        public virtual Image Avatar { get; set; }
     }
 }

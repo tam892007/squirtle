@@ -5,10 +5,7 @@ using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.WebApi;
 using System;
 using System.Web.Http;
 
@@ -43,16 +40,22 @@ namespace BSE365.Web
             // container.LoadConfiguration();
 
             container
-                .RegisterType<IDataContextAsync, BSE365Context>(new PerRequestLifetimeManager())
-                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
+                .RegisterType<IDataContextAsync, BSE365Context>(new HierarchicalLifetimeManager())
+                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new HierarchicalLifetimeManager())
                 .RegisterType<IRepositoryAsync<PinTransactionHistory>, Repository<PinTransactionHistory>>()
-                .RegisterType<IRepositoryAsync<Config>, Repository<Config>>();
+                .RegisterType<IRepositoryAsync<Config>, Repository<Config>>()
+                .RegisterType<IRepositoryAsync<Image>, Repository<Image>>();
         }
 
         public static void ConfigureUnity(HttpConfiguration config)
         {
-            var resolver = new UnityDependencyResolver(GetConfiguredContainer());
+            ////MVC goes first
+            System.Web.Mvc.DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(GetConfiguredContainer()));
+
+            var resolver = new Microsoft.Practices.Unity.WebApi.UnityDependencyResolver(GetConfiguredContainer());
             config.DependencyResolver = resolver;
+
+           
         }
     }
 }

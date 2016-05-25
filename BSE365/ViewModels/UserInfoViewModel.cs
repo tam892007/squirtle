@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace BSE365.ViewModels
 {
     public class UserInfoViewModel
@@ -26,5 +22,7 @@ namespace BSE365.ViewModels
         public string BankName { get; set; }
 
         public string BankBranch { get; set; }
+
+        public ImageViewModel Avatar { get; set; }
     }
 }
