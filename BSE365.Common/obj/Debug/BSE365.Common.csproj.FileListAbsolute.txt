@@ -1,6 +1,0 @@
-E:\SharePoint\BSE365\Development\BSE365.Common\bin\Debug\BSE365.Common.dll.config
-E:\SharePoint\BSE365\Development\BSE365.Common\bin\Debug\BSE365.Common.dll
-E:\SharePoint\BSE365\Development\BSE365.Common\bin\Debug\BSE365.Common.pdb
-E:\SharePoint\BSE365\Development\BSE365.Common\obj\Debug\BSE365.Common.dll
-E:\SharePoint\BSE365\Development\BSE365.Common\obj\Debug\BSE365.Common.pdb
-E:\SharePoint\BSE365\Development\BSE365.Common\obj\Debug\BSE365.Common.csprojResolveAssemblyReference.cache
