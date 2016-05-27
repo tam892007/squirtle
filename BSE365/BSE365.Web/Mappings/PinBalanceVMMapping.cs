@@ -11,6 +11,7 @@ namespace BSE365.Mappings
             var result = new PinBalanceViewModel
             {
                 UserId = model.Id,
+                UserName = model.UserName,
                 PinBalance = model.PinBalance,
             };
 

@@ -1,7 +1,6 @@
-﻿using BSE365.Model.Entities;
+using BSE365.Model.Entities;
 using BSE365.Model.Mappings;
 using System.Data.Entity;
-using BSE365.Repository.Mappings;
 
 namespace BSE365.Repository.DataContext
 {
@@ -16,22 +15,11 @@ namespace BSE365.Repository.DataContext
 
         public virtual DbSet<PinTransactionHistory> PinTransactionHistories { get; set; }
 
-        public virtual DbSet<UserInfo> UserInfos { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
-        public virtual DbSet<WaitingGiver> WaitingGivers { get; set; }
-        public virtual DbSet<WaitingReceiver> WaitingReceivers { get; set; }
-        public virtual DbSet<MoneyTransferGroup> MoneyTransferGroups { get; set; }
-        public virtual DbSet<MoneyTransaction> MoneyTransactions { get; set; }
-
+        public virtual DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new ConfigMapping());
-            modelBuilder.Configurations.Add(new UserInfoMapping());
-            modelBuilder.Configurations.Add(new AccountMapping());
-            modelBuilder.Configurations.Add(new WaitingGiverMapping());
-            modelBuilder.Configurations.Add(new WaitingReceiverMapping());
-            modelBuilder.Configurations.Add(new MoneyTransactionMapping());
 
             base.OnModelCreating(modelBuilder);
         }

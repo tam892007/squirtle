@@ -15,6 +15,7 @@ namespace BSE365.Mappings
             var result = new PinTransaction
             {
                 FromId = viewModel.FromId,
+                FromName = viewModel.FromName,
                 ToId = viewModel.ToId,
                 Amount = viewModel.Amount,
                 Note = viewModel.Note,
@@ -30,6 +31,7 @@ namespace BSE365.Mappings
             var result = new PinTransactionHistoryViewModel
             {
                 FromId = model.FromId,
+                FromName = model.FromName,
                 ToId = model.ToId,
                 Amount = model.Amount,
                 Note = model.Note,

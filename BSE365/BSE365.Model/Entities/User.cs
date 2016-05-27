@@ -16,5 +16,10 @@ namespace BSE365.Model.Entities
         {
             this.PinBalance = this.PinBalance - amout;
         }
+
+        public void ReceivePin(int amout)
+        {
+            this.PinBalance = this.PinBalance + amout;
+        }
     }
 }

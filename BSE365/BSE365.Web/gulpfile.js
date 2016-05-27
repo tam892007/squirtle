@@ -18,7 +18,10 @@ var paths = {
         'bower_components/angular-local-storage/dist/angular-local-storage.js',
         'bower_components/angular-smart-table/dist/smart-table.js',
         'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-        'bower_components/underscore/underscore.js'
+        'bower_components/underscore/underscore.js',
+        'bower_components/angular-file-upload/dist/angular-file-upload.js',
+        'bower_components/ngImgCrop/compile/unminified/ng-img-crop.js',
+        'bower_components/angular-messages/angular-messages.js',
     ],
     'MainApp': [
         'app/main/*.js',
@@ -31,13 +34,15 @@ var paths = {
     'AuthApp': [
         'app/authentication/*.js',
         'app/authentication/**/*.js',
-    ]
+    ],
+    'images': "Content/images/",
+    'fonts': "fonts/"
 };
 
 gulp.task('CommonJS', function () {
     return gulp.src(paths['Common'])
         .pipe(concat('Common.js'))
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest('Scripts'));
 });
 
@@ -71,6 +76,7 @@ gulp.task('less', function () {
     return gulp.src([
             'bower_components/bootstrap/less/bootstrap.less',
             'bower_components/angular-ui-tree/dist/angular-ui-tree.css',
+            'bower_components/ngImgCrop/compile/unminified/ng-img-crop.css',
             'content/main.less',
     ])
         .pipe(sourcemaps.init())
@@ -79,11 +85,24 @@ gulp.task('less', function () {
         .pipe(gulp.dest('Content'));
 });
 
+//gulp.task("images", function () {
+//    return gulp.src([paths['images'] + "**/*.*", paths['images'] + "**/*"])
+//        .pipe(gulp.dest(paths.dist + "images/"));
+//});
+
+//gulp.task("fonts", function () {
+//    return gulp.src(paths['fonts'] + "*")
+//        .pipe(gulp.dest(paths.dist + "fonts/"));
+//});
+
 //Watch change
 gulp.task('watch', ['less', 'js'], function () {
     gulp.watch('Content/**/*.less', ['less']);
     gulp.watch('app/**/*.js', ['js']);
     gulp.watch('app/**/**/*.js', ['js']);
+    //gulp.watch('Content/images/*.jpg', ['jpg']);
+    //gulp.watch('Content/images/*.png', ['png']);
+    //gulp.watch('fonts/*.ttf', ['ttf']);
 });
 
 var LiveReloadLessPath = [

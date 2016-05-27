@@ -41,7 +41,10 @@ namespace BSE365.Api
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterUserViewModel userModel)
         {
-            var result = await _repo.RegisterUser(userModel.UserName, userModel.Password, userModel.UserInfo.ToModel());
+            var userInfo = userModel.UserInfo.ToModel();
+            userInfo.ParentId = User.Identity.GetUserId();
+
+            var result = await _repo.RegisterUser(userModel.UserName, userModel.Password, userInfo);
         
             if (!result.IsSuccessful)
             {

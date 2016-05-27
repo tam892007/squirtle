@@ -41,6 +41,10 @@ namespace BSE365.Model.Entities
         public DateTime LastGiveDate { get; set; }
 
         public int GiveOver { get; set; }
+        
+        public int? AvatarId { get; set; }
+
+        public virtual Image Avatar { get; set; }
 
         public virtual ICollection<Account> Accounts { get; set; }
 

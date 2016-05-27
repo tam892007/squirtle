@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace BSE365.Api
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/pin")]
     public class PinController : ApiController
     {
@@ -50,7 +50,9 @@ namespace BSE365.Api
 
         private async Task<IEnumerable<PinTransactionViewModel>> GetAllAsync()
         {
-            var transactionHistories = await _historyRepo.Queryable().OrderByDescending(x => x.CreatedDate).ToListAsync();
+            var userId = User.Identity.GetUserId();
+            var transactionHistories = await _historyRepo.Query(x=>x.FromId == userId)
+                .OrderBy(x=>x.OrderByDescending(i=>i.CreatedDate)).SelectAsync();
             return transactionHistories.Select(x => x.ToViewModel());
         }
 
@@ -60,6 +62,7 @@ namespace BSE365.Api
             
             ////ensure from current user
             pinTransaction.FromId = User.Identity.GetUserId();
+            pinTransaction.FromName = User.Identity.GetUserName();
 
             var result = await _repo.TransferPin(pinTransaction);
 

@@ -5,6 +5,7 @@ using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -29,6 +30,21 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("UpdateCurrent")]
+        public async Task<IHttpActionResult> UpdateCurrent(UserInfoViewModel viewModel)
+        {
+            var result = await UpdateCurrentAsync(viewModel);
+            if (result.IsSuccessful)
+            {
+                return Ok(result.Result);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpGet]
         [Route("GetChildren")]
         public async Task<IHttpActionResult> GetChildren(string id)
@@ -45,6 +61,30 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("UpdateAvatar")]
+        public async Task<IHttpActionResult> UpdateAvatar()
+        {
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+
+            // extract file name and file contents
+            var fileNameParam = provider.Contents[0].Headers.ContentDisposition.Parameters
+                .FirstOrDefault(p => p.Name.ToLower() == "filename");
+            string fileName = (fileNameParam == null) ? "" : fileNameParam.Value.Trim('"');
+            byte[] file = await provider.Contents[0].ReadAsByteArrayAsync();
+
+            var id = User.Identity.GetUserId();        
+            var image = new Image
+            {
+                Content = file,
+                Extension = fileName.Split('.').Last(),
+            };
+
+            var result = await _repo.UpdateAvatar(id, image);
+            return Ok(result.ToViewModel());
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -59,7 +99,15 @@ namespace BSE365.Api
         {            
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
-            return user.ToViewModel();
+            var viewModel = user.ToViewModel();
+
+            if (user.UserInfo != null && !string.IsNullOrEmpty(user.UserInfo.ParentId))
+            {
+                var parentUser = await _repo.FindUser(user.UserInfo.ParentId);
+                viewModel.ParentName = parentUser.UserName;
+            }
+            
+            return viewModel;
         }
 
         private async Task<IEnumerable<UserInfoViewModel>> GetChildrenAsync(string id)
@@ -73,6 +121,13 @@ namespace BSE365.Api
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             return user.ToPinBalanceViewModel();
+        }
+
+        private async Task<ResultViewModel<UserInfoViewModel>> UpdateCurrentAsync(UserInfoViewModel vm)
+        {            
+            var userId = User.Identity.GetUserId();
+            var result = await _repo.UpdateUserInfo(userId, vm.ToModel());
+            return result.ToResultViewModel<UserInfoViewModel, User>(x => x.ToViewModel());
         }
     }
 }

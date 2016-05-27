@@ -38,7 +38,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
             context.SaveChanges();
             _userManager.Create(new User
             {
-                UserName = SystemAdmin.UserName,
+                UserName = adminInfo.Id.ToString(),
                 UserInfo = adminInfo,
                 PinBalance = int.MaxValue,
             }, SystemAdmin.Password);
@@ -59,7 +59,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 context.SaveChanges();
                 foreach (var suffix in TestData.AccountSuffixes)
                 {
-                    var username = TestData.UserNames[i] + suffix;
+                    var username = info.Id.ToString() + suffix;
                     _userManager.Create(new User
                     {
                         UserName = username,

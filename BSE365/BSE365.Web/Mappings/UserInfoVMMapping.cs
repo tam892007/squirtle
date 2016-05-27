@@ -15,13 +15,15 @@ namespace BSE365.Mappings
             var result = new UserInfoViewModel
             {
                 Id = model.Id,
+                UserName = model.UserName,
                 DisplayName = model.UserInfo.DisplayName,
                 Email = model.UserInfo.Email,
                 ParentId = model.UserInfo.ParentId,
                 PhoneNumber = model.UserInfo.PhoneNumber,
                 BankNumber = model.UserInfo.BankNumber,
                 BankName = model.UserInfo.BankName,
-                BankBranch = model.UserInfo.BankBranch
+                BankBranch = model.UserInfo.BankBranch,
+                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 }
             };
 
             return result;
@@ -38,7 +40,8 @@ namespace BSE365.Mappings
                 PhoneNumber = viewModel.PhoneNumber,
                 BankNumber = viewModel.BankNumber,
                 BankName = viewModel.BankName,
-                BankBranch = viewModel.BankBranch
+                BankBranch = viewModel.BankBranch,
+                Avatar = viewModel.Avatar.ToModel()
             };
 
             return result;

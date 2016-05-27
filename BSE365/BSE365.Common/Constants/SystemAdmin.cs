@@ -17,5 +17,8 @@ namespace BSE365.Common.Constants
         public const string BankNumber = "1111-1111-1111-1111";
         public const string BankName = "VietinBank";
         public const string BankBranch = "Ha Nam";
+        public const int UserIdLength = 8;
+        public const char FillInChar = '0';
+        public const string UserDefautPic = "user_default.jpg";
     }
 }

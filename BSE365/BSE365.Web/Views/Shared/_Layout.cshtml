@@ -8,11 +8,19 @@
         <link href="Content/bootstrap.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
         <link href="Content/main.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
         <link href="Content/angular-ui-tree.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+        <link href="Content/ng-img-crop.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
     </head>
-    <body data-ng-app="mainApp">
+    <body data-ng-app="mainApp" data-ng-controller="indexController">
+        <script type="text/ng-template" id="validation-messages">
+            <div ng-message="required">This field cannot be blank</div>
+            <div ng-message="minlength">The value for this field is too short</div>
+            <div ng-message="maxlength">The value for this field is too long</div>
+            <div ng-message="email">You have entered an incorrect email value</div>
+            <div ng-message="pattern">You did not enter the value in the correct format</div>
+        </script>
 
         <!-- Fixed navbar -->
-        <nav class="navbar navbar-default navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top navbar--custom">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -21,23 +29,37 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">BSE365</a>
+                    <i class="navbar-logo"></i>
+                    <a class="navbar-brand navbar-brand--custom" href="#">@ViewBag.Title</a>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
+                    <ul class="nav navbar-nav navbar-nav--custom">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#/pin">PIN Management</a></li>
-                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#/pin">Wallet</a></li>                        
                         <li class="dropdown">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a ui-sref="user.default">Profile</a></li>
-                                <li><a ui-sref="user.register">Introduce new user</a></li>
-                                <li><a ui-sref="user.tree">User Tree</a></li>
+                                <li><a ui-sref="user.default">Information</a></li>
+                                <li><a ui-sref="user.register">Introduction</a></li>
+                                <li><a ui-sref="user.tree">Tree Expansion</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Nav header</li>
                                 <li><a href="#">Separated link</a></li>
                                 <li><a href="#">One more separated link</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#/system">System</a></li>          
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
+                        <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
+                        <li class="dropdown" data-ng-hide="!authentication.isAuth">
+                            <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown">
+                                <img src="Content/images/avatar.png" class="nav-right--custom__avatar" />
+                                <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-ng-click="logOut()">Logout</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -45,7 +67,7 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container container--custom">
             @RenderBody()
         </div>
 
