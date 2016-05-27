@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -60,7 +60,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BSE365.Common\BSE365.Common.csproj">
+    <ProjectReference Include="..\BSE365.Common\BSE365.Common.csproj">
       <Project>{b06fe56e-dde5-459e-9b0d-90edcd38b2e2}</Project>
       <Name>BSE365.Common</Name>
     </ProjectReference>
@@ -74,57 +74,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSE365AuthContextMigration\201605190927397_InitialCreate.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605190927397_InitialCreate.Designer.cs">
-      <DependentUpon>201605190927397_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.Designer.cs">
-      <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.Designer.cs">
-      <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365AuthContextMigration\201605260334468_AddAvatar.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605260334468_AddAvatar.Designer.cs">
-      <DependentUpon>201605260334468_AddAvatar.cs</DependentUpon>
+    <Compile Include="BSE365AuthContextMigration\201605270934068_Initial.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605270934068_Initial.Designer.cs">
+      <DependentUpon>201605270934068_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
-    <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.cs" />
-    <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.Designer.cs">
-      <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365ContextMigration\201605260335130_AddAvatar.cs" />
-    <Compile Include="BSE365ContextMigration\201605260335130_AddAvatar.Designer.cs">
-      <DependentUpon>201605260335130_AddAvatar.cs</DependentUpon>
+    <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
+    <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
+      <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
+    <Compile Include="Mappings\AccountMapping.cs" />
     <Compile Include="Mappings\ConfigMapping.cs" />
+    <Compile Include="Mappings\MoneyTransactionMapping.cs" />
+    <Compile Include="Mappings\UserInfoMapping.cs" />
+    <Compile Include="Mappings\WaitingGiverMapping.cs" />
+    <Compile Include="Mappings\WaitingReceiverMapping.cs" />
     <Compile Include="Repositories\AuthRepository.cs" />
+    <Compile Include="Repositories\MoneyRepository.cs" />
     <Compile Include="Repositories\UserProfileRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605190927397_InitialCreate.resx">
-      <DependentUpon>201605190927397_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605270934068_Initial.resx">
+      <DependentUpon>201605270934068_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605221102483_PinTransactionHistory.resx">
-      <DependentUpon>201605221102483_PinTransactionHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.resx">
-      <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605260334468_AddAvatar.resx">
-      <DependentUpon>201605260334468_AddAvatar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365ContextMigration\201605221122420_InitialCreate.resx">
-      <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365ContextMigration\201605260335130_AddAvatar.resx">
-      <DependentUpon>201605260335130_AddAvatar.cs</DependentUpon>
+    <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
+      <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

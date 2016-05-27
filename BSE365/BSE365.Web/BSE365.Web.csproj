@@ -207,11 +207,17 @@
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
+    <Content Include="app\common\directives\httpSrc.js" />
+    <Content Include="app\common\directives\matchValidator.js" />
+    <Content Include="app\common\services\imageService.js" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\home\home.html" />
+    <Content Include="app\main\index\indexController.js" />
     <Content Include="app\main\pin\pinController.js" />
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
+    <Content Include="app\main\user\dlg-change-avatar.html" />
+    <Content Include="app\main\user\dlgChangeAvatarController.js" />
     <Content Include="app\main\user\user-info.default.html" />
     <Content Include="app\main\user\user-info.html" />
     <Content Include="app\main\user\user-info.tree.html" />
@@ -223,7 +229,13 @@
     <Content Include="app\main\user\userService.js" />
     <Content Include="Content\angular-ui-tree.css" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\images\avatar.png" />
+    <Content Include="Content\images\complete-logo.png" />
+    <Content Include="Content\images\edit-logo.png" />
+    <Content Include="Content\images\logo.png" />
+    <Content Include="Content\image\user_default.jpg" />
     <Content Include="Content\main.css" />
+    <Content Include="Content\ng-img-crop.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\AuthApp.js" />
@@ -233,6 +245,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ImageController.cs" />
     <Compile Include="Api\MoneyTransactionController.cs" />
     <Compile Include="Api\TradeController.cs" />
     <Compile Include="Api\PinController.cs" />
@@ -247,6 +260,8 @@
     <Compile Include="App_Start\Startup.Unity.cs" />
     <Compile Include="App_Start\Startup.WebApi.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Mappings\ImageVMMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionVMMapping.cs" />
     <Compile Include="Mappings\PinBalanceVMMapping.cs" />
     <Compile Include="Mappings\PinTransactionVMMapping.cs" />
@@ -263,6 +278,7 @@
     <Compile Include="Timers\TransactionTimer.cs" />
     <Compile Include="Timers\WaitingHepler.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
+    <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MoneyTransactionVM.cs" />
     <Compile Include="ViewModels\PinBalanceViewModel.cs" />
     <Compile Include="ViewModels\PinTransactionViewModel.cs" />
@@ -293,6 +309,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\ng-img-crop.css.map" />
+    <Content Include="Content\style\dialog.less" />
+    <Content Include="Content\style\header.less" />
+    <Content Include="Content\style\panel.less" />
+    <Content Include="Content\style\tree.less" />
+    <Content Include="Content\style\validation.less" />
+    <Content Include="Content\style\variables.less" />
+    <Content Include="fonts\Roboto-Regular.ttf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
