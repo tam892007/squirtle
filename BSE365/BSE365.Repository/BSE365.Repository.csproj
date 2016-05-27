@@ -86,26 +86,18 @@
     <Compile Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.Designer.cs">
       <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSE365AuthContextMigration\201605231721457_AddColumnAvatarAndImageTable.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605231721457_AddColumnAvatarAndImageTable.Designer.cs">
-      <DependentUpon>201605231721457_AddColumnAvatarAndImageTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365AuthContextMigration\201605241937373_LazyloadImageById.cs" />
-    <Compile Include="BSE365AuthContextMigration\201605241937373_LazyloadImageById.Designer.cs">
-      <DependentUpon>201605241937373_LazyloadImageById.cs</DependentUpon>
+    <Compile Include="BSE365AuthContextMigration\201605260334468_AddAvatar.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605260334468_AddAvatar.Designer.cs">
+      <DependentUpon>201605260334468_AddAvatar.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.cs" />
     <Compile Include="BSE365ContextMigration\201605221122420_InitialCreate.Designer.cs">
       <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.cs" />
-    <Compile Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.Designer.cs">
-      <DependentUpon>201605230943536_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BSE365ContextMigration\201605231724140_AddColumnAvatarAndImageTable.cs" />
-    <Compile Include="BSE365ContextMigration\201605231724140_AddColumnAvatarAndImageTable.Designer.cs">
-      <DependentUpon>201605231724140_AddColumnAvatarAndImageTable.cs</DependentUpon>
+    <Compile Include="BSE365ContextMigration\201605260335130_AddAvatar.cs" />
+    <Compile Include="BSE365ContextMigration\201605260335130_AddAvatar.Designer.cs">
+      <DependentUpon>201605260335130_AddAvatar.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -125,20 +117,14 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201605230924168_AddFromNameColumnToPinTransactionHistory.resx">
       <DependentUpon>201605230924168_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605231721457_AddColumnAvatarAndImageTable.resx">
-      <DependentUpon>201605231721457_AddColumnAvatarAndImageTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365AuthContextMigration\201605241937373_LazyloadImageById.resx">
-      <DependentUpon>201605241937373_LazyloadImageById.cs</DependentUpon>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605260334468_AddAvatar.resx">
+      <DependentUpon>201605260334468_AddAvatar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605221122420_InitialCreate.resx">
       <DependentUpon>201605221122420_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BSE365ContextMigration\201605230943536_AddFromNameColumnToPinTransactionHistory.resx">
-      <DependentUpon>201605230943536_AddFromNameColumnToPinTransactionHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="BSE365ContextMigration\201605231724140_AddColumnAvatarAndImageTable.resx">
-      <DependentUpon>201605231724140_AddColumnAvatarAndImageTable.cs</DependentUpon>
+    <EmbeddedResource Include="BSE365ContextMigration\201605260335130_AddAvatar.resx">
+      <DependentUpon>201605260335130_AddAvatar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

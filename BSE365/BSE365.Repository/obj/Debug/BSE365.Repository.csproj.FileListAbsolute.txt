@@ -29,7 +29,5 @@ E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repos
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.pdb
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.InitialCreate.resources
 E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.AddFromNameColumnToPinTransactionHistory.resources
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.AddFromNameColumnToPinTransactionHistory.resources
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.AddColumnAvatarAndImageTable.resources
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.AddColumnAvatarAndImageTable.resources
-E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.LazyloadImageById.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365AuthContextMigration.AddAvatar.resources
+E:\SharePoint\BSE365\Development\BSE365\BSE365.Repository\obj\Debug\BSE365.Repository.BSE365ContextMigration.AddAvatar.resources

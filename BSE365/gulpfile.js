@@ -21,6 +21,7 @@ var paths = {
         'bower_components/underscore/underscore.js',
         'bower_components/angular-file-upload/dist/angular-file-upload.js',
         'bower_components/ngImgCrop/compile/unminified/ng-img-crop.js',
+        'bower_components/angular-messages/angular-messages.js',
     ],
     'MainApp': [
         'app/main/*.js',

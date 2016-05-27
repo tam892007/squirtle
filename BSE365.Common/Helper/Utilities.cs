@@ -22,5 +22,22 @@ namespace BSE365.Common.Helper
             if (userName == null) return string.Empty;
             return Convert.ToString(userName).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
         }
+
+        public static string GetImageContentType(string extension)
+        {
+            var ext = extension.ToLower();
+
+            if (ext == "png")
+            {
+                return "image/png";
+            }
+
+            if (ext == ".jpg" || ext == ".jpeg")
+            {
+                return "image/jpeg";
+            }
+
+            return "application/octet-stream";
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace BSE365.Repository.BSE365ContextMigration
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BSE365.Repository.DataContext.BSE365Context>
+    public sealed class Configuration : DbMigrationsConfiguration<BSE365.Repository.DataContext.BSE365Context>
     {
         public Configuration()
         {

@@ -8,5 +8,13 @@ namespace BSE365.ViewModels
         public byte[] Content { get; set; }
 
         public string Extension { get; set; }
+
+        public string Url
+        {
+            get
+            {
+                return "/image/getUserPicture/" + Id;
+            }
+        }
     }
 }

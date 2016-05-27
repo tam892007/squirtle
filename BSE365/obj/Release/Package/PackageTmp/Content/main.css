@@ -1,0 +1,307 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+  background-color: #fafafa;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+body > .container {
+  padding: 60px 15px 0;
+}
+.container .text-muted {
+  margin: 20px 0;
+}
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+code {
+  font-size: 80%;
+}
+.btn {
+  margin-right: 8px;
+}
+/* Avatar style
+-------------------------------------------------- */
+/* Required for avatar section. */
+.avatar-change-btn {
+  position: relative;
+  top: -40px;
+  background-color: rgba(0, 0, 0, 0.541176);
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  display: inline-block;
+  color: #ffffff;
+}
+.avatar-frame {
+  border: 2px solid #c7b89e;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-decoration: underline;
+}
+.avatar-frame,
+.avatar-frame img {
+  width: 200px;
+  height: 200px;
+  -webkit-border-radius: 120px;
+  /* Saf3+, Chrome */
+  border-radius: 120px;
+  /* Opera 10.5, IE 9 */
+  /*-moz-border-radius: 30px;  Disabled for FF1+ */
+  overflow: hidden;
+}
+.group-title {
+  background-color: #687074 !important;
+  color: #FFF !important;
+}
+.container--custom {
+  padding: 100px 15px 0 !important;
+}
+.angular-ui-tree-handle {
+  background: #f8faff;
+  border: 1px solid #dae2ea;
+  color: #7c9eb2;
+  padding: 10px 10px;
+}
+.angular-ui-tree-handle:hover {
+  color: #438eb9;
+  background: #f4f6f7;
+  border-color: #dce2e8;
+}
+.angular-ui-tree-placeholder {
+  background: #f0f9ff;
+  border: 2px dashed #bed2db;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.group-title {
+  background-color: #687074 !important;
+  color: #FFF !important;
+}
+.navbar-nav li a,
+.navbar-nav li .navbar-brand {
+  padding-top: 18px !important;
+  padding-bottom: 0 !important;
+  height: 60px;
+}
+@media (min-width: 768px) {
+  .navbar-right {
+    margin-right: -22px !important;
+  }
+}
+.navbar {
+  min-height: 28px !important;
+}
+.navbar--custom {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#383a3f+0,2e3034+50,202225+98,383a3f+100,207cca+100,383a3f+100,202225+100 */
+  background: #383a3f;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #383a3f 0%, #2e3034 50%, #202225 98%, #383a3f 100%, #207cca 100%, #383a3f 100%, #202225 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #383a3f 0%, #2e3034 50%, #202225 98%, #383a3f 100%, #207cca 100%, #383a3f 100%, #202225 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #383a3f 0%, #2e3034 50%, #202225 98%, #383a3f 100%, #207cca 100%, #383a3f 100%, #202225 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#383a3f', endColorstr='#202225', GradientType=0);
+  /* IE6-9 */
+  border-bottom-width: 2px;
+  border-bottom-color: #f35f5f;
+}
+.navbar-logo {
+  width: 50px;
+  height: 60px;
+  display: inline-block;
+  float: left;
+  background-image: url('images/logo.png');
+  background-repeat: no-repeat;
+  background-position: left;
+}
+.navbar-brand--custom {
+  height: 60px;
+  line-height: normal;
+  font-family: Roboto, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #fafafa !important;
+}
+.navbar-nav--custom li a {
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  color: #9fa0a1 !important;
+  text-transform: uppercase;
+}
+.navbar-nav--custom .active > a,
+.navbar-nav--custom .open > a {
+  color: white !important;
+  background-color: #f35f5f !important;
+}
+.navbar-nav--custom .dropdown-menu {
+  margin-top: 2px !important;
+}
+.navbar-nav--custom .dropdown-menu > li > a:hover {
+  color: white !important;
+  background-color: #f35f5f !important;
+}
+.navbar-right--custom > li > a {
+  color: #fafafa !important;
+}
+.navbar-right--custom > li > a:hover {
+  text-decoration: underline;
+}
+.navbar-right--custom > li .dropdown-toggle--custom {
+  padding-top: 9px !important;
+}
+.navbar-right--custom > li .dropdown-toggle--custom:hover {
+  cursor: pointer;
+}
+.navbar-right--custom .nav-right--custom__avatar {
+  margin-right: 5px;
+}
+.navbar-right--custom .dropdown-menu {
+  margin-top: 2px !important;
+}
+.navbar-right--custom .dropdown-menu > li > a:hover {
+  color: white !important;
+  background-color: #f35f5f !important;
+}
+.panel-form .panel-heading {
+  background-color: #ffa089;
+}
+.panel-form .panel-heading .panel-title {
+  color: #fff9f8;
+}
+.panel-form .panel-heading .panel-logo {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  float: left;
+  line-height: 37px;
+  background-image: url('images/edit-logo.png');
+  margin-top: -10px;
+  margin-right: 10px;
+}
+.panel-form .panel-body .btn--submit {
+  color: #fff9f8;
+  background-color: #f35f5f;
+  width: 50%;
+  margin-left: 25%;
+}
+.panel-form .panel-body .btn--submit:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.panel-table .panel-heading {
+  background-color: #4b2218;
+}
+.panel-table .panel-heading .panel-title {
+  color: #fff9f8;
+}
+.panel-table .panel-heading .panel-logo {
+  width: 35px;
+  height: 35px;
+  display: inline-block;
+  float: left;
+  line-height: 37px;
+  background-image: url('images/complete-logo.png');
+  margin-top: -10px;
+  margin-right: 10px;
+}
+.crop-area {
+  height: 295px;
+  width: 390px;
+  background-color: #f2f2f2;
+  overflow: hidden;
+}
+.column-wrapper-right.column-divider-left:before {
+  content: ' ';
+  display: block;
+  float: left;
+  background: #e0e0e0;
+  width: 2px;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+.portraitDialog > .modal-dialog.modal-lg {
+  width: 760px;
+}
+.column-wrapper-left {
+  margin: 20px;
+  max-width: 470px;
+}
+.column-wrapper-right {
+  max-width: 330px;
+}
+.avatar {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-style: none;
+  border-width: 0px;
+}
+.avatar-wrapper {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.avatar-lg {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+  padding: 0;
+}
+.m-lg-left-right {
+  margin-left: 40px !important;
+  margin-right: 40px !important;
+}
+.column-wrapper-right .form-title {
+  font-size: 16px;
+  color: #494949;
+  font-weight: 600;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.column-wrapper-right .form-description {
+  margin-bottom: 40px;
+}
+.column-wrapper-right p {
+  margin: 0px;
+}
+.fileUpload {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+}
+.fileUpload input.upload {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.upload-btn-container {
+  margin-top: 40px;
+}
+
+/*# sourceMappingURL=main.css.map */

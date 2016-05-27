@@ -15,7 +15,7 @@ namespace BSE365.Controllers
         }
 
         [HttpGet]
-        [Authorize()]
+        //[Authorize()]
         public async Task<FileContentResult> Get(int id)
         {
             var image = await this._repo.FindAsync(id);
@@ -24,12 +24,12 @@ namespace BSE365.Controllers
             {
                 var ext = image.Extension.ToLower();
 
-                if (ext.EndsWith(".png"))
+                if (ext.EndsWith("png"))
                 {
                     return new FileContentResult(image.Content, "image/png");
                 }
 
-                if (ext.EndsWith(".jpg") || ext.EndsWith(".jpeg"))
+                if (ext.EndsWith("jpg") || ext.EndsWith("jpeg"))
                 {
                     return new FileContentResult(image.Content, "image/jpeg");
                 }
@@ -43,7 +43,7 @@ namespace BSE365.Controllers
         }
 
         [HttpGet]
-        [Authorize()]
+        //[Authorize()]
         public async Task<FileContentResult> GetUserPicture(int id)
         {
             if (id == 0)

@@ -19,5 +19,6 @@ namespace BSE365.Common.Constants
         public const string BankBranch = "Ha Nam";
         public const int UserIdLength = 8;
         public const char FillInChar = '0';
+        public const string UserDefautPic = "user_default.jpg";
     }
 }

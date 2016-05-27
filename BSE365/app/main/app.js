@@ -1,4 +1,4 @@
-﻿var mainApp = angular.module('mainApp', ['ui.router', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload', 'ngImgCrop']);
+﻿var mainApp = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload', 'ngImgCrop', 'ngMessages']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 

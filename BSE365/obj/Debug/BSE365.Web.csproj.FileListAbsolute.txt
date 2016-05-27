@@ -81,3 +81,7 @@ E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.Web.csprojResolveAssemb
 E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.dll
 E:\SharePoint\BSE365\Development\BSE365\obj\Debug\BSE365.pdb
 E:\SharePoint\BSE365\Development\BSE365\bin\Unity.Mvc5.dll
+E:\SharePoint\BSE365\Development\BSE365\bin\Microsoft.Azure.AppService.ApiApps.Service.dll
+E:\SharePoint\BSE365\Development\BSE365\bin\Swashbuckle.Core.dll
+E:\SharePoint\BSE365\Development\BSE365\bin\System.IdentityModel.Tokens.Jwt.dll
+E:\SharePoint\BSE365\Development\BSE365\bin\System.IdentityModel.Tokens.Jwt.xml

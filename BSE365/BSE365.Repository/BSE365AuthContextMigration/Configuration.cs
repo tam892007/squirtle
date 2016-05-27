@@ -7,7 +7,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
     using Microsoft.AspNet.Identity.EntityFramework;
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BSE365.Repository.DataContext.BSE365AuthContext>
+    public sealed class Configuration : DbMigrationsConfiguration<BSE365.Repository.DataContext.BSE365AuthContext>
     {
         public Configuration()
         {

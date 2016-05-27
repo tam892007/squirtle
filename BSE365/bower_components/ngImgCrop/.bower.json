@@ -32,6 +32,6 @@
     "commit": "8f29783e69e8e74cf76b278e42d3ad686f209ace"
   },
   "_source": "https://github.com/alexk111/ngImgCrop.git",
-  "_target": "*",
+  "_target": "0.3.2",
   "_originalSource": "ngImgCrop"
 }

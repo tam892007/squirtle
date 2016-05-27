@@ -1,11 +1,11 @@
-﻿using BSE365.Common;
-using BSE365.Mappings;
+﻿using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -59,6 +59,30 @@ namespace BSE365.Api
         {
             var result = await GetCurrentUserPinInfo();
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("UpdateAvatar")]
+        public async Task<IHttpActionResult> UpdateAvatar()
+        {
+            var provider = new MultipartMemoryStreamProvider();
+            await Request.Content.ReadAsMultipartAsync(provider);
+
+            // extract file name and file contents
+            var fileNameParam = provider.Contents[0].Headers.ContentDisposition.Parameters
+                .FirstOrDefault(p => p.Name.ToLower() == "filename");
+            string fileName = (fileNameParam == null) ? "" : fileNameParam.Value.Trim('"');
+            byte[] file = await provider.Contents[0].ReadAsByteArrayAsync();
+
+            var id = User.Identity.GetUserId();        
+            var image = new Image
+            {
+                Content = file,
+                Extension = fileName.Split('.').Last(),
+            };
+
+            var result = await _repo.UpdateAvatar(id, image);
+            return Ok(result.ToViewModel());
         }
 
         protected override void Dispose(bool disposing)

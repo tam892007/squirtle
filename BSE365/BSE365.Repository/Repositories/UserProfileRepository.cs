@@ -31,6 +31,28 @@ namespace BSE365.Repository.Repositories
             return user;             
         }
 
+        public async Task<User> UpdateAvatar(string id, Image image)
+        {
+            var user = await FindUser(id);
+
+            if (user.UserInfo.AvatarId.HasValue)
+            {
+                user.UserInfo.Avatar.Content = image.Content;
+                user.UserInfo.Avatar.Extension = image.Extension;
+            }
+            else { 
+                user.UserInfo.Avatar = new Image
+                {
+                    Content = image.Content,
+                    Extension = image.Extension,
+                };
+            }
+
+            await _userManager.UpdateAsync(user);
+
+            return user;
+        }
+
         public async Task<User> FindUserByName(string name)
         {
             var user = await _userManager.FindByNameAsync(name);
