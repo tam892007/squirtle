@@ -27,7 +27,7 @@ namespace BSE365.Web.Providers
                 context.TryGetFormCredentials(out clientId, out clientSecret);
             }
 
-            if (context.ClientId == null)
+            if (string.IsNullOrEmpty(context.ClientId))
             {
                 //Remove the comments from the below line context.SetError, and invalidate context 
                 //if you want to force sending clientId/secrects once obtain access tokens. 

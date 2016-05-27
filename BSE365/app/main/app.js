@@ -1,4 +1,5 @@
-﻿var mainApp = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload', 'ngImgCrop', 'ngMessages']);
+﻿var mainApp = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload'
+    , 'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -13,7 +14,12 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             url: "/login",
             templateUrl: 'app/authentication/login/login.html',
             controller: 'loginController'
-            })
+        })
+        .state('refresh', {
+            url: "/refresh",
+            templateUrl: 'app/authentication/refresh/refresh.html',
+            controller: 'refreshController'
+        })
         .state('pin', {
             url: "/pin",
             templateUrl: 'app/main/pin/pin.html',
@@ -53,3 +59,7 @@ mainApp.run(['authService', function (authService) {
 mainApp.config(['treeConfig', function (treeConfig) {
     treeConfig.defaultCollapsed = true; // collapse nodes by default
 }]);
+
+mainApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.includeSpinner = false;
+}])

@@ -67,6 +67,12 @@ namespace BSE365.Repository.Repositories
             return users;
         }
 
+        public async Task<bool> ChangePassword(string id, string currentPassword, string newPassword)
+        {
+            var result = await _userManager.ChangePasswordAsync(id, currentPassword, newPassword);
+            return result.Succeeded;            
+        }
+
         public async Task<BusinessResult<User>> TransferPin(PinTransaction transaction)
         {
             var result = new BusinessResult<User>();

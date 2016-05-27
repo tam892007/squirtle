@@ -85,6 +85,14 @@ namespace BSE365.Api
             return Ok(result.ToViewModel());
         }
 
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(ChangePasswordViewModel vm)
+        {
+            var result = await ChangePasswordAsync(vm);
+            return Ok(result);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -128,6 +136,17 @@ namespace BSE365.Api
             var userId = User.Identity.GetUserId();
             var result = await _repo.UpdateUserInfo(userId, vm.ToModel());
             return result.ToResultViewModel<UserInfoViewModel, User>(x => x.ToViewModel());
+        }
+
+        private async Task<ResultViewModel<bool>> ChangePasswordAsync(ChangePasswordViewModel vm)
+        {
+            var id = User.Identity.GetUserId();
+            var succeeded = await _repo.ChangePassword(id, vm.OldPassword, vm.NewPassword);
+            return new ResultViewModel<bool>
+            {
+                IsSuccessful = succeeded,
+                Result = succeeded,
+            };
         }
     }
 }

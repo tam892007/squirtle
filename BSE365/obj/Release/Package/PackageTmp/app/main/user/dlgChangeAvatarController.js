@@ -1,9 +1,8 @@
 ﻿'use strict';
-mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileUploader', '_', 'localStorageService', function ($scope, userService, FileUploader, _, localStorageService) {
+mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileUploader', '_', 'localStorageService', '$uibModalInstance', function ($scope, userService, FileUploader, _, localStorageService, $uibModalInstance) {
     $scope.uploadImage = function () {
         var selectedFile = _.last(uploader.queue);
-        selectedFile.upload();
-        console.log(selectedFile);
+        selectedFile.upload();        
     }
 
     /**
@@ -39,10 +38,10 @@ mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileU
      *   https://developer.mozilla.org/en-US/docs/Web/API/FormData
      *   https://github.com/nervgh/angular-file-upload/issues/208
      */
-    //uploader.onBeforeUploadItem = function (item) {
-    //    var blob = dataURItoBlob($scope.cropped.image);
-    //    item._file = blob;
-    //};
+    uploader.onBeforeUploadItem = function (item) {
+        var blob = dataURItoBlob($scope.cropped.image);
+        item._file = blob;
+    };
 
     /**
      * Converts data uri to Blob. Necessary for uploading.
@@ -65,5 +64,18 @@ mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileU
             array.push(byteString.charCodeAt(i));
         }
         return new Blob([new Uint8Array(array)], { type: mimeString });
+    };
+
+    uploader.onSuccessItem = function (item, res, status, headers) {
+        console.log(res);
+        $scope.ok(res)
+    }
+
+    $scope.ok = function (res) {
+        $uibModalInstance.close(res);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss();
     };
 }]);

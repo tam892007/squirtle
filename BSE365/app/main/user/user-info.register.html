@@ -17,10 +17,11 @@
             </div>
             <div class="form-group">
                 <label for="confirmPwd">Confirm Password:</label>
-                <input type="password" class="form-control" name="confirmPwd" data-ng-model="newUser.confirmPassword" ng-minlength="6" maxlength="12" match-validator="newUser.password" required>
+                <input type="password" class="form-control" name="confirmPwd" data-ng-model="newUser.confirmPassword" ng-minlength="6" maxlength="12" ui-validate=" '$value==newUser.password' "
+                       ui-validate-watch=" 'newUser.password' " required>
                 <div ng-messages="regForm.confirmPwd.$error" ng-if="interacted(regForm.confirmPwd)" class="error-messages">
                     <div ng-messages-include="validation-messages"></div>
-                    <div ng-message="match">This password does not match the password entered before</div>
+                    <div ng-message="validator">This password does not match the password entered before</div>
                 </div>
             </div>
             <div class="form-group">

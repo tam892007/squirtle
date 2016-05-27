@@ -56,6 +56,10 @@ namespace BSE365.Providers
         {
 
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+            
+            ////Remove these below line if you want to allow only matched origin for this client
+            if (string.IsNullOrEmpty(allowedOrigin)) allowedOrigin = "*";
+
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
 
             string hashedTokenId = Utilities.GetHash(context.Token);

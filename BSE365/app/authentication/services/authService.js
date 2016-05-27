@@ -85,23 +85,25 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
 
         var authData = localStorageService.get('authorizationData');
 
-        if (authData) {
-
+        if (authData && !authServiceFactory.tokenRefreshing) {
             if (authData.useRefreshTokens) {
+
+                authServiceFactory.tokenRefreshing = true; ////Prevent multiple refresh token requested
 
                 var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + ngAuthSettings.clientId;
 
-                localStorageService.remove('authorizationData');
+                //localStorageService.remove('authorizationData');
 
                 $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
 
                     localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
-
                     deferred.resolve(response);
 
                 }).error(function (err, status) {
                     _logOut();
                     deferred.reject(err);
+                }).finally(function () {
+                    authServiceFactory.tokenRefreshing = false;
                 });
             }
         }

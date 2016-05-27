@@ -215,11 +215,12 @@
     <Content Include="app\authentication\app.js" />
     <Content Include="app\authentication\login\login.html" />
     <Content Include="app\authentication\login\loginController.js" />
+    <Content Include="app\authentication\refresh\refresh.html" />
+    <Content Include="app\authentication\refresh\refreshController.js" />
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
     <Content Include="app\common\directives\httpSrc.js" />
-    <Content Include="app\common\directives\matchValidator.js" />
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\home\home.html" />
@@ -228,7 +229,9 @@
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
     <Content Include="app\main\user\dlg-change-avatar.html" />
+    <Content Include="app\main\user\dlg-change-password.html" />
     <Content Include="app\main\user\dlgChangeAvatarController.js" />
+    <Content Include="app\main\user\dlgChangePasswordController.js" />
     <Content Include="app\main\user\user-info.default.html" />
     <Content Include="app\main\user\user-info.html" />
     <Content Include="app\main\user\user-info.tree.html" />
@@ -283,6 +286,7 @@
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
     <Compile Include="ViewModels\PinBalanceViewModel.cs" />
     <Compile Include="ViewModels\PinTransactionViewModel.cs" />

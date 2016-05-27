@@ -5,6 +5,8 @@ mainApp.controller('userDefaultController', ['$scope', 'userService', 'FileUploa
     }
 
     $scope.updateProfile = function () {
+        if (!$scope.userForm.$valid) return;
+
         $scope.updateCurrentUserProfile($scope.currentUser).then(function (res) {
 
         });

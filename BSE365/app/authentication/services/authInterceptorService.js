@@ -18,14 +18,21 @@ authApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
     var _responseError = function (rejection) {
         if (rejection.status === 401) {
             var authService = $injector.get('authService');
-            var authData = localStorageService.get('authorizationData');
-
+            var authData = localStorageService.get('authorizationData');            
             if (authData) {
                 if (authData.useRefreshTokens) {
-                    $location.path('/refresh');
+                    var $state = $injector.get('$state');
+                    authService.refreshToken().then(function (response) {  
+                        $state.reload();
+                    }, function (err) {
+                        $location.path('/login');
+                    });
+
                     return $q.reject(rejection);
                 }
             }
+
+            console.log(2);
             authService.logOut();
             $location.path('/login');
         }

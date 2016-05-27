@@ -10,7 +10,23 @@ mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileU
     */
     var uploader = $scope.uploader = new FileUploader({
         autoUpload: false,
-        url: 'api/user/updateAvatar',        
+        url: 'api/user/updateAvatar',
+        queueLimit: 1,
+    });
+
+    //// by max size (5MB)
+    uploader.filters.push({
+        'name': "size",
+        'fn': function (item) {
+            return item.size <= 5 * 1048576; // 5* 1024 * 1024 | Math.pow(2,20); | 0x100000
+        }
+    });
+
+    uploader.filters.push({
+        'name': "image",
+        'fn': function (item) {
+            return !uploader.hasHTML5 ? true : /\/(png|jpeg|jpg)$/.test(item.file.type);
+        }
     });
 
     var authData = localStorageService.get('authorizationData');

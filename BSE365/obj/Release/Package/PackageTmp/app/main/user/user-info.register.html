@@ -1,42 +1,71 @@
-﻿<div class="panel panel-default">
+﻿<div class="panel panel-default panel-table">
     <div class="panel-heading">
-        <h3 class="panel-title">Introduce new user</h3>
+        <h3 class="panel-title"> <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Introduce new user</h3>
     </div>
     <div class="panel-body">
-        <form role="form" data-ng-submit="registerUser()">
+        <form role="form" data-ng-submit="registerUser()" name="regForm" novalidate>
             <div class="form-group">
                 <label for="parentId">Parent ID:</label>
                 <input type="text" class="form-control" id="parentId" data-ng-model="currentUser.userName" readonly>
             </div>
             <div class="form-group">
                 <label for="pwd">Password:</label>
-                <input type="password" class="form-control" id="pwd" data-ng-model="newUser.password">
+                <input type="password" class="form-control" name="pwd" data-ng-model="newUser.password" ng-minlength="6" maxlength="12" required>
+                <div ng-messages="regForm.pwd.$error" ng-if="interacted(regForm.pwd)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
-                <label for="name">Display Name:</label>
-                <input type="text" class="form-control" id="name" data-ng-model="newUser.userInfo.displayName">
+                <label for="confirmPwd">Confirm Password:</label>
+                <input type="password" class="form-control" name="confirmPwd" data-ng-model="newUser.confirmPassword" ng-minlength="6" maxlength="12" match-validator="newUser.password" required>
+                <div ng-messages="regForm.confirmPwd.$error" ng-if="interacted(regForm.confirmPwd)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                    <div ng-message="match">This password does not match the password entered before</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dispName">Display Name:</label>
+                <input type="text" class="form-control" name="dispName" data-ng-model="newUser.userInfo.displayName" required>
+                <div ng-messages="regForm.dispName.$error" ng-if="interacted(regForm.dispName)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="phone">Phone:</label>
-                <input type="text" class="form-control" id="phone" data-ng-model="newUser.userInfo.phoneNumber">
+                <input type="text" class="form-control" name="phone" data-ng-model="newUser.userInfo.phoneNumber" required>
+                <div ng-messages="regForm.phone.$error" ng-if="interacted(regForm.phone)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" data-ng-model="newUser.userInfo.email">
+                <input type="email" class="form-control" name="email" data-ng-model="newUser.userInfo.email" required>
+                <div ng-messages="regForm.email.$error" ng-if="interacted(regForm.email)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="bankNumber">Bank Number:</label>
-                <input type="text" class="form-control" id="bankNumber" data-ng-model="newUser.userInfo.bankNumber">
+                <input type="text" class="form-control" name="bankNumber" data-ng-model="newUser.userInfo.bankNumber" required>
+                <div ng-messages="regForm.bankNumber.$error" ng-if="interacted(regForm.bankNumber)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="bankName">Bank Name:</label>
-                <input type="text" class="form-control" id="bankName" data-ng-model="newUser.userInfo.bankName">
+                <input type="text" class="form-control" name="bankName" data-ng-model="newUser.userInfo.bankName" required>
+                <div ng-messages="regForm.bankName.$error" ng-if="interacted(regForm.bankName)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="bankBranch">Bank Branch:</label>
-                <input type="text" class="form-control" id="bankBranch" data-ng-model="newUser.userInfo.bankBranch">
+                <input type="text" class="form-control" name="bankBranch" data-ng-model="newUser.userInfo.bankBranch" required>
+                <div ng-messages="regForm.bankBranch.$error" ng-if="interacted(regForm.bankBranch)" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <button type="submit" class="btn btn-default btn-primary">Register</button>
         </form>
     </div>
 </div>

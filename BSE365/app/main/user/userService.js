@@ -7,6 +7,7 @@
             register: { method: 'POST', params: { path: 'api/account/register', registerVM: 'registerVM' } },
             updateCurrentUserProfile: { method: 'POST', params: { path: 'api/user/updateCurrent', userProfileVM: 'userProfileVM' } },
             updateAvatar: { method: 'POST', params: { path: 'api/user/updateAvatar', avatar: 'avatar' } },
+            changePassword: { method: 'POST', params: { path: 'api/user/changePassword', model: 'model' } },
         });
     }
 ]);

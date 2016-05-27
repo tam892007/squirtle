@@ -19,7 +19,7 @@ mainApp.controller('userController', ['$scope', 'userService', 'imageService', '
 
     $scope.updateAvatar = function () {
         var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
+            animation: false,
             templateUrl: 'app/main/user/dlg-change-avatar.html',
             controller: 'dlgChangeAvatarController',
             size: 'lg',

@@ -28,7 +28,8 @@
     "angular-ui-tree": "2.15.0",
     "underscore": "1.8.3",
     "angular-file-upload": "2.3.2",
-    "ngImgCrop" :  "0.3.2"
+    "ngImgCrop": "0.3.2",
+    "angular-messages" : "1.5.5"
   },
   "resolutions": {
     "angular": "1.5.5"
