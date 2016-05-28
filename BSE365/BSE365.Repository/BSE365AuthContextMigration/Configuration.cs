@@ -1,3 +1,4 @@
+
 namespace BSE365.Repository.BSE365AuthContextMigration
 {
     using BSE365.Common.Constants;
@@ -64,6 +65,57 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 context.Clients.Add(client);
                 context.SaveChanges();
             }
+
+            InitData(context);
+        }
+
+        public static void InitData(BSE365.Repository.DataContext.BSE365AuthContext context)
+        {
+            var _userManager = new UserManager<User>(new UserStore<User>(context));
+            // admin
+            var adminInfo = context.UserInfos.Add(new UserInfo
+            {
+                DisplayName = SystemAdmin.DisplayName,
+                Email = SystemAdmin.Email,
+                PhoneNumber = SystemAdmin.PhoneNumber,
+                BankNumber = SystemAdmin.BankNumber,
+                BankName = SystemAdmin.BankName,
+                BankBranch = SystemAdmin.BankBranch,
+            });
+            context.SaveChanges();
+            _userManager.Create(new User
+            {
+                UserName = adminInfo.Id.ToString(),
+                UserInfo = adminInfo,
+                PinBalance = int.MaxValue,
+            }, SystemAdmin.Password);
+
+            // test data
+            for (int i = 0; i < TestData.UserNames.Length; i++)
+            {
+                var info = context.UserInfos.Add(new UserInfo
+                {
+                    ParentId = SystemAdmin.UserName,
+                    DisplayName = TestData.DisplayNames[i],
+                    Email = TestData.UserNames[i] + "@gmail.com",
+                    PhoneNumber = TestData.PhoneNumbers[i],
+                    BankNumber = TestData.BankNumbers[i],
+                    BankName = TestData.BankNames[i],
+                    BankBranch = TestData.BankBranchs[i],
+                });
+                context.SaveChanges();
+                foreach (var suffix in TestData.AccountSuffixes)
+                {
+                    var username = info.Id.ToString() + suffix;
+                    _userManager.Create(new User
+                    {
+                        UserName = username,
+                        UserInfo = info,
+                        PinBalance = 10,
+                    }, TestData.Password);
+                }
+            }
+            context.SaveChanges();
         }
     }
 }
