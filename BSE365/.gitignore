@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled source #
 ###################
 *.com
@@ -288,3 +289,27 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+=======
+/build/
+*.suo
+*.user
+_ReSharper.*/
+*.sdf
+/bin/
+/obj/
+/Debug/
+/Release/
+*.opensdf
+*.tlog
+*.log
+TestResult.xml
+*.VisualState.xml
+Version.cs
+Version.h
+Version.cpp
+.temp
+.idea
+*.iml
+/node_modules
+/bower_components
+>>>>>>> b525e42f60ba0640dae1beeb3f230aa0d3da76bb
