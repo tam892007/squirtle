@@ -217,7 +217,9 @@
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
     <Content Include="app\main\user\dlg-change-avatar.html" />
+    <Content Include="app\main\user\dlg-change-password.html" />
     <Content Include="app\main\user\dlgChangeAvatarController.js" />
+    <Content Include="app\main\user\dlgChangePasswordController.js" />
     <Content Include="app\main\user\user-info.default.html" />
     <Content Include="app\main\user\user-info.html" />
     <Content Include="app\main\user\user-info.tree.html" />
@@ -234,6 +236,7 @@
     <Content Include="Content\images\edit-logo.png" />
     <Content Include="Content\images\logo.png" />
     <Content Include="Content\image\user_default.jpg" />
+    <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\ng-img-crop.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -318,6 +321,7 @@
     <Content Include="Content\style\validation.less" />
     <Content Include="Content\style\variables.less" />
     <Content Include="fonts\Roboto-Regular.ttf" />
+    <Content Include="Content\loading-bar.css.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
