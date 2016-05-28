@@ -62,7 +62,7 @@ namespace BSE365.Repository.Repositories
 
         public async Task<IEnumerable<User>> FindChildren(string id)
         {
-            var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).ToListAsync();
+            var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).ToListAsync();
 
             return users;
         }

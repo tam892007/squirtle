@@ -116,7 +116,6 @@ namespace BSE365.Web.Providers
 
             var ticket = new AuthenticationTicket(identity, props);
             context.Validated(ticket);
-
         }
 
         public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)

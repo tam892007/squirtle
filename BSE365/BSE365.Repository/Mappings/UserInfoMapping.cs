@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using BSE365.Model.Entities;
+using BSE365.Repository.Extensions;
 using System.Data.Entity.ModelConfiguration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BSE365.Model.Entities;
 
 namespace BSE365.Repository.Mappings
 {
@@ -12,6 +8,7 @@ namespace BSE365.Repository.Mappings
     {
         public UserInfoMapping()
         {
+            Property(u => u.BankNumber).UniqueIndex("Unq_BankNumber", 1);
         }
     }
 }

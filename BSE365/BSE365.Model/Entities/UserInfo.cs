@@ -18,23 +18,29 @@ namespace BSE365.Model.Entities
         }
 
         [Required]
+        [StringLength(30)]
         public string DisplayName { get; set; }
 
         [Required]
+        [StringLength(30)]
         public string Email { get; set; }
 
         public string ParentId { get; set; }
 
         [Required]
+        [StringLength(20)]
         public string PhoneNumber { get; set; }
 
         [Required]
+        [StringLength(30)]
         public string BankNumber { get; set; }
 
         [Required]
+        [StringLength(30)]
         public string BankName { get; set; }
 
         [Required]
+        [StringLength(30)]
         public string BankBranch { get; set; }
 
         [DataType(DataType.Date)]

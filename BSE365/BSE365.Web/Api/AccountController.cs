@@ -38,6 +38,7 @@ namespace BSE365.Api
         }
 
         // POST api/Account/Register
+        [Authorize]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterUserViewModel userModel)
         {
@@ -51,7 +52,7 @@ namespace BSE365.Api
                 return BadRequest();
             }
 
-            return Ok();
+            return Ok(result.Result);
         }
 
         // GET api/Account/ExternalLogin

@@ -32,7 +32,7 @@ namespace BSE365.Repository.BSE365ContextMigration
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            InitData(context);
+            //InitData(context);
         }
 
         public static void InitData(BSE365.Repository.DataContext.BSE365Context context)

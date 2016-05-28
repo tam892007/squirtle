@@ -12,6 +12,7 @@ using Microsoft.Practices.Unity.WebApi;
 using System;
 using System.Web.Http;
 using BSE365.Repository.Repositories;
+using System.Web.Mvc;
 
 namespace BSE365.Web
 {
@@ -46,8 +47,9 @@ namespace BSE365.Web
             // container.LoadConfiguration();
 
             container
-                .RegisterType<IDataContextAsync, BSE365Context>(new PerRequestLifetimeManager())
-                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
+                .RegisterType<IDataContextAsync, BSE365Context>(new HierarchicalLifetimeManager())
+                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new HierarchicalLifetimeManager())
+                .RegisterType<IRepositoryAsync<Image>, Repository<Image>>()
                 .RegisterType<IRepositoryAsync<PinTransactionHistory>, Repository<PinTransactionHistory>>()
                 .RegisterType<IRepositoryAsync<Config>, Repository<Config>>()
                 .RegisterType<IRepositoryAsync<Account>, Repository<Account>>()
@@ -60,6 +62,8 @@ namespace BSE365.Web
 
         public static void ConfigureUnity(HttpConfiguration config)
         {
+            DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(GetConfiguredContainer()));
+
             var resolver = new UnityDependencyResolver(GetConfiguredContainer());
             config.DependencyResolver = resolver;
         }

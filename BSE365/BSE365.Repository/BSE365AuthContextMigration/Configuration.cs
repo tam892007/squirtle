@@ -19,11 +19,16 @@ namespace BSE365.Repository.BSE365AuthContextMigration
         }
 
         protected override void Seed(BSE365.Repository.DataContext.BSE365AuthContext context)
-        {
+        {                        
             ////Add User Admin
             var numOfUser = context.UserInfos.Count();
             if (numOfUser == 0)
             {
+                /////Add Role
+                var _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                _roleManager.Create(new IdentityRole { Name = UserRolesText.SuperAdmin });
+                _roleManager.Create(new IdentityRole { Name = UserRolesText.User });
+
                 var _userManager = new UserManager<User>(new UserStore<User>(context));
                 User user = new User
                 {
@@ -37,7 +42,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                         BankName = SystemAdmin.BankName,
                         BankBranch = SystemAdmin.BankBranch,
                     },
-                    PinBalance = int.MaxValue,
+                    PinBalance = 10000,
                 };
 
                 _userManager.Create(user, SystemAdmin.Password);
@@ -45,6 +50,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 user.UserName = Utilities.StandardizeUserId(user.UserInfo.Id);
 
                 _userManager.Update(user);
+                _userManager.AddToRole(user.Id, UserRolesText.SuperAdmin);
             }
 
             ////Add Client
@@ -66,7 +72,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 context.SaveChanges();
             }
 
-            InitData(context);
+            //InitData(context);
         }
 
         public static void InitData(BSE365.Repository.DataContext.BSE365AuthContext context)

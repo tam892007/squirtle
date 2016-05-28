@@ -7,7 +7,7 @@ namespace BSE365.ViewModels
 {
     public class PinBalanceViewModel
     {
-        public int PinBalance { get; set; }
+        public uint PinBalance { get; set; }
 
         public string UserId { get; set; }
 

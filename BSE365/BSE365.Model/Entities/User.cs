@@ -8,16 +8,16 @@ namespace BSE365.Model.Entities
 {
     public class User : IdentityUser
     {
-        public int PinBalance { get; set; }
+        public uint PinBalance { get; set; }
 
         public virtual UserInfo UserInfo { get; set; }
 
-        public void TransferPin(int amout)
+        public void TransferPin(uint amout)
         {
             this.PinBalance = this.PinBalance - amout;
         }
 
-        public void ReceivePin(int amout)
+        public void ReceivePin(uint amout)
         {
             this.PinBalance = this.PinBalance + amout;
         }

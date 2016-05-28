@@ -14,7 +14,7 @@ namespace BSE365.Model.Entities
 
         public string ToId { get; set; }
 
-        public int Amount { get; set; }
+        public uint Amount { get; set; }
 
         public string Note { get; set; }
 

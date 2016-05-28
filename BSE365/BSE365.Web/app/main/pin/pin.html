@@ -22,7 +22,7 @@
                         </div>
                         <div class="form-group">
                             <label for="amount">Amount</label>
-                            <input type="number" class="form-control" id="amount" placeholder="Amount" data-ng-model="transaction.amount">
+                            <input type="number" min="0" max="{{currentPinBalance.pinBalance}}" class="form-control" id="amount" placeholder="Amount" data-ng-model="transaction.amount">
                         </div>
                         <div class="form-group">
                             <label for="note">Note</label>
@@ -30,8 +30,8 @@
                         </div>
                         <div class="form-group">
                             <label for="code">Verify Code</label>
-                            <input type="text" class="form-control" id="code" placeholder="Code" data-ng-model="transaction.code">
-                        </div>
+                            <div id="code" re-captcha data-ng-model="transaction.code"></div>
+                            </div>
                         <button type="submit" class="btn btn-default btn--submit">Submit</button>
                     </form>
                 </div>

@@ -10,6 +10,7 @@
         <link href="Content/angular-ui-tree.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
         <link href="Content/ng-img-crop.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
         <link href="Content/loading-bar.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+        <link href="Content/angular-ui-notification.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
     </head>
     <body data-ng-app="mainApp" data-ng-controller="indexController">
         <script type="text/ng-template" id="validation-messages">
@@ -35,21 +36,21 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-nav--custom">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#/pin">Wallet</a></li>                        
-                        <li class="dropdown">
+                        <li ui-sref-active-eq='active'><a ui-sref="home" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a></li>
+                        <li ui-sref-active-eq='active'><a ui-sref="pin" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Wallet</a></li>                        
+                        <li class="dropdown" ui-sref-active="{'active' : 'user'}">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a ui-sref="user.default">Information</a></li>
-                                <li><a ui-sref="user.register">Introduction</a></li>
-                                <li><a ui-sref="user.tree">Tree Expansion</a></li>
+                                <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
+                                <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in">Introduction</a></li>
+                                <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li class="dropdown-header">Nav header</li>
-                                <li><a href="#">Separated link</a></li>
-                                <li><a href="#">One more separated link</a></li>
+                                <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">Separated link</a></li>
+                                <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">One more separated link</a></li>
                             </ul>
                         </li>
-                        <li><a href="#/system">System</a></li>          
+                        <li ui-sref-active-eq='active'><a ui-sref="system">System</a></li>          
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
@@ -81,6 +82,6 @@
         <script src="Scripts/Common.js?cacheKey=@ViewBag.Version"></script>
         <script src="Scripts/MainApp.js?cacheKey=@ViewBag.Version"></script>
         <script src="Scripts/CommonApp.js?cacheKey=@ViewBag.Version"></script>
-        <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>
+        <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>       
     </body>
 </html>

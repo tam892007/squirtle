@@ -10,14 +10,16 @@ authApp.controller('loginController', ['$scope', '$location', 'authService', 'ng
     $scope.message = "";
 
     $scope.login = function () {
+        $scope.submitted = true;
+
+        if (!$scope.frmLogin.$valid) return;        
+
         authService.login($scope.loginData).then(function (response) {
-
             $location.path('/');
-
         },
-         function (err) {
-             $scope.message = err.error_description;
-         });
+        function (err) {
+            $scope.message = err.error_description;
+        });
     };
 
     $scope.authExternalProvider = function (provider) {
@@ -64,4 +66,8 @@ authApp.controller('loginController', ['$scope', '$location', 'authService', 'ng
 
         });
     }
+
+    $scope.interacted = function (field) {    
+        return $scope.submitted || field.$dirty;
+    };
 }]);

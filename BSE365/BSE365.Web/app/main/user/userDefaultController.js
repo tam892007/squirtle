@@ -1,5 +1,5 @@
 ﻿'use strict';
-mainApp.controller('userDefaultController', ['$scope', 'userService', '$uibModal', function ($scope, userService, $uibModal) {
+mainApp.controller('userDefaultController', ['$scope', 'userService', '$uibModal', 'Notification', function ($scope, userService, $uibModal, Notification) {
     $scope.updateCurrentUserProfile = function (profile) {
         return userService.updateCurrentUserProfile(profile).$promise;
     }
@@ -8,7 +8,7 @@ mainApp.controller('userDefaultController', ['$scope', 'userService', '$uibModal
         if (!$scope.userForm.$valid) return;
 
         $scope.updateCurrentUserProfile($scope.currentUser).then(function (res) {
-
+            Notification.success('Update successfully');
         });
     }
 

@@ -105,10 +105,6 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unity.Mvc.4.0.1\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -191,6 +187,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Unity.Mvc5, Version=1.2.3.0, Culture=neutral, PublicKeyToken=43da31bc42a85347, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc5.1.2.3\lib\net45\Unity.Mvc5.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
       <Private>True</Private>
@@ -208,7 +208,6 @@
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
     <Content Include="app\common\directives\httpSrc.js" />
-    <Content Include="app\common\directives\matchValidator.js" />
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\home\home.html" />
@@ -264,6 +263,7 @@
     <Compile Include="App_Start\Startup.WebApi.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Helper\CatpchaValidator.cs" />
     <Compile Include="Mappings\ImageVMMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionVMMapping.cs" />
     <Compile Include="Mappings\PinBalanceVMMapping.cs" />
@@ -276,10 +276,12 @@
     <Compile Include="Providers\GoogleAuthProvider.cs" />
     <Compile Include="Providers\SimpleAuthorizationServerProvider.cs" />
     <Compile Include="Providers\SimpleRefreshTokenProvider.cs" />
+    <Compile Include="Results\CaptchaResponse.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Timers\TransactionTimer.cs" />
     <Compile Include="Timers\WaitingHepler.cs" />
+    <Compile Include="ViewModels\CaptchaViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />

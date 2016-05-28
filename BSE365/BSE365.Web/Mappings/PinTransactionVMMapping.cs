@@ -18,8 +18,7 @@ namespace BSE365.Mappings
                 FromName = viewModel.FromName,
                 ToId = viewModel.ToId,
                 Amount = viewModel.Amount,
-                Note = viewModel.Note,
-                Code = viewModel.Code,
+                Note = viewModel.Note,                
             };
 
             return result;
@@ -35,7 +34,6 @@ namespace BSE365.Mappings
                 ToId = model.ToId,
                 Amount = model.Amount,
                 Note = model.Note,
-                Code = model.Code,
                 CreatedDate = model.CreatedDate,
             };
 

@@ -24,6 +24,8 @@ var paths = {
         'bower_components/angular-messages/angular-messages.js',
         'bower_components/angular-loading-bar/build/loading-bar.js',
         'bower_components/angular-ui-validate/dist/validate.js',
+        'bower_components/angular-re-captcha/angular-re-captcha.js',
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.js',
     ],
     'MainApp': [
         'app/main/*.js',
@@ -80,6 +82,7 @@ gulp.task('less', function () {
             'bower_components/angular-ui-tree/dist/angular-ui-tree.css',
             'bower_components/ngImgCrop/compile/unminified/ng-img-crop.css',
             'bower_components/angular-loading-bar/build/loading-bar.css',
+            'bower_components/angular-ui-notification/dist/angular-ui-notification.css',
             'content/main.less',
     ])
         .pipe(sourcemaps.init())

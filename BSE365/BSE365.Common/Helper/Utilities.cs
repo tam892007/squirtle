@@ -1,5 +1,6 @@
 ﻿using BSE365.Common.Constants;
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace BSE365.Common.Helper
@@ -17,10 +18,21 @@ namespace BSE365.Common.Helper
             return Convert.ToBase64String(byteHash);
         }
 
-        public static string StandardizeUserId(object userName)
+        public static string StandardizeUserId(int userName)
+        {            
+            return Convert.ToString(userName + SystemAdmin.StartId).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
+        }
+
+        public static List<string> GetRangeUserName(object userName)
         {
-            if (userName == null) return string.Empty;
-            return Convert.ToString(userName).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
+            var result = new List<string>();
+            if (userName == null) return result;
+            var name = Convert.ToString(userName).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
+            for (char i = 'A'; i <= 'F'; i++) {
+                 result.Add(name + i);
+            }
+
+            return result;
         }
 
         public static string GetImageContentType(string extension)

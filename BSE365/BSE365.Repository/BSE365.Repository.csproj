@@ -78,10 +78,18 @@
     <Compile Include="BSE365AuthContextMigration\201605270934068_Initial.Designer.cs">
       <DependentUpon>201605270934068_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201605281911599_PutContraints.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605281911599_PutContraints.Designer.cs">
+      <DependentUpon>201605281911599_PutContraints.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201605281922493_PutConstraints.cs" />
+    <Compile Include="BSE365ContextMigration\201605281922493_PutConstraints.Designer.cs">
+      <DependentUpon>201605281922493_PutConstraints.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -101,8 +109,14 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201605270934068_Initial.resx">
       <DependentUpon>201605270934068_Initial.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605281911599_PutContraints.resx">
+      <DependentUpon>201605281911599_PutContraints.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201605281922493_PutConstraints.resx">
+      <DependentUpon>201605281922493_PutConstraints.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

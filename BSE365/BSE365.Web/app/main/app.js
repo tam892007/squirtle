@@ -1,5 +1,5 @@
 ﻿var mainApp = angular.module('mainApp', ['ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload'
-    , 'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate']);
+    , 'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification']);
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
@@ -60,6 +60,30 @@ mainApp.config(['treeConfig', function (treeConfig) {
     treeConfig.defaultCollapsed = true; // collapse nodes by default
 }]);
 
-mainApp.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+mainApp.config(['cfpLoadingBarProvider', function (cfpLoadingBarProvider) {
     cfpLoadingBarProvider.includeSpinner = false;
-}])
+}]);
+
+mainApp.config(['reCAPTCHAProvider', 'recaptchaSettings', function (reCAPTCHAProvider, recaptchaSettings) {
+    // required: please use your own key :)
+    reCAPTCHAProvider.setPublicKey(recaptchaSettings.publicKey);
+
+    // optional: gets passed into the Recaptcha.create call
+    reCAPTCHAProvider.setOptions({
+        theme: 'red'
+    });
+}]);
+
+mainApp.config(['NotificationProvider', function (NotificationProvider) {
+    NotificationProvider.setOptions({
+        delay: 3000,
+        startTop: 20,
+        startRight: 10,
+        verticalSpacing: 20,
+        horizontalSpacing: 20,
+        positionX: 'left',
+        positionY: 'bottom',
+        closeOnClick: true,
+        maxCount: 3,
+    });
+}]);

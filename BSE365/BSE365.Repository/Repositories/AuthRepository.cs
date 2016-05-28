@@ -24,25 +24,32 @@ namespace BSE365.Repository.Repositories
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
 
-        public async Task<BusinessResult<User>> RegisterUser(string userName, string password, UserInfo info)
+        public async Task<BusinessResult<IEnumerable<User>>> RegisterUser(string userName, string password, UserInfo info)
         {
-            User user = new User
-            {
-                UserName = Guid.NewGuid().ToString().Replace("-", string.Empty), ////temporary unique name
-                UserInfo = info,
-            };            
+            var userInfo = info;      
+            _ctx.UserInfos.Add(userInfo);
+            _ctx.SaveChanges();
 
-            var identityResult = await _userManager.CreateAsync(user, password);
-
-            if (identityResult.Succeeded)
+            var lstUser = new List<User>();
+            var lstName = Utilities.GetRangeUserName(userInfo.Id);
+            foreach (var name in lstName)
             {
-                user.UserName = Utilities.StandardizeUserId(user.UserInfo.Id);
-                identityResult = await _userManager.UpdateAsync(user);
+                var user = new User
+                {
+                    UserName = name,
+                    UserInfo = info,
+                };
+
+                _ctx.Users.Add(user);
+
+                lstUser.Add(user);
             }
 
-            var result = new BusinessResult<User>();
-            result.Result = user;
-            result.IsSuccessful = identityResult.Succeeded;
+            await _ctx.SaveChangesAsync();
+
+            var result = new BusinessResult<IEnumerable<User>>();
+            result.Result = lstUser;
+            result.IsSuccessful = true;
 
             return result;
         }

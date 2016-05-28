@@ -9,6 +9,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BSE365.Helper;
 
 namespace BSE365.Api
 {
@@ -29,6 +30,9 @@ namespace BSE365.Api
         [Route("transfer")]
         public async Task<IHttpActionResult> Transfer(PinTransactionViewModel transactionVM)
         {
+            var response = CatpchaValidator.Validate(transactionVM.Code);
+            if (!response.Success) return BadRequest("invalid captcha");
+
             var result = await TransferAsync(transactionVM);
             if (result.IsSuccessful)
             {

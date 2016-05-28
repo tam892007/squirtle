@@ -10,9 +10,9 @@ namespace BSE365.ViewModels
         public string FromId { get; set; }
         public string FromName { get; set; }
         public string ToId { get; set; }
-        public int Amount { get; set; }
+        public uint Amount { get; set; }
         public string Note { get; set; }
-        public string Code { get; set; }
+        public CaptchaViewModel Code { get; set; }
     }
 
     public class PinTransactionHistoryViewModel : PinTransactionViewModel

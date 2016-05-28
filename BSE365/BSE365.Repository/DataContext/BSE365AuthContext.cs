@@ -1,4 +1,5 @@
 ﻿using BSE365.Model.Entities;
+using BSE365.Repository.Mappings;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 
@@ -18,6 +19,7 @@ namespace BSE365.Repository.DataContext
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new UserInfoMapping());
             base.OnModelCreating(modelBuilder);
         }
     }
