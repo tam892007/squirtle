@@ -1,1 +1,0 @@
-﻿var authApp = angular.module('authApp', ['LocalStorageModule', 'commonApp']);
