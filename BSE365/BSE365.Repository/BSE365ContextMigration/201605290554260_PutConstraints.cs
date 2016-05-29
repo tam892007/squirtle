@@ -10,7 +10,7 @@ namespace BSE365.Repository.BSE365ContextMigration
         }
         
         public override void Down()
-        {      
+        {
         }
     }
 }

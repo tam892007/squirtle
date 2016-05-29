@@ -42,7 +42,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                         BankName = SystemAdmin.BankName,
                         BankBranch = SystemAdmin.BankBranch,
                     },
-                    PinBalance = 10000,
+                    PinBalance = 10000000,
                 };
 
                 _userManager.Create(user, SystemAdmin.Password);

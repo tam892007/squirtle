@@ -125,6 +125,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 .ForeignKey("dbo.UserInfoes", t => t.UserInfo_Id)
                 .Index(t => t.UserName, unique: true, name: "UserNameIndex")
                 .Index(t => t.UserInfo_Id);
+            Sql("ALTER TABLE dbo.AspNetUsers ADD CONSTRAINT CK_Positive_PinBalance CHECK (PinBalance >= 0)");
             
             CreateTable(
                 "dbo.AspNetUserClaims",

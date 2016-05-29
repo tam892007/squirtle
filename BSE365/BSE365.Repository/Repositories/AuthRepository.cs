@@ -28,7 +28,7 @@ namespace BSE365.Repository.Repositories
         {
             var userInfo = info;      
             _ctx.UserInfos.Add(userInfo);
-            _ctx.SaveChanges();
+            await _ctx.SaveChangesAsync();
 
             var lstUser = new List<User>();
             var lstName = Utilities.GetRangeUserName(userInfo.Id);
@@ -40,12 +40,10 @@ namespace BSE365.Repository.Repositories
                     UserInfo = info,
                 };
 
-                _ctx.Users.Add(user);
+                await _userManager.CreateAsync(user, password);
 
                 lstUser.Add(user);
-            }
-
-            await _ctx.SaveChangesAsync();
+            }            
 
             var result = new BusinessResult<IEnumerable<User>>();
             result.Result = lstUser;

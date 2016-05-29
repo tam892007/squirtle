@@ -22,6 +22,6 @@ namespace BSE365.Common.Constants
         public const string UserDefautPic = "user_default.jpg";
         public const string ClientId = "SHARE";
         public const string ClientSecret = "1111-1111-1111-1111";
-        public const int StartId = 120;
+        public const string StartId = "31";
     }
 }

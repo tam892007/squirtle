@@ -18,18 +18,18 @@ namespace BSE365.Common.Helper
             return Convert.ToBase64String(byteHash);
         }
 
-        public static string StandardizeUserId(int userName)
-        {            
-            return Convert.ToString(userName + SystemAdmin.StartId).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
+        public static string StandardizeUserId(int infoId)
+        {
+            return SystemAdmin.StartId + Convert.ToString(infoId).PadLeft(SystemAdmin.UserIdLength - SystemAdmin.StartId.Length, SystemAdmin.FillInChar);
         }
 
-        public static List<string> GetRangeUserName(object userName)
+        public static List<string> GetRangeUserName(int infoId)
         {
             var result = new List<string>();
-            if (userName == null) return result;
-            var name = Convert.ToString(userName).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
-            for (char i = 'A'; i <= 'F'; i++) {
-                 result.Add(name + i);
+            var name = StandardizeUserId(infoId);
+            for (char i = 'A'; i <= 'F'; i++)
+            {
+                result.Add(name + i);
             }
 
             return result;
