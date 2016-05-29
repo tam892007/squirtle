@@ -235,7 +235,9 @@
     <Content Include="Content\images\complete-logo.png" />
     <Content Include="Content\images\edit-logo.png" />
     <Content Include="Content\images\logo.png" />
-    <Content Include="Content\image\user_default.jpg" />
+    <Content Include="Content\images\plax_sphere_large.png" />
+    <Content Include="Content\images\plax_sphere_small.png" />
+    <Content Include="Content\images\lauch.png" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\ng-img-crop.css" />
