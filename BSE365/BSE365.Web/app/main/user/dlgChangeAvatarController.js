@@ -1,5 +1,6 @@
 ﻿'use strict';
-mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileUploader', '_', 'localStorageService', '$uibModalInstance', function ($scope, userService, FileUploader, _, localStorageService, $uibModalInstance) {
+mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileUploader', '_', 'localStorageService', '$uibModalInstance', 'Notification',
+    function ($scope, userService, FileUploader, _, localStorageService, $uibModalInstance, Notification) {
     $scope.uploadImage = function () {
         var selectedFile = _.last(uploader.queue);
         selectedFile.upload();        
@@ -10,8 +11,7 @@ mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileU
     */
     var uploader = $scope.uploader = new FileUploader({
         autoUpload: false,
-        url: 'api/user/updateAvatar',
-        queueLimit: 1,
+        url: 'api/user/updateAvatar',       
     });
 
     //// by max size (5MB)
@@ -88,6 +88,7 @@ mainApp.controller('dlgChangeAvatarController', ['$scope', 'userService', 'FileU
     }
 
     $scope.ok = function (res) {
+        Notification.success('Avatar has been updated');
         $uibModalInstance.close(res);
     };
 

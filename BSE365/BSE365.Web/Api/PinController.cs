@@ -31,7 +31,7 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> Transfer(PinTransactionViewModel transactionVM)
         {
             var response = CatpchaValidator.Validate(transactionVM.Code);
-            if (!response.Success) return BadRequest("invalid captcha");
+            if (!response.Success) return BadRequest("invalid_captcha");
 
             var result = await TransferAsync(transactionVM);
             if (result.IsSuccessful)
@@ -40,7 +40,7 @@ namespace BSE365.Api
             }               
             else
             {
-                return BadRequest();
+                return BadRequest("err_server");
             }
         }
 

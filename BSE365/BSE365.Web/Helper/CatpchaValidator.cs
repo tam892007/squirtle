@@ -21,7 +21,7 @@ namespace BSE365.Helper
                 wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
                 var reply = wc.UploadString(ConfigurationManager.AppSettings["captchaUrl"], myParameters);
 
-                var results = reply.Split(new[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                var results = reply.Split(new[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 var captchaResponse = new CaptchaResponse
                 {
                     Success = Convert.ToBoolean(results[0]),

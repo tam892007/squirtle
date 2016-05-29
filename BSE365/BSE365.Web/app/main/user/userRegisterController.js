@@ -1,5 +1,5 @@
 ﻿'use strict';
-mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notification', function ($scope, userService, Notification) {
+mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notification', '$state', function ($scope, userService, Notification, $state) {
     $scope.init = function () {
         $scope.newUser = { userInfo: {} };
         $scope.submitted = false;
@@ -13,7 +13,7 @@ mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notifica
         $scope.newUser.userInfo.parentId = $scope.currentUser.userName;
         userService.register($scope.newUser, function (res) {
             Notification.success('Register successfully');
-            $scope.init();
+            $state.reload();
         });
     }
 

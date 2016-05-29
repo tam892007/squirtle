@@ -29,6 +29,7 @@ mainApp.controller('userController', ['$scope', 'userService', 'imageService', '
         modalInstance.result.then(function (res) {
             $scope.currentUser = res;
             $scope.currentUser.avatar.url = $scope.currentUser.avatar.url + '?' + new Date().getTime();
+            $scope.$emit('user:updateAvatar', $scope.currentUser.avatar.url)
         }, function () {           
         });
     }

@@ -171,6 +171,8 @@ code {
 }
 .navbar-right--custom .nav-right--custom__avatar {
   margin-right: 5px;
+  width: 40px;
+  height: 40px;
 }
 .navbar-right--custom .dropdown-menu {
   margin-top: 2px !important;
@@ -180,7 +182,7 @@ code {
   background-color: #f35f5f !important;
 }
 .panel-form .panel-heading {
-  background-color: #ffa089;
+  background-color: #4b2218;
 }
 .panel-form .panel-heading .panel-title {
   color: #fff9f8;
@@ -198,8 +200,6 @@ code {
 .panel-form .panel-body .btn--submit {
   color: #fff9f8;
   background-color: #f35f5f;
-  width: 50%;
-  margin-left: 25%;
 }
 .panel-form .panel-body .btn--submit:hover {
   color: #333;

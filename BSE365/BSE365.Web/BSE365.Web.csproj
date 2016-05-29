@@ -228,6 +228,7 @@
     <Content Include="app\main\user\userDefaultController.js" />
     <Content Include="app\main\user\userController.js" />
     <Content Include="app\main\user\userService.js" />
+    <Content Include="Content\angular-ui-notification.css" />
     <Content Include="Content\angular-ui-tree.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\images\avatar.png" />
@@ -270,6 +271,7 @@
     <Compile Include="Mappings\PinTransactionVMMapping.cs" />
     <Compile Include="Mappings\ResultViewModelMapping.cs" />
     <Compile Include="Mappings\TradeAccountVMMapping.cs" />
+    <Compile Include="Mappings\UserContextVMMapping.cs" />
     <Compile Include="Mappings\UserInfoVMMapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\FacebookAuthProvider.cs" />
@@ -291,6 +293,7 @@
     <Compile Include="ViewModels\RegisterUserViewModel.cs" />
     <Compile Include="ViewModels\ResultViewModel.cs" />
     <Compile Include="ViewModels\TradeAccountVM.cs" />
+    <Compile Include="ViewModels\UserContextViewModel.cs" />
     <Compile Include="ViewModels\UserInfoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +327,7 @@
     <Content Include="Content\style\variables.less" />
     <Content Include="fonts\Roboto-Regular.ttf" />
     <Content Include="Content\loading-bar.css.map" />
+    <Content Include="Content\angular-ui-notification.css.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

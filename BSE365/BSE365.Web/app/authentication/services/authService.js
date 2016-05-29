@@ -1,5 +1,5 @@
 ﻿'use strict';
-authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', function ($http, $q, localStorageService, ngAuthSettings) {
+authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSettings', '$rootScope', function ($http, $q, localStorageService, ngAuthSettings, $rootScope) {
 
     var serviceBase = ngAuthSettings.apiServiceBaseUri;
     var authServiceFactory = {};
@@ -44,9 +44,11 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
             else {
                 localStorageService.set('authorizationData', { token: response.access_token, userName: loginData.userName, refreshToken: "", useRefreshTokens: false });
             }
+
             _authentication.isAuth = true;
             _authentication.userName = loginData.userName;
             _authentication.useRefreshTokens = loginData.useRefreshTokens;
+            $rootScope.$broadcast('user:authenticated'); ////tamld - to update user context;
 
             deferred.resolve(response);
 
@@ -87,16 +89,15 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
 
         if (authData && !authServiceFactory.tokenRefreshing) {
             if (authData.useRefreshTokens) {
-
-                authServiceFactory.tokenRefreshing = true; ////Prevent multiple refresh token requested
+                authServiceFactory.tokenRefreshing = true; ////Prevent multiple refresh token requested   -  tamld
 
                 var data = "grant_type=refresh_token&refresh_token=" + authData.refreshToken + "&client_id=" + ngAuthSettings.clientId;
 
                 //localStorageService.remove('authorizationData');
 
-                $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-
+                $http.post(serviceBase + 'token', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {                    
                     localStorageService.set('authorizationData', { token: response.access_token, userName: response.userName, refreshToken: response.refresh_token, useRefreshTokens: true });
+                    $rootScope.$broadcast('user:authenticated');
                     deferred.resolve(response);
 
                 }).error(function (err, status) {

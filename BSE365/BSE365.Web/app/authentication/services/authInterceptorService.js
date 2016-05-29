@@ -32,7 +32,6 @@ authApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
                 }
             }
 
-            console.log(2);
             authService.logOut();
             $location.path('/login');
         }

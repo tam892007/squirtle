@@ -30,6 +30,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("GetCurrentUserContext")]
+        public async Task<IHttpActionResult> GetCurrentUserContext()
+        {
+            var result = await GetCurrentUserContextAsync();
+            return Ok(result);
+        }
+
         [HttpPost]
         [Route("UpdateCurrent")]
         public async Task<IHttpActionResult> UpdateCurrent(UserInfoViewModel viewModel)
@@ -93,6 +101,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpGet] 
+        [Route("CheckName")]
+        public async Task<IHttpActionResult> CheckName(string name)
+        {
+            var result = await CheckNameAsync(name);
+            return Ok(result);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -147,6 +163,23 @@ namespace BSE365.Api
                 IsSuccessful = succeeded,
                 Result = succeeded,
             };
+        }
+
+        private async Task<ResultViewModel<bool>> CheckNameAsync(string name)
+        {
+            var result = new ResultViewModel<bool>();
+            var user = await _repo.FindUserByName(name);
+            result.IsSuccessful = user != null;
+            result.Result = user != null;
+            return result;
+        }
+
+        private async Task<UserContextViewModel> GetCurrentUserContextAsync()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await _repo.FindUser(userId);
+            var viewModel = user.ToContextViewModel();
+            return viewModel;
         }
     }
 }
