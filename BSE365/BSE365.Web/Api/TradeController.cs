@@ -24,19 +24,21 @@ namespace BSE365.Api
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<Account> _accountRepo;
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
-
-        #region
-
-        #endregion
-
+        IRepositoryAsync<WaitingGiver> _waitingGiverRepo;
+        IRepositoryAsync<WaitingReceiver> _waitingReceiverRepo;
+        
         public TradeController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<Account> accountRepo,
-            IRepositoryAsync<MoneyTransaction> transactionRepo)
+            IRepositoryAsync<MoneyTransaction> transactionRepo,
+            IRepositoryAsync<WaitingGiver> waitingGiverRepo,
+            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo)
         {
             _unitOfWork = unitOfWork;
             _accountRepo = accountRepo;
             _transactionRepo = transactionRepo;
+            _waitingGiverRepo = waitingGiverRepo;
+            _waitingReceiverRepo = waitingReceiverRepo;
         }
 
         [HttpGet]
@@ -109,6 +111,22 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [HttpPost]
+        [Route("QueryWaitingGivers")]
+        public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
+        {
+            var result = await QueryWaitingGiversAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("QueryWaitingReceivers")]
+        public async Task<IHttpActionResult> QueryWaitingReceivers(FilterVM filter)
+        {
+            var result = await QueryWaitingReceiversAsync(filter);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task QueueGiveAsync()
@@ -133,6 +151,24 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo).FirstAsync();
             var result = account.ToVM();
             return result;
+        }
+
+        private async Task<List<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
+        {
+            var expression = WaitingAccountVMMapping.GetExpToGiverVM();
+            var data = await _waitingGiverRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
+        }
+
+        private async Task<List<WaitingAccountVM>> QueryWaitingReceiversAsync(FilterVM filter)
+        {
+            var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
+            var data = await _waitingReceiverRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
         }
 
         #endregion
