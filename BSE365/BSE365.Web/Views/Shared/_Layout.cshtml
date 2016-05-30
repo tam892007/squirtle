@@ -39,7 +39,13 @@
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul data-ng-hide="!authentication.isAuth" class="nav navbar-nav navbar-nav--custom">
                         <li ui-sref-active-eq='active'><a ui-sref="home" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a></li>
-                        <li ui-sref-active-eq='active'><a ui-sref="pin" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Wallet</a></li>
+                        <li class="dropdown" ui-sref-active="{'active' : 'user'}">
+                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wallet <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li ui-sref-active-eq='active'><a ui-sref="pin" data-toggle="collapse" data-target=".navbar-collapse.in">Get</a></li>
+                                <li ui-sref-active-eq='active'><a ui-sref="rate" data-toggle="collapse" data-target=".navbar-collapse.in">Rate</a></li>
+                            </ul>
+                        </li>
                         <li class="dropdown" ui-sref-active="{'active' : 'ga'}">
                             <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Give - Accept <span class="caret"></span></a>
                             <ul class="dropdown-menu">

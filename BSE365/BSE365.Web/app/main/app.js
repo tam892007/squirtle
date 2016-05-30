@@ -33,6 +33,12 @@ mainApp.config([
                 templateUrl: 'app/main/pin/pin.html',
                 controller: 'pinController'
             })
+            .state('rate',
+            {
+                url: "/rate",
+                templateUrl: 'app/main/pin/rate.html',
+                controller: 'rateController'
+            })
             .state('user',
             {
                 abstract: true,
