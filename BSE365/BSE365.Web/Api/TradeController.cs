@@ -48,7 +48,9 @@ namespace BSE365.Api
                 case 0:
                     BSE365.Repository.BSE365AuthContextMigration.Configuration.InitData(
                         new BSE365.Repository.DataContext.BSE365AuthContext());
-                    BSE365.Repository.BSE365ContextMigration.Configuration.InitData(
+                    BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
                 case 1:
@@ -56,7 +58,15 @@ namespace BSE365.Api
                         new BSE365.Repository.DataContext.BSE365AuthContext());
                     break;
                 case 2:
-                    BSE365.Repository.BSE365ContextMigration.Configuration.InitData(
+                    BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    break;
+                case 3:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    break;
+                case 5:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
             }
@@ -117,8 +127,10 @@ namespace BSE365.Api
 
         private async Task<TradeAccountVM> AccountStatusAsync()
         {
-            var account = await _accountRepo.Queryable().Where(x => x.UserName == User.Identity.GetUserName())
-                .Include(x => x.UserInfo).FirstOrDefaultAsync();
+            var username = User.Identity.GetUserName();
+            var account = await _accountRepo.Queryable()
+                .Where(x => x.UserName == username)
+                .Include(x => x.UserInfo).FirstAsync();
             var result = account.ToVM();
             return result;
         }

@@ -64,28 +64,27 @@ namespace BSE365.Api
         /// <summary>
         /// xác nhận đã gửi
         /// </summary>
-        /// <param name="transactionId"></param>
+        /// <param name="transaction"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("MoneyTranfered")]
-        public async Task<IHttpActionResult> MoneyTranfered(int transactionId)
+        [Route("MoneyTransfered")]
+        public async Task<IHttpActionResult> MoneyTransfered(MoneyTransactionVM.Receiver transaction)
         {
-            var fileUrl = "";
-            await MoneyTranferedAsync(transactionId, fileUrl);
-            return Ok();
+            var result = await MoneyTransferedAsync(transaction);
+            return Ok(result);
         }
 
         /// <summary>
         /// xác nhận đã nhận
         /// </summary>
-        /// <param name="transactionId"></param>
+        /// <param name="transaction"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("MoneyReceived")]
-        public async Task<IHttpActionResult> MoneyReceived(int transactionId)
+        public async Task<IHttpActionResult> MoneyReceived(MoneyTransactionVM.Giver transaction)
         {
-            await MoneyReceivedAsync(transactionId);
-            return Ok();
+            var result = await MoneyReceivedAsync(transaction);
+            return Ok(result);
         }
 
         /// <summary>
@@ -95,20 +94,21 @@ namespace BSE365.Api
         /// <returns></returns>
         [HttpPost]
         [Route("ReportNotTransfer")]
-        public async Task<IHttpActionResult> ReportNotTransfer(int transactionId)
+        public async Task<IHttpActionResult> ReportNotTransfer(MoneyTransactionVM.Giver transaction)
         {
-            await ReportNotTransferAsync(transactionId);
-            return Ok();
+            var result = await ReportNotTransferAsync(transaction);
+            return Ok(result);
         }
 
         #region internal method
 
         private async Task<List<MoneyTransactionVM.Receiver>> GiveRequestedAsync()
         {
+            var username = User.Identity.GetUserName();
             var expression = MoneyTransactionVMMapping.GetExpToReceiverVM();
             var data = await _transactionRepo.Queryable().Where(x =>
                 !x.IsEnd
-                && x.ReceiverId == User.Identity.GetUserName())
+                && x.GiverId == username)
                 .Include(x => x.Receiver.UserInfo)
                 .Select(expression)
                 .ToListAsync();
@@ -117,35 +117,47 @@ namespace BSE365.Api
 
         private async Task<List<MoneyTransactionVM.Giver>> ReceiveRequestedAsync()
         {
+            var username = User.Identity.GetUserName();
             var expression = MoneyTransactionVMMapping.GetExpToGiverVM();
             var data = await _transactionRepo.Queryable().Where(x =>
                 !x.IsEnd
-                && x.GiverId == User.Identity.GetUserName())
+                && x.ReceiverId == username)
                 .Include(x => x.Giver.UserInfo)
                 .Select(expression)
                 .ToListAsync();
             return data;
         }
 
-        private async Task MoneyTranferedAsync(int transactionId, string fileUrl)
+        private async Task<MoneyTransactionVM.Receiver> MoneyTransferedAsync(MoneyTransactionVM.Receiver tran)
         {
-            var transaction = await _transactionRepo.FindAsync(transactionId);
-            transaction.MoneyTranfered(fileUrl);
+            var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Receiver)
+                .FirstAsync(x => x.Id == tran.Id);
+            transaction.MoneyTransfered(tran.AttachmentUrl);
             await _unitOfWork.SaveChangesAsync();
+            return transaction.UpdateVm(tran);
         }
 
-        private async Task MoneyReceivedAsync(int transactionId)
+        private async Task<MoneyTransactionVM.Giver> MoneyReceivedAsync(MoneyTransactionVM.Giver tran)
         {
-            var transaction = await _transactionRepo.FindAsync(transactionId);
+            var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Receiver)
+                .Include(x => x.Giver)
+                .FirstAsync(x => x.Id == tran.Id);
             transaction.MoneyReceived();
             await _unitOfWork.SaveChangesAsync();
+            return transaction.UpdateVm(tran);
         }
 
-        private async Task ReportNotTransferAsync(int transactionId)
+        private async Task<MoneyTransactionVM.Giver> ReportNotTransferAsync(MoneyTransactionVM.Giver tran)
         {
-            var transaction = await _transactionRepo.FindAsync(transactionId);
+            var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Receiver)
+                .Include(x => x.Giver)
+                .FirstAsync(x => x.Id == tran.Id);
             transaction.ReportNotTransfer();
             await _unitOfWork.SaveChangesAsync();
+            return transaction.UpdateVm(tran);
         }
 
         #endregion

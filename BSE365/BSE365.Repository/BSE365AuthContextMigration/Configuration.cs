@@ -1,4 +1,3 @@
-
 namespace BSE365.Repository.BSE365AuthContextMigration
 {
     using BSE365.Common.Constants;
@@ -19,15 +18,15 @@ namespace BSE365.Repository.BSE365AuthContextMigration
         }
 
         protected override void Seed(BSE365.Repository.DataContext.BSE365AuthContext context)
-        {                        
+        {
             ////Add User Admin
             var numOfUser = context.UserInfos.Count();
             if (numOfUser == 0)
             {
                 /////Add Role
                 var _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-                _roleManager.Create(new IdentityRole { Name = UserRolesText.SuperAdmin });
-                _roleManager.Create(new IdentityRole { Name = UserRolesText.User });
+                _roleManager.Create(new IdentityRole {Name = UserRolesText.SuperAdmin});
+                _roleManager.Create(new IdentityRole {Name = UserRolesText.User});
 
                 var _userManager = new UserManager<User>(new UserStore<User>(context));
                 User user = new User
@@ -46,11 +45,11 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 };
 
                 _userManager.Create(user, SystemAdmin.Password);
-
                 user.UserName = Utilities.StandardizeUserId(user.UserInfo.Id);
-
                 _userManager.Update(user);
                 _userManager.AddToRole(user.Id, UserRolesText.SuperAdmin);
+
+                InitData(context);
             }
 
             ////Add Client
@@ -71,31 +70,11 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 context.Clients.Add(client);
                 context.SaveChanges();
             }
-
-            //InitData(context);
         }
 
         public static void InitData(BSE365.Repository.DataContext.BSE365AuthContext context)
         {
             var _userManager = new UserManager<User>(new UserStore<User>(context));
-            // admin
-            var adminInfo = context.UserInfos.Add(new UserInfo
-            {
-                DisplayName = SystemAdmin.DisplayName,
-                Email = SystemAdmin.Email,
-                PhoneNumber = SystemAdmin.PhoneNumber,
-                BankNumber = SystemAdmin.BankNumber,
-                BankName = SystemAdmin.BankName,
-                BankBranch = SystemAdmin.BankBranch,
-            });
-            context.SaveChanges();
-            _userManager.Create(new User
-            {
-                UserName = adminInfo.Id.ToString(),
-                UserInfo = adminInfo,
-                PinBalance = int.MaxValue,
-            }, SystemAdmin.Password);
-
             // test data
             for (int i = 0; i < TestData.UserNames.Length; i++)
             {
@@ -112,16 +91,17 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 context.SaveChanges();
                 foreach (var suffix in TestData.AccountSuffixes)
                 {
-                    var username = info.Id.ToString() + suffix;
-                    _userManager.Create(new User
+                    var username = Utilities.StandardizeUserId(info.Id) + suffix;
+                    var user = new User
                     {
                         UserName = username,
                         UserInfo = info,
                         PinBalance = 10,
-                    }, TestData.Password);
+                    };
+                    _userManager.Create(user, TestData.Password);
+                    _userManager.AddToRole(user.Id, UserRolesText.User);
                 }
             }
-            context.SaveChanges();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace BSE365.Model.Entities
         public virtual Account Giver { get; set; }
         public virtual Account Receiver { get; set; }
 
-        public void MoneyTranfered(string attachmentUrl)
+        public void MoneyTransfered(string attachmentUrl)
         {
             State = MoneyTransferState.Transfered;
             TransferedDate = DateTime.Now;

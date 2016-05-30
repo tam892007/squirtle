@@ -204,6 +204,8 @@
     <Content Include="app\authentication\app.js" />
     <Content Include="app\authentication\login\login.html" />
     <Content Include="app\authentication\login\loginController.js" />
+    <Content Include="app\authentication\refresh\refresh.html" />
+    <Content Include="app\authentication\refresh\refreshController.js" />
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
@@ -215,6 +217,26 @@
     <Content Include="app\main\pin\pinController.js" />
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
+    <Content Include="app\main\trade\current.html" />
+    <Content Include="app\main\trade\trade-history.html" />
+    <Content Include="app\main\trade\trade-statistic.html" />
+    <Content Include="app\main\trade\tradeStatisticController.js" />
+    <Content Include="app\main\trade\tradeService.js" />
+    <Content Include="app\main\trade\tradeCurrentController.js" />
+    <Content Include="app\main\trade\trade-waitingReceivers.html" />
+    <Content Include="app\main\trade\trade-waitingGivers.html" />
+    <Content Include="app\main\trade\trade-info.html" />
+    <Content Include="app\main\trade\tradeWaitingGiversController.js" />
+    <Content Include="app\main\trade\tradeWaitingReceiversController.js" />
+    <Content Include="app\main\trade\tradeInfoController.js" />
+    <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\info-receiver.html" />
+    <Content Include="app\main\transaction\info-giver.html" />
+    <Content Include="app\main\transaction\transactionhistory.html" />
+    <Content Include="app\main\transaction\current.html" />
+    <Content Include="app\main\transaction\transactionService.js" />
+    <Content Include="app\main\transaction\transactionCurrentController.js" />
+    <Content Include="app\main\transaction\transactionHistoryController.js" />
     <Content Include="app\main\user\dlg-change-avatar.html" />
     <Content Include="app\main\user\dlg-change-password.html" />
     <Content Include="app\main\user\dlgChangeAvatarController.js" />
@@ -369,7 +391,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2736</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
