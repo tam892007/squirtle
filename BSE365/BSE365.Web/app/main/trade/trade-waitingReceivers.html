@@ -5,28 +5,33 @@
         </h3>
     </div>
     <div class="panel-body">
-        <table st-table="transactionHistories" class="table table-striped">
+        <table st-table="displayData" st-safe-src="data" class="table table-striped">
             <thead>
                 <tr>
-                    <th>STT</th>
-                    <th>To Id</th>
-                    <th>Amount</th>
-                    <th>Time</th>
+                    <th>#</th>
+                    <th st-sort="accountId">Account</th>
+                    <th st-sort="displayName">Name</th>
+                    <th st-sort="created">Created</th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="transaction in transactionHistories">
+                <tr>
+                    <td colspan="4">
+                        <input st-search="" class="form-control" placeholder="search ..." />
+                    </td>
+                </tr>
+                <tr ng-repeat="item in displayData">
                     <td>
                         <span>{{ $index + 1 }}</span>
                     </td>
                     <td>
-                        <span data-ng-bind="transaction.toId"></span>
+                        <span data-ng-bind="item.accountId"></span>
                     </td>
                     <td>
-                        <span data-ng-bind="transaction.amount"></span>
+                        <span data-ng-bind="item.displayName"></span>
                     </td>
                     <td>
-                        <span data-ng-bind="transaction.createdDate"></span>
+                        <span data-ng-bind="item.created"></span>
                     </td>
                 </tr>
             </tbody>

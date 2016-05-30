@@ -290,6 +290,7 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Helper\CatpchaValidator.cs" />
     <Compile Include="Mappings\ImageVMMapping.cs" />
+    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionVMMapping.cs" />
     <Compile Include="Mappings\PinBalanceVMMapping.cs" />
     <Compile Include="Mappings\PinTransactionVMMapping.cs" />
@@ -311,6 +312,8 @@
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />
+    <Compile Include="ViewModels\FilterVM.cs" />
+    <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Compile Include="ViewModels\MoneyTransactionVM.cs" />
     <Compile Include="ViewModels\PinBalanceViewModel.cs" />
     <Compile Include="ViewModels\PinTransactionViewModel.cs" />
