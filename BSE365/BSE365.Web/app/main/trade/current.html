@@ -1,0 +1,82 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default panel-form">
+                <div class="panel-heading">
+                    <i class="panel-logo"></i>
+                    <h3 class="panel-title">Current Transaction</h3>
+                </div>
+                <div class="panel-body">
+                    <form data-ng-submit="transferPIN()" name="frmTransfer" novalidate>
+                        <div class="form-group">
+                            <label>Balance</label>
+                            <p class="form-control-static" data-ng-bind="currentPinBalance.pinBalance"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="from">From</label>
+                            <input type="text" class="form-control" name="from" placeholder="From" data-ng-model="currentPinBalance.userName" readonly>                 
+                        </div>
+                        <div class="form-group">
+                            <label for="to">To</label>
+                            <input type="text" class="form-control" name="to" placeholder="To" data-ng-model="transaction.toId" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
+                                   required ui-validate-async="{unknown: 'validateUser($modelValue)' }">
+                            <div ng-messages="frmTransfer.to.$error" ng-if="interacted(frmTransfer.to)" class="error-messages">
+                                <div ng-messages-include="validation-messages"></div>
+                                <div ng-message="unknown">User cannot be found</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Amount</label>
+                            <input type="number" min="1" max="{{currentPinBalance.pinBalance}}" class="form-control" name="amount" placeholder="Amount" data-ng-model="transaction.amount" required>
+                            <div ng-messages="frmTransfer.amount.$error" ng-if="interacted(frmTransfer.amount)" class="error-messages">
+                                <div ng-messages-include="validation-messages"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Note</label>
+                            <input type="text" class="form-control" name="note" placeholder="Note" data-ng-model="transaction.note">
+                        </div>
+                        <div class="form-group">
+                            <label for="code">Verify Code</label>
+                            <div id="code" re-captcha data-ng-model="transaction.code"></div>
+                        </div>
+                        <div class="form-group">                           
+                            <p class="text-danger" ng-if="failed == 1">Transaction failed. Please try again later.</p>
+                            <p class="text-danger" ng-if="failed == 2">Invalid captcha.</p>
+                        </div>
+                        <button type="submit" class="btn btn-default btn--submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    <i class="panel-logo"></i>
+                    <h3 class="panel-title">History</h3>
+                </div>
+                <div class="panel-body">
+                    <table st-table="transactionHistories" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>To Id</th>
+                                <th>Amount</th>
+                                <th>Time</th>  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="transaction in transactionHistories">
+                                <td><span>{{ $index + 1 }}</span></td>
+                                <td><span data-ng-bind="transaction.toId"></span></td>
+                                <td><span data-ng-bind="transaction.amount"></span></td>
+                                <td><span data-ng-bind="transaction.createdDate"></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

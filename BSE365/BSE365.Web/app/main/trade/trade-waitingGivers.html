@@ -1,0 +1,40 @@
+﻿<div class="panel panel-default panel-table">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Waiting Givers
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table st-table="displayData" st-safe-src="data" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th st-sort="accountId">Account</th>
+                    <th st-sort="displayName">Name</th>
+                    <th st-sort="created">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td colspan="4">
+                    <input st-search="" class="form-control" placeholder="search ..." />
+                </td>
+            </tr>
+            <tr ng-repeat="item in displayData">
+                <td>
+                    <span>{{ $index + 1 }}</span>
+                </td>
+                <td>
+                    <span data-ng-bind="item.accountId"></span>
+                </td>
+                <td>
+                    <span data-ng-bind="item.displayName"></span>
+                </td>
+                <td>
+                    <span data-ng-bind="item.created"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

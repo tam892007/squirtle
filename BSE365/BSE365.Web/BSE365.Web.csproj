@@ -204,6 +204,8 @@
     <Content Include="app\authentication\app.js" />
     <Content Include="app\authentication\login\login.html" />
     <Content Include="app\authentication\login\loginController.js" />
+    <Content Include="app\authentication\refresh\refresh.html" />
+    <Content Include="app\authentication\refresh\refreshController.js" />
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
@@ -215,9 +217,31 @@
     <Content Include="app\main\association\associationController.js" />
     <Content Include="app\main\home\home.html" />
     <Content Include="app\main\index\indexController.js" />
+    <Content Include="app\main\pin\rateController.js" />
+    <Content Include="app\main\pin\rate.html" />
     <Content Include="app\main\pin\pinController.js" />
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
+    <Content Include="app\main\trade\current.html" />
+    <Content Include="app\main\trade\trade-history.html" />
+    <Content Include="app\main\trade\trade-statistic.html" />
+    <Content Include="app\main\trade\tradeStatisticController.js" />
+    <Content Include="app\main\trade\tradeService.js" />
+    <Content Include="app\main\trade\tradeCurrentController.js" />
+    <Content Include="app\main\trade\trade-waitingReceivers.html" />
+    <Content Include="app\main\trade\trade-waitingGivers.html" />
+    <Content Include="app\main\trade\trade-info.html" />
+    <Content Include="app\main\trade\tradeWaitingGiversController.js" />
+    <Content Include="app\main\trade\tradeWaitingReceiversController.js" />
+    <Content Include="app\main\trade\tradeInfoController.js" />
+    <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\info-receiver.html" />
+    <Content Include="app\main\transaction\info-giver.html" />
+    <Content Include="app\main\transaction\transactionhistory.html" />
+    <Content Include="app\main\transaction\current.html" />
+    <Content Include="app\main\transaction\transactionService.js" />
+    <Content Include="app\main\transaction\transactionCurrentController.js" />
+    <Content Include="app\main\transaction\transactionHistoryController.js" />
     <Content Include="app\main\user\dlg-change-avatar.html" />
     <Content Include="app\main\user\dlg-change-password.html" />
     <Content Include="app\main\user\dlgChangeAvatarController.js" />
@@ -242,6 +266,7 @@
     <Content Include="Content\images\plax_sphere_small.png" />
     <Content Include="Content\images\lauch.png" />
     <Content Include="Content\images\user_default.jpg" />
+    <Content Include="Content\images\wallets.jpg" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\ng-img-crop.css" />
@@ -262,6 +287,8 @@
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\ConfigController.cs" />
+    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
+    <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -292,6 +319,7 @@
     <Compile Include="ViewModels\CaptchaViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
+    <Compile Include="ViewModels\FilterVM.cs" />
     <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MoneyTransactionVM.cs" />
     <Compile Include="ViewModels\PinBalanceViewModel.cs" />
@@ -334,6 +362,7 @@
     <Content Include="fonts\Roboto-Regular.ttf" />
     <Content Include="Content\loading-bar.css.map" />
     <Content Include="Content\angular-ui-notification.css.map" />
+    <Content Include="Content\style\rate.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -373,7 +402,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>2736</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

@@ -8,13 +8,14 @@ using BSE365.ViewModels;
 
 namespace BSE365.Mappings
 {
-    public class MoneyTransactionVMMapping
+    public static class MoneyTransactionVMMapping
     {
         public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Giver>> GetExpToGiverVM()
         {
             Expression<Func<MoneyTransaction, MoneyTransactionVM.Giver>> result =
                 x => new MoneyTransactionVM.Giver
                 {
+                    Id = x.Id,
                     GiverId = x.GiverId,
                     ReceiverId = x.ReceiverId,
                     Created = x.Created,
@@ -39,6 +40,7 @@ namespace BSE365.Mappings
             Expression<Func<MoneyTransaction, MoneyTransactionVM.Receiver>> result =
                 x => new MoneyTransactionVM.Receiver
                 {
+                    Id = x.Id,
                     GiverId = x.GiverId,
                     ReceiverId = x.ReceiverId,
                     Created = x.Created,
@@ -56,6 +58,19 @@ namespace BSE365.Mappings
                     BankBranch = x.Receiver.UserInfo.BankBranch
                 };
             return result;
+        }
+
+        public static T UpdateVm<T>(this MoneyTransaction model, T vm)
+            where T : MoneyTransactionVM.Base
+        {
+            vm.Created = model.Created;
+            vm.LastModified = model.LastModified;
+            vm.State = model.State;
+            vm.AttachmentUrl = model.AttachmentUrl;
+            vm.TransferedDate = model.TransferedDate;
+            vm.ReceivedDate = model.ReceivedDate;
+            vm.IsEnd = model.IsEnd;
+            return vm;
         }
     }
 }

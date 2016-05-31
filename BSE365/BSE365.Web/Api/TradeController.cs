@@ -24,19 +24,21 @@ namespace BSE365.Api
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<Account> _accountRepo;
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
-
-        #region
-
-        #endregion
-
+        IRepositoryAsync<WaitingGiver> _waitingGiverRepo;
+        IRepositoryAsync<WaitingReceiver> _waitingReceiverRepo;
+        
         public TradeController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<Account> accountRepo,
-            IRepositoryAsync<MoneyTransaction> transactionRepo)
+            IRepositoryAsync<MoneyTransaction> transactionRepo,
+            IRepositoryAsync<WaitingGiver> waitingGiverRepo,
+            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo)
         {
             _unitOfWork = unitOfWork;
             _accountRepo = accountRepo;
             _transactionRepo = transactionRepo;
+            _waitingGiverRepo = waitingGiverRepo;
+            _waitingReceiverRepo = waitingReceiverRepo;
         }
 
         [HttpGet]
@@ -48,7 +50,9 @@ namespace BSE365.Api
                 case 0:
                     BSE365.Repository.BSE365AuthContextMigration.Configuration.InitData(
                         new BSE365.Repository.DataContext.BSE365AuthContext());
-                    BSE365.Repository.BSE365ContextMigration.Configuration.InitData(
+                    BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
                 case 1:
@@ -56,7 +60,15 @@ namespace BSE365.Api
                         new BSE365.Repository.DataContext.BSE365AuthContext());
                     break;
                 case 2:
-                    BSE365.Repository.BSE365ContextMigration.Configuration.InitData(
+                    BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    break;
+                case 3:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
+                        new BSE365.Repository.DataContext.BSE365Context());
+                    break;
+                case 5:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
             }
@@ -99,6 +111,22 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [HttpPost]
+        [Route("QueryWaitingGivers")]
+        public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
+        {
+            var result = await QueryWaitingGiversAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("QueryWaitingReceivers")]
+        public async Task<IHttpActionResult> QueryWaitingReceivers(FilterVM filter)
+        {
+            var result = await QueryWaitingReceiversAsync(filter);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task QueueGiveAsync()
@@ -117,10 +145,30 @@ namespace BSE365.Api
 
         private async Task<TradeAccountVM> AccountStatusAsync()
         {
-            var account = await _accountRepo.Queryable().Where(x => x.UserName == User.Identity.GetUserName())
-                .Include(x => x.UserInfo).FirstOrDefaultAsync();
+            var username = User.Identity.GetUserName();
+            var account = await _accountRepo.Queryable()
+                .Where(x => x.UserName == username)
+                .Include(x => x.UserInfo).FirstAsync();
             var result = account.ToVM();
             return result;
+        }
+
+        private async Task<List<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
+        {
+            var expression = WaitingAccountVMMapping.GetExpToGiverVM();
+            var data = await _waitingGiverRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
+        }
+
+        private async Task<List<WaitingAccountVM>> QueryWaitingReceiversAsync(FilterVM filter)
+        {
+            var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
+            var data = await _waitingReceiverRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
         }
 
         #endregion

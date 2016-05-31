@@ -18,6 +18,8 @@ namespace BSE365.ViewModels
 
         public abstract class Base
         {
+            public int Id { get; set; }
+
             public string GiverId { get; set; }
             public string ReceiverId { get; set; }
 
