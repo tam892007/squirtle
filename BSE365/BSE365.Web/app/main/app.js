@@ -81,7 +81,6 @@ mainApp.config(['reCAPTCHAProvider', 'recaptchaSettings', function (reCAPTCHAPro
     // optional: gets passed into the Recaptcha.create call
     reCAPTCHAProvider.setOptions({
         theme: 'red'
-=======
             .state('login',
             {
                 url: "/login",
@@ -167,9 +166,9 @@ mainApp.config(['reCAPTCHAProvider', 'recaptchaSettings', function (reCAPTCHAPro
                 url: "/trade/current",
                 templateUrl: 'app/main/transaction/current.html',
                 controller: 'transactionCurrentController'
-            });
-    }
-]);
+            })
+    })
+}]);
 
 mainApp.config([
     '$httpProvider', function($httpProvider) {
@@ -276,7 +275,6 @@ mainApp.factory('AccountState',
             }
         }
         return data;
->>>>>>> 2ecd1b6a149f29682fb10f47e017d022e17562e0
     });
 
 mainApp.factory('PriorityLevel',
