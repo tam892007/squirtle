@@ -4,6 +4,7 @@ authApp.factory('authInterceptorService', ['$q', '$injector', '$location', 'loca
     var authInterceptorServiceFactory = {};
 
     var _request = function (config) {
+        if (config.skipInterceptor) return config;
 
         config.headers = config.headers || {};
 

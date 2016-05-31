@@ -2,7 +2,7 @@
     <img src="Content/images/wallets.jpg" />
     <div class="rate-info">
         <div class="row rate-info__heading">
-            <div class="col-md-12">Bitcoin ID and Currency</div>
+            <div class="col-md-12">Bitcoin Supported</div>
         </div>
         <div class="row rate-info__content">
             <div class="row account">
@@ -17,7 +17,10 @@
                 <div class="col-md-5 title">
                     Current Price for 1 BITCOIN:
                 </div>
-                <div class="col-md-7 content">{{currRate}} <span>USD</span></div>
+                <div class="col-md-7 content">
+                    <span data-ng-bind="rate.usd"></span>
+                    <span>USD</span>
+                </div>
             </div>
         </div>
     </div>
