@@ -53,7 +53,6 @@ mainApp.controller('pinController', ['$scope', 'userService', 'pinService', '$q'
     };
 
     $scope.validateUser = function (userName) {
-        console.log(userName);
         var deferred = $q.defer();
 
         userService.checkName({ name: userName }, function (res) {

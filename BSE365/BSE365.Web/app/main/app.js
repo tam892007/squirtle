@@ -3,7 +3,7 @@
 
 mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
 
-    $urlRouterProvider.otherwise("/")
+    $urlRouterProvider.otherwise("/login")
 
     $stateProvider
         .state('home', {
@@ -45,6 +45,11 @@ mainApp.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider
             url: "/tree",
             templateUrl: 'app/main/user/user-info.tree.html',
             controller: 'userTreeController'
+        })
+        .state('association', {
+            url: "/association",
+            templateUrl: 'app/main/association/association.html',
+            controller: 'associationController'
         })
 }]);
 

@@ -57,12 +57,13 @@
 
                     <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
                         <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
-                        <li class="dropdown" data-ng-hide="!authentication.isAuth">
-                            <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown">
-                                <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
-                                <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
+                        <li class="dropdown" data-ng-hide="!authentication.isAuth">                            
+                            <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown"> 
+                                <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />                               
+                                <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>                                          
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a ui-sref="association">Associated Accounts</a></li>
                                 <li><a href="#" data-ng-click="logOut()">Logout</a></li>
                             </ul>
                         </li>

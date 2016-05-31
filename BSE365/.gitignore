@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Compiled source #
 ###################
 *.com
@@ -312,4 +311,4 @@ Version.cpp
 *.iml
 /node_modules
 /bower_components
->>>>>>> b525e42f60ba0640dae1beeb3f230aa0d3da76bb
+

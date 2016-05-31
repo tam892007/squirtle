@@ -53,7 +53,7 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
             deferred.resolve(response);
 
         }).error(function (err, status) {
-            _logOut();
+            //_logOut();
             deferred.reject(err);
         });
 

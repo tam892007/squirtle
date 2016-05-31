@@ -1,20 +1,13 @@
 ﻿using BSE365.Base.Repositories.Contracts;
-using BSE365.Mappings;
+using BSE365.Common.Constants;
+using BSE365.Common.Helper;
 using BSE365.Model.Entities;
-using BSE365.Repository.Repositories;
-using BSE365.ViewModels;
-using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web.Http;
-using BSE365.Mappings;
-using System.Net;
-using BSE365.Common.Constants;
-using BSE365.Common.Helper;
 
 namespace BSE365.Api
 {
@@ -22,8 +15,7 @@ namespace BSE365.Api
     [RoutePrefix("api/image")]
     public class ImageController : ApiController
     {
-        private IRepositoryAsync<Image> _repo = null;
-        IRepositoryAsync<PinTransactionHistory> _historyRepo;
+        private IRepositoryAsync<Image> _repo = null; 
 
         public ImageController(IRepositoryAsync<Image> repo)
         {

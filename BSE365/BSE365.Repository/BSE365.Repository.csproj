@@ -82,6 +82,10 @@
     <Compile Include="BSE365AuthContextMigration\201605290553472_PutConstraints.Designer.cs">
       <DependentUpon>201605290553472_PutConstraints.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201605300809309_SupportTreeAndRating.cs" />
+    <Compile Include="BSE365AuthContextMigration\201605300809309_SupportTreeAndRating.Designer.cs">
+      <DependentUpon>201605300809309_SupportTreeAndRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -90,6 +94,10 @@
     <Compile Include="BSE365ContextMigration\201605290554260_PutConstraints.cs" />
     <Compile Include="BSE365ContextMigration\201605290554260_PutConstraints.Designer.cs">
       <DependentUpon>201605290554260_PutConstraints.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.cs" />
+    <Compile Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.Designer.cs">
+      <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -112,11 +120,17 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201605290553472_PutConstraints.resx">
       <DependentUpon>201605290553472_PutConstraints.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201605300809309_SupportTreeAndRating.resx">
+      <DependentUpon>201605300809309_SupportTreeAndRating.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605290554260_PutConstraints.resx">
       <DependentUpon>201605290554260_PutConstraints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.resx">
+      <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

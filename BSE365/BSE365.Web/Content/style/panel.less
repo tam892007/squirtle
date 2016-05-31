@@ -21,12 +21,34 @@
     .panel-body {
         .btn--submit {
             color: @white-text;
-            background-color: #f35f5f;                       
+            background-color: #f35f5f;
 
             &:hover {
                 color: #333;
                 background-color: #e6e6e6;
                 border-color: #adadad;
+            }
+        }
+
+        .btn--submit-selected {
+            background-color: lightgreen !important;
+        }
+
+        .icon--main {
+            position:absolute; right: 20px; top:5px;
+        }
+
+        .row {
+            padding-top : 10px;
+        }
+
+        .rating-custom {
+            .glyphicon-star {
+                color: red;
+            }
+
+            .glyphicon-star-empty {
+                color:black
             }
         }
     }

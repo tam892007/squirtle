@@ -48,7 +48,7 @@ namespace BSE365.Controllers
         {
             if (id == 0)
             {
-                return new FileContentResult(System.IO.File.ReadAllBytes(string.Format(@"{0}\Content\image\{1}"
+                return new FileContentResult(System.IO.File.ReadAllBytes(string.Format(@"{0}\Content\images\{1}"
                     , System.AppDomain.CurrentDomain.BaseDirectory, SystemAdmin.UserDefautPic)), "image/jpeg"); 
             }
             else

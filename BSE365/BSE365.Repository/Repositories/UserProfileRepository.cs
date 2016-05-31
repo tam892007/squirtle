@@ -60,6 +60,30 @@ namespace BSE365.Repository.Repositories
             return user;
         }
 
+        public async Task<IEnumerable<User>> FindUserByUserInfo(int id)
+        {
+            var user = await _ctx.Users.Where(x => x.UserInfo.Id == id).OrderBy(x => x.UserName).ToListAsync();
+
+            return user;
+        }
+
+        public async Task<bool> FindUserByBankNumber(string bankNumber, string userName)
+        {
+            bool exist;
+            var user = await _userManager.FindByNameAsync(userName);
+            if (user == null || user.UserInfo == null)
+            {
+                exist = await _ctx.UserInfos.AnyAsync(x => x.BankNumber == bankNumber);
+            }
+            else
+            {
+                var id = user.UserInfo.Id;
+                exist = await _ctx.UserInfos.AnyAsync(x => x.BankNumber == bankNumber && x.Id != id);
+            }
+            
+            return exist;
+        }
+
         public async Task<IEnumerable<User>> FindChildren(string id)
         {
             var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).ToListAsync();

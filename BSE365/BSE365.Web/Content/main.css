@@ -7,7 +7,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background-color: #fafafa;
+  background-color: #39015d;
 }
 .footer {
   position: absolute;
@@ -15,7 +15,6 @@ body {
   width: 100%;
   /* Set the fixed height of the footer here */
   height: 60px;
-  background-color: #f5f5f5;
 }
 /* Custom page CSS
 -------------------------------------------------- */
@@ -73,6 +72,41 @@ code {
 }
 .container--custom {
   padding: 100px 15px 0 !important;
+}
+.middle-container {
+  text-align: center;
+  margin-top: 40px;
+  color: #fff;
+}
+.middle-container .heading {
+  font-size: 60px;
+  font-weight: normal;
+}
+.middle-container .shell {
+  margin-top: -80px;
+}
+.middle-container .shell #plax-sphere-2 {
+  margin-left: -40px;
+  margin-bottom: -100px;
+}
+.middle-container .shell #plax-sphere-3 {
+  margin-left: -40px;
+  margin-bottom: -80px;
+}
+.middle-container .text-content {
+  margin-top: -110px;
+}
+.middle-container .text-content .text-margin {
+  margin-top: 30px;
+}
+.middle-container .text-content .text-margin span {
+  background: #FFF;
+  color: #b908b2;
+  padding: 3px 2px;
+}
+.circle-main {
+  text-align: center;
+  margin-top: 40px;
 }
 .angular-ui-tree-handle {
   background: #f8faff;
@@ -205,6 +239,23 @@ code {
   color: #333;
   background-color: #e6e6e6;
   border-color: #adadad;
+}
+.panel-form .panel-body .btn--submit-selected {
+  background-color: lightgreen !important;
+}
+.panel-form .panel-body .icon--main {
+  position: absolute;
+  right: 20px;
+  top: 5px;
+}
+.panel-form .panel-body .row {
+  padding-top: 10px;
+}
+.panel-form .panel-body .rating-custom .glyphicon-star {
+  color: red;
+}
+.panel-form .panel-body .rating-custom .glyphicon-star-empty {
+  color: black;
 }
 .panel-table .panel-heading {
   background-color: #4b2218;

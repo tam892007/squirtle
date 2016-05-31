@@ -109,6 +109,22 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("CheckBankNumber")]
+        public async Task<IHttpActionResult> CheckBankNumber(string number, string userName)
+        {
+            var result = await CheckBankNumberAsync(number, userName);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("GetCurrentAssociation")]
+        public async Task<IHttpActionResult> GetCurrentAssociation()
+        {
+            var result = await GetCurrentAssociationAsync();
+            return Ok(result);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -174,12 +190,31 @@ namespace BSE365.Api
             return result;
         }
 
+        private async Task<ResultViewModel<bool>> CheckBankNumberAsync(string number, string userName)
+        {
+            var result = new ResultViewModel<bool>();
+            var exist = await _repo.FindUserByBankNumber(number, userName);
+            result.IsSuccessful = exist == false;
+            result.Result = exist == false;
+            return result;
+        }
+
         private async Task<UserContextViewModel> GetCurrentUserContextAsync()
         {
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             var viewModel = user.ToContextViewModel();
             return viewModel;
+        }
+
+        private async Task<IEnumerable<UserContextViewModel>> GetCurrentAssociationAsync()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = await _repo.FindUser(userId);
+            var users = await _repo.FindUserByUserInfo(user.UserInfo.Id);
+
+            var result = users.Select(x => x.ToContextViewModel());
+            return result;
         }
     }
 }

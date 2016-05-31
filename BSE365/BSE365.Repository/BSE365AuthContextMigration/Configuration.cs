@@ -41,6 +41,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                         BankNumber = SystemAdmin.BankNumber,
                         BankName = SystemAdmin.BankName,
                         BankBranch = SystemAdmin.BankBranch,
+                        Rating = 5,
                     },
                     PinBalance = 10000000,
                 };

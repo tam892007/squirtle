@@ -1,5 +1,5 @@
 ﻿'use strict';
-mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notification', '$state', function ($scope, userService, Notification, $state) {
+mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notification', '$state', '$q', function ($scope, userService, Notification, $state, $q) {
     $scope.init = function () {
         $scope.newUser = { userInfo: {} };
         $scope.submitted = false;
@@ -20,4 +20,23 @@ mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notifica
     $scope.interacted = function (field) {
         return $scope.submitted || field.$dirty;
     };
+
+    $scope.validateBankNumber = function (number) {
+        var deferred = $q.defer();
+
+        userService.checkBankNumber({ number: number, userName: '*' }, function (res) {
+            if (res.result) {
+                deferred.resolve(res);
+            }
+            else {
+                deferred.reject(res);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    $scope.canIntroduce = function () {        
+        return $scope.currentUser == null || $scope.currentUser.userName.endsWith('A') || !$scope.currentUser.parentId;
+    }
 }]);

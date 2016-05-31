@@ -1,8 +1,8 @@
 ﻿'use strict';
-mainApp.controller('indexController', ['$scope', '$location', 'authService', 'userService', function ($scope, $location, authService, userService) {
+mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userService', function ($scope, $state, authService, userService) {
     $scope.logOut = function () {
         authService.logOut();
-        $location.path('/home');
+        $state.go('login');
     }
    
     $scope.authentication = authService.authentication;

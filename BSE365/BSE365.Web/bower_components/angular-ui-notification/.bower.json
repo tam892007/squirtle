@@ -40,6 +40,6 @@
     "commit": "136aa45597ef079f00fa3148a193a60dfd7802a0"
   },
   "_source": "https://github.com/alexcrack/angular-ui-notification.git",
-  "_target": "*",
+  "_target": "0.2.0",
   "_originalSource": "angular-ui-notification"
 }

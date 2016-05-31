@@ -23,7 +23,8 @@ namespace BSE365.Mappings
                 BankNumber = model.UserInfo.BankNumber,
                 BankName = model.UserInfo.BankName,
                 BankBranch = model.UserInfo.BankBranch,
-                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 }
+                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 },
+                Rating = model.UserInfo.Rating,
             };
 
             return result;

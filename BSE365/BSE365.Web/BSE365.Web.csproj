@@ -208,8 +208,11 @@
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
     <Content Include="app\common\directives\httpSrc.js" />
+    <Content Include="app\common\directives\syncFocusWith.js" />
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\main\app.js" />
+    <Content Include="app\main\association\association.html" />
+    <Content Include="app\main\association\associationController.js" />
     <Content Include="app\main\home\home.html" />
     <Content Include="app\main\index\indexController.js" />
     <Content Include="app\main\pin\pinController.js" />
@@ -238,6 +241,7 @@
     <Content Include="Content\images\plax_sphere_large.png" />
     <Content Include="Content\images\plax_sphere_small.png" />
     <Content Include="Content\images\lauch.png" />
+    <Content Include="Content\images\user_default.jpg" />
     <Content Include="Content\loading-bar.css" />
     <Content Include="Content\main.css" />
     <Content Include="Content\ng-img-crop.css" />

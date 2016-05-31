@@ -10,6 +10,8 @@
             updateAvatar: { method: 'POST', params: { path: 'api/user/updateAvatar', avatar: 'avatar' } },
             changePassword: { method: 'POST', params: { path: 'api/user/changePassword', model: 'model' } },
             checkName: { method: 'GET', params: { path: 'api/user/checkName', name: '@name' } },
+            checkBankNumber: { method: 'GET', params: { path: 'api/user/checkBankNumber', number: '@number', userName: '@userName' } },
+            getCurrentAssociation: { method: 'GET', params: { path: 'api/user/getCurrentAssociation' }, isArray: true },
         });
     }
 ]);

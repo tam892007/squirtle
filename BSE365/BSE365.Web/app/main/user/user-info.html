@@ -6,12 +6,23 @@
                     <h3 class="panel-title"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; Profile</h3>
                 </div>
                 <div class="panel-body">
-                    <a href="" class="avatar-frame text-center" ng-click="updateAvatar()">
-                        <div class="">
-                            <img http-src="{{currentUser.avatar.url}}">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a href="" class="avatar-frame text-center" ng-click="updateAvatar()">
+                                <div class="">
+                                    <img http-src="{{currentUser.avatar.url}}">
+                                </div>
+                                <span class="avatar-change-btn">Change</span>
+                            </a>
+                        </div>                        
+                    </div>    
+                    <div class="row">
+                        <div class="col-xs-12 text-center rating-custom">
+                            <uib-rating ng-model="currentUser.rating" max="5" read-only="true" aria-labelledby="user-rating">
+
+                            </uib-rating>
                         </div>
-                        <span class="avatar-change-btn">Change</span>
-                    </a>
+                    </div>                
                 </div>
             </div>
         </div>

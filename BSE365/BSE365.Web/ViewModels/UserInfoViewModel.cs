@@ -24,5 +24,7 @@ namespace BSE365.ViewModels
         public string BankBranch { get; set; }
 
         public ImageViewModel Avatar { get; set; }
+
+        public int Rating { get; set; }
     }
 }

@@ -52,6 +52,10 @@ namespace BSE365.Model.Entities
 
         public virtual Image Avatar { get; set; }
 
+        public int Rating { get; set; }
+
+        public int Level { get; set; }
+
         public virtual ICollection<Account> Accounts { get; set; }
 
         public bool IsAllowGive()
