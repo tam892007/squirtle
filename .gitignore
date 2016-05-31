@@ -311,10 +311,6 @@ Version.cpp
 *.iml
 /node_modules
 /bower_components
-<<<<<<< HEAD
-
-=======
->>>>>>> b525e42f60ba0640dae1beeb3f230aa0d3da76bb
 BSE365/BSE365.Web/bower_components/
 BSE365/BSE365.Web/node_modules/
->>>>>>> 2ecd1b6a149f29682fb10f47e017d022e17562e0
+
