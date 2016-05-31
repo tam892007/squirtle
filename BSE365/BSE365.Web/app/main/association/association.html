@@ -1,0 +1,38 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-default panel-form">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; Association</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row" ng-repeat="usr in associatedUsrs track by usr.id">
+                        <div class="col-xs-6 col-xs-offset-3" ng-click="switch(usr)">                            
+                            <button type="button" class="btn btn-block btn--submit" ng-class="{'btn--submit-selected': selectedUsr.id == usr.id}">
+                                <p>{{usr.userName}} <span class="glyphicon glyphicon-king icon--main" title="main" ng-if="isMain(usr)"></span></p>
+                                Balance: <span>{{usr.pinBalance}}</span>
+                            </button>   
+                            <div ng-if="selectedUsr.id == usr.id">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <input type="password" class="form-control" placeholder="Enter password..." sync-focus-with="selectedUsr.id == usr.id" ng-model="usr.password"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <p class="text-danger" data-ng-bind="message"></p>
+                                        <button class="btn btn-block btn-primary" data-ng-click="login()">Login</button>
+                                    </div>
+                                </div>
+                            </div>                                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8" ui-view>
+
+        </div>
+    </div>
+</div>
