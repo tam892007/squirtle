@@ -23,5 +23,6 @@ namespace BSE365.Common.Constants
         public const string ClientId = "SHARE";
         public const string ClientSecret = "1111-1111-1111-1111";
         public const int StartId = 31121315;
+        public const string TreePathSplitter = ";";
     }
 }

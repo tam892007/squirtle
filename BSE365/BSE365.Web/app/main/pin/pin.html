@@ -7,22 +7,34 @@
                     <h3 class="panel-title">Management</h3>
                 </div>
                 <div class="panel-body">
-                    <form data-ng-submit="transferPIN()" name="frmTransfer" novalidate>
+                    <form data-ng-submit="processToConfirm()" name="frmTransfer" novalidate ng-show="transaction.step == 1">
                         <div class="form-group">
                             <label>Balance</label>
                             <p class="form-control-static" data-ng-bind="currentPinBalance.pinBalance"></p>
                         </div>
                         <div class="form-group">
                             <label for="from">From</label>
-                            <input type="text" class="form-control" name="from" placeholder="From" data-ng-model="currentPinBalance.userName" readonly>                 
+                            <input type="text" class="form-control" name="from" placeholder="From" data-ng-model="currentPinBalance.userName" readonly>
                         </div>
                         <div class="form-group">
                             <label for="to">To</label>
-                            <input type="text" class="form-control" name="to" placeholder="To" data-ng-model="transaction.toId" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
+                            <input type="text" class="form-control" name="to" placeholder="To" data-ng-model="transaction.toId" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }"
                                    required ui-validate-async="{unknown: 'validateUser($modelValue)' }">
                             <div ng-messages="frmTransfer.to.$error" ng-if="interacted(frmTransfer.to)" class="error-messages">
                                 <div ng-messages-include="validation-messages"></div>
-                                <div ng-message="unknown">User cannot be found</div>
+                                <div ng-message="unknown">User cannot be found in tree</div>
+                            </div>
+                            <div ng-if="frmTransfer.to.$valid" class="user-detail row">
+                                <div class="col-xs-4">
+                                    <img class="img-circle img-responsive" http-src="{{toUser.avatar.url}}" />
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="col-xs-12"><b data-ng-bind="toUser.displayName"></b></div>
+                                    <div class="col-xs-12"><span data-ng-bind="toUser.email"></span></div>
+                                    <div class="col-xs-12"><span data-ng-bind="toUser.phoneNumber"></span></div>
+                                    <div class="col-xs-12"><span data-ng-bind="toUser.bankNumber"></span></div>
+                                    <div class="col-xs-12"><span>{{toUser.bankName}}, {{toUser.bankBranch}}</span></div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -36,15 +48,37 @@
                             <label for="note">Note</label>
                             <input type="text" class="form-control" name="note" placeholder="Note" data-ng-model="transaction.note">
                         </div>
+                        <button type="submit" class="btn btn-default btn--submit">Submit</button>
+                    </form>
+
+                    <form data-ng-submit="transferPIN()" name="frmConfirm" novalidate ng-show="transaction.step == 2">
+                        <div class="form-group">
+                            <label>Balance</label>
+                            <p class="form-control-static" data-ng-bind="currentPinBalance.pinBalance"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="to">Receiver Information</label>
+                            <p class="form-control-static" data-ng-bind="toUser.userName"></p>
+                            <p class="form-control-static" data-ng-bind="toUser.displayName"></p>
+                            <p class="form-control-static" data-ng-bind="toUser.email"></p>
+                            <p class="form-control-static" data-ng-bind="toUser.bankNumber"></p>
+                            <p class="form-control-static"><span data-ng-bind="toUser.bankName"></span>, <span data-ng-bind="toUser.bankBranch"></span></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <p class="form-control-static" data-ng-bind="transaction.amount"></p>
+                        </div>
                         <div class="form-group">
                             <label for="code">Verify Code</label>
                             <div id="code" re-captcha data-ng-model="transaction.code"></div>
-                        </div>
-                        <div class="form-group">                           
+                        </div>     
+                        <div class="form-group">
                             <p class="text-danger" ng-if="failed == 1">Transaction failed. Please try again later.</p>
                             <p class="text-danger" ng-if="failed == 2">Invalid captcha.</p>
                         </div>
-                        <button type="submit" class="btn btn-default btn--submit">Submit</button>
+
+                        <button type="submit" class="btn btn-default btn--submit">Confirm</button>
+                        <button type="button" class="btn btn-default" ng-click="goBack()">Back</button>
                     </form>
                 </div>
             </div>
@@ -63,7 +97,7 @@
                                 <th>STT</th>
                                 <th>To Id</th>
                                 <th>Amount</th>
-                                <th>Time</th>  
+                                <th>Time</th>
                             </tr>
                         </thead>
                         <tbody>

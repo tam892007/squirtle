@@ -56,6 +56,8 @@ namespace BSE365.Model.Entities
 
         public int Level { get; set; }
 
+        public string TreePath { get; set; }
+
         public virtual ICollection<Account> Accounts { get; set; }
 
         public bool IsAllowGive()

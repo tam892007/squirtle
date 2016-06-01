@@ -13,8 +13,7 @@ mainApp.config([
             .state('home',
             {
                 url: "/",
-                templateUrl: 'app/main/home/home.html',
-                controller: 'homeController'
+                templateUrl: 'app/main/home/home.html',  
             })
             .state('login',
             {
@@ -30,11 +29,16 @@ mainApp.config([
             })
             .state('pin',
             {
-                url: "/pin",
+                abstract: true,
+                templateUrl: "app/common/templates/empty.html"
+            })
+            .state('pin.transfer',
+            {
+                url: "/transfer",
                 templateUrl: 'app/main/pin/pin.html',
                 controller: 'pinController'
             })
-            .state('rate',
+            .state('pin.rate',
             {
                 url: "/rate",
                 templateUrl: 'app/main/pin/rate.html',

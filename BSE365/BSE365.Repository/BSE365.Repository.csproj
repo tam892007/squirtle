@@ -86,6 +86,10 @@
     <Compile Include="BSE365AuthContextMigration\201605300809309_SupportTreeAndRating.Designer.cs">
       <DependentUpon>201605300809309_SupportTreeAndRating.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201606010903371_AddTreePathColumn.cs" />
+    <Compile Include="BSE365AuthContextMigration\201606010903371_AddTreePathColumn.Designer.cs">
+      <DependentUpon>201606010903371_AddTreePathColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -98,6 +102,10 @@
     <Compile Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.cs" />
     <Compile Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.Designer.cs">
       <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201606010907478_AddTreePathColumn.cs" />
+    <Compile Include="BSE365ContextMigration\201606010907478_AddTreePathColumn.Designer.cs">
+      <DependentUpon>201606010907478_AddTreePathColumn.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -123,6 +131,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201605300809309_SupportTreeAndRating.resx">
       <DependentUpon>201605300809309_SupportTreeAndRating.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201606010903371_AddTreePathColumn.resx">
+      <DependentUpon>201606010903371_AddTreePathColumn.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +142,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.resx">
       <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606010907478_AddTreePathColumn.resx">
+      <DependentUpon>201606010907478_AddTreePathColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

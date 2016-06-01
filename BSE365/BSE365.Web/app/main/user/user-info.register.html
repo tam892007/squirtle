@@ -3,7 +3,7 @@
         <h3 class="panel-title"> <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Introduce new user</h3>
     </div>
     <div class="panel-body">
-        <form role="form" data-ng-submit="registerUser()" name="regForm" novalidate>
+        <form role="form" data-ng-submit="registerUser()" name="regForm" novalidate ng-show="step==1">
             <div class="form-group" ng-if="!canIntroduce()">
                 <p class="bg-danger"><span class="glyphicon glyphicon-warning-sign"></span> &nbsp; ONLY MAIN ACCOUNT CAN INTRODUCE NEW USER</p>
             </div>
@@ -74,6 +74,55 @@
                 </div>
                 <button type="submit" class="btn btn-default btn-primary">Register</button>
             </div>
+        </form>
+        <form role="form" data-ng-submit="endRegister()" name="frmComplete" novalidate ng-show="step==2" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <p class="bg-success">
+                        <i class="text-info glyphicon glyphicon-ok"></i>&nbsp;
+                        <i class="text-info">User has been registered successfully. Below is the detail information</i>
+                    </p>
+                </div>                
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">User Ids:</label>  
+                <div class="col-xs-9">
+                    <p ng-repeat="user in users track by user.id" class="form-control-static">
+                        <b data-ng-bind="user.userName"></b>
+                    </p> 
+                </div>             
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Email: </label>
+                <div class="col-xs-9">
+                    <p data-ng-bind="users[0].email" class="form-control-static"></p>
+                </div>                  
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Phone: </label>
+                <div class="col-xs-9">
+                    <p data-ng-bind="users[0].phoneNumber" class="form-control-static"></p>
+                </div>                  
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Bank Number: </label>
+                <div class="col-xs-9">
+                    <p data-ng-bind="users[0].bankNumber" class="form-control-static"></p>
+                </div>    
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Bank Name: </label>
+                <div class="col-xs-9">
+                    <p data-ng-bind="users[0].bankName" class="form-control-static"></p>
+                </div>    
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Bank Branch: </label>
+                <div class="col-xs-9">
+                    <p data-ng-bind="users[0].bankBranch" class="form-control-static"></p>
+                </div>     
+            </div>
+            <button type="submit" class="btn btn-default btn-primary">Introduce another</button>
         </form>
     </div>
 </div>

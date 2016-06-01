@@ -3,6 +3,7 @@ mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notifica
     $scope.init = function () {
         $scope.newUser = { userInfo: {} };
         $scope.submitted = false;
+        $scope.step = 1;
     }
 
     $scope.init();
@@ -12,9 +13,16 @@ mainApp.controller('userRegisterController', ['$scope', 'userService', 'Notifica
         if (!$scope.regForm.$valid) return;
         $scope.newUser.userInfo.parentId = $scope.currentUser.userName;
         userService.register($scope.newUser, function (res) {
+            $scope.users = res;
             Notification.success('Register successfully');
-            $state.reload();
+            $scope.step = 2;
+        }, function (err) {
+            Notification.error('Register failed');
         });
+    }
+
+    $scope.endRegister = function () {
+        $state.reload();
     }
 
     $scope.interacted = function (field) {

@@ -22,6 +22,7 @@ namespace BSE365.Repository.BSE365ContextMigration
 
         protected override void Seed(BSE365.Repository.DataContext.BSE365Context context)
         {
+            return;
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 

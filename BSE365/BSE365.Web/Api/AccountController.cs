@@ -52,7 +52,7 @@ namespace BSE365.Api
                 return BadRequest();
             }
 
-            return Ok(result.Result);
+            return Ok(result.Result.Select(x=>x.ToViewModel()));
         }
 
         // GET api/Account/ExternalLogin

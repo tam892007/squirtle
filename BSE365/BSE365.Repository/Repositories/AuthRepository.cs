@@ -26,7 +26,14 @@ namespace BSE365.Repository.Repositories
 
         public async Task<BusinessResult<IEnumerable<User>>> RegisterUser(string userName, string password, UserInfo info)
         {
-            var userInfo = info;      
+            var parentUser = _userManager.FindById(info.ParentId);
+            if (parentUser == null) throw new Exception(string.Format("Parent User with id {0} doesnt exist", info.ParentId));
+            var parentLevel = parentUser.UserInfo.Level;
+            var parentPath = parentUser.UserInfo.TreePath;
+
+            var userInfo = info;
+            userInfo.Level = parentLevel + 1; ////Update level for tree
+            userInfo.TreePath = string.Format("{0}{1}{2}", parentPath, BSE365.Common.Constants.SystemAdmin.TreePathSplitter, parentUser.Id);
             _ctx.UserInfos.Add(userInfo);
             await _ctx.SaveChangesAsync();
 

@@ -24,7 +24,6 @@ var paths = {
         'bower_components/angular-ui-validate/dist/validate.js',
         'bower_components/angular-re-captcha/angular-re-captcha.js',
         'bower_components/angular-ui-notification/dist/angular-ui-notification.js',
-
         'bower_components/underscore/underscore.js',
         'bower_components/ngImgCrop/compile/unminified/ng-img-crop.js',
     ],
