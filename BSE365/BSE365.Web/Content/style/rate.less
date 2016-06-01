@@ -1,59 +1,86 @@
 ﻿.rate {
-    position: relative;
-    padding: 0;
-
-    > img {
-        display: block;
-        width: 100%;
-        max-width: 1200px; /* corresponds to max height of 450px */
-        margin: 0 auto;
-    }
-
     &-info {
-        position: absolute;
-        top: 10%;
-        left: 3%;
-        right: 3%;
-        bottom: 10%;
         background: rgba(0,0,0,.7);
-        color: #fff;
-        text-align: center;
+        color: lightgrey;
+        padding: 30px;
 
         &__heading {
-            font-size: 50px;
+            font-size: 30px;
             font-weight: normal;
-            margin-left: 10%;
-            margin-right: 10%;
-            margin-top: 5%;
+            text-align: center;
         }
 
         &__content {
-            font-size: @font-size-big;
-            margin-top: 50px;
-            margin-left: 10%;
-            margin-right: 10%;
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
 
-            .account {
+            .content-left {
+                margin-top: 50px;
+
+                .account {
+                }
+
+                .currency {
+                }
+
+                .title {
+                    font-size: @font-size-normal;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+                    padding-left: 0;
+                }
+
+                .content {
+                    font-size: @font-size-normal;
+                    color: #f35f5f;
+                    font-weight: 700;
+                    padding-top: 15px;
+                    padding-bottom: 15px;
+
+                    > span {
+                        color: cadetblue;
+                    }
+                }
             }
 
-            .currency {
-            }
+            .content-right {
+                .price-table {
+                    text-align: center;
 
-            .title {
-                text-align: left;
-                color: lightgrey;
-                padding-top: 15px;
-                padding-bottom: 15px;
-            }
+                    &__title {
+                        font-size: @font-size-normal;
+                        font-weight: 700;
+                    }
 
-            .content {
-                color: #f35f5f;
-                font-weight: 700;
-                padding-top: 15px;
-                padding-bottom: 15px;
+                    &__content {
+                        margin-top: 10px;
+                        border: 1px solid darkslategrey;
+                        font-size: 16px;
 
-                > span {
-                    color: cadetblue;
+                        .border-left {
+                            border-left: 1px solid darkslategrey;
+                        }
+
+                        .border-right {
+                            border-right: 1px solid darkslategrey;
+                        }
+
+                        .border-top {
+                            border-top: 1px solid darkslategrey;
+                        }
+
+                        .border-bottom {
+                            border-bottom: 1px solid darkslategrey;
+                        }
+
+                        .table-header {
+                            .quantity {
+                                position: relative;
+                                top: 15px;
+                            }
+                        }
+                    }
                 }
             }
         }

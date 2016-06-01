@@ -1,25 +1,59 @@
 ﻿<div class="container rate">
-    <img src="Content/images/wallets.jpg" />
     <div class="rate-info">
         <div class="row rate-info__heading">
             <div class="col-md-12">Bitcoin Supported</div>
         </div>
         <div class="row rate-info__content">
-            <div class="row account">
-                <div class="col-md-5 title">
-                    ID BITCOIN MAXXPG:
+            <div class="col-md-5 content-left">
+                <div class="row account">
+                    <div class="title">
+                        ID BITCOIN MAXXPG:
+                    </div>
+                    <div class="content">
+                        50720706-63be-4dd5-a304-1f17a3ac4344
+                    </div>
                 </div>
-                <div class="col-md-7 content">
-                    50720706-63be-4dd5-a304-1f17a3ac4344
+                <div class="row currency">
+                    <div class="col-md-7 title">
+                        Current Price online:
+                    </div>
+                    <div class="col-md-5 content">
+                        <span data-ng-bind="rate.usd"></span>
+                        <span>USD</span>
+                    </div>
                 </div>
             </div>
-            <div class="row currency">
-                <div class="col-md-5 title">
-                    Current Price for 1 BITCOIN:
-                </div>
-                <div class="col-md-7 content">
-                    <span data-ng-bind="rate.usd"></span>
-                    <span>USD</span>
+            <div class="col-md-7 content-right">
+                <div class="row price-table">
+                    <div class="price-table__title">
+                        Current Price tranfer
+                    </div>
+                    <div class="col-md-12 price-table__content">
+                        <div class="table-header">
+                            <div class="row">
+                                <div class="col-md-2 padding-5"><span class="quantity">Quantity</span></div>
+                                <div class="col-md-5 border-left border-bottom padding-5">Prise/Pin</div>
+                                <div class="col-md-5 border-left border-bottom padding-5">Total</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2 border-left padding-5">USD</div>
+                                <div class="col-md-3 border-left padding-5">Bitcoin</div>
+                                <div class="col-md-2 border-left padding-5">USD</div>
+                                <div class="col-md-3 border-left padding-5">Bitcoin</div>
+                            </div>
+                        </div>
+                        <div class="table-content" ng-repeat="bitPrice in bitPrices">
+                            <div class="row border-top">
+                                <div class="col-md-1 padding-5">{{bitPrice.quantity1}}</div>
+                                <div class="col-md-1 border-left padding-5">{{bitPrice.quantity2}}</div>
+                                <div class="col-md-2 border-left padding-5">{{bitPrice.usd | number:2}}</div>
+                                <div class="col-md-3 border-left padding-5">{{bitPrice.bitCoin}}</div>
+                                <div class="col-md-2 border-left padding-5">{{bitPrice.totalUsd | number:0}}</div>
+                                <div class="col-md-3 border-left padding-5">{{bitPrice.totalBitCoin | number:11}}</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
