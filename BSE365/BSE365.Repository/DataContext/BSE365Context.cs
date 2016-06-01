@@ -22,7 +22,7 @@ namespace BSE365.Repository.DataContext
         public virtual DbSet<MoneyTransaction> MoneyTransactions { get; set; }
         public virtual DbSet<WaitingGiver> WaitingGivers { get; set; }
         public virtual DbSet<WaitingReceiver> WaitingReceivers { get; set; }
-
+        public virtual DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -32,7 +32,7 @@ namespace BSE365.Repository.DataContext
             modelBuilder.Configurations.Add(new MoneyTransactionMapping());
             modelBuilder.Configurations.Add(new WaitingGiverMapping());
             modelBuilder.Configurations.Add(new WaitingReceiverMapping());
-
+            modelBuilder.Configurations.Add(new MessageMapping());
             base.OnModelCreating(modelBuilder);
         }
     }

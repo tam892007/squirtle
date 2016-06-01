@@ -280,6 +280,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ImageController.cs" />
+    <Compile Include="Api\MessageController.cs" />
     <Compile Include="Api\MoneyTransactionController.cs" />
     <Compile Include="Api\TradeController.cs" />
     <Compile Include="Api\PinController.cs" />
@@ -287,7 +288,9 @@
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\ConfigController.cs" />
+    <Compile Include="Mappings\MessageVMMapping.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
+    <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
     <Compile Include="App_Start\RouteConfig.cs" />

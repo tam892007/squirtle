@@ -99,10 +99,15 @@
     <Compile Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.Designer.cs">
       <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365ContextMigration\201606011436176_AddMessage.cs" />
+    <Compile Include="BSE365ContextMigration\201606011436176_AddMessage.Designer.cs">
+      <DependentUpon>201606011436176_AddMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
+    <Compile Include="Mappings\MessageMapping.cs" />
     <Compile Include="Mappings\AccountMapping.cs" />
     <Compile Include="Mappings\ConfigMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionMapping.cs" />
@@ -131,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605300810168_SupportTreeAndRating.resx">
       <DependentUpon>201605300810168_SupportTreeAndRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606011436176_AddMessage.resx">
+      <DependentUpon>201606011436176_AddMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

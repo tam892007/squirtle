@@ -50,6 +50,9 @@ namespace BSE365.Model.Entities
         public virtual ICollection<WaitingGiver> WaitingGivers { get; set; }
         public virtual ICollection<WaitingReceiver> WaitingReceivers { get; set; }
 
+        public virtual ICollection<Message> MessageReceied { get; set; }
+        public virtual ICollection<Message> MessageSent { get; set; }
+
         public bool IsAllowGive()
         {
             var dayFromLastCycle = (DateTime.Now - LastCycleDate).Days;
