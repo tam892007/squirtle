@@ -22,7 +22,7 @@
                 </tr>
                 <tr>
                     <td>ID</td>
-                    <td>{{item.receiverId}}</td>
+                    <td>{{item.giverId}}</td>
                 </tr>
                 <tr>
                     <td>Phone</td>
@@ -45,8 +45,12 @@
                     <td>{{item.amount}}</td>
                 </tr>
                 <tr>
-                    <td>Time</td>
-                    <td>{{item.time}}</td>
+                    <td>Time left</td>
+                    <td>
+                        <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
+                            {{hhours}}:{{mminutes}}:{{sseconds}} <span> </span>
+                        </timer>
+                    </td>
                 </tr>
             </table>
         </div>

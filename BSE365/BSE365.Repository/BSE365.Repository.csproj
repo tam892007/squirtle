@@ -107,10 +107,15 @@
     <Compile Include="BSE365ContextMigration\201606010907478_AddTreePathColumn.Designer.cs">
       <DependentUpon>201606010907478_AddTreePathColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.cs" />
+    <Compile Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.Designer.cs">
+      <DependentUpon>201606012225470_AddStoredProcedureMapGiversAndReceivers.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
+    <Compile Include="Helper\StoreHelper.cs" />
     <Compile Include="Mappings\AccountMapping.cs" />
     <Compile Include="Mappings\ConfigMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionMapping.cs" />
@@ -146,9 +151,17 @@
     <EmbeddedResource Include="BSE365ContextMigration\201606010907478_AddTreePathColumn.resx">
       <DependentUpon>201606010907478_AddTreePathColumn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.resx">
+      <DependentUpon>201606012225470_AddStoredProcedureMapGiversAndReceivers.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SQL\CreateMoneyTransaction.sql" />
+    <Content Include="SQL\SpMapGiversAndReceivers.sql" />
+    <Content Include="SQL\SpMapGiversAndReceivers_Drop.sql" />
+    <Content Include="SQL\SpUpdateNotConfirmedTransactions.sql" />
+    <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

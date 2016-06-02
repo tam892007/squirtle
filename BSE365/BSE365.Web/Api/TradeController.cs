@@ -11,6 +11,7 @@ using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Repository.Helper;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -40,14 +41,14 @@ namespace BSE365.Api
             _waitingGiverRepo = waitingGiverRepo;
             _waitingReceiverRepo = waitingReceiverRepo;
         }
-
+        
         [HttpGet]
         [Route("InitDatabase")]
         public async Task<IHttpActionResult> InitDatabase(int key = 0)
         {
             switch (key)
             {
-                case 0:
+                case 10:
                     BSE365.Repository.BSE365AuthContextMigration.Configuration.InitData(
                         new BSE365.Repository.DataContext.BSE365AuthContext());
                     BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
@@ -63,7 +64,9 @@ namespace BSE365.Api
                     BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
-                case 3:
+                case 0:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
+                        new BSE365.Repository.DataContext.BSE365Context());
                     BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;

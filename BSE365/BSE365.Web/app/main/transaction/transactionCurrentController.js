@@ -1,8 +1,8 @@
 ﻿'use strict';
 mainApp.controller('transactionCurrentController',
 [
-    '$scope', '_', 'transactionService', 'tradeService', 'Notification', 'AccountState', 'TransactionState',
-    function($scope, _, transactionService, tradeService, Notification, AccountState, TransactionState) {
+    '$scope', '_', '$timeout', 'transactionService', 'tradeService', 'Notification', 'AccountState', 'TransactionState',
+    function($scope, _, $timeout, transactionService, tradeService, Notification, AccountState, TransactionState) {
 
         $scope.updateStatus = function() {
             return tradeService.status({},
@@ -19,12 +19,14 @@ mainApp.controller('transactionCurrentController',
                         loadTransaction(response);
                     });
                 $scope.accountDisplayTemplate = $scope.receiverInfoTemplateUrl;
+                $scope.grState = 'giving';
             } else if ($scope.info.state == AccountState.InReceiveTransaction) {
                 transactionService.receiveRequested({},
                     function(response) {
                         loadTransaction(response);
                     });
                 $scope.accountDisplayTemplate = $scope.giverInfoTemplateUrl;
+                $scope.grState = 'receiving';
             }
         }
 
@@ -72,7 +74,8 @@ mainApp.controller('transactionCurrentController',
                 });
         }
 
-        $scope.init = function() {
+        $scope.init = function () {
+            $scope.grState = '';
             $scope.giverInfoTemplateUrl = 'app/main/transaction/info-giver.html';
             $scope.receiverInfoTemplateUrl = 'app/main/transaction/info-receiver.html';
             $scope.TransactionState = TransactionState;

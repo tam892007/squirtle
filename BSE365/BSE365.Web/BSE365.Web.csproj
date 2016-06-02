@@ -288,6 +288,7 @@
     <Compile Include="Api\AccountController.cs" />
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\ConfigController.cs" />
+    <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
@@ -316,7 +317,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Timers\TransactionTimer.cs" />
-    <Compile Include="Timers\WaitingHepler.cs" />
+    <Compile Include="Timers\WaitingTimer.cs" />
     <Compile Include="ViewModels\CaptchaViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />
