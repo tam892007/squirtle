@@ -1,10 +1,7 @@
-CREATE PROCEDURE UpdateTransactions 
-	@Time DATETIME
+CREATE PROCEDURE UpdateTransactions @Time DATETIME
 AS
 BEGIN
-	EXEC UpdateNotTransferedTransactions @Time GO;
-	EXEC UpdateNotConfirmedTransactions @Time GO;
+	EXEC UpdateNotTransferedTransactions @Time;
+
+	EXEC UpdateNotConfirmedTransactions @Time;
 END
-GO
-
-
