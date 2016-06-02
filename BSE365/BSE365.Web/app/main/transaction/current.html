@@ -1,7 +1,12 @@
 ﻿<div>
-    <div class="row">
+    <div class="alert alert-danger">
+        <div class="" ng-if="grState=='giving'">Giving</div>
+        <div class="" ng-if="grState=='receiving'">Receiving</div>
+        <div class="" ng-if="grState==''">Nothing!</div>
+    </div>
+    <div class="row text-center">
         <div class="col-md-4" ng-repeat="item in transactions" ng-include="accountDisplayTemplate">
-            
+
         </div>
     </div>
 </div>

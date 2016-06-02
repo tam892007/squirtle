@@ -158,6 +158,10 @@
   <ItemGroup>
     <Content Include="SQL\SpMapGiversAndReceivers.sql" />
     <Content Include="SQL\SpMapGiversAndReceivers_Drop.sql" />
+    <Content Include="SQL\SpUpdateNotConfirmedTransactions.sql" />
+    <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

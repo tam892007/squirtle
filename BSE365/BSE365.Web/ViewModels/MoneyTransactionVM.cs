@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using BSE365.Common.Constants;
 using BSE365.Model.Enum;
 
 namespace BSE365.ViewModels
@@ -41,6 +42,31 @@ namespace BSE365.ViewModels
             public string BankNumber { get; set; }
             public string BankName { get; set; }
             public string BankBranch { get; set; }
+
+            public int Countdown
+            {
+                get
+                {
+                    var result = 0;
+                    if (State == MoneyTransferState.Begin)
+                    {
+                        var timeLeft = DateTime.Now - Created;
+                        if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
+                        {
+                            result = TimerConfig.TimeForEachStepInMilliseconds - timeLeft.Milliseconds;
+                        }
+                    }
+                    else if (State == MoneyTransferState.Transfered)
+                    {
+                        var timeLeft = DateTime.Now - TransferedDate.Value;
+                        if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
+                        {
+                            result = TimerConfig.TimeForEachStepInMilliseconds - timeLeft.Milliseconds;
+                        }
+                    }
+                    return result;
+                }
+            }
         }
     }
 }

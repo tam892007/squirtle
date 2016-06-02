@@ -48,7 +48,7 @@ namespace BSE365.Api
         {
             switch (key)
             {
-                case 0:
+                case 10:
                     BSE365.Repository.BSE365AuthContextMigration.Configuration.InitData(
                         new BSE365.Repository.DataContext.BSE365AuthContext());
                     BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
@@ -64,7 +64,9 @@ namespace BSE365.Api
                     BSE365.Repository.BSE365ContextMigration.Configuration.CreateAccount(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;
-                case 3:
+                case 0:
+                    BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
+                        new BSE365.Repository.DataContext.BSE365Context());
                     BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
                         new BSE365.Repository.DataContext.BSE365Context());
                     break;

@@ -45,7 +45,7 @@ namespace BSE365.Timers
             try
             {
                 Trace.WriteLine("Running");
-                //SyncHelper.Sync();
+                Execute();
                 Trace.WriteLine("---");
             }
             catch (Exception exception)

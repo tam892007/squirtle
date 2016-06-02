@@ -34,7 +34,7 @@ namespace BSE365.Repository.Helper
                     SqlDbType = SqlDbType.DateTime,
                     Direction = ParameterDirection.Input,
                 };
-                context.Database.ExecuteSqlCommand("EXEC UpdateTransactions @Time GO;", timeBaseParam);
+                context.Database.ExecuteSqlCommand("EXEC UpdateTransactions @Time;", timeBaseParam);
             }
         }
     }
