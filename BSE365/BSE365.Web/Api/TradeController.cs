@@ -11,6 +11,7 @@ using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Repository.Helper;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -40,7 +41,7 @@ namespace BSE365.Api
             _waitingGiverRepo = waitingGiverRepo;
             _waitingReceiverRepo = waitingReceiverRepo;
         }
-
+        
         [HttpGet]
         [Route("InitDatabase")]
         public async Task<IHttpActionResult> InitDatabase(int key = 0)
