@@ -108,6 +108,9 @@ code {
   text-align: center;
   margin-top: 40px;
 }
+.padding-5 {
+  padding: 5px;
+}
 .angular-ui-tree-handle {
   background: #f8faff;
   border: 1px solid #dae2ea;
@@ -251,11 +254,28 @@ code {
 .panel-form .panel-body .row {
   padding-top: 10px;
 }
+.panel-form .panel-body .col-xs-4,
+.panel-form .panel-body .col-xs-8,
+.panel-form .panel-body .col-xs-12 {
+  padding: 0px 5px 0px 5px;
+}
 .panel-form .panel-body .rating-custom .glyphicon-star {
   color: red;
 }
 .panel-form .panel-body .rating-custom .glyphicon-star-empty {
   color: black;
+}
+.panel-form .panel-body .user-detail {
+  border: 1px solid #4b2218;
+  margin: 5px 0 5px 0;
+  border-radius: 4px;
+  padding-bottom: 10px;
+}
+.panel-form .panel-body .user-detail .col-xs-4,
+.panel-form .panel-body .user-detail .col-xs-8,
+.panel-form .panel-body .user-detail .col-xs-12 {
+  padding: 0px 5px 0px 5px;
+  font-family: 'Eras ITC';
 }
 .panel-table .panel-heading {
   background-color: #4b2218;
@@ -386,54 +406,67 @@ textarea.ng-dirty.ng-valid,
   border-color: transparent transparent maroon;
   border-width: 5px;
 }
-.rate {
-  position: relative;
-  padding: 0;
-}
-.rate > img {
-  display: block;
-  width: 100%;
-  max-width: 1200px;
-  /* corresponds to max height of 450px */
-  margin: 0 auto;
-}
 .rate-info {
-  position: absolute;
-  top: 10%;
-  left: 3%;
-  right: 3%;
-  bottom: 10%;
   background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  text-align: center;
+  color: lightgrey;
+  padding: 30px;
 }
 .rate-info__heading {
-  font-size: 50px;
+  font-size: 30px;
   font-weight: normal;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-top: 5%;
+  text-align: center;
 }
 .rate-info__content {
-  font-size: 24px;
-  margin-top: 50px;
-  margin-left: 10%;
-  margin-right: 10%;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
-.rate-info__content .title {
-  text-align: left;
-  color: lightgrey;
+.rate-info__content .content-left {
+  margin-top: 50px;
+}
+.rate-info__content .content-left .title {
+  font-size: 18px;
   padding-top: 15px;
   padding-bottom: 15px;
+  padding-left: 0;
 }
-.rate-info__content .content {
+.rate-info__content .content-left .content {
+  font-size: 18px;
   color: #f35f5f;
   font-weight: 700;
   padding-top: 15px;
   padding-bottom: 15px;
 }
-.rate-info__content .content > span {
+.rate-info__content .content-left .content > span {
   color: cadetblue;
+}
+.rate-info__content .content-right .price-table {
+  text-align: center;
+}
+.rate-info__content .content-right .price-table__title {
+  font-size: 18px;
+  font-weight: 700;
+}
+.rate-info__content .content-right .price-table__content {
+  margin-top: 10px;
+  border: 1px solid darkslategrey;
+  font-size: 16px;
+}
+.rate-info__content .content-right .price-table__content .border-left {
+  border-left: 1px solid darkslategrey;
+}
+.rate-info__content .content-right .price-table__content .border-right {
+  border-right: 1px solid darkslategrey;
+}
+.rate-info__content .content-right .price-table__content .border-top {
+  border-top: 1px solid darkslategrey;
+}
+.rate-info__content .content-right .price-table__content .border-bottom {
+  border-bottom: 1px solid darkslategrey;
+}
+.rate-info__content .content-right .price-table__content .table-header .quantity {
+  position: relative;
+  top: 15px;
 }
 
 /*# sourceMappingURL=main.css.map */

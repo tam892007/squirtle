@@ -212,11 +212,15 @@
     <Content Include="app\common\directives\httpSrc.js" />
     <Content Include="app\common\directives\syncFocusWith.js" />
     <Content Include="app\common\services\imageService.js" />
+    <Content Include="app\common\templates\empty.html" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\association\association.html" />
     <Content Include="app\main\association\associationController.js" />
     <Content Include="app\main\home\home.html" />
     <Content Include="app\main\index\indexController.js" />
+    <Content Include="app\main\message\send-message.html" />
+    <Content Include="app\main\message\sendMessageController.js" />
+    <Content Include="app\main\message\messageService.js" />
     <Content Include="app\main\pin\rateController.js" />
     <Content Include="app\main\pin\rate.html" />
     <Content Include="app\main\pin\pinController.js" />
@@ -289,6 +293,7 @@
     <Compile Include="Api\BaseController.cs" />
     <Compile Include="Api\ConfigController.cs" />
     <Compile Include="Mappings\MessageVMMapping.cs" />
+    <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
@@ -318,7 +323,7 @@
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Timers\TransactionTimer.cs" />
-    <Compile Include="Timers\WaitingHepler.cs" />
+    <Compile Include="Timers\WaitingTimer.cs" />
     <Compile Include="ViewModels\CaptchaViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\ExternalLoginViewModels.cs" />

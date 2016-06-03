@@ -181,12 +181,25 @@ namespace BSE365.Api
             };
         }
 
-        private async Task<ResultViewModel<bool>> CheckNameAsync(string name)
+        private async Task<ResultViewModel<UserInfoViewModel>> CheckNameAsync(string name)
         {
-            var result = new ResultViewModel<bool>();
+            var parentId = User.Identity.GetUserId();
+            var parentUser = await _repo.FindUser(parentId);
+
+            var result = new ResultViewModel<UserInfoViewModel>();
             var user = await _repo.FindUserByName(name);
-            result.IsSuccessful = user != null;
-            result.Result = user != null;
+            if (user == null)
+            {
+                return new ResultViewModel<UserInfoViewModel> { IsSuccessful = false, Result = null, };
+            }
+            else
+            {            
+                result.Result = user.ToViewModel();
+                var treePath = user.UserInfo.TreePath == null ? string.Empty : user.UserInfo.TreePath;
+                var parentIds = treePath.Split(new string[] { BSE365.Common.Constants.SystemAdmin.TreePathSplitter }, System.StringSplitOptions.RemoveEmptyEntries);
+                result.IsSuccessful = parentUser.UserInfo.Id == user.UserInfo.Id || parentIds.Contains(parentId);  ////same user or in tree
+            }
+            
             return result;
         }
 

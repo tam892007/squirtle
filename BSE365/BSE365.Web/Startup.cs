@@ -27,8 +27,11 @@ namespace BSE365.Web
             ConfigureWebApi(config);
             app.UseWebApi(config);
 
-            //Database
+            ////Database
             DatabaseInitializer();
+
+            ////Timer
+            ConfigureTimer(config);
         }
     }
 }

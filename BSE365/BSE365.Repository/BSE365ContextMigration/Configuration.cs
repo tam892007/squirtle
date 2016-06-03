@@ -22,6 +22,7 @@ namespace BSE365.Repository.BSE365ContextMigration
 
         protected override void Seed(BSE365.Repository.DataContext.BSE365Context context)
         {
+            //return;
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
@@ -110,6 +111,7 @@ namespace BSE365.Repository.BSE365ContextMigration
             foreach (var account in accounts)
             {
                 account.State = AccountState.Default;
+                account.RelatedTransaction = string.Empty;
                 account.ObjectState = ObjectState.Modified;
                 foreach (var item in account.WaitingGivers)
                 {
@@ -127,6 +129,11 @@ namespace BSE365.Repository.BSE365ContextMigration
                 {
                     item.ObjectState = ObjectState.Deleted;
                 }
+            }
+            var groups = context.MoneyTransferGroups.ToList();
+            foreach (var group in groups)
+            {
+                group.ObjectState = ObjectState.Deleted;
             }
             context.SaveChanges();
         }

@@ -1,7 +1,7 @@
 ﻿var mainApp = angular.module('mainApp',
 [
     'ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload',
-    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification'
+    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification', 'timer'
 ]);
 
 mainApp.config([
@@ -13,8 +13,7 @@ mainApp.config([
             .state('home',
             {
                 url: "/",
-                templateUrl: 'app/main/home/home.html',
-                controller: 'homeController'
+                templateUrl: 'app/main/home/home.html',  
             })
             .state('login',
             {
@@ -30,11 +29,16 @@ mainApp.config([
             })
             .state('pin',
             {
-                url: "/pin",
+                abstract: true,
+                templateUrl: "app/common/templates/empty.html"
+            })
+            .state('pin.transfer',
+            {
+                url: "/transfer",
                 templateUrl: 'app/main/pin/pin.html',
                 controller: 'pinController'
             })
-            .state('rate',
+            .state('pin.rate',
             {
                 url: "/rate",
                 templateUrl: 'app/main/pin/rate.html',
@@ -106,6 +110,12 @@ mainApp.config([
                 url: "/association",
                 templateUrl: 'app/main/association/association.html',
                 controller: 'associationController'
+            })
+            .state('sendMessage',
+            {
+                url: "/message/send",
+                templateUrl: '/message/send-message.html',
+                controller: 'sendMessageController'
             });
 }]);
 

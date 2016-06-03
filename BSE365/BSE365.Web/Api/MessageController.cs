@@ -12,18 +12,20 @@ using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Model.Enum;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 
 namespace BSE365.Api
 {
-    [Authorize]
+    //[Authorize]
     [RoutePrefix("api/Message")]
     public class MessageController : ApiController
     {
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<Message> _messageRepo;
+        MessageRepository messageRepository;
 
         public MessageController(
             IUnitOfWorkAsync unitOfWork,
@@ -31,6 +33,7 @@ namespace BSE365.Api
         {
             _unitOfWork = unitOfWork;
             _messageRepo = messageRepo;
+            messageRepository = new MessageRepository();
         }
 
         [HttpGet]
@@ -46,6 +49,15 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> MessageReceived()
         {
             var result = await MessageReceivedAsync();
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("Send")]
+        public async Task<IHttpActionResult> Send(MessageViewModel messageViewModel)
+        {
+            var message = messageViewModel.ToModel();
+            var result = messageRepository.Send(message);
             return Ok(result);
         }
 

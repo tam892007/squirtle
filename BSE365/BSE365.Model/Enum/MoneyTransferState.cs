@@ -12,8 +12,8 @@ namespace BSE365.Model.Enum
         Transfered = 1,
         Confirmed = 2,
 
-        NotTransfer = 11,
-        NotConfirm = 12,
-        ReportedNotTransfer = 13,
+        NotTransfer = 21,
+        NotConfirm = 22,
+        ReportedNotTransfer = 23,
     }
 }

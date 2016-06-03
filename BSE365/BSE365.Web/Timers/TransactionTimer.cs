@@ -2,35 +2,41 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web;
+using BSE365.Common.Constants;
+using BSE365.Repository.Helper;
 
 namespace BSE365.Timers
 {
     public class TransactionTimer
     {
         private System.Timers.Timer _timer;
-        private double timerTick = /*60*60*1000;*/ 10*60*1000; //for test
-
-        public TransactionTimer()
-        {
-            this._timer = new System.Timers.Timer(timerTick); // 30000 milliseconds = 30 seconds
-            this._timer.AutoReset = true;
-            this._timer.Elapsed += new System.Timers.ElapsedEventHandler(this.timer_Elapsed);
-            this._timer.Enabled = true;
-        }
-
+        public bool IsRunning { get; private set; }
 
         public void Start()
         {
-            timer_Elapsed(null, null);
-            this._timer.Start();
+            if (!IsRunning)
+            {
+                IsRunning = true;
+                timer_Elapsed(null, null);
+                this._timer = new System.Timers.Timer(TimerConfig.WaitingHelperTimeout);
+                this._timer.AutoReset = true;
+                this._timer.Elapsed += new System.Timers.ElapsedEventHandler(this.timer_Elapsed);
+                this._timer.Enabled = true;
+                this._timer.Start();
+            }
         }
 
 
         public void Stop()
         {
-            this._timer.Stop();
-            this._timer = null;
+            if (IsRunning)
+            {
+                IsRunning = false;
+                this._timer.Stop();
+                this._timer = null;
+            }
         }
 
 
@@ -39,13 +45,19 @@ namespace BSE365.Timers
             try
             {
                 Trace.WriteLine("Running");
-                //SyncHelper.Sync();
+                Execute();
                 Trace.WriteLine("---");
             }
             catch (Exception exception)
             {
                 Trace.WriteLine("Exception : {0}", exception.Message);
             }
+        }
+        
+        public void Execute()
+        {
+            Thread thread = new Thread(StoreHelper.UpdateTransactions);
+            thread.Start();
         }
     }
 }

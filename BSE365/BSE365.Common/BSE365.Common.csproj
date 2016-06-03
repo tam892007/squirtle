@@ -39,6 +39,7 @@
     <Compile Include="Constants\SystemAdmin.cs" />
     <Compile Include="Constants\TestData.cs" />
     <Compile Include="Constants\UserRolesText.cs" />
+    <Compile Include="Constants\TimerConfig.cs" />
     <Compile Include="Constants\WebConfigKey.cs" />
     <Compile Include="Helper\Utilities.cs" />
   </ItemGroup>
