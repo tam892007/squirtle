@@ -218,7 +218,9 @@
     <Content Include="app\main\association\associationController.js" />
     <Content Include="app\main\home\home.html" />
     <Content Include="app\main\index\indexController.js" />
+    <Content Include="app\main\message\inbox.html" />
     <Content Include="app\main\message\send-message.html" />
+    <Content Include="app\main\message\inboxController.js" />
     <Content Include="app\main\message\sendMessageController.js" />
     <Content Include="app\main\message\messageService.js" />
     <Content Include="app\main\pin\rateController.js" />

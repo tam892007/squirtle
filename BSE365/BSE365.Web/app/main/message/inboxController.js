@@ -1,5 +1,5 @@
 ﻿'use strict';
-mainApp.controller('sendMessageController', ['$scope', 'userService', 'messageService', '$q', 'Notification', 'localStorageService', '$state', function ($scope, userService, messageService, $q, Notification, localStorageService, $state) {
+mainApp.controller('inboxController', ['$scope', 'userService', 'messageService', '$q', 'Notification', 'localStorageService', '$state', function ($scope, userService, messageService, $q, Notification, localStorageService, $state) {
     
     $scope.init = function () {
         var currentUserName = localStorageService.get('authorizationData').userName;

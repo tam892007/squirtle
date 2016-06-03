@@ -57,7 +57,7 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> Send(MessageViewModel messageViewModel)
         {
             var message = messageViewModel.ToModel();
-            var result = messageRepository.Send(message);
+            var result = await messageRepository.Send(message);
             return Ok(result);
         }
 

@@ -114,8 +114,14 @@ mainApp.config([
             .state('sendMessage',
             {
                 url: "/message/send",
-                templateUrl: '/message/send-message.html',
+                templateUrl: 'app/main/message/send-message.html',
                 controller: 'sendMessageController'
+            })
+            .state('inbox',
+            {
+                url: "/inbox",
+                templateUrl: 'app/main/message/inbox.html',
+                controller: 'inboxController'
             });
 }]);
 

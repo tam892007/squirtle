@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using BSE365.Model.Enum;
+using BSE365.Base.Infrastructures;
 
 namespace BSE365.Repository.Repositories
 {
@@ -26,6 +27,7 @@ namespace BSE365.Repository.Repositories
         {
             message.Status = MessageState.UnRead;
             message.SendTime = DateTime.Now;
+            message.ObjectState = ObjectState.Added;
             _ctx.Messages.Add(message);
             return await _ctx.SaveChangesAsync();
         }
