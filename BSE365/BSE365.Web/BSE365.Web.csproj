@@ -289,6 +289,12 @@
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\CommonApp.js" />
     <Content Include="Scripts\MainApp.js" />
+    <Content Include="SQL\SpMapGiversAndReceivers.sql" />
+    <Content Include="SQL\SpMapGiversAndReceivers_Drop.sql" />
+    <Content Include="SQL\SpUpdateNotConfirmedTransactions.sql" />
+    <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

@@ -7,16 +7,16 @@ namespace BSE365.Repository.BSE365ContextMigration
     {
         public override void Up()
         {
-            SqlFile("../../SQL/SpMapGiversAndReceivers.sql");
-            SqlFile("../../SQL/SpUpdateNotConfirmedTransactions.sql");
-            SqlFile("../../SQL/SpUpdateNotTransferedTransactions.sql");
-            SqlFile("../../SQL/SpUpdateTransactions.sql");
+            SqlFile("SQL/SpMapGiversAndReceivers.sql");
+            SqlFile("SQL/SpUpdateNotConfirmedTransactions.sql");
+            SqlFile("SQL/SpUpdateNotTransferedTransactions.sql");
+            SqlFile("SQL/SpUpdateTransactions.sql");
         }
         
         public override void Down()
         {
-            SqlFile("../../SQL/SpMapGiversAndReceivers_Drop.sql");
-            SqlFile("../../SQL/SpUpdateTransaction_Drop.sql");
+            SqlFile("SQL/SpMapGiversAndReceivers_Drop.sql");
+            SqlFile("SQL/SpUpdateTransaction_Drop.sql");
         }
     }
 }
