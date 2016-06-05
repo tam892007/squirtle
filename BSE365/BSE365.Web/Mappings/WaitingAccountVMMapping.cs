@@ -19,13 +19,13 @@ namespace BSE365.Mappings
                     AccountId = x.AccountId,
                     Priority = x.Priority,
                     Created = x.Created,
-                    //Amount = x.Amount,
+                    Amount = x.Amount,
                     State = x.Account.State,
                     LastCycleDate = x.Account.LastCycleDate,
                     DisplayName = x.Account.UserInfo.DisplayName,
                     Email = x.Account.UserInfo.Email,
                     PhoneNumber = x.Account.UserInfo.PhoneNumber,
-                    //AvatarUrl = x.Account.UserInfo.AvatarId,
+                    AvatarId = x.Account.UserInfo.AvatarId,
                 };
             return result;
         }
@@ -45,7 +45,7 @@ namespace BSE365.Mappings
                     DisplayName = x.Account.UserInfo.DisplayName,
                     Email = x.Account.UserInfo.Email,
                     PhoneNumber = x.Account.UserInfo.PhoneNumber,
-                    //AvatarUrl = x.Account.UserInfo.AvatarId,
+                    AvatarId = x.Account.UserInfo.AvatarId,
                 };
             return result;
         }

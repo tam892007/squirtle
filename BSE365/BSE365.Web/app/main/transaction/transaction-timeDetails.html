@@ -1,0 +1,25 @@
+﻿<div class="alert">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td colspan="5">History</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>Account</td>
+                <td>Rate</td>
+                <td>Time</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in histories">
+                <td>{{$index + 1}}</td>
+                <td>{{item.userName}}</td>
+                <td>{{item.rate}}</td>
+                <td>{{item.time|date}}</td>
+                <td>{{item.isCompleted}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

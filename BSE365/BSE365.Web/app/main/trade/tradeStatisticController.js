@@ -39,10 +39,8 @@ mainApp.controller('tradeStatisticController',
 
 
         $scope.init = function() {
-            Notification.success('Hello');
-
-            $scope.accountStates = AccountState;
-            $scope.priorityLevels = PriorityLevel;
+            $scope.AccountState = AccountState;
+            $scope.PriorityLevel = PriorityLevel;
 
             $scope.updateStatus();
         }

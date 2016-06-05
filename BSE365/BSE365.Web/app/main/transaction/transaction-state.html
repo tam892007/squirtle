@@ -1,0 +1,27 @@
+﻿<div class="bg-primary">
+    <div class="" ng-if="grState=='giving'">Giving</div>
+    <div class="" ng-if="grState=='receiving'">Receiving</div>
+    <div class="" ng-if="grState==''">Nothing!</div>
+</div>
+<div class="bg-info">
+    <div class="col-md-2 col-md-offset-1 text-center transaction-step">
+        <div>Queue</div>
+        <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>
+    </div>
+    <div class="col-md-2 text-center transaction-step">
+        <div>Wait Give</div>
+        <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.giving == -1, 'glyphicon-expand': overviewState.giving == 0,'glyphicon-ok': overviewState.giving == 1,}"></span>
+    </div>
+    <div class="col-md-2 text-center transaction-step">
+        <div>Cofirm Give</div>
+        <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.gave == -1, 'glyphicon-expand': overviewState.gave == 0,'glyphicon-ok': overviewState.gave == 1,}"></span>
+    </div>
+    <div class="col-md-2 text-center transaction-step">
+        <div>Confirm Receive</div>
+        <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.received == -1, 'glyphicon-expand': overviewState.received == 0,'glyphicon-ok': overviewState.received == 1,}"></span>
+    </div>
+    <div class="col-md-2 text-center transaction-step">
+        <div>Complete</div>
+        <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
+    </div>
+</div>

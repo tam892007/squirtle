@@ -1,0 +1,3 @@
+DROP PROCEDURE UpdateTransactions
+DROP PROCEDURE UpdateNotConfirmedTransactions
+DROP PROCEDURE UpdateNotTransferedTransactions

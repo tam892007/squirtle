@@ -10,13 +10,20 @@ namespace BSE365.Model.Entities
 {
     public class MoneyTransaction : BaseEntity
     {
+        public MoneyTransaction()
+        {
+            Type = TransactionType.Default;
+            State = TransactionState.Begin;
+        }
+
         public string GiverId { get; set; }
         public string ReceiverId { get; set; }
 
         public DateTime Created { get; set; }
         public DateTime LastModified { get; set; }
 
-        public MoneyTransferState State { get; set; }
+        public TransactionType Type { get; set; }
+        public TransactionState State { get; set; }
         public string AttachmentUrl { get; set; }
 
         public DateTime? TransferedDate { get; set; }
@@ -24,14 +31,18 @@ namespace BSE365.Model.Entities
 
         public int MoneyTransferGroupId { get; set; }
 
+        public int? RelatedTransactionId { get; set; }
+
         public bool IsEnd { get; set; }
 
         public virtual Account Giver { get; set; }
         public virtual Account Receiver { get; set; }
 
+        public virtual MoneyTransaction RelatedTransaction { get; set; }
+
         public void MoneyTransfered(string attachmentUrl)
         {
-            State = MoneyTransferState.Transfered;
+            State = TransactionState.Transfered;
             TransferedDate = DateTime.Now;
             LastModified = DateTime.Now;
             AttachmentUrl = attachmentUrl;
@@ -42,7 +53,7 @@ namespace BSE365.Model.Entities
 
         public void MoneyReceived()
         {
-            State = MoneyTransferState.Confirmed;
+            State = TransactionState.Confirmed;
             ReceivedDate = DateTime.Now;
             LastModified = DateTime.Now;
             IsEnd = true;
@@ -54,7 +65,7 @@ namespace BSE365.Model.Entities
 
         public void NotTransfer()
         {
-            State = MoneyTransferState.NotTransfer;
+            State = TransactionState.NotTransfer;
             LastModified = DateTime.Now;
             ObjectState = ObjectState.Modified;
 
@@ -63,7 +74,7 @@ namespace BSE365.Model.Entities
 
         public void NotConfirm()
         {
-            State = MoneyTransferState.NotConfirm;
+            State = TransactionState.NotConfirm;
             LastModified = DateTime.Now;
             ObjectState = ObjectState.Modified;
 
@@ -72,7 +83,7 @@ namespace BSE365.Model.Entities
 
         public void ReportNotTransfer()
         {
-            State = MoneyTransferState.ReportedNotTransfer;
+            State = TransactionState.ReportedNotTransfer;
             LastModified = DateTime.Now;
             ObjectState = ObjectState.Modified;
 

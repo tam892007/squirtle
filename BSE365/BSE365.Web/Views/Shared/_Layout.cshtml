@@ -1,108 +1,114 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <base href="@(Request.ApplicationPath == "/" ? "/" : Request.ApplicationPath + "/")">
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width" />
-        <title>@ViewBag.Title</title>
-        <link href="Content/bootstrap.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-        <link href="Content/main.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-        <link href="Content/angular-ui-tree.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-        <link href="Content/ng-img-crop.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-        <link href="Content/loading-bar.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-        <link href="Content/angular-ui-notification.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
-    </head>
-    <body data-ng-app="mainApp" data-ng-controller="indexController">
-        <script type="text/ng-template" id="validation-messages">
-            <div ng-message="required">This field cannot be blank</div>
-            <div ng-message="minlength">The value for this field is too short</div>
-            <div ng-message="maxlength">The value for this field is too long</div>
-            <div ng-message="min">Please enter higher value</div>
-            <div ng-message="max">The value entered has exceeded the limit</div>
-            <div ng-message="email">You have entered an incorrect email value</div>
-            <div ng-message="pattern">You did not enter the value in the correct format</div>
-        </script>
+<head>
+    <base href="@(Request.ApplicationPath == "/" ? "/" : Request.ApplicationPath + "/")">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="Content/bootstrap.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+    <link href="Content/main.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+    <link href="Content/angular-ui-tree.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+    <link href="Content/ng-img-crop.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+    <link href="Content/loading-bar.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+    <link href="Content/angular-ui-notification.css?cacheKey=@ViewBag.Version" rel="stylesheet" />
+</head>
+<body data-ng-app="mainApp" data-ng-controller="indexController">
+    <script type="text/ng-template" id="validation-messages">
+        <div ng-message="required">This field cannot be blank</div>
+        <div ng-message="minlength">The value for this field is too short</div>
+        <div ng-message="maxlength">The value for this field is too long</div>
+        <div ng-message="min">Please enter higher value</div>
+        <div ng-message="max">The value entered has exceeded the limit</div>
+        <div ng-message="email">You have entered an incorrect email value</div>
+        <div ng-message="pattern">You did not enter the value in the correct format</div>
+    </script>
 
-        <!-- Fixed navbar -->
-        <nav class="navbar navbar-default navbar-fixed-top navbar--custom">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <i class="navbar-logo"></i>
-                    <a class="navbar-brand navbar-brand--custom" href="#">@ViewBag.Title</a>
-                </div>
-                <div id="navbar" class="collapse navbar-collapse">
-                    <ul data-ng-hide="!authentication.isAuth" class="nav navbar-nav navbar-nav--custom">
-                        <li ui-sref-active-eq='active'><a ui-sref="home" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a></li>
-                        <li class="dropdown" ui-sref-active="{'active': 'pin'}">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wallet <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ui-sref-active-eq='active'><a ui-sref="pin.transfer" data-toggle="collapse" data-target=".navbar-collapse.in">Transfer</a></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="pin.rate" data-toggle="collapse" data-target=".navbar-collapse.in">Buy</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown" ui-sref-active="{'active' : 'ga'}">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Give / Accept <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ui-sref-active-eq='active'><a ui-sref="trade.statistic" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">History</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="trade.waitinggivers" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Givers</a></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="trade.waitingreceivers" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Receivers</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in">Current Transaction</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown" ui-sref-active="{'active' : 'user'}">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in">Introduction</a></li>
-                                <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li class="dropdown-header">Nav header</li>
-                                <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">Separated link</a></li>
-                                <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">One more separated link</a></li>
-                            </ul>
-                        </li>
-                        <li ui-sref-active-eq='active'><a ui-sref="system">System</a></li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
-                        <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
-                        <li class="dropdown" data-ng-hide="!authentication.isAuth">                            
-                            <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown"> 
-                                <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />                               
-                                <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>                                          
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a ui-sref="association">Associated Accounts</a></li>
-                                <li><a href="#" data-ng-click="logOut()">Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div><!--/.nav-collapse -->
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar--custom">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <i class="navbar-logo"></i>
+                <a class="navbar-brand navbar-brand--custom" href="#">@ViewBag.Title</a>
             </div>
-        </nav>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul data-ng-hide="!authentication.isAuth" class="nav navbar-nav navbar-nav--custom">
+                    <li ui-sref-active-eq='active'><a ui-sref="home" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in">Home</a></li>
+                    <li class="dropdown" ui-sref-active="{'active': 'pin'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wallet <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active-eq='active'><a ui-sref="pin.transfer" data-toggle="collapse" data-target=".navbar-collapse.in">Transfer</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="pin.rate" data-toggle="collapse" data-target=".navbar-collapse.in">Buy</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" ui-sref-active="{'active' : 'ga'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Give / Accept <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active-eq='active'><a ui-sref="trade.statistic" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">History</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in">Current Transaction</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" ui-sref-active="{'active' : 'acc'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Management <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in">Accounts</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="waitinggiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Givers</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="waitingreceiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Receivers</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" ui-sref-active="{'active' : 'user'}">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in">Introduction</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Nav header</li>
+                            <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">Separated link</a></li>
+                            <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">One more separated link</a></li>
+                        </ul>
+                    </li>
+                    <li ui-sref-active-eq='active'><a ui-sref="system">System</a></li>
+                </ul>
 
-        <div class="container container--custom">
-            @RenderBody()
+                <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
+                    <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
+                    <li class="dropdown" data-ng-hide="!authentication.isAuth">
+                        <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown">
+                            <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
+                            <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a ui-sref="association">Associated Accounts</a></li>
+                            <li><a href="#" data-ng-click="logOut()">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
         </div>
+    </nav>
 
-        <footer class="footer navbar--custom">
-            <div class="container">
-                <p class="text-muted">Copyright © 2016 MAXX</p>
-            </div>
-        </footer>
+    <div class="container container--custom">
+        @RenderBody()
+    </div>
 
-        <script src="Scripts/Common.js?cacheKey=@ViewBag.Version"></script>
-        <script src="Scripts/MainApp.js?cacheKey=@ViewBag.Version"></script>
-        <script src="Scripts/CommonApp.js?cacheKey=@ViewBag.Version"></script>
-        <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>       
-    </body>
+    <footer class="footer navbar--custom">
+        <div class="container">
+            <p class="text-muted">Copyright © 2016 MAXX</p>
+        </div>
+    </footer>
+
+    <script src="Scripts/Common.js?cacheKey=@ViewBag.Version"></script>
+    <script src="Scripts/MainApp.js?cacheKey=@ViewBag.Version"></script>
+    <script src="Scripts/CommonApp.js?cacheKey=@ViewBag.Version"></script>
+    <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>
+</body>
 </html>

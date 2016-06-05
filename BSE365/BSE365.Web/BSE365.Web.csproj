@@ -112,6 +112,10 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -221,6 +225,14 @@
     <Content Include="app\common\directives\syncFocusWith.js" />
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\common\templates\empty.html" />
+    <Content Include="app\main\account\account-default.html" />
+    <Content Include="app\main\account\waiting-details.html" />
+    <Content Include="app\main\account\accountService.js" />
+    <Content Include="app\main\account\account-info.html" />
+    <Content Include="app\main\account\accountInfoController.js" />
+    <Content Include="app\main\account\waiting-list.html" />
+    <Content Include="app\main\account\waitingGiver.html" />
+    <Content Include="app\main\account\waitingReceiver.html" />
     <Content Include="app\main\app.js" />
     <Content Include="app\main\association\association.html" />
     <Content Include="app\main\association\associationController.js" />
@@ -231,22 +243,22 @@
     <Content Include="app\main\pin\pinController.js" />
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
-    <Content Include="app\main\trade\current.html" />
+    <Content Include="app\main\account\account.html" />
     <Content Include="app\main\trade\trade-history.html" />
     <Content Include="app\main\trade\trade-statistic.html" />
+    <Content Include="app\main\account\accountController.js" />
     <Content Include="app\main\trade\tradeStatisticController.js" />
     <Content Include="app\main\trade\tradeService.js" />
-    <Content Include="app\main\trade\tradeCurrentController.js" />
-    <Content Include="app\main\trade\trade-waitingReceivers.html" />
-    <Content Include="app\main\trade\trade-waitingGivers.html" />
     <Content Include="app\main\trade\trade-info.html" />
-    <Content Include="app\main\trade\tradeWaitingGiversController.js" />
-    <Content Include="app\main\trade\tradeWaitingReceiversController.js" />
+    <Content Include="app\main\account\waitingGiverController.js" />
+    <Content Include="app\main\account\waitingReceiverController.js" />
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\transaction-timeDetails.html" />
+    <Content Include="app\main\transaction\transaction-state.html" />
     <Content Include="app\main\transaction\info-receiver.html" />
     <Content Include="app\main\transaction\info-giver.html" />
-    <Content Include="app\main\transaction\transactionhistory.html" />
+    <Content Include="app\main\transaction\transactionHistory.html" />
     <Content Include="app\main\transaction\current.html" />
     <Content Include="app\main\transaction\transactionService.js" />
     <Content Include="app\main\transaction\transactionCurrentController.js" />
@@ -285,6 +297,12 @@
     <Content Include="Scripts\Common.js" />
     <Content Include="Scripts\CommonApp.js" />
     <Content Include="Scripts\MainApp.js" />
+    <Content Include="SQL\SpMapGiversAndReceivers.sql" />
+    <Content Include="SQL\SpMapGiversAndReceivers_Drop.sql" />
+    <Content Include="SQL\SpUpdateNotConfirmedTransactions.sql" />
+    <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransactions.sql" />
+    <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -301,6 +319,9 @@
     <Compile Include="Helper\EmailHelper.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
+    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
+    <Compile Include="ViewModels\TransactionHistoryVm.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
     <Compile Include="App_Start\RouteConfig.cs" />

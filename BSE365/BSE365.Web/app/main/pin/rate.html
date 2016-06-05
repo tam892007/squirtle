@@ -15,7 +15,7 @@
                 </div>
                 <div class="row currency">
                     <div class="col-md-7 title">
-                        Current Price online:
+                        Current 1 Bitcoin online:
                     </div>
                     <div class="col-md-5 content">
                         <span data-ng-bind="rate.usd"></span>
@@ -48,9 +48,9 @@
                                 <div class="col-md-1 padding-5">{{bitPrice.quantity1}}</div>
                                 <div class="col-md-1 border-left padding-5">{{bitPrice.quantity2}}</div>
                                 <div class="col-md-2 border-left padding-5">{{bitPrice.usd | number:2}}</div>
-                                <div class="col-md-3 border-left padding-5">{{bitPrice.bitCoin}}</div>
+                                <div class="col-md-3 border-left padding-5">{{bitPrice.bitCoin | number:8}}</div>
                                 <div class="col-md-2 border-left padding-5">{{bitPrice.totalUsd | number:0}}</div>
-                                <div class="col-md-3 border-left padding-5">{{bitPrice.totalBitCoin | number:11}}</div>
+                                <div class="col-md-3 border-left padding-5">{{bitPrice.totalBitCoin | number:8}}</div>
                             </div>
                         </div>
                     </div>

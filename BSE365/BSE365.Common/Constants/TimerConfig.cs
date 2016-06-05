@@ -26,9 +26,9 @@ namespace BSE365.Common.Constants
         /// <summary>
         /// Milliseconds
         /// </summary>
-        public static int TimeForEachStepInMilliseconds
+        public static int TimeForEachStepInSeconds
         {
-            get { return TimeForEachStepInHours*60*60*1000; }
+            get { return TimeForEachStepInHours*60*60; }
         }
     }
 }

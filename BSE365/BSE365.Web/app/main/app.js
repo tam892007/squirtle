@@ -1,7 +1,8 @@
 ﻿var mainApp = angular.module('mainApp',
 [
     'ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload',
-    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification', 'timer'
+    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification',
+    'timer'
 ]);
 
 mainApp.config([
@@ -13,7 +14,7 @@ mainApp.config([
             .state('home',
             {
                 url: "/",
-                templateUrl: 'app/main/home/home.html',  
+                templateUrl: 'app/main/home/home.html',
             })
             .state('login',
             {
@@ -94,17 +95,36 @@ mainApp.config([
                 templateUrl: 'app/main/trade/trade-history.html',
                 controller: 'tradeHistoryController'
             })
-            .state('trade.waitinggivers',
+            .state('waitinggiver',
             {
-                url: "/waitinggivers",
-                templateUrl: 'app/main/trade/trade-waitingGivers.html',
-                controller: 'tradeWaitingGiversController'
+                url: "/waitinggiver",
+                templateUrl: 'app/main/account/waitingGiver.html',
+                controller: 'waitingGiverController'
             })
-            .state('trade.waitingreceivers',
+            .state('waitingreceiver',
             {
-                url: "/waitingreceivers",
-                templateUrl: 'app/main/trade/trade-waitingReceivers.html',
-                controller: 'tradeWaitingReceiversController'
+                url: "/waitingreceiver",
+                templateUrl: 'app/main/account/waitingReceiver.html',
+                controller: 'waitingReceiverController'
+            })
+            .state('account',
+            {
+                abstract: true,
+                url: "/account",
+                templateUrl: 'app/main/account/account.html',
+                controller: 'accountController'
+            })
+            .state('account.default',
+            {
+                url: "/",
+                templateUrl: 'app/main/account/account-default.html',
+                controller: function() {}
+            })
+            .state('account.details',
+            {
+                url: "/:key",
+                templateUrl: 'app/main/account/account-info.html',
+                controller: 'accountInfoController'
             })
             .state('currentTransaction',
             {
@@ -112,12 +132,14 @@ mainApp.config([
                 templateUrl: 'app/main/transaction/current.html',
                 controller: 'transactionCurrentController'
             })
-            .state('association', {
+            .state('association',
+            {
                 url: "/association",
                 templateUrl: 'app/main/association/association.html',
                 controller: 'associationController'
             });
-}]);
+    }
+]);
 
 mainApp.config([
     '$httpProvider', function($httpProvider) {
@@ -198,6 +220,8 @@ mainApp.factory('AccountState',
             NotGive: 21,
             NotConfirm: 22,
             ReportedNotTransfer: 23,
+
+            AbadonedOne: 31,
         };
         data.display = function(value) {
             switch (value) {
@@ -219,6 +243,8 @@ mainApp.factory('AccountState',
                 return 'Not Confirm';
             case data.ReportedNotTransfer:
                 return 'Reported Not Transfer';
+            case data.AbadonedOne:
+                return 'Abadoned One';
             default:
                 return '';
             }
@@ -261,9 +287,11 @@ mainApp.factory('TransactionState',
             Transfered: 1,
             Confirmed: 2,
 
-            NotTransfer: 11,
-            NotConfirm: 12,
-            ReportedNotTransfer: 13,
+            NotTransfer: 21,
+            NotConfirm: 22,
+            ReportedNotTransfer: 23,
+
+            Abadoned: 31,
         }
         data.display = function(value) {
             switch (value) {
@@ -279,9 +307,74 @@ mainApp.factory('TransactionState',
                 return 'Not Confirm';
             case data.ReportedNotTransfer:
                 return 'Reported Not Transfer';
+            case data.Abadoned:
+                return 'Abadoned';
             default:
                 return '';
             }
+        }
+        return data;
+    });
+
+mainApp.factory('TransactionType',
+    function() {
+        var data = {
+            Begin: 0,
+            Abadoned: 31,
+            Replacement: 41,
+        }
+        data.display = function(value) {
+            switch (value) {
+            case data.Begin:
+                return 'Begin';
+            case data.Abadoned:
+                return 'Abadoned';
+            case data.Replacement:
+                return 'Replacement';
+            default:
+                return '';
+            }
+        }
+        return data;
+    });
+
+mainApp.factory('UserState',
+    function() {
+        var data = {
+            /// <summary>
+            /// Must give 
+            /// </summary>
+            Default: 0,
+
+            NotGive: 21,
+            NotConfirm: 22,
+            ReportedNotTransfer: 23,
+
+            AbadonedOne: 31,
+        };
+        data.display = function(value) {
+            switch (value) {
+            case data.Default:
+                return 'Default';
+            case data.NotGive:
+                return 'Not Give';
+            case data.NotConfirm:
+                return 'Not Confirm';
+            case data.ReportedNotTransfer:
+                return 'Reported Not Transfer';
+            case data.AbadonedOne:
+                return 'Abadoned One';
+            default:
+                return '';
+            }
+        }
+        return data;
+    });
+
+mainApp.factory('ConfigData',
+    function() {
+        var data = {
+            dateFormat: 'yyyy/MM/dd',
         }
         return data;
     });

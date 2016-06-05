@@ -11,6 +11,7 @@ using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Model.Enum;
 using BSE365.Repository.Helper;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
@@ -27,21 +28,24 @@ namespace BSE365.Api
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
         IRepositoryAsync<WaitingGiver> _waitingGiverRepo;
         IRepositoryAsync<WaitingReceiver> _waitingReceiverRepo;
-        
+        IRepositoryAsync<MoneyTransferGroup> _groupRepo;
+
         public TradeController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<Account> accountRepo,
             IRepositoryAsync<MoneyTransaction> transactionRepo,
             IRepositoryAsync<WaitingGiver> waitingGiverRepo,
-            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo)
+            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo,
+            IRepositoryAsync<MoneyTransferGroup> groupRepo)
         {
             _unitOfWork = unitOfWork;
             _accountRepo = accountRepo;
             _transactionRepo = transactionRepo;
             _waitingGiverRepo = waitingGiverRepo;
             _waitingReceiverRepo = waitingReceiverRepo;
+            _groupRepo = groupRepo;
         }
-        
+
         [HttpGet]
         [Route("InitDatabase")]
         public async Task<IHttpActionResult> InitDatabase(int key = 0)
@@ -78,15 +82,23 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [HttpPost]
+        [Route("QueryAccount")]
+        public async Task<IHttpActionResult> QueryAccount(FilterVM filter)
+        {
+            var result = await QueryAccountAsync(filter);
+            return Ok(result);
+        }
+
         /// <summary>
         /// kiểm tra status của account
         /// </summary>
         /// <returns></returns>
         [HttpPost]
         [Route("AccountStatus")]
-        public async Task<IHttpActionResult> AccountStatus()
+        public async Task<IHttpActionResult> AccountStatus(string key = null)
         {
-            var result = await AccountStatusAsync();
+            var result = await AccountStatusAsync(key);
             return Ok(result);
         }
 
@@ -96,9 +108,9 @@ namespace BSE365.Api
         /// <returns></returns>
         [HttpPost]
         [Route("QueueGive")]
-        public async Task<IHttpActionResult> QueueGive()
+        public async Task<IHttpActionResult> QueueGive(string key = null)
         {
-            await QueueGiveAsync();
+            await QueueGiveAsync(key);
             return Ok();
         }
 
@@ -108,9 +120,9 @@ namespace BSE365.Api
         /// <returns></returns>
         [HttpPost]
         [Route("QueueReceive")]
-        public async Task<IHttpActionResult> QueueReceive()
+        public async Task<IHttpActionResult> QueueReceive(string key = null)
         {
-            await QueueReceiveAsync();
+            await QueueReceiveAsync(key);
             return Ok();
         }
 
@@ -129,26 +141,29 @@ namespace BSE365.Api
             var result = await QueryWaitingReceiversAsync(filter);
             return Ok(result);
         }
+        
+        [HttpPost]
+        [Route("QueryHistory")]
+        public async Task<IHttpActionResult> QueryHistory(FilterVM filter)
+        {
+            var result = await QueryHistoryAsync(filter);
+            return Ok(result);
+        }
 
         #region internal method
 
-        private async Task QueueGiveAsync()
+        private async Task<List<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
         {
-            var account = await _accountRepo.FindAsync(User.Identity.GetUserName());
-            account.QueueGive();
-            await _unitOfWork.SaveChangesAsync();
+            var expression = TradeAccountVMMapping.GetExpToVM();
+            var data = await _accountRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
         }
 
-        private async Task QueueReceiveAsync()
+        private async Task<TradeAccountVM> AccountStatusAsync(string key)
         {
-            var account = await _accountRepo.FindAsync(User.Identity.GetUserName());
-            account.QueueReceive();
-            await _unitOfWork.SaveChangesAsync();
-        }
-
-        private async Task<TradeAccountVM> AccountStatusAsync()
-        {
-            var username = User.Identity.GetUserName();
+            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
             var account = await _accountRepo.Queryable()
                 .Where(x => x.UserName == username)
                 .Include(x => x.UserInfo).FirstAsync();
@@ -156,6 +171,14 @@ namespace BSE365.Api
             return result;
         }
 
+        private async Task QueueGiveAsync(string key)
+        {
+            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            var account = await _accountRepo.FindAsync(username);
+            account.QueueGive();
+            await _unitOfWork.SaveChangesAsync();
+        }
+        
         private async Task<List<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
         {
             var expression = WaitingAccountVMMapping.GetExpToGiverVM();
@@ -169,6 +192,28 @@ namespace BSE365.Api
         {
             var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
             var data = await _waitingReceiverRepo.Queryable()
+                .Select(expression)
+                .ToListAsync();
+            return data;
+        }
+
+
+        private async Task QueueReceiveAsync(string key)
+        {
+            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            var account = await _accountRepo.FindAsync(username);
+            account.QueueReceive();
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+
+        private async Task<List<TransactionHistoryVM>> QueryHistoryAsync(FilterVM filter)
+        {
+            var username = User.Identity.GetUserName();
+            var expression = TransactionHistoryVMMapping.GetExpToVM(username);
+            var data = await _transactionRepo.Queryable()
+                .Where(x => x.GiverId == username || x.ReceiverId == username)
+                .GroupBy(x => x.MoneyTransferGroupId)
                 .Select(expression)
                 .ToListAsync();
             return data;

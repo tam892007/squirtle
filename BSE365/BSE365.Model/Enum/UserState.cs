@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace BSE365.Model.Enum
 {
-    public enum MoneyTransferState
+    public enum UserState
     {
-        Begin = 0,
-        Transfered = 1,
-        Confirmed = 2,
+        /// <summary>
+        /// Default
+        /// </summary>
+        Default = 0,
 
-        NotTransfer = 21,
+        NotGive = 21,
         NotConfirm = 22,
         ReportedNotTransfer = 23,
+
+        AbadonedOne = 31,
     }
 }

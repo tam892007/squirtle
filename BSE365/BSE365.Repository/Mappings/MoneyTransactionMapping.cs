@@ -20,6 +20,12 @@ namespace BSE365.Repository.Mappings
                 .WithMany(u => u.Received)
                 .HasForeignKey(m => m.ReceiverId)
                 .WillCascadeOnDelete(false);
+
+
+            HasOptional(m => m.RelatedTransaction)
+                .WithMany()
+                .HasForeignKey(m => m.RelatedTransactionId)
+                .WillCascadeOnDelete(false);
         }
     }
 }

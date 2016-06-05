@@ -101,7 +101,7 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                         PinBalance = 10,
                     };
                     _userManager.Create(user, TestData.Password);
-                    _userManager.AddToRole(user.Id, UserRolesText.User);
+                    //_userManager.AddToRole(user.Id, UserRolesText.User);
                 }
             }
         }

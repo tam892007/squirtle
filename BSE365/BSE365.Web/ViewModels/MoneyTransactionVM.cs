@@ -27,11 +27,16 @@ namespace BSE365.ViewModels
             public DateTime Created { get; set; }
             public DateTime LastModified { get; set; }
 
-            public MoneyTransferState State { get; set; }
+            public TransactionType Type { get; set; }
+            public TransactionState State { get; set; }
             public string AttachmentUrl { get; set; }
 
             public DateTime? TransferedDate { get; set; }
             public DateTime? ReceivedDate { get; set; }
+
+            public int? MoneyTransferGroupId { get; set; }
+            public int? RelatedTransactionId { get; set; }
+
 
             public bool IsEnd { get; set; }
 
@@ -48,20 +53,20 @@ namespace BSE365.ViewModels
                 get
                 {
                     var result = 0;
-                    if (State == MoneyTransferState.Begin)
+                    if (State == TransactionState.Begin)
                     {
                         var timeLeft = DateTime.Now - Created;
                         if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
                         {
-                            result = TimerConfig.TimeForEachStepInMilliseconds - timeLeft.Milliseconds;
+                            result = TimerConfig.TimeForEachStepInSeconds - timeLeft.Seconds;
                         }
                     }
-                    else if (State == MoneyTransferState.Transfered)
+                    else if (State == TransactionState.Transfered)
                     {
                         var timeLeft = DateTime.Now - TransferedDate.Value;
                         if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
                         {
-                            result = TimerConfig.TimeForEachStepInMilliseconds - timeLeft.Milliseconds;
+                            result = TimerConfig.TimeForEachStepInSeconds - timeLeft.Seconds;
                         }
                     }
                     return result;

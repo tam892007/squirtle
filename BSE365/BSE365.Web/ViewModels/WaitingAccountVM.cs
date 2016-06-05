@@ -25,6 +25,6 @@ namespace BSE365.ViewModels
         public string PhoneNumber { get; set; }
 
 
-        public string AvatarUrl { get; set; }
+        public int? AvatarId { get; set; }
     }
 }
