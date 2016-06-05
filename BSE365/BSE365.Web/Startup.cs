@@ -32,6 +32,9 @@ namespace BSE365.Web
 
             ////Timer
             ConfigureTimer(config);
+
+            ////HangFire
+            ConfigureHangFire(app);
         }
     }
 }

@@ -1,13 +1,34 @@
 ﻿'use strict';
-authApp.controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings) {
+authApp.controller('loginController', ['$scope', '$location', 'authService', 'ngAuthSettings', function ($scope, $location, authService, ngAuthSettings) {    
+    
+    $scope.forgotPassword = function () {        
+        $scope.init();
+        $scope.state = 2;
+    }
 
-    $scope.loginData = {
-        userName: "",
-        password: "",
-        useRefreshTokens: true
-    };
+    $scope.requestNewPassword = function () {
+        authService.forgetPassword($scope.forgotUserName).then(function (res) {
+            $scope.message = "Successfully. Please check your email.";            
+        },
+        function (err) {
+            $scope.message = err.error_description;
+        });
+    }
 
-    $scope.message = "";
+    $scope.init = function () {
+        $scope.message = "";
+        $scope.state = 1;
+        $scope.loginData = {
+            userName: "",
+            password: "",
+            useRefreshTokens: true
+        };
+        $scope.forgotUserName = '';
+
+        $scope.submitted = false;
+    }
+
+    $scope.init();
 
     $scope.login = function () {
         $scope.submitted = true;

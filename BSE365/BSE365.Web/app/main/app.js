@@ -21,6 +21,12 @@ mainApp.config([
                 templateUrl: 'app/authentication/login/login.html',
                 controller: 'loginController'
             })
+            .state('resetPassword',
+            {
+                url: "/resetpassword",
+                templateUrl: 'app/authentication/password/resetPassword.html',
+                controller: 'resetPasswordController'
+            })
             .state('refresh',
             {
                 url: "/refresh",

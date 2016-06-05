@@ -158,6 +158,30 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
 
     };
 
+    var _forgetPassword = function (userName) {
+        var deferred = $q.defer();
+
+        $http.get(serviceBase + 'api/account/forgotpassword', { params: { userName: userName } }).success(function (res) {
+            deferred.resolve(res);
+        }).error(function (err, status) {
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    }
+
+    var _resetPassword = function (resetData) {
+        var deferred = $q.defer();
+
+        $http.post(serviceBase + 'api/account/resetpassword', resetData).success(function (response) {
+            deferred.resolve(response);
+        }).error(function (err, status) {
+            deferred.reject(err);
+        });
+
+        return deferred.promise;
+    }
+
     authServiceFactory.saveRegistration = _saveRegistration;
     authServiceFactory.login = _login;
     authServiceFactory.logOut = _logOut;
@@ -168,6 +192,9 @@ authApp.factory('authService', ['$http', '$q', 'localStorageService', 'ngAuthSet
     authServiceFactory.obtainAccessToken = _obtainAccessToken;
     authServiceFactory.externalAuthData = _externalAuthData;
     authServiceFactory.registerExternal = _registerExternal;
+
+    authServiceFactory.forgetPassword = _forgetPassword;
+    authServiceFactory.resetPassword = _resetPassword;
 
     return authServiceFactory;
 }]);

@@ -32,8 +32,7 @@ mainApp.controller('pinController', ['$scope', 'userService', 'pinService', '$q'
     $scope.init();
 
     $scope.processToConfirm = function() {
-        $scope.submitted = true;
-        console.log($scope);
+        $scope.submitted = true;        
         if (!$scope.frmTransfer.$valid) return;
         $scope.transaction.step = 2;
     }

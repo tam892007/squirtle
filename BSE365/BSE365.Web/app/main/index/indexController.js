@@ -1,5 +1,5 @@
 ﻿'use strict';
-mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userService', function ($scope, $state, authService, userService) {
+mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userService', '$location', function ($scope, $state, authService, userService, $location) {
     $scope.logOut = function () {
         authService.logOut();
         $state.go('login');
@@ -18,10 +18,13 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
 
    
     $scope.getUserContext = function () {
-        userService.getCurrentUserContext(function (res) {
+        userService.getCurrentUserContext(function (res) {           
             $scope.userContext = res;
         });
     }
-
-    $scope.getUserContext();
+    
+    var params = $location.search();
+    if ($scope.authentication.isAuth && params.anonymous != 'true') {   ////Only load user context when authenticated (even if it's not refreshed)
+        $scope.getUserContext();
+    }
 }]);

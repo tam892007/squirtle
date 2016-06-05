@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security.DataProtection;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace BSE365.Repository.Repositories
 {
@@ -62,6 +64,13 @@ namespace BSE365.Repository.Repositories
         public async Task<User> FindUser(string userName, string password)
         {
             User user = await _userManager.FindAsync(userName, password);
+
+            return user;
+        }
+
+        public async Task<User> FindUserByName(string name)
+        {
+            var user = await _userManager.FindByNameAsync(name);
 
             return user;
         }
@@ -137,6 +146,29 @@ namespace BSE365.Repository.Repositories
         {
             var result = await _userManager.AddLoginAsync(userId, login);
 
+            return result;
+        }
+
+        public async Task<string> ForgotPassword(User user)
+        {
+            if (user == null) return string.Empty;
+
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);  
+            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
+
+            string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+
+            return code;
+        }
+
+        public async Task<IdentityResult> ResetPassword(User user, string code, string newPassword)
+        {
+            if (user == null) return null;
+
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
+
+            var result = await _userManager.ResetPasswordAsync(user.Id, code, newPassword);
             return result;
         }
 

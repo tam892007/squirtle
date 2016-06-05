@@ -41,6 +41,9 @@
     <Compile Include="Constants\UserRolesText.cs" />
     <Compile Include="Constants\TimerConfig.cs" />
     <Compile Include="Constants\WebConfigKey.cs" />
+    <Compile Include="Email\IMailClient.cs" />
+    <Compile Include="Email\MailClientBase.cs" />
+    <Compile Include="Email\SmtpMailClient.cs" />
     <Compile Include="Helper\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>

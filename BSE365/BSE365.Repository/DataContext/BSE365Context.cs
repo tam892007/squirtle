@@ -1,12 +1,14 @@
+using BSE365.Common.Constants;
 using BSE365.Model.Entities;
-using System.Data.Entity;
 using BSE365.Repository.Mappings;
+using System.Data.Entity;
 
 namespace BSE365.Repository.DataContext
 {
     public class BSE365Context : BSE365.Base.DataContext.DataContext
     {
-        public BSE365Context() : base("name=bse365.connection")
+        public BSE365Context()
+            : base(string.Format("name={0}", WebConfigKey.ConnectionStringName))
         {
             Configuration.LazyLoadingEnabled = true;
         }

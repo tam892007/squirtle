@@ -1,8 +1,11 @@
-﻿using BSE365.Model.Entities;
+﻿using BSE365.Helper;
+using BSE365.Mappings;
+using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
 using BSE365.Results;
 using BSE365.ViewModels;
 using BSE365.Web;
+using Hangfire;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -10,15 +13,11 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using BSE365.Mappings;
 
 namespace BSE365.Api
 {
@@ -53,6 +52,41 @@ namespace BSE365.Api
             }
 
             return Ok(result.Result.Select(x=>x.ToViewModel()));
+        }
+       
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("ForgotPassword")]
+        public async Task<IHttpActionResult> ForgotPassword(string userName)
+        {
+            var user = await _repo.FindUserByName(userName);
+            if (user == null) return Ok(false);
+
+            var code = await _repo.ForgotPassword(user);
+            if (string.IsNullOrEmpty(code)) return Ok(false);
+            
+            ////Send Email
+            var request = System.Web.HttpContext.Current.Request;
+            var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+            BackgroundJob.Enqueue(() => EmailHelper.SendLinkResetPassword(code, user.UserInfo.Email, userName, baseUri));
+            
+            return Ok(true);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("ResetPassword")]
+        public async Task<IHttpActionResult> ResetPassword(ResetPasswordViewModel vm)
+        {
+            var user = await _repo.FindUserByName(vm.UserName);
+            if (user == null) return Ok(false);
+
+            var result = await _repo.ResetPassword(user, vm.Code, vm.NewPassword);
+
+            //EmailHelper.SendLinkResetPassword(code, user.UserInfo.Email, userName);
+
+            if (result.Succeeded) return Ok(result);
+            else return BadRequest();
         }
 
         // GET api/Account/ExternalLogin

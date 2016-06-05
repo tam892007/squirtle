@@ -9,7 +9,6 @@ authApp.controller('refreshController', ['$scope', '$location', 'authService', f
         authService.refreshToken().then(function (response) {
             $scope.tokenRefreshed = true;
             $scope.tokenResponse = response;
-            console.log(response);
         },
          function (err) {
              $location.path('/login');
