@@ -1,0 +1,40 @@
+﻿
+<table st-table="displayData" st-safe-src="data" class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th st-sort="accountId">Account</th>
+            <th st-sort="displayName">Name</th>
+            <th st-sort="priority">Priority</th>
+            <th st-sort="amount">Amount</th>
+            <th st-sort="created">Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="6">
+                <input st-search="" class="form-control" placeholder="search ..." />
+            </td>
+        </tr>
+        <tr ng-repeat="item in displayData" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+            <td>
+                <span>{{ $index + 1 }}</span>
+            </td>
+            <td>
+                <span data-ng-bind="item.accountId"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.displayName"></span>
+            </td>
+            <td>
+                <span data-ng-bind="PriorityLevel.display(item.priority)"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.amount"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.created|date:ConfigData.dateFormat"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

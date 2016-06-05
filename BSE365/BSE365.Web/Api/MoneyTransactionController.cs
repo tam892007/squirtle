@@ -12,6 +12,7 @@ using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Model.Enum;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -100,6 +101,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("History")]
+        public async Task<IHttpActionResult> History(TransactionHistoryVM instance)
+        {
+            var result = await HistoryAsync(instance);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<List<MoneyTransactionVM.Receiver>> GiveRequestedAsync()
@@ -158,6 +167,31 @@ namespace BSE365.Api
             transaction.ReportNotTransfer();
             await _unitOfWork.SaveChangesAsync();
             return transaction.UpdateVm(tran);
+        }
+
+        private async Task<List<MoneyTransactionVM.Base>> HistoryAsync(TransactionHistoryVM instance)
+        {
+            var username = User.Identity.GetUserName();
+            if (instance.Type == AccountState.InGiveTransaction)
+            {
+                var expression = MoneyTransactionVMMapping.GetExpToReceiverVM();
+                var data = await _transactionRepo.Queryable().Where(x =>
+                    x.MoneyTransferGroupId == instance.Id && x.GiverId == username)
+                    .Include(x => x.Receiver.UserInfo)
+                    .Select(expression)
+                    .ToListAsync();
+                return data.Select(x => x as MoneyTransactionVM.Base).ToList();
+            }
+            else
+            {
+                var expression = MoneyTransactionVMMapping.GetExpToGiverVM();
+                var data = await _transactionRepo.Queryable().Where(x =>
+                    x.MoneyTransferGroupId == instance.Id && x.ReceiverId == username)
+                    .Include(x => x.Giver.UserInfo)
+                    .Select(expression)
+                    .ToListAsync();
+                return data.Select(x => x as MoneyTransactionVM.Base).ToList();
+            }
         }
 
         #endregion

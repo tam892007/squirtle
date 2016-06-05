@@ -12,7 +12,5 @@ namespace BSE365.Model.Entities
         {
             Amount = 3;
         }
-
-        public int Amount { get; set; }
     }
 }

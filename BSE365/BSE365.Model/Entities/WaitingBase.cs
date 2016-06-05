@@ -17,6 +17,8 @@ namespace BSE365.Model.Entities
         public string AccountId { get; set; }
         public PriorityLevel Priority { get; set; }
         public DateTime Created { get; set; }
-        public Account Account { get; set; }
+        public int Amount { get; set; }
+
+        public virtual Account Account { get; set; }
     }
 }

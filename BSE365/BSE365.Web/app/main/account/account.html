@@ -1,0 +1,52 @@
+﻿<div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default panel-form">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; Accounts
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <table st-table="data" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Account</th>
+                                <th>State</th>
+                                <th>Priority</th>
+                                <th>Last Cycle</th>
+                                <th>Allow Abadon One</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+                                <td>
+                                    <span>{{ $index + 1 }}</span>
+                                </td>
+                                <td>
+                                    <span data-ng-bind="item.userName"></span>
+                                </td>
+                                <td>
+                                    <span data-ng-bind="getAccountState(item)"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span data-ng-bind="PriorityLevel.display(item.priority)"></span>
+                                </td>
+                                <td>
+                                    <span data-ng-bind="item.lastCycleDate|date:ConfigData.dateFormat"></span>
+                                </td>
+                                <td>
+                                    <span data-ng-bind="item.isAllowAbandonOne|yesno"></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4" ui-view>
+        </div>
+    </div>
+</div>

@@ -20,10 +20,13 @@ namespace BSE365.Mappings
                     ReceiverId = x.ReceiverId,
                     Created = x.Created,
                     LastModified = x.LastModified,
+                    Type = x.Type,
                     State = x.State,
                     AttachmentUrl = x.AttachmentUrl,
                     TransferedDate = x.TransferedDate,
                     ReceivedDate = x.ReceivedDate,
+                    MoneyTransferGroupId = x.MoneyTransferGroupId,
+                    RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Giver.UserInfo.DisplayName,
                     Email = x.Giver.UserInfo.Email,
@@ -45,10 +48,13 @@ namespace BSE365.Mappings
                     ReceiverId = x.ReceiverId,
                     Created = x.Created,
                     LastModified = x.LastModified,
+                    Type = x.Type,
                     State = x.State,
                     AttachmentUrl = x.AttachmentUrl,
                     TransferedDate = x.TransferedDate,
                     ReceivedDate = x.ReceivedDate,
+                    MoneyTransferGroupId = x.MoneyTransferGroupId,
+                    RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Receiver.UserInfo.DisplayName,
                     Email = x.Receiver.UserInfo.Email,
@@ -65,10 +71,13 @@ namespace BSE365.Mappings
         {
             vm.Created = model.Created;
             vm.LastModified = model.LastModified;
+            vm.Type = model.Type;
             vm.State = model.State;
             vm.AttachmentUrl = model.AttachmentUrl;
             vm.TransferedDate = model.TransferedDate;
             vm.ReceivedDate = model.ReceivedDate;
+            vm.MoneyTransferGroupId = model.MoneyTransferGroupId;
+            vm.RelatedTransactionId = model.RelatedTransactionId;
             vm.IsEnd = model.IsEnd;
             return vm;
         }

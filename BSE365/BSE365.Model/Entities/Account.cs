@@ -36,9 +36,11 @@ namespace BSE365.Model.Entities
         [DataType(DataType.Date)]
         public DateTime LastCycleDate { get; set; }
 
-        public int UserInfoId { get; set; }
-
         public string RelatedTransaction { get; set; }
+
+        public int? CurrentTransactionGroupId { get; set; }
+
+        public int UserInfoId { get; set; }
 
         [NotMapped]
         public ObjectState ObjectState { get; set; }

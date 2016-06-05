@@ -39,8 +39,6 @@ mainApp.controller('tradeInfoController',
 
 
         $scope.init = function() {
-            Notification.success('Hello');
-
             $scope.AccountState = AccountState;
             $scope.PriorityLevel = PriorityLevel;
 

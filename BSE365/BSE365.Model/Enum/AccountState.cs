@@ -35,5 +35,7 @@ namespace BSE365.Model.Enum
         NotGive = 21,
         NotConfirm = 22,
         ReportedNotTransfer = 23,
+
+        AbadonOne = 31,
     }
 }

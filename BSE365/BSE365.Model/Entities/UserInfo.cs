@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
+using BSE365.Model.Enum;
 
 namespace BSE365.Model.Entities
 {
@@ -12,6 +14,7 @@ namespace BSE365.Model.Entities
     {
         public UserInfo()
         {
+            State = UserState.Default;
             GiveOver = -1;
             LastGiveDate = DateTime.Now.AddDays(-1).Date;
             Accounts = new HashSet<Account>();
@@ -47,7 +50,13 @@ namespace BSE365.Model.Entities
         public DateTime LastGiveDate { get; set; }
 
         public int GiveOver { get; set; }
-        
+
+        public UserState State { get; set; }
+
+        public bool IsAllowAbandonOne { get; set; }
+
+        public string RelatedAccount { get; set; }
+
         public int? AvatarId { get; set; }
 
         public virtual Image Avatar { get; set; }

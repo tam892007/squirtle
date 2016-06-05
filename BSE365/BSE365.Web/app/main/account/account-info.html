@@ -1,0 +1,92 @@
+﻿<div class="panel panel-default panel-form">
+    <div class="panel-heading">
+        <span class="badge pull-right">ID: {{info.userName}}</span>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <label>User</label>
+            <p class="form-control-static" data-ng-bind="info.displayName"></p>
+        </div>
+        <div class="form-group">
+            <img/>
+        </div>
+        <div class="form-group">
+            <label>Rating</label>
+            <p class="form-control-static" data-ng-bind="info.rating"></p>
+        </div>
+        <div class="form-group">
+            <label>Level</label>
+            <p class="form-control-static" data-ng-bind="info.level"></p>
+        </div>
+        <div class="form-group">
+            <label>Account State</label>
+            <p class="form-control-static" data-ng-bind="AccountState.display(info.state)"></p>
+        </div>
+        <div class="form-group">
+            <label>Priority Level</label>
+            <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.priority)"></p>
+        </div>
+        <div class="form-group">
+            <label>Allow Give?</label>
+            <p class="form-control-static" data-ng-bind="info.isAllowGive|yesno"></p>
+        </div>
+        <div class="form-group">
+            <label>Allow Receive?</label>
+            <p class="form-control-static" data-ng-bind="info.isAllowReceive|yesno"></p>
+        </div>
+        <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{}" ng-click="queueGive()">Request Give</button>
+        <button class="btn" ng-disabled="!info.isAllowReceive" ng-class="{}" ng-click="queueReceive()">Request Receive</button>
+        <div class="form-group">
+            <label>Last Cycle Date</label>
+            <p class="form-control-static" data-ng-bind="info.lastCycleDate|date:ConfigData.dateFormat"></p>
+        </div>
+        <div class="form-group">
+            <label>User State</label>
+            <p class="form-control-static" data-ng-bind="UserState.display(info.userState)"></p>
+        </div>
+        <div class="form-group">
+            <label>Realted Account</label>
+            <p class="form-control-static" data-ng-bind="info.relatedAccount"></p>
+        </div>
+        <div class="form-group">
+            <label>Related Transaction</label>
+            <p class="form-control-static" data-ng-bind="info.relatedTransaction"></p>
+        </div>
+        <div class="form-group">
+            <label>Allow Abadon One Transaction</label>
+            <p class="form-control-static" data-ng-bind="info.isAllowAbandonOne|yesno"></p>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <p class="form-control-static" data-ng-bind="info.email"></p>
+        </div>
+        <div class="form-group">
+            <label>ParentId</label>
+            <p class="form-control-static" data-ng-bind="info.parentId"></p>
+        </div>
+        <div class="form-group">
+            <label>PhoneNumber</label>
+            <p class="form-control-static" data-ng-bind="info.phoneNumber"></p>
+        </div>
+        <div class="form-group">
+            <label>BankName</label>
+            <p class="form-control-static" data-ng-bind="info.bankName"></p>
+        </div>
+        <div class="form-group">
+            <label>BankNumber</label>
+            <p class="form-control-static" data-ng-bind="info.bankNumber"></p>
+        </div>
+        <div class="form-group">
+            <label>BankBranch</label>
+            <p class="form-control-static" data-ng-bind="info.bankBranch"></p>
+        </div>
+        <div class="form-group">
+            <label>TreePath</label>
+            <p class="form-control-static" data-ng-bind="info.treePath"></p>
+        </div>
+    </div>
+</div>

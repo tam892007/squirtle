@@ -47,8 +47,8 @@ namespace BSE365.Web
             // container.LoadConfiguration();
 
             container
-                .RegisterType<IDataContextAsync, BSE365Context>(new HierarchicalLifetimeManager())
-                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new HierarchicalLifetimeManager())
+                .RegisterType<IDataContextAsync, BSE365Context>(new PerRequestLifetimeManager())
+                .RegisterType<IUnitOfWorkAsync, UnitOfWork>(new PerRequestLifetimeManager())
                 .RegisterType<IRepositoryAsync<Image>, Repository<Image>>()
                 .RegisterType<IRepositoryAsync<PinTransactionHistory>, Repository<PinTransactionHistory>>()
                 .RegisterType<IRepositoryAsync<Config>, Repository<Config>>()

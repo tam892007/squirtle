@@ -90,6 +90,10 @@
     <Compile Include="BSE365AuthContextMigration\201606010903371_AddTreePathColumn.Designer.cs">
       <DependentUpon>201606010903371_AddTreePathColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201606050414310_UpdateWaiting-Transaction-UserInfo-Account.cs" />
+    <Compile Include="BSE365AuthContextMigration\201606050414310_UpdateWaiting-Transaction-UserInfo-Account.Designer.cs">
+      <DependentUpon>201606050414310_UpdateWaiting-Transaction-UserInfo-Account.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -110,6 +114,10 @@
     <Compile Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.cs" />
     <Compile Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.Designer.cs">
       <DependentUpon>201606012225470_AddStoredProcedureMapGiversAndReceivers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201606050413121_UpdateWaiting-Transaction-UserInfo-Account.cs" />
+    <Compile Include="BSE365ContextMigration\201606050413121_UpdateWaiting-Transaction-UserInfo-Account.Designer.cs">
+      <DependentUpon>201606050413121_UpdateWaiting-Transaction-UserInfo-Account.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -139,6 +147,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201606010903371_AddTreePathColumn.resx">
       <DependentUpon>201606010903371_AddTreePathColumn.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201606050414310_UpdateWaiting-Transaction-UserInfo-Account.resx">
+      <DependentUpon>201606050414310_UpdateWaiting-Transaction-UserInfo-Account.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -153,6 +164,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201606012225470_AddStoredProcedureMapGiversAndReceivers.resx">
       <DependentUpon>201606012225470_AddStoredProcedureMapGiversAndReceivers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606050413121_UpdateWaiting-Transaction-UserInfo-Account.resx">
+      <DependentUpon>201606050413121_UpdateWaiting-Transaction-UserInfo-Account.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
