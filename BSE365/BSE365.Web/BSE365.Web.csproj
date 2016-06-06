@@ -112,10 +112,6 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Bin\Microsoft.Practices.Unity.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -286,6 +282,23 @@
     <Content Include="Content\images\plax_sphere_large.png" />
     <Content Include="Content\images\plax_sphere_small.png" />
     <Content Include="Content\images\lauch.png" />
+    <Content Include="Content\images\trade1-top.png" />
+    <Content Include="Content\images\trade1.png" />
+    <Content Include="Content\images\trade2-disable.png" />
+    <Content Include="Content\images\trade2-top.png" />
+    <Content Include="Content\images\trade2.png" />
+    <Content Include="Content\images\trade3-disable.png" />
+    <Content Include="Content\images\trade3-top-disable.png" />
+    <Content Include="Content\images\trade3-top.png" />
+    <Content Include="Content\images\trade3.png" />
+    <Content Include="Content\images\trade4-disable.png" />
+    <Content Include="Content\images\trade4-top-disable.png" />
+    <Content Include="Content\images\trade4-top.png" />
+    <Content Include="Content\images\trade4.png" />
+    <Content Include="Content\images\trade5-disable.png" />
+    <Content Include="Content\images\trade5-top-disable.png" />
+    <Content Include="Content\images\trade5-top.png" />
+    <Content Include="Content\images\trade5.png" />
     <Content Include="Content\images\user_default.jpg" />
     <Content Include="Content\images\wallets.jpg" />
     <Content Include="Content\loading-bar.css" />
@@ -303,7 +316,9 @@
     <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
     <Content Include="SQL\SpUpdateTransactions.sql" />
     <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ImageController.cs" />
@@ -320,7 +335,6 @@
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
-    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\TransactionHistoryVm.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
@@ -398,6 +412,7 @@
     <Content Include="Content\angular-ui-notification.css.map" />
     <Content Include="Content\style\rate.less" />
     <Compile Include="App_Start\Startup.HangFire.cs" />
+    <Content Include="Content\style\trade.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
