@@ -1,8 +1,8 @@
 ﻿'use strict';
 mainApp.controller('transactionCurrentController',
 [
-    '$scope', '_', '$timeout', 'transactionService', 'tradeService', 'Notification', 'AccountState', 'TransactionState',
-    function($scope, _, $timeout, transactionService, tradeService, Notification, AccountState, TransactionState) {
+    '$scope', '_', '$timeout', 'transactionService', 'tradeService', 'Notification', 'AccountState', 'TransactionState', 'ConfigData',
+    function ($scope, _, $timeout, transactionService, tradeService, Notification, AccountState, TransactionState, ConfigData) {
 
         $scope.updateStatus = function() {
             return tradeService.status({},
@@ -62,9 +62,9 @@ mainApp.controller('transactionCurrentController',
                     if ($scope.grState == 'giving') {
                         user = item.receiverId;
                         if (item.receivedDate) {
-                            $scope.histories.add({
+                            $scope.histories.push({
                                 userName: user,
-                                rate: 0,
+                                rating: item.rating,
                                 time: item.receivedDate,
                                 isCompleted: true
                             });
@@ -72,9 +72,9 @@ mainApp.controller('transactionCurrentController',
                     } else {
                         user = item.giverId;
                         if (item.transferedDate) {
-                            $scope.histories.add({
+                            $scope.histories.push({
                                 userName: user,
-                                rate: 0,
+                                rating: item.rating,
                                 time: item.transferedDate,
                                 isCompleted: true
                             });
@@ -174,6 +174,7 @@ mainApp.controller('transactionCurrentController',
             $scope.receiverInfoTemplateUrl = 'app/main/transaction/info-receiver.html';
             $scope.TransactionState = TransactionState;
             $scope.AccountState = AccountState;
+            $scope.ConfigData = ConfigData;
             $scope.overviewState = {
                 queued: 1,
                 giving: 0,

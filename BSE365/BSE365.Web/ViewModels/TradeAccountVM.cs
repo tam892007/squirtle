@@ -13,6 +13,7 @@ namespace BSE365.ViewModels
 
         public bool IsAllowGive { get; set; }
         public bool IsAllowReceive { get; set; }
+        public bool IsAllowChangeState { get; set; }
 
         public AccountState State { get; set; }
         public PriorityLevel Priority { get; set; }
@@ -40,5 +41,18 @@ namespace BSE365.ViewModels
         public int Rating { get; set; }
         public int Level { get; set; }
         public string TreePath { get; set; }
+
+        public class SetPriorityVM
+        {
+            public string UserName { get; set; }
+
+            public PriorityLevel Priority { get; set; }
+        }
+
+        public class SetStateVM
+        {
+            public string UserName { get; set; }
+            public AccountState State { get; set; }
+        }
     }
 }

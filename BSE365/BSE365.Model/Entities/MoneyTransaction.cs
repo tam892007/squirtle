@@ -29,7 +29,10 @@ namespace BSE365.Model.Entities
         public DateTime? TransferedDate { get; set; }
         public DateTime? ReceivedDate { get; set; }
 
-        public int MoneyTransferGroupId { get; set; }
+        public int WaitingGiverId { get; set; }
+
+        public int WaitingReceiverId { get; set; }
+
 
         public int? RelatedTransactionId { get; set; }
 
@@ -37,7 +40,6 @@ namespace BSE365.Model.Entities
 
         public virtual Account Giver { get; set; }
         public virtual Account Receiver { get; set; }
-
         public virtual MoneyTransaction RelatedTransaction { get; set; }
 
         public void MoneyTransfered(string attachmentUrl)
@@ -47,11 +49,10 @@ namespace BSE365.Model.Entities
             LastModified = DateTime.Now;
             AttachmentUrl = attachmentUrl;
             ObjectState = ObjectState.Modified;
-
-            Receiver.Notify();
         }
 
-        public void MoneyReceived()
+        public void MoneyReceived(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction,
+            List<MoneyTransaction> otherReceivingTransactionsInCurrentTransaction)
         {
             State = TransactionState.Confirmed;
             ReceivedDate = DateTime.Now;
@@ -59,26 +60,52 @@ namespace BSE365.Model.Entities
             IsEnd = true;
             ObjectState = ObjectState.Modified;
 
-            Giver.MoneyGave(this);
-            Receiver.MoneyReceived(this);
+            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction);
+            Receiver.MoneyReceived(this, otherReceivingTransactionsInCurrentTransaction);
         }
 
-        public void NotTransfer()
+        public void NotTransfer(Account parentAccount)
         {
             State = TransactionState.NotTransfer;
             LastModified = DateTime.Now;
+            IsEnd = true;
             ObjectState = ObjectState.Modified;
 
+            // update giver
             Giver.NotTransfer(this);
+
+            // create new transaction
+            if (parentAccount != null)
+            {
+                RelatedTransaction = new MoneyTransaction
+                {
+                    GiverId = parentAccount.UserName,
+                    ReceiverId = ReceiverId,
+                    Created = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Type = TransactionType.Replacement,
+                    WaitingGiverId = WaitingGiverId,
+                    WaitingReceiverId = WaitingReceiverId,
+                    ObjectState = ObjectState.Added,
+                };
+            }
+            else
+            {
+            }
         }
 
-        public void NotConfirm()
+        public void NotConfirm(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction)
         {
             State = TransactionState.NotConfirm;
             LastModified = DateTime.Now;
+            IsEnd = true;
             ObjectState = ObjectState.Modified;
 
+            // update receiver
             Receiver.NotConfirm(this);
+
+            // update giver
+            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction);
         }
 
         public void ReportNotTransfer()
@@ -87,7 +114,8 @@ namespace BSE365.Model.Entities
             LastModified = DateTime.Now;
             ObjectState = ObjectState.Modified;
 
-            Receiver.ReportNotTransfer(this);
+            //Receiver.ReportNotTransfer(this);
+            //Giver.ReportNotTransfer(this);
         }
     }
 }

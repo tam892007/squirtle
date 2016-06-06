@@ -123,7 +123,7 @@ mainApp.config([
             .state('account.details',
             {
                 url: "/:key",
-                templateUrl: 'app/main/account/account-info.html',
+                templateUrl: 'app/main/account/account-edit.html',
                 controller: 'accountInfoController'
             })
             .state('currentTransaction',
@@ -348,9 +348,6 @@ mainApp.factory('UserState',
 
             NotGive: 21,
             NotConfirm: 22,
-            ReportedNotTransfer: 23,
-
-            AbadonedOne: 31,
         };
         data.display = function(value) {
             switch (value) {
@@ -360,10 +357,6 @@ mainApp.factory('UserState',
                 return 'Not Give';
             case data.NotConfirm:
                 return 'Not Confirm';
-            case data.ReportedNotTransfer:
-                return 'Reported Not Transfer';
-            case data.AbadonedOne:
-                return 'Abadoned One';
             default:
                 return '';
             }
@@ -375,6 +368,7 @@ mainApp.factory('ConfigData',
     function() {
         var data = {
             dateFormat: 'yyyy/MM/dd',
+            dateTimeFormat: 'yyyy/MM/dd',
         }
         return data;
     });

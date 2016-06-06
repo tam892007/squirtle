@@ -25,7 +25,8 @@ namespace BSE365.Mappings
                     AttachmentUrl = x.AttachmentUrl,
                     TransferedDate = x.TransferedDate,
                     ReceivedDate = x.ReceivedDate,
-                    MoneyTransferGroupId = x.MoneyTransferGroupId,
+                    WaitingGiverId = x.WaitingGiverId,
+                    WaitingReceiverId = x.WaitingReceiverId,
                     RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Giver.UserInfo.DisplayName,
@@ -53,7 +54,8 @@ namespace BSE365.Mappings
                     AttachmentUrl = x.AttachmentUrl,
                     TransferedDate = x.TransferedDate,
                     ReceivedDate = x.ReceivedDate,
-                    MoneyTransferGroupId = x.MoneyTransferGroupId,
+                    WaitingGiverId = x.WaitingGiverId,
+                    WaitingReceiverId = x.WaitingReceiverId,
                     RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Receiver.UserInfo.DisplayName,
@@ -76,7 +78,8 @@ namespace BSE365.Mappings
             vm.AttachmentUrl = model.AttachmentUrl;
             vm.TransferedDate = model.TransferedDate;
             vm.ReceivedDate = model.ReceivedDate;
-            vm.MoneyTransferGroupId = model.MoneyTransferGroupId;
+            vm.WaitingGiverId = model.WaitingGiverId;
+            vm.WaitingReceiverId = model.WaitingReceiverId;
             vm.RelatedTransactionId = model.RelatedTransactionId;
             vm.IsEnd = model.IsEnd;
             return vm;

@@ -34,7 +34,11 @@
         <div class="row">
             <div class="col-md-6">
                 <label>Priority Level</label>
-                <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.level)"></p>
+                <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.priority)"></p>
+            </div>
+            <div class="col-md-6">
+                <p><select class="form-control" ng-model="info.newPriority" ng-options="item.value as item.text for item in priorityToSelect"></select></p>
+                <button class="btn btn-success" ng-click="setPriority()">Set Priority</button>
             </div>
         </div>
         <div class="row">
@@ -43,10 +47,15 @@
                 <p class="form-control-static" data-ng-bind="AccountState.display(info.state)"></p>
             </div>
             <div class="col-md-6">
-                <label>User State</label>
-                <p class="form-control-static" data-ng-bind="UserState.display(info.userState)"></p>
+                <p><select class="form-control" ng-model="info.newState" ng-options="item.value as item.text for item in accountStateToSelect"></select></p>
+                <button class="btn" ng-disabled="!info.isAllowChangeState" ng-class="{'btn-success': info.isAllowChangeState}" ng-click="setAccountState()">Change State</button>
             </div>
         </div>
+        <div class="form-group">
+            <label>User State</label>
+            <p class="form-control-static" data-ng-bind="UserState.display(info.userState)"></p>
+        </div>
+
         <div class="row" ng-show="info.userState!=UserState.Default">
             <div class="col-md-6">
                 <label>Related Account</label>
@@ -60,11 +69,10 @@
         <div class="row">
             <div class="col-md-6">
                 <label>Allow Give?</label>
-                <label>&nbsp;</label>
                 <p class="form-control-static" data-ng-bind="info.isAllowGive|yesno"></p>
             </div>
             <div class="col-md-6">
-                <label>&nbsp;</label>
+                <p>&nbsp;</p>
                 <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{'btn-success': info.isAllowGive}" ng-click="queueGive()">Request Give</button>
             </div>
         </div>
@@ -74,6 +82,7 @@
                 <p class="form-control-static" data-ng-bind="info.isAllowReceive|yesno"></p>
             </div>
             <div class="col-md-6">
+                <p>&nbsp;</p>
                 <button class="btn" ng-disabled="!info.isAllowReceive" ng-class="{'btn-success': info.isAllowReceive}" ng-click="queueReceive()">Request Receive</button>
             </div>
         </div>
@@ -81,6 +90,11 @@
             <label>Last Cycle Date</label>
             <p class="form-control-static" data-ng-bind="info.lastCycleDate|date:ConfigData.dateFormat"></p>
         </div>
+        <div class="form-group">
+            <label>Allow Abadon One Transaction</label>
+            <p class="form-control-static" data-ng-bind="info.isAllowAbandonOne|yesno"></p>
+        </div>
+
         <div class="row">
             <div class="col-md-6">
                 <label>PhoneNumber</label>
@@ -102,6 +116,10 @@
         <div class="form-group">
             <label>BankBranch</label>
             <p class="form-control-static" data-ng-bind="info.bankBranch"></p>
+        </div>
+        <div class="form-group">
+            <label>TreePath</label>
+            <p class="form-control-static" data-ng-bind="info.treePath"></p>
         </div>
     </div>
 </div>

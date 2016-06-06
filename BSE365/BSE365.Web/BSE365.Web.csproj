@@ -226,6 +226,7 @@
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\common\templates\empty.html" />
     <Content Include="app\main\account\account-default.html" />
+    <Content Include="app\main\account\account-edit.html" />
     <Content Include="app\main\account\waiting-details.html" />
     <Content Include="app\main\account\accountService.js" />
     <Content Include="app\main\account\account-info.html" />
@@ -317,7 +318,6 @@
     <Content Include="app\authentication\password\resetPassword.html" />
     <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Helper\EmailHelper.cs" />
-    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />

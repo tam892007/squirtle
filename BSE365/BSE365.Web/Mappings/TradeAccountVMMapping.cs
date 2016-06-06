@@ -15,8 +15,9 @@ namespace BSE365.Mappings
             var result = new TradeAccountVM
             {
                 UserName = target.UserName,
-                IsAllowGive = target.IsAllowGive(),
-                IsAllowReceive = target.IsAllowReceive(),
+                IsAllowGive = target.IsAllowQueueGive(),
+                IsAllowReceive = target.IsAllowQueueReceive(),
+                IsAllowChangeState = target.IsAllowChangeState(),
                 State = target.State,
                 Priority = target.Priority,
                 LastCycleDate = target.LastCycleDate,
@@ -44,8 +45,9 @@ namespace BSE365.Mappings
         {
             Expression<Func<Account, TradeAccountVM>> result = x => new TradeAccountVM
             {
-                //IsAllowGive = x.IsAllowGive(),
-                //IsAllowReceive = x.IsAllowReceive(),
+                IsAllowGive = x.IsAllowQueueGive(),
+                IsAllowReceive = x.IsAllowQueueReceive(),
+                IsAllowChangeState = x.IsAllowChangeState(),
                 UserName = x.UserName,
                 State = x.State,
                 Priority = x.Priority,

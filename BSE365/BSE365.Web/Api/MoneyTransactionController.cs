@@ -115,10 +115,9 @@ namespace BSE365.Api
         {
             var username = User.Identity.GetUserName();
             var expression = MoneyTransactionVMMapping.GetExpToReceiverVM();
-            var data = await _transactionRepo.Queryable().Where(x =>
-                !x.IsEnd
-                && x.GiverId == username)
+            var data = await _transactionRepo.Queryable()
                 .Include(x => x.Receiver.UserInfo)
+                .Where(x => x.GiverId == username && x.WaitingGiverId == x.Giver.CurrentTransactionGroupId)
                 .Select(expression)
                 .ToListAsync();
             return data;
@@ -128,10 +127,9 @@ namespace BSE365.Api
         {
             var username = User.Identity.GetUserName();
             var expression = MoneyTransactionVMMapping.GetExpToGiverVM();
-            var data = await _transactionRepo.Queryable().Where(x =>
-                !x.IsEnd
-                && x.ReceiverId == username)
+            var data = await _transactionRepo.Queryable()
                 .Include(x => x.Giver.UserInfo)
+                .Where(x => x.ReceiverId == username && x.WaitingReceiverId == x.Receiver.CurrentTransactionGroupId)
                 .Select(expression)
                 .ToListAsync();
             return data;
@@ -150,10 +148,19 @@ namespace BSE365.Api
         private async Task<MoneyTransactionVM.Giver> MoneyReceivedAsync(MoneyTransactionVM.Giver tran)
         {
             var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Receiver)
-                .Include(x => x.Giver)
+                .Include(x => x.Giver.UserInfo)
+                .Include(x => x.Receiver.UserInfo)
+                .Include(x => x.Giver.WaitingGivers)
+                .Include(x => x.Receiver.WaitingReceivers)
                 .FirstAsync(x => x.Id == tran.Id);
-            transaction.MoneyReceived();
+            var otherGivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
+                .Where(x => x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
+                .ToListAsync();
+            var otherReceivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
+                .Where(x => x.WaitingReceiverId == transaction.WaitingReceiverId && x.Id != transaction.Id)
+                .ToListAsync();
+            transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
+                otherReceivingTransactionsInCurrentTransaction);
             await _unitOfWork.SaveChangesAsync();
             return transaction.UpdateVm(tran);
         }
@@ -176,7 +183,7 @@ namespace BSE365.Api
             {
                 var expression = MoneyTransactionVMMapping.GetExpToReceiverVM();
                 var data = await _transactionRepo.Queryable().Where(x =>
-                    x.MoneyTransferGroupId == instance.Id && x.GiverId == username)
+                    x.WaitingGiverId == instance.Id && x.GiverId == username)
                     .Include(x => x.Receiver.UserInfo)
                     .Select(expression)
                     .ToListAsync();
@@ -186,7 +193,7 @@ namespace BSE365.Api
             {
                 var expression = MoneyTransactionVMMapping.GetExpToGiverVM();
                 var data = await _transactionRepo.Queryable().Where(x =>
-                    x.MoneyTransferGroupId == instance.Id && x.ReceiverId == username)
+                    x.WaitingReceiverId == instance.Id && x.ReceiverId == username)
                     .Include(x => x.Giver.UserInfo)
                     .Select(expression)
                     .ToListAsync();

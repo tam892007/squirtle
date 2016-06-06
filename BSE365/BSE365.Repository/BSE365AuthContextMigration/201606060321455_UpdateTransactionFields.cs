@@ -1,9 +1,9 @@
-namespace BSE365.Repository.BSE365ContextMigration
+namespace BSE365.Repository.BSE365AuthContextMigration
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddStoredProcedureMapGiversAndReceivers : DbMigration
+    public partial class UpdateTransactionFields : DbMigration
     {
         public override void Up()
         {

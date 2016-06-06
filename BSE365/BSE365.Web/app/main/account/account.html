@@ -13,10 +13,11 @@
                             <tr>
                                 <th>#</th>
                                 <th>Account</th>
+                                <th>Rating</th>
                                 <th>State</th>
                                 <th>Priority</th>
                                 <th>Last Cycle</th>
-                                <th>Allow Abadon One</th>
+                                <th>Give/Receive allowed</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,9 @@
                                     <span data-ng-bind="item.userName"></span>
                                 </td>
                                 <td>
+                                    <uib-rating ng-model="item.rating" max="5" read-only="true" ></uib-rating>
+                                </td>
+                                <td>
                                     <span data-ng-bind="getAccountState(item)"></span>
                                 </td>
                                 <td class="text-center">
@@ -36,8 +40,9 @@
                                 <td>
                                     <span data-ng-bind="item.lastCycleDate|date:ConfigData.dateFormat"></span>
                                 </td>
-                                <td>
-                                    <span data-ng-bind="item.isAllowAbandonOne|yesno"></span>
+                                <td class="text-center">
+                                    <span data-ng-bind="item.isAllowGive|yesno"></span> /
+                                    <span data-ng-bind="item.isAllowReceive|yesno"></span>
                                 </td>
                             </tr>
                         </tbody>
