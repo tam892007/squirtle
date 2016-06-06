@@ -21,7 +21,7 @@ namespace BSE365.Common.Constants
         /// <summary>
         /// Hours
         /// </summary>
-        public static int TimeForEachStepInHours = 48;
+        public static int TimeForEachStepInHours = 32;
 
         /// <summary>
         /// Milliseconds

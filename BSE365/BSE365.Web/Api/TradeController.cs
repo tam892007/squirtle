@@ -72,12 +72,6 @@ namespace BSE365.Api
                 case 0:
                     BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
                         new BSE365.Repository.DataContext.BSE365Context());
-                    BSE365.Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
-                        new BSE365.Repository.DataContext.BSE365Context());
-                    break;
-                case 5:
-                    BSE365.Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
-                        new BSE365.Repository.DataContext.BSE365Context());
                     break;
             }
             return Ok();
@@ -275,15 +269,17 @@ namespace BSE365.Api
             var expression = TransactionHistoryVMMapping.GetExpToVM(username);
             var giveTrans = _transactionRepo.Queryable()
                 .Where(x => x.GiverId == username)
-                .GroupBy(x => x.WaitingReceiverId);
+                .GroupBy(x => x.WaitingReceiverId)
+                .Select(expression);
 
             var receiveTrans = _transactionRepo.Queryable()
                 .Where(x => x.ReceiverId == username)
-                .GroupBy(x => x.WaitingReceiverId);
+                .GroupBy(x => x.WaitingReceiverId)
+                .Select(expression);
 
             var data = await giveTrans.Union(receiveTrans)
-                .Select(expression)
                 .ToListAsync();
+            data.ForEach(x => x.AccountId = username);
             return data;
         }
 

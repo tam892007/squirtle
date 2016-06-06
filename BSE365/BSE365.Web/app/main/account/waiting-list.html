@@ -13,7 +13,12 @@
     <tbody>
         <tr>
             <td colspan="6">
-                <input st-search="" class="form-control" placeholder="search ..." />
+                <div class="form-inline">
+                    <input st-search="" class="form-control" placeholder="search ..." />
+                    <button class="btn btn-success" ng-click="reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </div>
             </td>
         </tr>
         <tr ng-repeat="item in displayData" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">

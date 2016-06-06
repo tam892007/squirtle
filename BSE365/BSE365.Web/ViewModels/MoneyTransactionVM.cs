@@ -56,21 +56,24 @@ namespace BSE365.ViewModels
             {
                 get
                 {
+                    var now = DateTime.Now;
                     var result = 0;
                     if (State == TransactionState.Begin)
                     {
-                        var timeLeft = DateTime.Now - Created;
-                        if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
+                        var endTime = Created.AddHours(TimerConfig.TimeForEachStepInHours);
+                        if (endTime > now)
                         {
-                            result = TimerConfig.TimeForEachStepInSeconds - timeLeft.Seconds;
+                            var timeLeft = endTime - now;
+                            result = (int) timeLeft.TotalSeconds;
                         }
                     }
                     else if (State == TransactionState.Transfered)
                     {
-                        var timeLeft = DateTime.Now - TransferedDate.Value;
-                        if (timeLeft.Hours < TimerConfig.TimeForEachStepInHours)
+                        var endTime = TransferedDate.Value.AddHours(TimerConfig.TimeForEachStepInHours);
+                        if (endTime > now)
                         {
-                            result = TimerConfig.TimeForEachStepInSeconds - timeLeft.Seconds;
+                            var timeLeft = endTime - now;
+                            result = (int) timeLeft.TotalSeconds;
                         }
                     }
                     return result;

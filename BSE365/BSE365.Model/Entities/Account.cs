@@ -90,7 +90,7 @@ namespace BSE365.Model.Entities
 
                         if (UserInfo.GiveOver < 2)
                         {
-                            UserInfo.GiveOver += 2;
+                            UserInfo.GiveOver = 2;
                             UserInfo.ObjectState = ObjectState.Modified;
                         }
                         break;

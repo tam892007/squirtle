@@ -58,6 +58,12 @@ mainApp.controller('transactionCurrentController',
                     console.log(minState);
 
                     // history
+                    $scope.histories.push({
+                        userName: "System - Create",
+                        rating: 5,
+                        time: item.created,
+                        isCompleted: true
+                    });
                     var user = '';
                     if ($scope.grState == 'giving') {
                         user = item.receiverId;

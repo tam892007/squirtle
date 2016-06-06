@@ -12,7 +12,11 @@ mainApp.controller('accountController',
                 });
         }
 
-        $scope.viewDefails = function (target) {
+        $scope.reload = function() {
+            $scope.loadData();
+        }
+
+        $scope.viewDefails = function(target) {
             if ($scope.current) {
                 $scope.current.selected = false;
             }

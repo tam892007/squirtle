@@ -368,7 +368,7 @@ mainApp.factory('ConfigData',
     function() {
         var data = {
             dateFormat: 'yyyy/MM/dd',
-            dateTimeFormat: 'yyyy/MM/dd',
+            dateTimeFormat: 'yyyy/MM/dd - hh:mm:ss',
         }
         return data;
     });

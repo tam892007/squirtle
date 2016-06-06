@@ -12,6 +12,10 @@ mainApp.controller('waitingReceiverController',
                 });
         }
 
+        $scope.reload = function () {
+            $scope.loadData();
+        }
+
         $scope.viewDefails = function(target) {
             if ($scope.target) {
                 $scope.target.selected = false;

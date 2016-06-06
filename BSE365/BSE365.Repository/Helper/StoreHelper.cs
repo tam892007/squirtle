@@ -21,6 +21,7 @@ namespace BSE365.Repository.Helper
             var now = DateTime.Now;
             using (var context = new BSE365Context())
             {
+                // get queued givers and queued receivers
                 var queuedWaitingGivers =
                     context.WaitingGivers.Include(x => x.Account)
                         .OrderByDescending(x => x.Priority)
@@ -31,6 +32,7 @@ namespace BSE365.Repository.Helper
                         .OrderByDescending(x => x.Priority)
                         .ThenBy(x => x.Created)
                         .ToList();
+                // transform queued data single queue (split amount)
                 var transformedWaitingGivers = new List<WaitingBase>();
                 var transformedWaitingReceivers = new List<WaitingBase>();
                 foreach (var queued in queuedWaitingGivers)
@@ -64,77 +66,66 @@ namespace BSE365.Repository.Helper
                     }
                 }
 
-                var mappedTransaction = new List<MoneyTransaction>();
-
                 while (transformedWaitingGivers.Count > 0 && transformedWaitingReceivers.Count > 0)
                 {
-                    var giver = transformedWaitingGivers[0];
-                    transformedWaitingGivers.RemoveAt(0);
-
-                    var receiverIndex = 0;
-                    var receiver = transformedWaitingReceivers[receiverIndex ++];
-
-                    var isExistSamGiverAndReceiver = mappedTransaction.Any(
-                        x => x.GiverId == giver.AccountId && x.ReceiverId == receiver.AccountId);
-                    while (isExistSamGiverAndReceiver && receiverIndex < transformedWaitingReceivers.Count)
-                    {
-                        receiver = transformedWaitingReceivers[receiverIndex ++];
-
-                        isExistSamGiverAndReceiver = mappedTransaction.Any(
-                            x => x.GiverId == giver.AccountId && x.ReceiverId == receiver.AccountId);
-                    }
-
-                    if (receiverIndex == transformedWaitingReceivers.Count)
+                    var coupleMapped = GetMappedCouple(context, transformedWaitingGivers, transformedWaitingReceivers);
+                    if (!coupleMapped.Item1)
                     {
                         break;
                     }
 
-                    receiver = transformedWaitingReceivers[receiverIndex - 1];
-                    transformedWaitingReceivers.RemoveAt(receiverIndex - 1);
+                    var giveRequest = coupleMapped.Item2;
+                    var receiveRequest = coupleMapped.Item3;
 
 
-                    var queuedGiver = queuedWaitingGivers.First(x => x.Id == giver.Id);
-                    var queuedReceiver = queuedWaitingReceivers.First(x => x.Id == receiver.Id);
+                    // select raw waiting data
+                    var queuedGiveRaw = queuedWaitingGivers.First(x => x.Id == giveRequest.Id);
+                    var queuedReceiveRaw = queuedWaitingReceivers.First(x => x.Id == receiveRequest.Id);
 
-                    var queuedGiverOldState = queuedGiver.Account.State;
-                    var queuedReceiverOldState = queuedReceiver.Account.State;
+                    // save account state for rollback
+                    var giverOldState = queuedGiveRaw.Account.State;
+                    var receiverOldState = queuedReceiveRaw.Account.State;
+
 
                     var transaction = new MoneyTransaction
                     {
-                        GiverId = giver.AccountId,
-                        ReceiverId = receiver.AccountId,
+                        GiverId = giveRequest.AccountId,
+                        ReceiverId = receiveRequest.AccountId,
                         Created = now,
                         LastModified = now,
-                        WaitingGiverId = queuedGiver.Id,
-                        WaitingReceiverId = queuedReceiver.Id,
+                        WaitingGiverId = queuedGiveRaw.Id,
+                        WaitingReceiverId = queuedReceiveRaw.Id,
                         ObjectState = ObjectState.Added,
                     };
 
-                    mappedTransaction.Add(transaction);
 
+                    // update data to database
                     using (var dbContextTransaction = context.Database.BeginTransaction())
                     {
                         try
                         {
-                            queuedGiver.Amount--;
-                            queuedGiver.ObjectState = (queuedGiver.Amount == 0)
+                            // update waiting raw
+                            queuedGiveRaw.Amount--;
+                            queuedGiveRaw.ObjectState = (queuedGiveRaw.Amount == 0)
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
 
-                            queuedReceiver.Amount--;
-                            queuedReceiver.ObjectState = (queuedReceiver.Amount == 0)
+                            queuedReceiveRaw.Amount--;
+                            queuedReceiveRaw.ObjectState = (queuedReceiveRaw.Amount == 0)
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
 
                             context.MoneyTransactions.Add(transaction);
 
-                            queuedGiver.Account.State = AccountState.InGiveTransaction;
-                            queuedGiver.Account.CurrentTransactionGroupId = transaction.WaitingGiverId;
-                            queuedGiver.Account.ObjectState = ObjectState.Modified;
+                            // update giver's account
+                            queuedGiveRaw.Account.State = AccountState.InGiveTransaction;
+                            queuedGiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingGiverId;
+                            queuedGiveRaw.Account.ObjectState = ObjectState.Modified;
 
-                            queuedReceiver.Account.State = AccountState.InReceiveTransaction;
-                            queuedReceiver.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
-                            queuedReceiver.Account.ObjectState = ObjectState.Modified;
+                            // update receiver's account
+                            queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
+                            queuedReceiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
+                            queuedReceiveRaw.Account.ObjectState = ObjectState.Modified;
 
                             context.SaveChanges();
 
@@ -146,21 +137,72 @@ namespace BSE365.Repository.Helper
 
                             transaction.ObjectState = ObjectState.Unchanged;
 
-                            queuedGiver.Amount++;
-                            queuedGiver.ObjectState = ObjectState.Unchanged;
+                            queuedGiveRaw.Amount++;
+                            queuedGiveRaw.ObjectState = ObjectState.Unchanged;
 
-                            queuedReceiver.Amount++;
-                            queuedReceiver.ObjectState = ObjectState.Unchanged;
+                            queuedReceiveRaw.Amount++;
+                            queuedReceiveRaw.ObjectState = ObjectState.Unchanged;
 
-                            queuedGiver.Account.State = queuedGiverOldState;
-                            queuedGiver.Account.ObjectState = ObjectState.Unchanged;
+                            queuedGiveRaw.Account.State = giverOldState;
+                            queuedGiveRaw.Account.ObjectState = ObjectState.Unchanged;
 
-                            queuedReceiver.Account.State = queuedReceiverOldState;
-                            queuedReceiver.Account.ObjectState = ObjectState.Unchanged;
+                            queuedReceiveRaw.Account.State = receiverOldState;
+                            queuedReceiveRaw.Account.ObjectState = ObjectState.Unchanged;
                         }
                     }
                 }
             }
+        }
+
+
+        private static Tuple<bool, WaitingBase, WaitingBase> GetMappedCouple(
+            BSE365Context context,
+            List<WaitingBase> transformedWaitingGivers,
+            List<WaitingBase> transformedWaitingReceivers)
+        {
+            var isSuccessed = true;
+
+            var countTried = 0;
+
+            // select single give request
+            var giveRequest = transformedWaitingGivers[0];
+            transformedWaitingGivers.RemoveAt(0);
+
+            Check_Duplicate_Point:
+            countTried++;
+            // check duplicate
+            var existReceiverIdsInGiverTransaction = context.MoneyTransactions.Where(
+                x => x.GiverId == giveRequest.AccountId &&
+                     x.WaitingGiverId == giveRequest.Id)
+                .Select(x => x.ReceiverId);
+
+            // select single receive request
+            var receiveRequest = transformedWaitingReceivers
+                .FirstOrDefault(x => !existReceiverIdsInGiverTransaction.Contains(x.AccountId));
+
+            if (receiveRequest != null)
+            {
+                transformedWaitingReceivers.Remove(receiveRequest);
+            }
+            else
+            {
+                if (countTried == transformedWaitingGivers.Count)
+                {
+                    isSuccessed = false;
+                }
+                else
+                {
+                    transformedWaitingGivers.Add(giveRequest);
+
+                    giveRequest = transformedWaitingGivers[0];
+                    transformedWaitingGivers.RemoveAt(0);
+
+                    goto Check_Duplicate_Point;
+                }
+            }
+
+            var result = new Tuple<bool, WaitingBase, WaitingBase>(isSuccessed, giveRequest, receiveRequest);
+            return result;
         }
 
         public static void UpdateTransactions()

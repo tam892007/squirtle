@@ -102,38 +102,44 @@ namespace BSE365.Repository.BSE365ContextMigration
         public static void ClearWaitingTransactionData(BSE365.Repository.DataContext.BSE365Context context)
         {
             var accounts = context.Accounts
-                .Include(x => x.WaitingGivers)
-                .Include(x => x.WaitingReceivers)
-                .Include(x => x.Gave)
-                .Include(x => x.Received)
+                .Include(x => x.UserInfo)
                 .Where(x => x.UserInfoId != 1)
                 .ToList();
             foreach (var account in accounts)
             {
                 account.State = AccountState.Default;
+                account.LastCycleDate = DateTime.Now.AddDays(-8);
+                account.CurrentTransactionGroupId = null;
                 account.RelatedTransaction = string.Empty;
                 account.ObjectState = ObjectState.Modified;
-                foreach (var item in account.WaitingGivers)
-                {
-                    item.ObjectState = ObjectState.Deleted;
-                }
-                foreach (var item in account.WaitingReceivers)
-                {
-                    item.ObjectState = ObjectState.Deleted;
-                }
-                foreach (var item in account.Gave)
-                {
-                    item.ObjectState = ObjectState.Deleted;
-                }
-                foreach (var item in account.Received)
-                {
-                    item.ObjectState = ObjectState.Deleted;
-                }
+
+                var info = account.UserInfo;
+                info.State = UserState.Default;
+                info.LastGiveDate = DateTime.Now.AddDays(-1);
+                info.GiveOver = -1;
+                info.IsAllowAbandonOne = false;
+                info.RelatedAccount = null;
+                info.ObjectState = ObjectState.Modified;
+            }
+            var transactions = context.MoneyTransactions.ToList();
+            foreach (var item in transactions)
+            {
+                item.ObjectState = ObjectState.Deleted;
             }
             var groups = context.MoneyTransferGroups.ToList();
-            foreach (var group in groups)
+            foreach (var item in groups)
             {
-                group.ObjectState = ObjectState.Deleted;
+                item.ObjectState = ObjectState.Deleted;
+            }
+            var wgivers = context.WaitingGivers.ToList();
+            foreach (var item in wgivers)
+            {
+                item.ObjectState = ObjectState.Deleted;
+            }
+            var wreceivers = context.WaitingReceivers.ToList();
+            foreach (var item in wreceivers)
+            {
+                item.ObjectState = ObjectState.Deleted;
             }
             context.SaveChanges();
         }

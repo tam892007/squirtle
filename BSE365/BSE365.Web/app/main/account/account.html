@@ -8,7 +8,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <table st-table="data" class="table table-striped">
+                    <table st-table="displayData" st-safe-src="data" class="table table-striped">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -21,7 +21,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="form-inline">
+                                        <input st-search="" class="form-control" placeholder="search ..." />
+                                        <button class="btn btn-success" ng-click="reload()">
+                                            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="item in displayData" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
                                 <td>
                                     <span>{{ $index + 1 }}</span>
                                 </td>
@@ -29,7 +39,7 @@
                                     <span data-ng-bind="item.userName"></span>
                                 </td>
                                 <td>
-                                    <uib-rating ng-model="item.rating" max="5" read-only="true" ></uib-rating>
+                                    <uib-rating ng-model="item.rating" max="5" read-only="true"></uib-rating>
                                 </td>
                                 <td>
                                     <span data-ng-bind="getAccountState(item)"></span>
