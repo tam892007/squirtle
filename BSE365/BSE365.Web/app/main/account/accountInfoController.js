@@ -16,10 +16,11 @@ mainApp.controller('accountInfoController',
 
         $scope.queueGive = function() {
             $scope.info.isAllowGive = false;
-            accountService.queueGive({},
+            accountService.queueGive({ key: $scope.info.userName },
+                { key: $scope.info.userName },
                 function(response) {
                     Notification.success('Queue give successful!');
-                    $scope.updateStatus();
+                    $scope.getData();
                 },
                 function(response) {
                     $scope.info.isAllowGive = true;
@@ -29,10 +30,11 @@ mainApp.controller('accountInfoController',
 
         $scope.queueReceive = function() {
             $scope.info.isAllowReceive = false;
-            accountService.queueReceive({},
+            accountService.queueReceive({ key: $scope.info.userName },
+                { key: $scope.info.userName },
                 function(response) {
                     Notification.success('Queue receive successful!');
-                    $scope.updateStatus();
+                    $scope.getData();
                 },
                 function(response) {
                     $scope.info.isAllowReceive = true;
