@@ -216,7 +216,12 @@ namespace BSE365.Api
         {
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
+            if (user == null) return null;
+            var roles = await _repo.GetRolesAsync(userId);
+
             var viewModel = user.ToContextViewModel();
+            viewModel.Roles = roles;
+
             return viewModel;
         }
 

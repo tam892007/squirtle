@@ -52,7 +52,18 @@ namespace BSE365.Repository.Repositories
                 await _userManager.CreateAsync(user, password);
 
                 lstUser.Add(user);
-            }            
+
+                ////create account
+                var account = new Account
+                {
+                    UserName = name,
+                    UserInfoId = info.Id,
+                };
+
+                _ctx.Accounts.Add(account);
+            }
+
+            await _ctx.SaveChangesAsync();
 
             var result = new BusinessResult<IEnumerable<User>>();
             result.Result = lstUser;

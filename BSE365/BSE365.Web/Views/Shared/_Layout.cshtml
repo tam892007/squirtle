@@ -54,7 +54,7 @@
                             <li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">History</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown" ui-sref-active="{'active' : 'acc'}">
+                    <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forAdmin()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Management <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in">Accounts</a></li>
@@ -75,7 +75,7 @@
                             <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">One more separated link</a></li>
                         </ul>
                     </li>
-                    <li ui-sref-active-eq='active'><a ui-sref="system">System</a></li>
+                    <li ui-sref-active-eq='active' ng-if="forAdmin()"><a ui-sref="system">System</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">

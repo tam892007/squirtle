@@ -17,8 +17,7 @@ namespace BSE365.Mappings
                 Id = model.Id,
                 UserName = model.UserName,                
                 PinBalance = model.PinBalance,
-                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 },
-                Roles = model.Roles.Select(x=>x.RoleId),
+                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 },        
             };
 
             return result;

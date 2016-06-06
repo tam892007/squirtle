@@ -468,5 +468,228 @@ textarea.ng-dirty.ng-valid,
   position: relative;
   top: 15px;
 }
+.transaction-title {
+  background-color: transparent;
+  text-align: center;
+  font-size: 30px;
+  font-family: Roboto, sans-serif;
+  font-weight: 600;
+  margin-top: 30px;
+}
+.transaction-step .glyphicon {
+  width: 128px;
+  height: 128px;
+  background-repeat: no-repeat;
+}
+.transaction-step .glyphicon-ok:before {
+  content: "";
+}
+.transaction-step .glyphicon-expand:before {
+  content: "";
+}
+.transaction-step .glyphicon-unchecked:before {
+  content: "";
+}
+.transaction-step .text-default {
+  line-height: 2.0;
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  color: white;
+  position: relative;
+  width: 80%;
+  margin-top: 60px;
+  margin-bottom: 15px;
+  margin-left: 9%;
+}
+.transaction-step .text-default:after {
+  top: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  border-width: 8px;
+  margin-left: -8px;
+}
+.transaction-step__1 .text-ok {
+  background-color: #ffa089;
+}
+.transaction-step__1 .text-ok:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade1-top.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__1 .text-ok:after {
+  border-top-color: #ffa089;
+}
+.transaction-step__1 .glyphicon-ok {
+  background-image: url('images/trade1.png');
+}
+.transaction-step__2 .text-ok,
+.transaction-step__2 .text-expand {
+  background-color: #ff8c70;
+}
+.transaction-step__2 .text-ok:before,
+.transaction-step__2 .text-expand:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade2-top.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__2 .text-ok:after,
+.transaction-step__2 .text-expand:after {
+  border-top-color: #ff8c70;
+}
+.transaction-step__2 .glyphicon-ok {
+  background-image: url('images/trade2.png');
+}
+.transaction-step__2 .glyphicon-expand,
+.transaction-step__2 .glyphicon-unchecked {
+  background-image: url('images/trade2-disable.png');
+}
+.transaction-step__3 .text-ok,
+.transaction-step__3 .text-expand {
+  background-color: #b2543c;
+}
+.transaction-step__3 .text-ok:before,
+.transaction-step__3 .text-expand:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade3-top.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__3 .text-ok:after,
+.transaction-step__3 .text-expand:after {
+  border-top-color: #b2543c;
+}
+.transaction-step__3 .text-unchecked {
+  background-color: #6e6e6e;
+}
+.transaction-step__3 .text-unchecked:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade3-top-disable.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__3 .text-unchecked:after {
+  border-top-color: #6e6e6e;
+}
+.transaction-step__3 .glyphicon-ok {
+  background-image: url('images/trade3.png');
+}
+.transaction-step__3 .glyphicon-expand,
+.transaction-step__3 .glyphicon-unchecked {
+  background-image: url('images/trade3-disable.png');
+}
+.transaction-step__4 .text-ok,
+.transaction-step__4 .text-expand {
+  background-color: #8e4330;
+}
+.transaction-step__4 .text-ok:before,
+.transaction-step__4 .text-expand:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade4-top.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__4 .text-ok:after,
+.transaction-step__4 .text-expand:after {
+  border-top-color: #8e4330;
+}
+.transaction-step__4 .text-unchecked {
+  background-color: #575757;
+}
+.transaction-step__4 .text-unchecked:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade4-top-disable.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__4 .text-unchecked:after {
+  border-top-color: #575757;
+}
+.transaction-step__4 .glyphicon-ok {
+  background-image: url('images/trade4.png');
+}
+.transaction-step__4 .glyphicon-expand,
+.transaction-step__4 .glyphicon-unchecked {
+  background-image: url('images/trade4-disable.png');
+}
+.transaction-step__5 .text-ok,
+.transaction-step__5 .text-expand {
+  background-color: #4b2218;
+}
+.transaction-step__5 .text-ok:before,
+.transaction-step__5 .text-expand:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade5-top.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__5 .text-ok:after,
+.transaction-step__5 .text-expand:after {
+  border-top-color: #4b2218;
+}
+.transaction-step__5 .text-unchecked {
+  background-color: #2d2d2d;
+}
+.transaction-step__5 .text-unchecked:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade5-top-disable.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__5 .text-unchecked:after {
+  border-top-color: #2d2d2d;
+}
+.transaction-step__5 .glyphicon-ok {
+  background-image: url('images/trade5.png');
+}
+.transaction-step__5 .glyphicon-expand,
+.transaction-step__5 .glyphicon-unchecked {
+  background-image: url('images/trade5-disable.png');
+}
 
 /*# sourceMappingURL=main.css.map */

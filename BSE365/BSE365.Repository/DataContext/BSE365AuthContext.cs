@@ -17,6 +17,7 @@ namespace BSE365.Repository.DataContext
         public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
         public virtual DbSet<PinTransactionHistory> PinTransactionHistories { get; set; }
         public virtual DbSet<Image> Images { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

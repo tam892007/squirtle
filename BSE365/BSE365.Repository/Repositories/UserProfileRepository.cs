@@ -31,6 +31,11 @@ namespace BSE365.Repository.Repositories
             return user;             
         }
 
+        public async Task<IList<string>> GetRolesAsync(string id)
+        {
+            return await _userManager.GetRolesAsync(id);
+        }
+
         public async Task<User> UpdateAvatar(string id, Image image)
         {
             var user = await FindUser(id);
