@@ -3,7 +3,7 @@
     <div class="" ng-if="grState=='receiving'">Receiving</div>
     <div class="" ng-if="grState==''">Nothing!</div>
 </div>
-<div class="bg-info">
+<div class="bg-info" ng-show="grState!=''">
     <div class="col-md-2 col-md-offset-1 text-center transaction-step transaction-step__1">
         <div class="text-default" ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queue</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>

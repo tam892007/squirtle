@@ -112,6 +112,10 @@
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Bin\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
       <Private>True</Private>
@@ -222,6 +226,7 @@
     <Content Include="app\common\services\imageService.js" />
     <Content Include="app\common\templates\empty.html" />
     <Content Include="app\main\account\account-default.html" />
+    <Content Include="app\main\account\account-edit.html" />
     <Content Include="app\main\account\waiting-details.html" />
     <Content Include="app\main\account\accountService.js" />
     <Content Include="app\main\account\account-info.html" />

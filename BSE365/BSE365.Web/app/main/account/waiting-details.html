@@ -6,35 +6,41 @@
     </div>
     <div class="panel-body">
         <div class="form-group">
-            <img http-src="{{target.avatarId}}" class="img-circle" />
+            <img http-src="{{target.avatarId}}" class="img-circle"/>
         </div>
-        <div class="form-group">
-            <label>Account</label>
-            <p class="form-control-static" data-ng-bind="target.accountId"></p>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Account</label>
+                <p class="form-control-static" data-ng-bind="target.accountId"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="target.displayName"></p>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Name</label>
-            <p class="form-control-static" data-ng-bind="target.displayName"></p>
-        </div>
-        <div class="form-group">
-            <label>Email</label>
-            <p class="form-control-static" data-ng-bind="target.email"></p>
-        </div>
-        <div class="form-group">
-            <label>Phone</label>
-            <p class="form-control-static" data-ng-bind="target.phoneNumber"></p>
-        </div>
-        <div class="form-group">
-            <label>Priority</label>
-            <p class="form-control-static" data-ng-bind="PriorityLevel.display(target.priority)"></p>
-        </div>
-        <div class="form-group">
-            <label>Amount</label>
-            <p class="form-control-static" data-ng-bind="target.amount"></p>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Amount</label>
+                <p class="form-control-static" data-ng-bind="target.amount"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Priority</label>
+                <p class="form-control-static" data-ng-bind="PriorityLevel.display(target.priority)"></p>
+            </div>
         </div>
         <div class="form-group">
             <label>Created</label>
-            <p class="form-control-static" data-ng-bind="target.created|date:ConfigData.dateFormat"></p>
+            <p class="form-control-static" data-ng-bind="target.created|date:ConfigData.dateTimeFormat"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>PhoneNumber</label>
+                <p class="form-control-static" data-ng-bind="target.phoneNumber"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="target.email"></p>
+            </div>
         </div>
     </div>
 </div>

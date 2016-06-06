@@ -20,6 +20,14 @@ namespace BSE365.Model.Entities
             Accounts = new HashSet<Account>();
         }
 
+        public string ParentId { get; set; }
+
+        public int Level { get; set; }
+
+        public string TreePath { get; set; }
+
+        #region user's infomations
+
         [Required]
         [StringLength(30)]
         public string DisplayName { get; set; }
@@ -27,8 +35,6 @@ namespace BSE365.Model.Entities
         [Required]
         [StringLength(30)]
         public string Email { get; set; }
-
-        public string ParentId { get; set; }
 
         [Required]
         [StringLength(20)]
@@ -46,10 +52,18 @@ namespace BSE365.Model.Entities
         [StringLength(30)]
         public string BankBranch { get; set; }
 
+        public int? AvatarId { get; set; }
+
+        #endregion
+
+        #region trade account infomations
+
         [DataType(DataType.Date)]
         public DateTime LastGiveDate { get; set; }
 
         public int GiveOver { get; set; }
+
+        public int Rating { get; set; }
 
         public UserState State { get; set; }
 
@@ -57,27 +71,23 @@ namespace BSE365.Model.Entities
 
         public string RelatedAccount { get; set; }
 
-        public int? AvatarId { get; set; }
+        #endregion
 
         public virtual Image Avatar { get; set; }
 
-        public int Rating { get; set; }
-
-        public int Level { get; set; }
-
-        public string TreePath { get; set; }
-
         public virtual ICollection<Account> Accounts { get; set; }
 
-        public bool IsAllowGive()
+        #region waiting list
+
+        public bool IsAllowQueueGive()
         {
             var dayFromLastGive = (DateTime.Now - LastGiveDate).Days;
-            return dayFromLastGive >= 1;
+            return dayFromLastGive >= 1 && State == UserState.Default;
         }
 
-        public bool IsAllowReceive()
+        public bool IsAllowQueueReceive()
         {
-            return GiveOver >= 2;
+            return GiveOver >= 2 && State == UserState.Default;
         }
 
         /// <summary>
@@ -98,13 +108,34 @@ namespace BSE365.Model.Entities
             ObjectState = ObjectState.Modified;
         }
 
+        #endregion
+
+        #region transaction report methods
+
         /// <summary>
         /// A transaction give money successed
         /// </summary>
         public void MoneyGave()
         {
             GiveOver += 1;
+            Rating += 1;
             ObjectState = ObjectState.Modified;
         }
+
+        public void NotTransfer(Account account)
+        {
+            State = UserState.NotGive;
+            RelatedAccount = $"{RelatedAccount}{account.UserName},";
+            ObjectState = ObjectState.Modified;
+        }
+
+        public void NotConfirm(Account account)
+        {
+            State = UserState.NotConfirm;
+            RelatedAccount = $"{RelatedAccount}{account.UserName},";
+            ObjectState = ObjectState.Modified;
+        }
+
+        #endregion
     }
 }

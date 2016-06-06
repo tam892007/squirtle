@@ -2,6 +2,7 @@
 mainApp.controller('transactionHistoryController',
 [
     '$scope', '_', '$timeout', '$uibModal', '$uibModalInstance', 'transactionService', 'tradeService', 'Notification',
+    'ConfigData',
     'AccountState', 'TransactionState', 'targetData',
     function($scope,
         _,
@@ -11,6 +12,7 @@ mainApp.controller('transactionHistoryController',
         transactionService,
         tradeService,
         Notification,
+        ConfigData,
         AccountState,
         TransactionState,
         targetData) {
@@ -63,7 +65,7 @@ mainApp.controller('transactionHistoryController',
                         if (item.receivedDate) {
                             $scope.histories.add({
                                 userName: user,
-                                rate: 0,
+                                rating: item.rating,
                                 time: item.receivedDate,
                                 isCompleted: true
                             });
@@ -73,7 +75,7 @@ mainApp.controller('transactionHistoryController',
                         if (item.transferedDate) {
                             $scope.histories.add({
                                 userName: user,
-                                rate: 0,
+                                rating: item.rating,
                                 time: item.transferedDate,
                                 isCompleted: true
                             });
@@ -140,6 +142,7 @@ mainApp.controller('transactionHistoryController',
             $scope.receiverInfoTemplateUrl = 'app/main/transaction/info-receiver.html';
             $scope.TransactionState = TransactionState;
             $scope.AccountState = AccountState;
+            $scope.ConfigData = ConfigData;
             $scope.overviewState = {
                 queued: 1,
                 giving: 0,

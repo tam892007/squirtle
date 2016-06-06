@@ -34,7 +34,11 @@ namespace BSE365.ViewModels
             public DateTime? TransferedDate { get; set; }
             public DateTime? ReceivedDate { get; set; }
 
-            public int? MoneyTransferGroupId { get; set; }
+            public int? WaitingGiverId { get; set; }
+
+            public int? WaitingReceiverId { get; set; }
+
+
             public int? RelatedTransactionId { get; set; }
 
 

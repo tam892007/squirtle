@@ -1,8 +1,8 @@
 ﻿'use strict';
 mainApp.controller('tradeInfoController',
 [
-    '$scope', 'tradeService', 'Notification', 'AccountState', 'PriorityLevel',
-    function($scope, tradeService, Notification, AccountState, PriorityLevel) {
+    '$scope', 'tradeService', 'Notification', 'AccountState', 'PriorityLevel', 'UserState',
+    function ($scope, tradeService, Notification, AccountState, PriorityLevel, UserState) {
 
         $scope.updateStatus = function() {
             tradeService.status({},
@@ -12,27 +12,27 @@ mainApp.controller('tradeInfoController',
         }
 
         $scope.queueGive = function() {
-            info.isAllowGive = false;
+            $scope.info.isAllowGive = false;
             tradeService.queueGive({},
                 function(response) {
                     Notification.success('Queue give successful!');
                     $scope.updateStatus();
                 },
                 function(response) {
-                    info.isAllowGive = true;
+                    $scope.info.isAllowGive = true;
                     Notification.success(response);
                 });
         }
 
         $scope.queueReceive = function() {
-            info.isAllowReceive = false;
+            $scope.info.isAllowReceive = false;
             tradeService.queueReceive({},
                 function(response) {
                     Notification.success('Queue receive successful!');
                     $scope.updateStatus();
                 },
                 function(response) {
-                    info.isAllowReceive = true;
+                    $scope.info.isAllowReceive = true;
                     Notification.success(response);
                 });
         }
@@ -40,6 +40,7 @@ mainApp.controller('tradeInfoController',
 
         $scope.init = function() {
             $scope.AccountState = AccountState;
+            $scope.UserState = UserState;
             $scope.PriorityLevel = PriorityLevel;
 
             $scope.updateStatus();
