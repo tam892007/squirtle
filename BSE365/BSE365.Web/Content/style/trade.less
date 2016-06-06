@@ -1,4 +1,22 @@
-﻿.transaction-step {
+﻿.transaction-title {
+    background-color: transparent;
+    text-align: center;
+    font-size: 30px;
+    font-family: @font-family-standard;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+@color1: #ffa089;
+@color2: #ff8c70;
+@color3: #b2543c;
+@color3-disable: #6e6e6e;
+@color4: #8e4330;
+@color4-disable: #575757;
+@color5: #4b2218;
+@color5-disable: #2d2d2d;
+
+.transaction-step {
     .glyphicon {
         width: 128px;
         height: 128px;
@@ -17,15 +35,77 @@
         }
     }
 
+    .text-default {
+        line-height: 2.0;
+        font-family: @font-family-standard;
+        font-weight: 500;
+        color: white;
+        position: relative;
+        width: 80%;
+        margin-top: 60px;
+        margin-bottom: 15px;
+        margin-left: 9%;
+
+        &:after {
+            top: 100%;
+            left: 50%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            border-width: 8px;
+            margin-left: -8px;
+        }
+    }
+
     &__1 {
+        .text-ok {
+            background-color: @color1;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade1-top.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color1;
+            }
+        }
+
         .glyphicon-ok {
             background-image: url('images/trade1.png');
         }
-
-
     }
 
     &__2 {
+        .text-ok, .text-expand {
+            background-color: @color2;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade2-top.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color2;
+            }
+        }
+
         .glyphicon-ok {
             background-image: url('images/trade2.png');
         }
@@ -36,6 +116,46 @@
     }
 
     &__3 {
+        .text-ok, .text-expand {
+            background-color: @color3;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade3-top.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color3;
+            }
+        }
+
+        .text-unchecked {
+            background-color: @color3-disable;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade3-top-disable.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color3-disable;
+            }
+        }
+
         .glyphicon-ok {
             background-image: url('images/trade3.png');
         }
@@ -46,6 +166,46 @@
     }
 
     &__4 {
+        .text-ok, .text-expand {
+            background-color: @color4;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade4-top.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color4;
+            }
+        }
+
+        .text-unchecked {
+            background-color: @color4-disable;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade4-top-disable.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color4-disable;
+            }
+        }
+
         .glyphicon-ok {
             background-image: url('images/trade4.png');
         }
@@ -56,6 +216,46 @@
     }
 
     &__5 {
+        .text-ok, .text-expand {
+            background-color: @color5;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade5-top.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color5;
+            }
+        }
+
+        .text-unchecked {
+            background-color: @color5-disable;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade5-top-disable.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color5-disable;
+            }
+        }
+
         .glyphicon-ok {
             background-image: url('images/trade5.png');
         }
