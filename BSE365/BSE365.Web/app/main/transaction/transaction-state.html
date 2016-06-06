@@ -4,24 +4,25 @@
     <div class="" ng-if="grState==''">Nothing!</div>
 </div>
 <div class="bg-info" ng-show="grState!=''">
-    <div class="col-md-2 col-md-offset-1 text-center transaction-step">
+    <div class="col-md-2 col-md-offset-1 text-center transaction-step transaction-step__1">
         <div>Queue</div>
+        <div ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queue</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>
     </div>
-    <div class="col-md-2 text-center transaction-step">
-        <div>Wait Give</div>
+    <div class="col-md-2 text-center transaction-step transaction-step__2">
+        <div ng-class="{'text-unchecked': overviewState.giving == -1, 'text-expand': overviewState.giving == 0,'text-ok': overviewState.giving == 1,}">Wait Give</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.giving == -1, 'glyphicon-expand': overviewState.giving == 0,'glyphicon-ok': overviewState.giving == 1,}"></span>
     </div>
-    <div class="col-md-2 text-center transaction-step">
-        <div>Cofirm Give</div>
+    <div class="col-md-2 text-center transaction-step transaction-step__3">
+        <div ng-class="{'text-unchecked': overviewState.gave == -1, 'text-expand': overviewState.gave == 0,'text-ok': overviewState.gave == 1,}">Cofirm Give</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.gave == -1, 'glyphicon-expand': overviewState.gave == 0,'glyphicon-ok': overviewState.gave == 1,}"></span>
     </div>
-    <div class="col-md-2 text-center transaction-step">
-        <div>Confirm Receive</div>
+    <div class="col-md-2 text-center transaction-step transaction-step__4">
+        <div ng-class="{'text-unchecked': overviewState.received == -1, 'text-expand': overviewState.received == 0,'text-ok': overviewState.received == 1,}">Confirm Receive</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.received == -1, 'glyphicon-expand': overviewState.received == 0,'glyphicon-ok': overviewState.received == 1,}"></span>
     </div>
-    <div class="col-md-2 text-center transaction-step">
-        <div>Complete</div>
+    <div class="col-md-2 text-center transaction-step transaction-step__5">
+        <div ng-class="{'text-unchecked': overviewState.ended == -1, 'text-expand': overviewState.ended == 0,'text-ok': overviewState.ended == 1,}">Complete</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
     </div>
 </div>

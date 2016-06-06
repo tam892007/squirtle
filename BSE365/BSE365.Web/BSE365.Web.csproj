@@ -287,6 +287,23 @@
     <Content Include="Content\images\plax_sphere_large.png" />
     <Content Include="Content\images\plax_sphere_small.png" />
     <Content Include="Content\images\lauch.png" />
+    <Content Include="Content\images\trade1-top.png" />
+    <Content Include="Content\images\trade1.png" />
+    <Content Include="Content\images\trade2-disable.png" />
+    <Content Include="Content\images\trade2-top.png" />
+    <Content Include="Content\images\trade2.png" />
+    <Content Include="Content\images\trade3-disable.png" />
+    <Content Include="Content\images\trade3-top-disable.png" />
+    <Content Include="Content\images\trade3-top.png" />
+    <Content Include="Content\images\trade3.png" />
+    <Content Include="Content\images\trade4-disable.png" />
+    <Content Include="Content\images\trade4-top-disable.png" />
+    <Content Include="Content\images\trade4-top.png" />
+    <Content Include="Content\images\trade4.png" />
+    <Content Include="Content\images\trade5-disable.png" />
+    <Content Include="Content\images\trade5-top-disable.png" />
+    <Content Include="Content\images\trade5-top.png" />
+    <Content Include="Content\images\trade5.png" />
     <Content Include="Content\images\user_default.jpg" />
     <Content Include="Content\images\wallets.jpg" />
     <Content Include="Content\loading-bar.css" />
@@ -304,7 +321,9 @@
     <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
     <Content Include="SQL\SpUpdateTransactions.sql" />
     <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ImageController.cs" />
@@ -318,9 +337,9 @@
     <Content Include="app\authentication\password\resetPassword.html" />
     <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Helper\EmailHelper.cs" />
+    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
-    <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\TransactionHistoryVm.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
@@ -398,6 +417,7 @@
     <Content Include="Content\angular-ui-notification.css.map" />
     <Content Include="Content\style\rate.less" />
     <Compile Include="App_Start\Startup.HangFire.cs" />
+    <Content Include="Content\style\trade.less" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
