@@ -17,6 +17,10 @@ namespace BSE365.Mappings
                 UserName = target.UserName,
                 IsAllowGive = target.IsAllowQueueGive(),
                 IsAllowReceive = target.IsAllowQueueReceive(),
+
+                NotAllowGiveReason = target.NotAllowGiveReason(),
+                NotAllowReceiveReason = target.NotAllowReceiveReason(),
+
                 IsAllowChangeState = target.IsAllowChangeState(),
                 State = target.State,
                 Priority = target.Priority,

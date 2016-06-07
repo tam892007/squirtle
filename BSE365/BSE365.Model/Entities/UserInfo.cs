@@ -82,15 +82,46 @@ namespace BSE365.Model.Entities
         /// <returns></returns>
         public bool IsAllowQueueGive()
         {
-            var dayFromLastGive = (DateTime.Now - LastGiveDate).Days;
-            return dayFromLastGive >= 1 &&
+            return DateTime.Now.Date > LastGiveDate &&
                    State == UserState.Default &&
                    Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction);
+        }
+
+        public List<string> NotAllowGiveReason()
+        {
+            var result = new List<string>();
+            if (DateTime.Now.Date <= LastGiveDate)
+            {
+                result.Add("Last give is today.");
+            }
+            if (State != UserState.Default)
+            {
+                result.Add("User's State not allowed.");
+            }
+            if (!Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction))
+            {
+                result.Add("Have another Account in Queue or Transaction.");
+            }
+            return result;
         }
 
         public bool IsAllowQueueReceive()
         {
             return GiveOver >= 2 && State == UserState.Default;
+        }
+
+        public List<string> NotAllowReceiveReason()
+        {
+            var result = new List<string>();
+            if (GiveOver < 2)
+            {
+                result.Add("You must give more!");
+            }
+            if (State != UserState.Default)
+            {
+                result.Add("User's State not allowed.");
+            }
+            return result;
         }
 
         /// <summary>

@@ -67,6 +67,7 @@ namespace BSE365.Model.Entities
 
         public void ChangeState(AccountState state)
         {
+            var now = DateTime.Now.Date;
             if (IsAllowChangeState())
             {
                 switch (state)
@@ -74,17 +75,17 @@ namespace BSE365.Model.Entities
                     case AccountState.Default:
                         ClearQueued();
                         State = AccountState.Default;
-                        var dayFromLastCycle = (DateTime.Now - LastCycleDate).Days;
+                        var dayFromLastCycle = (now - LastCycleDate).Days;
                         if (dayFromLastCycle < 7)
                         {
-                            LastCycleDate = DateTime.Now.AddDays(-8);
+                            LastCycleDate = now.AddDays(-8);
                         }
                         ObjectState = ObjectState.Modified;
 
-                        var dayFromLastGive = (DateTime.Now - UserInfo.LastGiveDate).Days;
+                        var dayFromLastGive = (now - UserInfo.LastGiveDate).Days;
                         if (dayFromLastGive < 1)
                         {
-                            UserInfo.LastGiveDate = DateTime.Now.AddDays(-2);
+                            UserInfo.LastGiveDate = now.AddDays(-2);
                             UserInfo.ObjectState = ObjectState.Modified;
                         }
                         break;
@@ -126,14 +127,39 @@ namespace BSE365.Model.Entities
         /// <returns></returns>
         public bool IsAllowQueueGive()
         {
-            var dayFromLastCycle = (DateTime.Now - LastCycleDate).Days;
+            var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
             return dayFromLastCycle >= 7 && (State == AccountState.Default || State == AccountState.AbadonOne) &&
                    UserInfo.IsAllowQueueGive();
+        }
+
+        public List<string> NotAllowGiveReason()
+        {
+            var result = UserInfo.NotAllowGiveReason();
+            var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
+            if (dayFromLastCycle < 7)
+            {
+                result.Add("Last receive date is less than 7 days.");
+            }
+            if (State != AccountState.Default && State != AccountState.AbadonOne)
+            {
+                result.Add("Account's State not allowed.");
+            }
+            return result;
         }
 
         public bool IsAllowQueueReceive()
         {
             return State == AccountState.Gave && UserInfo.IsAllowQueueReceive();
+        }
+
+        public List<string> NotAllowReceiveReason()
+        {
+            var result = UserInfo.NotAllowReceiveReason();
+            if (State != AccountState.Gave)
+            {
+                result.Add("Account's State not allowed");
+            }
+            return result;
         }
 
         /// <summary>
