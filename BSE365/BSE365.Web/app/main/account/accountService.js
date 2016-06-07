@@ -9,7 +9,7 @@
             queueGive: { method: 'POST', params: { path: 'api/trade/queueGive', key: 'key' } },
             queueReceive: { method: 'POST', params: { path: 'api/trade/queueReceive', key: 'key' } },
 
-            queryAccount: { method: 'POST', params: { path: 'api/trade/queryAccount' }, isArray: true },
+            queryAccount: { method: 'POST', params: { path: 'api/trade/queryAccount' } },
             queryHistory: { method: 'POST', params: { path: 'api/trade/queryHistory', key: 'key' }, isArray: true },
 
             queryWaitingGivers: { method: 'POST', params: { path: 'api/trade/queryWaitingGivers' }, isArray:true },

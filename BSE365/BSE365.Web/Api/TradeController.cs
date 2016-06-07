@@ -177,13 +177,32 @@ namespace BSE365.Api
 
         #region internal method
 
-        private async Task<List<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
-        {
-            var rawData = await _accountRepo.Queryable()
+        private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
+        {                      
+            int totalPageCount;
+            IQueryFluent<Account> query = null;
+            if (filter.Search.PredicateObject == null)
+            {
+                query = _accountRepo.Query();
+            }
+            else
+            {
+                var userName = filter.Search.PredicateObject.Value<string>("userName");
+                query = _accountRepo.Query(x => x.UserName.Contains(userName));
+            }
+
+            var rawData = await query.OrderBy(x => x.OrderBy(a => a.UserName)).SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number, out totalPageCount)
                 .Include(x => x.UserInfo.Accounts)
                 .ToListAsync();
-            var data = rawData.Select(x => x.ToVM()).ToList();
-            return data;
+            var data = rawData.Select(x => x.ToVM());
+
+            var page = new PageViewModel<TradeAccountVM>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         private async Task<TradeAccountVM> AccountStatusAsync(string key)

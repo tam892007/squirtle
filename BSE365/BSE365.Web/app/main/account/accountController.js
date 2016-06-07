@@ -2,13 +2,15 @@
 mainApp.controller('accountController',
 [
     '$scope', '$state', 'accountService', 'Notification', 'AccountState', 'PriorityLevel', 'UserState', 'ConfigData',
-    function($scope, $state, accountService, Notification, AccountState, PriorityLevel, UserState, ConfigData) {
+    function ($scope, $state, accountService, Notification, AccountState, PriorityLevel, UserState, ConfigData) {
 
-        $scope.loadData = function() {
+        $scope.loadData = function (tableState) {
+            console.log(tableState);
             $scope.data = [];
-            accountService.queryAccount({},
+            accountService.queryAccount(JSON.stringify(tableState),
                 function(response) {
-                    $scope.data = response;
+                    $scope.data = response.data;
+                    tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);    
                 });
         }
 
@@ -38,8 +40,6 @@ mainApp.controller('accountController',
             $scope.PriorityLevel = PriorityLevel;
             $scope.UserState = UserState;
             $scope.ConfigData = ConfigData;
-            $scope.data = [];
-            $scope.loadData();
         }
 
         $scope.init();

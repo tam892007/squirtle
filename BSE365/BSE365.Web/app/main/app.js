@@ -393,3 +393,8 @@ function StringToXML(oString) {
         return (new DOMParser()).parseFromString(oString, "text/xml");
     }
 }
+
+mainApp.config(['stConfig', 'filterSetting', function (stConfig, filterSetting) {
+    stConfig.pagination.itemsByPage = filterSetting.pagination.itemsByPage;
+    stConfig.pagination.displayedPages = filterSetting.pagination.displayedPages;
+}]);

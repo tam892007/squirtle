@@ -230,17 +230,16 @@ mainApp.controller('transactionCurrentController',
                 }
             });
 
-            modalInstance.result.then(function(returnData) {
-                    Notification.success('Upload successful.');
-                    var fileData = $window.StringToXML(returnData);
-                    console.log(fileData);
-                    target.attachmentUrl = fileData.childNodes[0].innerHTML;
-                    target.attachmentUrl = target.attachmentUrl.replace('~/', '');
-                    $scope.updateImg(target);
-                },
-                function() {
-                    Notification.success('Upload error.');
-                });
+            modalInstance.result.then(function (returnData) {
+                Notification.success('Upload successful.');
+                var fileData = $window.StringToXML(returnData);
+                target.attachmentUrl = returnData;//fileData.childNodes[0].innerHTML;
+                target.attachmentUrl = target.attachmentUrl.replace('~/', '');
+                $scope.updateImg(target);
+            },
+            function() {
+                Notification.success('Upload error.');
+            });
         };
 
 

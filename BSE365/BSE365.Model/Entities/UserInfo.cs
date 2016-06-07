@@ -128,14 +128,14 @@ namespace BSE365.Model.Entities
         public void NotTransfer(Account account)
         {
             State = UserState.NotGive;
-            RelatedAccount = string.Format("{0}{1}", RelatedAccount, account.UserName);
+            RelatedAccount = string.Format("{0}{1},", RelatedAccount, account.UserName);
             ObjectState = ObjectState.Modified;
         }
 
         public void NotConfirm(Account account)
         {
             State = UserState.NotConfirm;
-            RelatedAccount = string.Format("{0}{1}", RelatedAccount, account.UserName);
+            RelatedAccount = string.Format("{0}{1},", RelatedAccount, account.UserName);
             ObjectState = ObjectState.Modified;
         }
 

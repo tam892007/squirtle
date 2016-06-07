@@ -229,7 +229,7 @@ namespace BSE365.Model.Entities
         public void NotTransfer(MoneyTransaction transaction)
         {
             State = AccountState.NotGive;
-            RelatedTransaction = string.Format("{0}{1}", RelatedTransaction, transaction.Id);
+            RelatedTransaction = string.Format("{0}{1},", RelatedTransaction, transaction.Id);
             ObjectState = ObjectState.Modified;
 
             UserInfo.NotTransfer(this);
@@ -238,7 +238,7 @@ namespace BSE365.Model.Entities
         public void NotConfirm(MoneyTransaction transaction)
         {
             State = AccountState.NotConfirm;
-            RelatedTransaction = string.Format("{0}{1}", RelatedTransaction, transaction.Id);
+            RelatedTransaction = string.Format("{0}{1},", RelatedTransaction, transaction.Id);
             ObjectState = ObjectState.Modified;
 
             UserInfo.NotConfirm(this);

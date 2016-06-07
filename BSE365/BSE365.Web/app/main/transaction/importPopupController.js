@@ -95,7 +95,7 @@ mainApp.controller('importPopupController',
             });
         };
 
-        $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
             $scope.uploaded = true;
             $scope.importing = false;
             cfpLoadingBar.complete();
