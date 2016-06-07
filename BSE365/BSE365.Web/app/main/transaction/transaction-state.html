@@ -1,9 +1,9 @@
 ﻿<div class="bg-primary transaction-title">
     <div class="" ng-if="grState=='giving'">Giving</div>
     <div class="" ng-if="grState=='receiving'">Receiving</div>
-    <div class="" ng-if="grState==''">Nothing!</div>
+    <div class="" ng-if="grState==''">Request First!</div>
 </div>
-<div class="bg-info" ng-show="grState!=''">
+<div class="bg-info">
     <div class="col-md-2 col-md-offset-1 text-center transaction-step transaction-step__1">
         <div class="text-default" ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queue</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>
@@ -23,5 +23,25 @@
     <div class="col-md-2 text-center transaction-step transaction-step__5">
         <div class="text-default" ng-class="{'text-unchecked': overviewState.ended == -1, 'text-expand': overviewState.ended == 0,'text-ok': overviewState.ended == 1,}">Complete</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
+    </div>
+</div>
+<div class="bg-info" ng-show="grState==''">
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <label>Allow Give?</label>
+            <span class="form-control-static" data-ng-bind="info.isAllowGive|yesno"></span>
+        </div>
+        <div class="col-md-6 text-center">
+            <label>Allow Receive?</label>
+            <span class="form-control-static" data-ng-bind="info.isAllowReceive|yesno"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{'btn-success': info.isAllowGive}" ng-click="queueGive()">Request Give</button>
+        </div>
+        <div class="col-md-6 text-center">
+            <button class="btn" ng-disabled="!info.isAllowReceive" ng-class="{'btn-success': info.isAllowReceive}" ng-click="queueReceive()">Request Receive</button>
+        </div>
     </div>
 </div>

@@ -69,7 +69,7 @@ mainApp.controller('transactionHistoryController',
                     if ($scope.grState == 'giving') {
                         user = item.receiverId;
                         if (item.receivedDate) {
-                            $scope.histories.add({
+                            $scope.histories.push({
                                 userName: user,
                                 rating: item.rating,
                                 time: item.receivedDate,
@@ -79,7 +79,7 @@ mainApp.controller('transactionHistoryController',
                     } else {
                         user = item.giverId;
                         if (item.transferedDate) {
-                            $scope.histories.add({
+                            $scope.histories.push({
                                 userName: user,
                                 rating: item.rating,
                                 time: item.transferedDate,
@@ -150,8 +150,8 @@ mainApp.controller('transactionHistoryController',
             $scope.AccountState = AccountState;
             $scope.ConfigData = ConfigData;
             $scope.overviewState = {
-                queued: 1,
-                giving: 0,
+                queued: 0,
+                giving: -1,
                 gave: -1,
                 received: -1,
                 ended: -1,

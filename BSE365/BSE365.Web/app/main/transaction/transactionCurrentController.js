@@ -24,6 +24,32 @@ mainApp.controller('transactionCurrentController',
                 .$promise;
         }
 
+        $scope.queueGive = function () {
+            $scope.info.isAllowGive = false;
+            tradeService.queueGive({},
+                function (response) {
+                    Notification.success('Queue give successful!');
+                    $scope.updateStatus();
+                },
+                function (response) {
+                    $scope.info.isAllowGive = true;
+                    Notification.success(response);
+                });
+        }
+
+        $scope.queueReceive = function () {
+            $scope.info.isAllowReceive = false;
+            tradeService.queueReceive({},
+                function (response) {
+                    Notification.success('Queue receive successful!');
+                    $scope.updateStatus();
+                },
+                function (response) {
+                    $scope.info.isAllowReceive = true;
+                    Notification.success(response);
+                });
+        }
+
         $scope.getCurrentTransactions = function() {
             if ($scope.info.state == AccountState.InGiveTransaction) {
                 $scope.accountDisplayTemplate = $scope.receiverInfoTemplateUrl;
@@ -226,8 +252,8 @@ mainApp.controller('transactionCurrentController',
             $scope.AccountState = AccountState;
             $scope.ConfigData = ConfigData;
             $scope.overviewState = {
-                queued: 1,
-                giving: 0,
+                queued: 0,
+                giving: -1,
                 gave: -1,
                 received: -1,
                 ended: -1,
