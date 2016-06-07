@@ -9,7 +9,7 @@
                 <td>Account</td>
                 <td>Rating</td>
                 <td>Time</td>
-                <td>Status</td>
+                <td>Action</td>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                 <td>{{item.userName}}</td>
                 <td><uib-rating ng-model="item.rating" max="5" read-only="true"></uib-rating></td>
                 <td>{{item.time|date:ConfigData.dateTimeFormat}}</td>
-                <td>{{item.isCompleted|yesno}}</td>
+                <td>{{item.action}}</td>
             </tr>
         </tbody>
     </table>

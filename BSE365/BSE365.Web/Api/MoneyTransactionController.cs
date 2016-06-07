@@ -125,7 +125,8 @@ namespace BSE365.Api
                     (Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
             }
             var username = User == null || User.Identity != null ? "Transactions" : User.Identity.GetUserName();
-            var result = await FileHelper.Upload(Request, username);
+            var url = await FileHelper.Upload(Request, username);
+            var result = new {Url = url};
             return Ok(result);
         }
 

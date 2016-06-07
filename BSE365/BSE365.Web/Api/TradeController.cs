@@ -12,6 +12,7 @@ using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
 using BSE365.Repository.Helper;
+using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -28,6 +29,8 @@ namespace BSE365.Api
         private readonly IRepositoryAsync<WaitingGiver> _waitingGiverRepo;
         private readonly IRepositoryAsync<WaitingReceiver> _waitingReceiverRepo;
 
+        private UserProfileRepository _userRepo;
+
         public TradeController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<Account> accountRepo,
@@ -40,6 +43,9 @@ namespace BSE365.Api
             _transactionRepo = transactionRepo;
             _waitingGiverRepo = waitingGiverRepo;
             _waitingReceiverRepo = waitingReceiverRepo;
+
+
+            _userRepo = new UserProfileRepository();
         }
 
         [HttpGet]
@@ -193,6 +199,13 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo.Accounts)
                 .Where(x => x.UserName == username).FirstAsync();
             var result = account.ToVM();
+            var user = await _userRepo.FindUserByName(username);
+            result.PinBalance = user.PinBalance;
+            if (result.PinBalance < 1)
+            {
+                result.IsAllowGive = false;
+                result.NotAllowGiveReason.Add("Not enough Pin.");
+            }
             return result;
         }
 
@@ -257,6 +270,16 @@ namespace BSE365.Api
             }
         }
 
+        private async Task QueueReceiveAsync(string key)
+        {
+            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            var account = await _accountRepo.Queryable()
+                .Include(x => x.UserInfo)
+                .Where(x => x.UserName == username).FirstAsync();
+            account.QueueReceive();
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         private async Task<List<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
         {
             var expression = WaitingAccountVMMapping.GetExpToGiverVM();
@@ -273,17 +296,6 @@ namespace BSE365.Api
                 .Select(expression)
                 .ToListAsync();
             return data;
-        }
-
-
-        private async Task QueueReceiveAsync(string key)
-        {
-            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
-            var account = await _accountRepo.Queryable()
-                .Include(x => x.UserInfo)
-                .Where(x => x.UserName == username).FirstAsync();
-            account.QueueReceive();
-            await _unitOfWork.SaveChangesAsync();
         }
 
 

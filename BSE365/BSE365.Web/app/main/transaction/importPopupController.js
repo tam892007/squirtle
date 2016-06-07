@@ -1,9 +1,11 @@
 ﻿
 mainApp.controller('importPopupController',
 [
-    '$scope', '$uibModal', '$log', '$uibModalInstance', '_', 'FileUploader', 'cfpLoadingBar', 'localStorageService',
+    '$scope', '$window', '$uibModal', '$log', '$uibModalInstance', '_', 'FileUploader', 'cfpLoadingBar',
+    'localStorageService',
     'targetData',
     function($scope,
+        $window,
         $uibModal,
         $log,
         $uibModalInstance,
@@ -29,9 +31,11 @@ mainApp.controller('importPopupController',
             selectedFile.upload();
         };
 
-        $scope.ok = function (response) {
+        $scope.ok = function(response) {
             console.log(response);
-            $uibModalInstance.close(response);
+            var url = response.url;
+            url = url.replace('~/', '');
+            $uibModalInstance.close(url);
         };
 
         $scope.cancel = function() {

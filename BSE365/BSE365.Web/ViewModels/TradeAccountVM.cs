@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using BSE365.Model.Enum;
 
 namespace BSE365.ViewModels
@@ -8,9 +9,14 @@ namespace BSE365.ViewModels
         public string UserName { get; set; }
         public string DisplayName { get; set; }
 
+        public int PinBalance { get; set; }
+
         public bool IsAllowGive { get; set; }
         public bool IsAllowReceive { get; set; }
         public bool IsAllowChangeState { get; set; }
+
+        public List<string> NotAllowGiveReason { get; set; }
+        public List<string> NotAllowReceiveReason { get; set; }
 
         public AccountState State { get; set; }
         public PriorityLevel Priority { get; set; }

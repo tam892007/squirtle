@@ -32,114 +32,146 @@ mainApp.controller('transactionHistoryController',
         }
 
         function loadTransaction(transactions) {
-            var minState = -1;
             _.each(transactions,
                 function(item) {
                     item.isBegin = item.state == TransactionState.Begin;
                     item.isAllowConfirmGave = item.state == TransactionState.Begin;
                     item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
 
-                    // overview state
-                    if (minState < 0) {
-                        if (item.state != TransactionState.Abadoned)
-                            minState = item.state;
-                    } else if (item.state == TransactionState.Abadoned) {
-                        // do nothing
-                    } else if (minState < TransactionState.NotTransfer) {
-                        if (item.state >= TransactionState.NotTransfer) {
-                            minState = item.state;
-                        } else {
-                            minState = minState > item.state ? item.state : minState;
-                        }
-                    } else {
-                        if (item.state >= TransactionState.NotTransfer) {
-                            minState = minState > item.state ? item.state : minState;
-                        }
-                    }
-                    console.log(minState);
-
                     // history
-                    $scope.histories.push({
-                        userName: "System - Create",
-                        rating: 5,
-                        time: item.created,
-                        isCompleted: true
-                    });
-                    var user = '';
-                    if ($scope.grState == 'giving') {
-                        user = item.receiverId;
-                        if (item.receivedDate) {
-                            $scope.histories.push({
-                                userName: user,
-                                rating: item.rating,
-                                time: item.receivedDate,
-                                isCompleted: true
-                            });
-                        }
-                    } else {
-                        user = item.giverId;
-                        if (item.transferedDate) {
-                            $scope.histories.push({
-                                userName: user,
-                                rating: item.rating,
-                                time: item.transferedDate,
-                                isCompleted: true
-                            });
-                        }
-                    }
-                    $scope.histories = _.sortBy($scope.histories, function(item) { return item.time; });
+                    generateHistory(item);
                 });
 
-            // over view state
-            switch (minState) {
-            case TransactionState.Begin:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = 0;
-                $scope.overviewState.gave = -1;
-                $scope.overviewState.received = -1;
-                $scope.overviewState.ended = -1;
-                break;
-            case TransactionState.Transfered:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = 1;
-                $scope.overviewState.gave = 1;
-                $scope.overviewState.received = 0;
-                $scope.overviewState.ended = -1;
-                break;
-            case TransactionState.Confirmed:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = 1;
-                $scope.overviewState.gave = 1;
-                $scope.overviewState.received = 1;
-                $scope.overviewState.ended = 1;
-                break;
-            case TransactionState.NotTransfer:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = -1;
-                $scope.overviewState.gave = -1;
-                $scope.overviewState.received = -1;
-                $scope.overviewState.ended = 1;
-                break;
-            case TransactionState.NotConfirm:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = 1;
-                $scope.overviewState.gave = 1;
-                $scope.overviewState.received = -1;
-                $scope.overviewState.ended = 1;
-                break;
-            case TransactionState.ReportedNotTransfer:
-                $scope.overviewState.queued = 1;
-                $scope.overviewState.giving = 1;
-                $scope.overviewState.gave = -1;
-                $scope.overviewState.received = -1;
-                $scope.overviewState.ended = 0;
-                break;
-            }
-            console.log(minState);
-            console.log($scope.overviewState);
-
             $scope.transactions = transactions;
+            generateOverviewStateOverTransactions();
         }
+
+        function generateHistory(item) {
+            $scope.histories.push({
+                userName: "System",
+                rating: 5,
+                time: item.created,
+                action: 'Created',
+            });
+            var user = '';
+            if ($scope.grState == 'giving') {
+                user = item.receiverId;
+                if (item.receivedDate) {
+                    $scope.histories.push({
+                        userName: user,
+                        rating: item.rating,
+                        time: item.receivedDate,
+                        action: 'Received',
+                    });
+                }
+            } else {
+                user = item.giverId;
+                if (item.transferedDate) {
+                    $scope.histories.push({
+                        userName: user,
+                        rating: item.rating,
+                        time: item.transferedDate,
+                        action: 'Transfered',
+                    });
+                }
+            }
+            $scope.histories = _.sortBy($scope.histories, function(item) { return item.time; });
+        }
+
+        function generateOverviewStateOverTransactions() {
+            var allEnded = _.every($scope.transactions,
+                function(item) { return item.state == TransactionState.Confirmed; });
+            if ($scope.grState == 'giving') {
+                $scope.overviewState.queued = 1;
+                if (allEnded) {
+                    $scope.overviewState.give = 1;
+                    $scope.overviewState.waitCofirm = 1;
+                } else {
+                    $scope.overviewState.give = 0;
+                }
+            } else if ($scope.grState == 'receiving') {
+                $scope.overviewState.queued = 1;
+                $scope.overviewState.give = 1;
+                $scope.overviewState.waitCofirm = 1;
+                if (allEnded) {
+                    $scope.overviewState.receive = 1;
+                    $scope.overviewState.ended = 1;
+                } else {
+                    $scope.overviewState.receive = 0;
+                }
+
+            }
+            console.log($scope.overviewState);
+        }
+
+        $scope.moneyTransfered = function(target) {
+            transactionService.moneyTransfered(target,
+                function(response) {
+                    Notification.success('Money Transfered');
+                    var index = $scope.transactions.indexOf(target);
+                    if (index !== -1) {
+                        $scope.transactions[index] = response;
+                    }
+                    $scope.updateStatus();
+                    getCurrentTransactions();
+                });
+        }
+
+        $scope.moneyReceived = function(target) {
+            transactionService.moneyReceived(target,
+                function(response) {
+                    Notification.success('Money Received');
+                    var index = $scope.transactions.indexOf(target);
+                    if (index !== -1) {
+                        $scope.transactions[index] = response;
+                    }
+                    $scope.updateStatus();
+                    getCurrentTransactions();
+                });
+        }
+
+        $scope.reportNotTransfer = function(target) {
+            transactionService.reportNotTransfer(target,
+                function(response) {
+                    Notification.success('Transaction Reported');
+                    var index = $scope.transactions.indexOf(target);
+                    if (index !== -1) {
+                        $scope.transactions[index] = response;
+                    }
+                    $scope.updateStatus();
+                    getCurrentTransactions();
+                });
+        }
+
+        $scope.updateImg = function(target) {
+            transactionService.updateImg(target,
+                function(response) {
+                    Notification.success('Upload saved.');
+                });
+        }
+
+        $scope.upload = function(target) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/transaction/importPopup.html',
+                size: 'lg',
+                controller: 'importPopupController',
+                resolve: {
+                    targetData: function() {
+                        return { uploadLink: 'api/transaction/upload' };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(returnData) {
+                    Notification.success('Upload successful.');
+                    target.attachmentUrl = returnData;
+                    $scope.updateImg(target);
+                },
+                function() {
+                    Notification.success('Upload error.');
+                });
+        };
+
 
         $scope.init = function() {
             $scope.targetData = targetData;
@@ -151,9 +183,9 @@ mainApp.controller('transactionHistoryController',
             $scope.ConfigData = ConfigData;
             $scope.overviewState = {
                 queued: 0,
-                giving: -1,
-                gave: -1,
-                received: -1,
+                give: -1,
+                waitCofirm: -1,
+                receive: -1,
                 ended: -1,
             };
             $scope.histories = [];
