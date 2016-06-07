@@ -1,8 +1,20 @@
 ﻿'use strict';
 mainApp.controller('transactionCurrentController',
 [
-    '$scope', '_', '$timeout', 'transactionService', 'tradeService', 'Notification', 'AccountState', 'TransactionState', 'ConfigData',
-    function ($scope, _, $timeout, transactionService, tradeService, Notification, AccountState, TransactionState, ConfigData) {
+    '$scope', '_', '$timeout', '$uibModal', '$window', 'transactionService', 'tradeService', 'Notification',
+    'AccountState',
+    'TransactionState', 'ConfigData',
+    function($scope,
+        _,
+        $timeout,
+        $uibModal,
+        $window,
+        transactionService,
+        tradeService,
+        Notification,
+        AccountState,
+        TransactionState,
+        ConfigData) {
 
         $scope.updateStatus = function() {
             return tradeService.status({},
@@ -172,6 +184,38 @@ mainApp.controller('transactionCurrentController',
                     }
                 });
         }
+
+        $scope.updateImg = function(target) {
+            transactionService.updateImg(target,
+                function (response) {
+                    Notification.success('Upload saved.');
+                });
+        }
+
+        $scope.upload = function(target) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/transaction/importPopup.html',
+                size: 'lg',
+                controller: 'importPopupController',
+                resolve: {
+                    targetData: function() {
+                        return { uploadLink: 'api/transaction/upload' };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function(returnData) {
+                    Notification.success('Upload successful.');
+                    var fileData = $window.StringToXML(returnData);
+                    console.log(fileData);
+                    target.attachmentUrl = fileData.childNodes[0].innerHTML;
+                    target.attachmentUrl = target.attachmentUrl.replace('~/', '');
+                    $scope.updateImg(target);
+                },
+                function() {
+                    Notification.success('Upload error.');
+                });
+        };
 
 
         $scope.init = function() {

@@ -7,6 +7,7 @@
             moneyTransfered: { method: 'POST', params: { path: 'api/transaction/moneyTransfered' } },
             moneyReceived: { method: 'POST', params: { path: 'api/transaction/moneyReceived' } },
             reportNotTransfer: { method: 'POST', params: { path: 'api/transaction/reportNotTransfer' } },
+            updateImg: { method: 'POST', params: { path: 'api/transaction/updateImg' } },
         });
     }
 ]);

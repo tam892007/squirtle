@@ -691,5 +691,9 @@ textarea.ng-dirty.ng-valid,
 .transaction-step__5 .glyphicon-unchecked {
   background-image: url('images/trade5-disable.png');
 }
+.transaction-attachment-file {
+  height: 100%;
+  width: 100%;
+}
 
 /*# sourceMappingURL=main.css.map */

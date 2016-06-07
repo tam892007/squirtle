@@ -1,0 +1,50 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title"><span>Upload File</span></h3>
+    </div>
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-md-12">
+                <label><span>Select File</span></label>
+                <form role="form" name="_form" class="form-validation">
+                    <input type="file" nv-file-select uploader="uploader" />
+                </form>
+            </div>
+        </div>
+        <div class="row form-group" ng-show="uploader.queue.length">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="col-md-9"><span>File Name</span></th>
+                            <th class="col-md-3" ng-show="uploader.isHTML5"><span>File Size</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in uploader.queue">
+                            <td>
+                                <strong>{{ item.file.name }}</strong>
+                            </td>
+                            <td ng-show="uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div ng-show="importing" class="inline-flex">
+            <div class="loading-icon"></div>&nbsp;&nbsp;&nbsp;&nbsp;<span>Uploading</span> . . .
+        </div>
+        <div ng-show="!uploaded && !importing">
+            <button class="btn btn-success" ng-click="upload()" ng-show="uploader.queue.length"><span class="glyphicon glyphicon-import"></span>&ensp;<span>Upload</span></button>
+            <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span>&ensp;<span>Close</span></button>
+        </div>
+        <div ng-show="uploaded && !isError">
+            <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-ok"></span>&ensp;<span>Successful !</span></button>
+        </div>
+        <div ng-show="isError">
+            <button class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></span>&ensp;<span>Error !</span></button>
+        </div>
+    </div>
+</div>

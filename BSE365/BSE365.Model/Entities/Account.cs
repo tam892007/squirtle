@@ -204,6 +204,7 @@ namespace BSE365.Model.Entities
                 {
                     State = AccountState.Gave;
                     CurrentTransactionGroupId = null;
+                    ObjectState = ObjectState.Modified;
                 }
                 UserInfo.MoneyGave();
             }
@@ -221,6 +222,7 @@ namespace BSE365.Model.Entities
             {
                 State = AccountState.Default;
                 CurrentTransactionGroupId = null;
+                ObjectState = ObjectState.Modified;
             }
         }
 

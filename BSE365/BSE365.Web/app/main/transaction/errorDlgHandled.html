@@ -1,0 +1,24 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="cancel()">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="">
+            <span class="glyphicon glyphicon-info-sign text-danger" aria-hidden="true">Error</span></h4>
+    </div>
+    <div class="modal-body">
+        <h2>Error. Somethings Went Wrong</h2>
+        <p>Upload Error</p>
+        <br/>
+        <a data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <span class="text-uppercase">Technical Details</span></a>
+        <div class="collapse" id="collapseExample">
+            <br/>
+            <div class="well">
+                <p data-ng-bind-html="rejection.data"></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Close</button>
+    </div>
+</div><!-- /.modal-content -->

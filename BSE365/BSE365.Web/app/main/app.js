@@ -381,3 +381,15 @@ mainApp.filter('yesno',
         };
     }
 ]);
+
+function StringToXML(oString) {
+    //code for IE
+    if (window.ActiveXObject) {
+        var oXML = new ActiveXObject("Microsoft.XMLDOM"); oXML.loadXML(oString);
+        return oXML;
+    }
+        // code for Chrome, Safari, Firefox, Opera, etc. 
+    else {
+        return (new DOMParser()).parseFromString(oString, "text/xml");
+    }
+}

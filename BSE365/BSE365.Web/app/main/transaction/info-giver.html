@@ -55,7 +55,7 @@
             </table>
         </div>
         <div class="form-group text-center">
-            <img ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" />
+            <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" />
         </div>
         <div class="form-group text-center" ng-show="item.isAllowConfirmReceived && !item.isEnd">
             <button class="btn btn-success" ng-click="moneyReceived(item)">Receive?</button>

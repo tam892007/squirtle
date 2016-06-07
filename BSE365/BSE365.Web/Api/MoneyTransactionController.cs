@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BSE365.Base.Infrastructures;
 using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
+using BSE365.Common.Helper;
+using BSE365.Helper;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
@@ -102,6 +108,28 @@ namespace BSE365.Api
         }
 
         [HttpPost]
+        [Route("UpdateImg")]
+        public async Task<IHttpActionResult> UpdateImg(MoneyTransactionVM.Receiver transaction)
+        {
+            var result = await UpdateImgAsync(transaction);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("Upload")]
+        public async Task<IHttpActionResult> Upload()
+        {
+            if (!Request.Content.IsMimeMultipartContent("form-data"))
+            {
+                throw new HttpResponseException
+                    (Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
+            }
+            var username = User == null || User.Identity != null ? "Transactions" : User.Identity.GetUserName();
+            var result = await FileHelper.Upload(Request, username);
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("History")]
         public async Task<IHttpActionResult> History(TransactionHistoryVM instance)
         {
@@ -174,6 +202,16 @@ namespace BSE365.Api
             transaction.ReportNotTransfer();
             await _unitOfWork.SaveChangesAsync();
             return transaction.UpdateVm(tran);
+        }
+
+        private async Task<MoneyTransactionVM.Receiver> UpdateImgAsync(MoneyTransactionVM.Receiver tran)
+        {
+            var transaction = await _transactionRepo.Queryable()
+                .FirstAsync(x => x.Id == tran.Id);
+            transaction.AttachmentUrl = tran.AttachmentUrl;
+            transaction.ObjectState = ObjectState.Modified;
+            await _unitOfWork.SaveChangesAsync();
+            return tran;
         }
 
         private async Task<List<MoneyTransactionVM.Base>> HistoryAsync(TransactionHistoryVM instance)

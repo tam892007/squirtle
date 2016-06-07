@@ -55,8 +55,8 @@
             </table>
         </div>
         <div class="form-group text-center">
-            <img ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}"/>&nbsp;
-            <button class="btn">Upload</button>
+            <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}"/><br/>
+            <button class="btn btn-default" ng-click="upload(item)"><span class="glyphicon glyphicon-upload"></span> Upload</button>
         </div>
         <div class="form-group text-center">
         </div>

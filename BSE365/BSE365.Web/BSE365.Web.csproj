@@ -255,10 +255,14 @@
     <Content Include="app\main\account\waitingReceiverController.js" />
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\errorDlgHandled.html" />
+    <Content Include="app\main\transaction\importPopup.html" />
+    <Content Include="app\main\transaction\errorDlgController.js" />
     <Content Include="app\main\transaction\transaction-timeDetails.html" />
     <Content Include="app\main\transaction\transaction-state.html" />
     <Content Include="app\main\transaction\info-receiver.html" />
     <Content Include="app\main\transaction\info-giver.html" />
+    <Content Include="app\main\transaction\importPopupController.js" />
     <Content Include="app\main\transaction\transactionHistory.html" />
     <Content Include="app\main\transaction\current.html" />
     <Content Include="app\main\transaction\transactionService.js" />
@@ -337,6 +341,7 @@
     <Content Include="app\authentication\password\resetPassword.html" />
     <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Helper\EmailHelper.cs" />
+    <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
