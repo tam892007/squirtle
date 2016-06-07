@@ -20,7 +20,7 @@ namespace BSE365.Timers
             {
                 IsRunning = true;
                 timer_Elapsed(null, null);
-                this._timer = new System.Timers.Timer(TimerConfig.WaitingHelperTimeout);
+                this._timer = new System.Timers.Timer(TransactionConfig.WaitingHelperTimeout);
                 this._timer.AutoReset = true;
                 this._timer.Elapsed += new System.Timers.ElapsedEventHandler(this.timer_Elapsed);
                 this._timer.Enabled = true;

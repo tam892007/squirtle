@@ -1,10 +1,12 @@
-﻿namespace BSE365.Model.Entities
+﻿using BSE365.Common.Constants;
+
+namespace BSE365.Model.Entities
 {
     public class WaitingReceiver : WaitingBase
     {
         public WaitingReceiver()
         {
-            Amount = 3;
+            Amount = TransactionConfig.ReceiveAmountDefault;
         }
     }
 }

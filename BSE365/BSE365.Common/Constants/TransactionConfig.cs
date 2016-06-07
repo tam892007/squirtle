@@ -1,6 +1,6 @@
 ﻿namespace BSE365.Common.Constants
 {
-    public static class TimerConfig
+    public static class TransactionConfig
     {
         /// <summary>
         /// in millisecond
@@ -13,16 +13,13 @@
         public static double WaitingHelperTimeout = /*60*60*1000;*/ 1*60*1000; //for test
 
         /// <summary>
-        /// Hours
+        /// Time for each step of Transaction in hours
         /// </summary>
         public static int TimeForEachStepInHours = 32;
 
-        /// <summary>
-        /// Milliseconds
-        /// </summary>
-        public static int TimeForEachStepInSeconds
-        {
-            get { return TimeForEachStepInHours*60*60; }
-        }
+        public static int GiveAmountDefault = 2;
+        public static int GiveAmountAbadon = 1;
+
+        public static int ReceiveAmountDefault = 3;
     }
 }

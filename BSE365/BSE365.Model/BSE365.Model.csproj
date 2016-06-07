@@ -86,6 +86,10 @@
       <Project>{817a03b7-f55a-459c-8395-86c460381dae}</Project>
       <Name>BSE365.Base</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BSE365.Common\BSE365.Common.csproj">
+      <Project>{b06fe56e-dde5-459e-9b0d-90edcd38b2e2}</Project>
+      <Name>BSE365.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

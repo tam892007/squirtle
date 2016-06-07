@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using BSE365.Base.Infrastructures;
 using BSE365.Model.Enum;
 
@@ -75,10 +76,16 @@ namespace BSE365.Model.Entities
 
         #region waiting list
 
+        /// <summary>
+        /// require accounts
+        /// </summary>
+        /// <returns></returns>
         public bool IsAllowQueueGive()
         {
             var dayFromLastGive = (DateTime.Now - LastGiveDate).Days;
-            return dayFromLastGive >= 1 && State == UserState.Default;
+            return dayFromLastGive >= 1 &&
+                   State == UserState.Default &&
+                   Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction);
         }
 
         public bool IsAllowQueueReceive()

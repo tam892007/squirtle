@@ -57,7 +57,7 @@ namespace BSE365.ViewModels
                     var result = 0;
                     if (State == TransactionState.Begin)
                     {
-                        var endTime = Created.AddHours(TimerConfig.TimeForEachStepInHours);
+                        var endTime = Created.AddHours(TransactionConfig.TimeForEachStepInHours);
                         if (endTime > now)
                         {
                             var timeLeft = endTime - now;
@@ -66,7 +66,7 @@ namespace BSE365.ViewModels
                     }
                     else if (State == TransactionState.Transfered)
                     {
-                        var endTime = TransferedDate.Value.AddHours(TimerConfig.TimeForEachStepInHours);
+                        var endTime = TransferedDate.Value.AddHours(TransactionConfig.TimeForEachStepInHours);
                         if (endTime > now)
                         {
                             var timeLeft = endTime - now;

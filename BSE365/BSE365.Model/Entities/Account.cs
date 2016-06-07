@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BSE365.Base.Infrastructures;
+using BSE365.Common.Constants;
 using BSE365.Model.Enum;
 
 namespace BSE365.Model.Entities
@@ -92,9 +93,9 @@ namespace BSE365.Model.Entities
                         State = AccountState.Gave;
                         ObjectState = ObjectState.Modified;
 
-                        if (UserInfo.GiveOver < 2)
+                        while (UserInfo.GiveOver < 2)
                         {
-                            UserInfo.GiveOver = 2;
+                            UserInfo.GiveOver += 2;
                             UserInfo.ObjectState = ObjectState.Modified;
                         }
                         break;
@@ -118,6 +119,11 @@ namespace BSE365.Model.Entities
 
         #region waiting list
 
+        /// <summary>
+        /// require userinfo
+        /// require userinfo.accounts
+        /// </summary>
+        /// <returns></returns>
         public bool IsAllowQueueGive()
         {
             var dayFromLastCycle = (DateTime.Now - LastCycleDate).Days;
@@ -143,14 +149,18 @@ namespace BSE365.Model.Entities
 
                 UserInfo.GiveQueued();
 
-                WaitingGivers.Add(new WaitingGiver
+                var giveRequest = new WaitingGiver
                 {
                     AccountId = UserName,
                     Priority = Priority,
                     Created = DateTime.Now,
-                    Amount = State == AccountState.AbadonOne ? 1 : 2,
                     ObjectState = ObjectState.Added
-                });
+                };
+                if (State == AccountState.AbadonOne)
+                {
+                    giveRequest.Amount = TransactionConfig.GiveAmountAbadon;
+                }
+                WaitingGivers.Add(giveRequest);
             }
         }
 

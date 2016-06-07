@@ -40,36 +40,5 @@ namespace BSE365.Mappings
             };
             return result;
         }
-
-        public static Expression<Func<Account, TradeAccountVM>> GetExpToVM()
-        {
-            Expression<Func<Account, TradeAccountVM>> result = x => new TradeAccountVM
-            {
-                IsAllowGive = x.IsAllowQueueGive(),
-                IsAllowReceive = x.IsAllowQueueReceive(),
-                IsAllowChangeState = x.IsAllowChangeState(),
-                UserName = x.UserName,
-                State = x.State,
-                Priority = x.Priority,
-                LastCycleDate = x.LastCycleDate,
-                CurrentTransactionGroupId = x.CurrentTransactionGroupId,
-                RelatedTransaction = x.RelatedTransaction,
-                DisplayName = x.UserInfo.DisplayName,
-                UserState = x.UserInfo.State,
-                IsAllowAbandonOne = x.UserInfo.IsAllowAbandonOne,
-                RelatedAccount = x.UserInfo.RelatedAccount,
-                AvatarId = x.UserInfo.AvatarId,
-                ParentId = x.UserInfo.ParentId,
-                PhoneNumber = x.UserInfo.PhoneNumber,
-                Email = x.UserInfo.Email,
-                BankNumber = x.UserInfo.BankNumber,
-                BankName = x.UserInfo.BankName,
-                BankBranch = x.UserInfo.BankBranch,
-                Rating = x.UserInfo.Rating,
-                Level = x.UserInfo.Level,
-                TreePath = x.UserInfo.TreePath,
-            };
-            return result;
-        }
     }
 }

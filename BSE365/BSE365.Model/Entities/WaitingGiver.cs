@@ -1,10 +1,12 @@
-﻿namespace BSE365.Model.Entities
+﻿using BSE365.Common.Constants;
+
+namespace BSE365.Model.Entities
 {
     public class WaitingGiver : WaitingBase
     {
         public WaitingGiver()
         {
-            Amount = 2;
+            Amount = TransactionConfig.GiveAmountDefault;
         }
     }
 }

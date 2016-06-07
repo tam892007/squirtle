@@ -180,7 +180,7 @@ namespace BSE365.Api
         private async Task<List<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
         {
             var rawData = await _accountRepo.Queryable()
-                .Include(x => x.UserInfo)
+                .Include(x => x.UserInfo.Accounts)
                 .ToListAsync();
             var data = rawData.Select(x => x.ToVM()).ToList();
             return data;
@@ -190,7 +190,7 @@ namespace BSE365.Api
         {
             var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
             var account = await _accountRepo.Queryable()
-                .Include(x => x.UserInfo)
+                .Include(x => x.UserInfo.Accounts)
                 .Where(x => x.UserName == username).FirstAsync();
             var result = account.ToVM();
             return result;

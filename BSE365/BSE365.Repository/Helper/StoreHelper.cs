@@ -212,7 +212,7 @@ namespace BSE365.Repository.Helper
             using (var context = new BSE365Context())
             {
                 var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-TimerConfig.TimeForEachStepInHours);
+                timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
                 var transactionsToUpdate = context.MoneyTransactions
                     .Include(x => x.Giver.UserInfo)
                     .Include(x => x.Receiver.UserInfo)
@@ -248,7 +248,7 @@ namespace BSE365.Repository.Helper
             using (var context = new BSE365Context())
             {
                 var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-TimerConfig.TimeForEachStepInHours);
+                timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
                 var transactionsToUpdate = context.MoneyTransactions
                     .Include(x => x.Giver.UserInfo)
                     .Include(x => x.Receiver.UserInfo)
