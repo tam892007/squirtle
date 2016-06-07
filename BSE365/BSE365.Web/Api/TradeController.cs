@@ -305,7 +305,7 @@ namespace BSE365.Api
             var expression = TransactionHistoryVMMapping.GetExpToVM(username);
             var giveTrans = _transactionRepo.Queryable()
                 .Where(x => x.GiverId == username)
-                .GroupBy(x => x.WaitingReceiverId)
+                .GroupBy(x => x.WaitingGiverId)
                 .Select(expression);
 
             var receiveTrans = _transactionRepo.Queryable()
