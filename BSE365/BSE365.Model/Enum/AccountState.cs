@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSE365.Model.Enum
+﻿namespace BSE365.Model.Enum
 {
     public enum AccountState
     {
         /// <summary>
-        /// Must give 
+        ///     Must give
         /// </summary>
         Default = 0,
 
         /// <summary>
-        /// Queued in WaitingGive
+        ///     Queued in WaitingGive
         /// </summary>
         WaitGive = 1,
 
         /// <summary>
-        /// Gave
-        /// Can queue receive
+        ///     Gave
+        ///     Can queue receive
         /// </summary>
         Gave = 2,
 
         /// <summary>
-        /// Queued in WaitingReceive
+        ///     Queued in WaitingReceive
         /// </summary>
         WaitReceive = 3,
 
@@ -36,6 +30,6 @@ namespace BSE365.Model.Enum
         NotConfirm = 22,
         ReportedNotTransfer = 23,
 
-        AbadonOne = 31,
+        AbadonOne = 31
     }
 }

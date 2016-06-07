@@ -1,8 +1,5 @@
-﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.ComponentModel.DataAnnotations;
 
 namespace BSE365.Model.Entities
 {
@@ -15,12 +12,17 @@ namespace BSE365.Model.Entities
 
         public void TransferPin(int amout)
         {
-            this.PinBalance = this.PinBalance - amout;
+            PinBalance = PinBalance - amout;
         }
 
         public void ReceivePin(int amout)
         {
-            this.PinBalance = this.PinBalance + amout;
-        }                    
+            PinBalance = PinBalance + amout;
+        }
+
+        public void GiveQueued()
+        {
+            PinBalance--;
+        }
     }
 }

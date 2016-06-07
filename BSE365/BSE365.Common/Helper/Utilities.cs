@@ -20,7 +20,8 @@ namespace BSE365.Common.Helper
 
         public static string StandardizeUserId(int infoId)
         {
-            return Convert.ToString(SystemAdmin.StartId + infoId).PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
+            return Convert.ToString(SystemAdmin.StartId + infoId)
+                .PadLeft(SystemAdmin.UserIdLength, SystemAdmin.FillInChar);
         }
 
         public static List<string> GetRangeUserName(int infoId)

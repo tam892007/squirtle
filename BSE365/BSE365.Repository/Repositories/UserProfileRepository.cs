@@ -1,22 +1,22 @@
-﻿using BSE365.Common;
-using BSE365.Model.Entities;
-using BSE365.Repository.DataContext;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using BSE365.Common;
+using BSE365.Model.Entities;
+using BSE365.Repository.DataContext;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace BSE365.Repository.Repositories
 {
     public class UserProfileRepository : IDisposable
     {
-        private BSE365AuthContext _ctx;
+        private readonly BSE365AuthContext _ctx;
 
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public UserProfileRepository()
         {
@@ -24,11 +24,17 @@ namespace BSE365.Repository.Repositories
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
 
+        public void Dispose()
+        {
+            _ctx.Dispose();
+            _userManager.Dispose();
+        }
+
         public async Task<User> FindUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            return user;             
+            return user;
         }
 
         public async Task<IList<string>> GetRolesAsync(string id)
@@ -45,11 +51,12 @@ namespace BSE365.Repository.Repositories
                 user.UserInfo.Avatar.Content = image.Content;
                 user.UserInfo.Avatar.Extension = image.Extension;
             }
-            else { 
+            else
+            {
                 user.UserInfo.Avatar = new Image
                 {
                     Content = image.Content,
-                    Extension = image.Extension,
+                    Extension = image.Extension
                 };
             }
 
@@ -85,7 +92,7 @@ namespace BSE365.Repository.Repositories
                 var id = user.UserInfo.Id;
                 exist = await _ctx.UserInfos.AnyAsync(x => x.BankNumber == bankNumber && x.Id != id);
             }
-            
+
             return exist;
         }
 
@@ -99,7 +106,7 @@ namespace BSE365.Repository.Repositories
         public async Task<bool> ChangePassword(string id, string currentPassword, string newPassword)
         {
             var result = await _userManager.ChangePasswordAsync(id, currentPassword, newPassword);
-            return result.Succeeded;            
+            return result.Succeeded;
         }
 
         public async Task<BusinessResult<User>> TransferPin(PinTransaction transaction)
@@ -130,11 +137,11 @@ namespace BSE365.Repository.Repositories
                             Amount = transaction.Amount,
                             Code = transaction.Code,
                             Note = transaction.Note,
-                            CreatedDate = DateTime.Now,
+                            CreatedDate = DateTime.Now
                         };
 
                         _ctx.PinTransactionHistories.Add(history);
-                        await _ctx.SaveChangesAsync();                       
+                        await _ctx.SaveChangesAsync();
 
                         dbTransaction.Commit();
 
@@ -144,7 +151,7 @@ namespace BSE365.Repository.Repositories
                     else
                     {
                         dbTransaction.Rollback();
-                    }                 
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -158,7 +165,7 @@ namespace BSE365.Repository.Repositories
         public async Task<BusinessResult<User>> UpdateUserInfo(string userId, UserInfo info)
         {
             var user = await FindUser(userId);
-            
+
             ////Only update legal information
             user.UserInfo.DisplayName = info.DisplayName;
             user.UserInfo.PhoneNumber = info.PhoneNumber;
@@ -174,12 +181,6 @@ namespace BSE365.Repository.Repositories
             result.Result = user;
 
             return result;
-        }
-
-        public void Dispose()
-        {
-            _ctx.Dispose();
-            _userManager.Dispose();
         }
     }
 }

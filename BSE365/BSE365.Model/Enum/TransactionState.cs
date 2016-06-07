@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSE365.Model.Enum
+﻿namespace BSE365.Model.Enum
 {
     public enum TransactionState
     {
@@ -16,6 +10,6 @@ namespace BSE365.Model.Enum
         NotConfirm = 22,
         ReportedNotTransfer = 23,
 
-        Abadoned = 31,
+        Abadoned = 31
     }
 }

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
 using BSE365.Model.Enum;
 
@@ -25,6 +21,10 @@ namespace BSE365.Model.Entities
         public int Level { get; set; }
 
         public string TreePath { get; set; }
+
+        public virtual Image Avatar { get; set; }
+
+        public virtual ICollection<Account> Accounts { get; set; }
 
         #region user's infomations
 
@@ -73,10 +73,6 @@ namespace BSE365.Model.Entities
 
         #endregion
 
-        public virtual Image Avatar { get; set; }
-
-        public virtual ICollection<Account> Accounts { get; set; }
-
         #region waiting list
 
         public bool IsAllowQueueGive()
@@ -91,7 +87,7 @@ namespace BSE365.Model.Entities
         }
 
         /// <summary>
-        /// Queued in WaitingGive
+        ///     Queued in WaitingGive
         /// </summary>
         public void GiveQueued()
         {
@@ -100,7 +96,7 @@ namespace BSE365.Model.Entities
         }
 
         /// <summary>
-        /// Queued in WaitingReceive
+        ///     Queued in WaitingReceive
         /// </summary>
         public void ReceiveQueued()
         {
@@ -113,7 +109,7 @@ namespace BSE365.Model.Entities
         #region transaction report methods
 
         /// <summary>
-        /// A transaction give money successed
+        ///     A transaction give money successed
         /// </summary>
         public void MoneyGave()
         {
@@ -125,7 +121,7 @@ namespace BSE365.Model.Entities
         public void NotTransfer(Account account)
         {
             State = UserState.NotGive;
-            RelatedAccount = string.Format("{0}{1}",RelatedAccount, account.UserName);
+            RelatedAccount = string.Format("{0}{1}", RelatedAccount, account.UserName);
             ObjectState = ObjectState.Modified;
         }
 

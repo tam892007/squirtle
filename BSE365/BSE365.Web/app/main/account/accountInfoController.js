@@ -70,11 +70,11 @@ mainApp.controller('accountInfoController',
             $scope.accountStateToSelect = [
                 {
                     value: AccountState.Default,
-                    text: AccountState.display(AccountState.Default),
+                    text: 'Giveable',
                 },
                 {
                     value: AccountState.Gave,
-                    text: AccountState.display(AccountState.Gave),
+                    text: 'Receivable',
                 },
             ];
             $scope.PriorityLevel = PriorityLevel;

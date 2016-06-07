@@ -1,7 +1,6 @@
-﻿
-namespace BSE365.Model.Entities
+﻿namespace BSE365.Model.Entities
 {
-    public class Image: BaseEntity
+    public class Image : BaseEntity
     {
         public string Extension { get; set; }
 

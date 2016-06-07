@@ -16,7 +16,7 @@ namespace BSE365.Mappings
             {
                 Id = model.Id,
                 Extension = model.Extension,
-                Content = model.Content,                
+                Content = model.Content,
             };
 
             return result;
@@ -33,6 +33,6 @@ namespace BSE365.Mappings
             };
 
             return result;
-        }        
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace BSE365.ViewModels
+﻿namespace BSE365.ViewModels
 {
     public class ChangePasswordViewModel
     {

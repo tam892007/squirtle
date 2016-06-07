@@ -1,24 +1,25 @@
-﻿using BSE365.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
+using BSE365.Common;
+using BSE365.Common.Constants;
 using BSE365.Common.Helper;
 using BSE365.Model.Entities;
 using BSE365.Repository.DataContext;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Owin.Security.DataProtection;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.DataProtection;
 
 namespace BSE365.Repository.Repositories
 {
     public class AuthRepository : IDisposable
     {
-        private BSE365AuthContext _ctx;
+        private readonly BSE365AuthContext _ctx;
 
-        private UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
 
         public AuthRepository()
         {
@@ -26,16 +27,24 @@ namespace BSE365.Repository.Repositories
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
 
-        public async Task<BusinessResult<IEnumerable<User>>> RegisterUser(string userName, string password, UserInfo info)
+        public void Dispose()
+        {
+            _ctx.Dispose();
+            _userManager.Dispose();
+        }
+
+        public async Task<BusinessResult<IEnumerable<User>>> RegisterUser(string userName, string password,
+            UserInfo info)
         {
             var parentUser = _userManager.FindById(info.ParentId);
-            if (parentUser == null) throw new Exception(string.Format("Parent User with id {0} doesnt exist", info.ParentId));
+            if (parentUser == null)
+                throw new Exception(string.Format("Parent User with id {0} doesnt exist", info.ParentId));
             var parentLevel = parentUser.UserInfo.Level;
             var parentPath = parentUser.UserInfo.TreePath;
 
             var userInfo = info;
             userInfo.Level = parentLevel + 1; ////Update level for tree
-            userInfo.TreePath = string.Format("{0}{1}{2}", parentPath, BSE365.Common.Constants.SystemAdmin.TreePathSplitter, parentUser.Id);
+            userInfo.TreePath = string.Format("{0}{1}{2}", parentPath, SystemAdmin.TreePathSplitter, parentUser.Id);
             _ctx.UserInfos.Add(userInfo);
             await _ctx.SaveChangesAsync();
 
@@ -46,7 +55,7 @@ namespace BSE365.Repository.Repositories
                 var user = new User
                 {
                     UserName = name,
-                    UserInfo = info,
+                    UserInfo = info
                 };
 
                 await _userManager.CreateAsync(user, password);
@@ -57,7 +66,7 @@ namespace BSE365.Repository.Repositories
                 var account = new Account
                 {
                     UserName = name,
-                    UserInfoId = info.Id,
+                    UserInfoId = info.Id
                 };
 
                 _ctx.Accounts.Add(account);
@@ -74,7 +83,7 @@ namespace BSE365.Repository.Repositories
 
         public async Task<User> FindUser(string userName, string password)
         {
-            User user = await _userManager.FindAsync(userName, password);
+            var user = await _userManager.FindAsync(userName, password);
 
             return user;
         }
@@ -95,8 +104,9 @@ namespace BSE365.Repository.Repositories
 
         public async Task<bool> AddRefreshToken(RefreshToken token)
         {
-
-            var existingToken = _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId).SingleOrDefault();
+            var existingToken =
+                _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId)
+                    .SingleOrDefault();
 
             if (existingToken != null)
             {
@@ -141,7 +151,7 @@ namespace BSE365.Repository.Repositories
 
         public async Task<User> FindAsync(UserLoginInfo loginInfo)
         {
-            User user = await _userManager.FindAsync(loginInfo);
+            var user = await _userManager.FindAsync(loginInfo);
 
             return user;
         }
@@ -164,10 +174,10 @@ namespace BSE365.Repository.Repositories
         {
             if (user == null) return string.Empty;
 
-            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);  
-            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
+            var provider = new DpapiDataProtectionProvider(Assembly.GetExecutingAssembly().GetName().Name);
+            _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
 
-            string code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
 
             return code;
         }
@@ -176,18 +186,11 @@ namespace BSE365.Repository.Repositories
         {
             if (user == null) return null;
 
-            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
-            _userManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
+            var provider = new DpapiDataProtectionProvider(Assembly.GetExecutingAssembly().GetName().Name);
+            _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
 
             var result = await _userManager.ResetPasswordAsync(user.Id, code, newPassword);
             return result;
-        }
-
-        public void Dispose()
-        {
-            _ctx.Dispose();
-            _userManager.Dispose();
-
         }
     }
 }

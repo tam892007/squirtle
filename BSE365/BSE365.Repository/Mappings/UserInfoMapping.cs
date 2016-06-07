@@ -1,6 +1,6 @@
-﻿using BSE365.Model.Entities;
+﻿using System.Data.Entity.ModelConfiguration;
+using BSE365.Model.Entities;
 using BSE365.Repository.Extensions;
-using System.Data.Entity.ModelConfiguration;
 
 namespace BSE365.Repository.Mappings
 {

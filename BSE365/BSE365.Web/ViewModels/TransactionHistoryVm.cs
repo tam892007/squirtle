@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using BSE365.Model.Enum;
 
 namespace BSE365.ViewModels

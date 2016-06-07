@@ -1,5 +1,4 @@
-﻿
-namespace BSE365.ViewModels
+﻿namespace BSE365.ViewModels
 {
     public class ImageViewModel
     {
@@ -11,10 +10,7 @@ namespace BSE365.ViewModels
 
         public string Url
         {
-            get
-            {
-                return "/image/getUserPicture/" + Id;
-            }
+            get { return "/image/getUserPicture/" + Id; }
         }
     }
 }

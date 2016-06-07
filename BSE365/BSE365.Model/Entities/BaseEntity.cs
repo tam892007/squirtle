@@ -1,5 +1,5 @@
-﻿using BSE365.Base.Infrastructures;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using BSE365.Base.Infrastructures;
 
 namespace BSE365.Model.Entities
 {

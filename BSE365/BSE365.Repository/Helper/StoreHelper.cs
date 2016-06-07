@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
-using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
+using BSE365.Common.Constants;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
 using BSE365.Repository.DataContext;
@@ -37,7 +33,7 @@ namespace BSE365.Repository.Helper
                 var transformedWaitingReceivers = new List<WaitingBase>();
                 foreach (var queued in queuedWaitingGivers)
                 {
-                    for (int i = 0; i < queued.Amount; i++)
+                    for (var i = 0; i < queued.Amount; i++)
                     {
                         transformedWaitingGivers.Add(new WaitingBase
                         {
@@ -52,7 +48,7 @@ namespace BSE365.Repository.Helper
                 }
                 foreach (var queued in queuedWaitingReceivers)
                 {
-                    for (int i = 0; i < queued.Amount; i++)
+                    for (var i = 0; i < queued.Amount; i++)
                     {
                         transformedWaitingReceivers.Add(new WaitingBase
                         {
@@ -95,7 +91,7 @@ namespace BSE365.Repository.Helper
                         LastModified = now,
                         WaitingGiverId = queuedGiveRaw.Id,
                         WaitingReceiverId = queuedReceiveRaw.Id,
-                        ObjectState = ObjectState.Added,
+                        ObjectState = ObjectState.Added
                     };
 
 
@@ -106,12 +102,12 @@ namespace BSE365.Repository.Helper
                         {
                             // update waiting raw
                             queuedGiveRaw.Amount--;
-                            queuedGiveRaw.ObjectState = (queuedGiveRaw.Amount == 0)
+                            queuedGiveRaw.ObjectState = queuedGiveRaw.Amount == 0
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
 
                             queuedReceiveRaw.Amount--;
-                            queuedReceiveRaw.ObjectState = (queuedReceiveRaw.Amount == 0)
+                            queuedReceiveRaw.ObjectState = queuedReceiveRaw.Amount == 0
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
 
@@ -216,7 +212,7 @@ namespace BSE365.Repository.Helper
             using (var context = new BSE365Context())
             {
                 var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-48);
+                timeBase = timeBase.AddHours(-TimerConfig.TimeForEachStepInHours);
                 var transactionsToUpdate = context.MoneyTransactions
                     .Include(x => x.Giver.UserInfo)
                     .Include(x => x.Receiver.UserInfo)
@@ -252,7 +248,7 @@ namespace BSE365.Repository.Helper
             using (var context = new BSE365Context())
             {
                 var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-48);
+                timeBase = timeBase.AddHours(-TimerConfig.TimeForEachStepInHours);
                 var transactionsToUpdate = context.MoneyTransactions
                     .Include(x => x.Giver.UserInfo)
                     .Include(x => x.Receiver.UserInfo)

@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BSE365.Base.DataContext;
 using BSE365.Base.Infrastructures;
 using BSE365.Model.Enum;
 
@@ -42,9 +39,6 @@ namespace BSE365.Model.Entities
 
         public int UserInfoId { get; set; }
 
-        [NotMapped]
-        public ObjectState ObjectState { get; set; }
-
         public virtual UserInfo UserInfo { get; set; }
 
         public virtual ICollection<MoneyTransaction> Gave { get; set; }
@@ -52,12 +46,22 @@ namespace BSE365.Model.Entities
         public virtual ICollection<WaitingGiver> WaitingGivers { get; set; }
         public virtual ICollection<WaitingReceiver> WaitingReceivers { get; set; }
 
+        [NotMapped]
+        public ObjectState ObjectState { get; set; }
+
+        /// <summary>
+        ///     Notify account when somethings happend
+        /// </summary>
+        public void Notify()
+        {
+        }
+
         #region state
 
         public bool IsAllowChangeState()
         {
-            return UserInfo.State == UserState.Default &&
-                   (State != AccountState.InGiveTransaction && State != AccountState.InReceiveTransaction);
+            return UserInfo.State == UserState.Default && State != AccountState.InGiveTransaction &&
+                   State != AccountState.InReceiveTransaction;
         }
 
         public void ChangeState(AccountState state)
@@ -127,7 +131,7 @@ namespace BSE365.Model.Entities
         }
 
         /// <summary>
-        /// Queued in WaitingGive
+        ///     Queued in WaitingGive
         /// </summary>
         public void QueueGive()
         {
@@ -145,13 +149,13 @@ namespace BSE365.Model.Entities
                     Priority = Priority,
                     Created = DateTime.Now,
                     Amount = State == AccountState.AbadonOne ? 1 : 2,
-                    ObjectState = ObjectState.Added,
+                    ObjectState = ObjectState.Added
                 });
             }
         }
 
         /// <summary>
-        /// Queued in WaitingReceive
+        ///     Queued in WaitingReceive
         /// </summary>
         public void QueueReceive()
         {
@@ -167,7 +171,7 @@ namespace BSE365.Model.Entities
                     AccountId = UserName,
                     Priority = Priority,
                     Created = DateTime.Now,
-                    ObjectState = ObjectState.Added,
+                    ObjectState = ObjectState.Added
                 });
             }
         }
@@ -177,7 +181,7 @@ namespace BSE365.Model.Entities
         #region transaction report methods
 
         /// <summary>
-        /// A transaction give money successed
+        ///     A transaction give money successed
         /// </summary>
         public void MoneyGave(MoneyTransaction transaction,
             List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction)
@@ -196,7 +200,7 @@ namespace BSE365.Model.Entities
         }
 
         /// <summary>
-        /// A transaction receive money successed
+        ///     A transaction receive money successed
         /// </summary>
         public void MoneyReceived(MoneyTransaction transaction,
             List<MoneyTransaction> otherReceivingTransactionsInCurrentTransaction)
@@ -235,12 +239,5 @@ namespace BSE365.Model.Entities
         }
 
         #endregion
-
-        /// <summary>
-        /// Notify account when somethings happend
-        /// </summary>
-        public void Notify()
-        {
-        }
     }
 }

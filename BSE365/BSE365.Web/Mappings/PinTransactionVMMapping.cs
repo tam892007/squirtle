@@ -8,7 +8,7 @@ using System.Web;
 namespace BSE365.Mappings
 {
     public static class PinTransactionVMMapping
-    {        
+    {
         public static PinTransaction ToModel(this PinTransactionViewModel viewModel)
         {
             if (viewModel == null) return null;
@@ -18,7 +18,7 @@ namespace BSE365.Mappings
                 FromName = viewModel.FromName,
                 ToId = viewModel.ToId,
                 Amount = viewModel.Amount,
-                Note = viewModel.Note,                
+                Note = viewModel.Note,
             };
 
             return result;
@@ -38,6 +38,6 @@ namespace BSE365.Mappings
             };
 
             return result;
-        }        
+        }
     }
 }

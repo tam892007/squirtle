@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
 using BSE365.Model.Enum;
 
@@ -86,11 +83,8 @@ namespace BSE365.Model.Entities
                     Type = TransactionType.Replacement,
                     WaitingGiverId = WaitingGiverId,
                     WaitingReceiverId = WaitingReceiverId,
-                    ObjectState = ObjectState.Added,
+                    ObjectState = ObjectState.Added
                 };
-            }
-            else
-            {
             }
         }
 

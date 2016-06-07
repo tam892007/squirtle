@@ -16,6 +16,6 @@ namespace BSE365.Mappings
             };
 
             return result;
-        }     
+        }
     }
 }

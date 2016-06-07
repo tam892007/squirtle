@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BSE365.Model.Enum
+﻿namespace BSE365.Model.Enum
 {
     public enum PriorityLevel
     {
@@ -12,6 +6,6 @@ namespace BSE365.Model.Enum
         Priority = 1,
         High = 2,
         ReceiveFail = 3,
-        Highest = 10,
+        Highest = 10
     }
 }

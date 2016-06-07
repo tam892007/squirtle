@@ -15,12 +15,12 @@ namespace BSE365.Mappings
             var result = new UserContextViewModel
             {
                 Id = model.Id,
-                UserName = model.UserName,                
+                UserName = model.UserName,
                 PinBalance = model.PinBalance,
-                Avatar = new ImageViewModel { Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0 },        
+                Avatar = new ImageViewModel {Id = model.UserInfo.AvatarId.HasValue ? model.UserInfo.AvatarId.Value : 0},
             };
 
             return result;
-        }     
+        }
     }
 }

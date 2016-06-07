@@ -21,7 +21,6 @@ namespace BSE365.ViewModels
 
         [Required]
         public string ExternalAccessToken { get; set; }
-
     }
 
     public class ParsedExternalAccessToken

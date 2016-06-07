@@ -15,11 +15,8 @@ namespace BSE365.Common
 
         public bool HasErrors
         {
-            get
-            {
-                return Exception != null;
-            }
-        } 
+            get { return Exception != null; }
+        }
 
         public Exception Exception { get; set; }
 
@@ -33,7 +30,6 @@ namespace BSE365.Common
 
         private void Dispose(bool disposing)
         {
-
             if (!this.disposed && disposing)
             {
                 this.Result = default(T);
