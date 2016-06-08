@@ -26,6 +26,10 @@ namespace BSE365.Repository.Repositories
             _ctx = new BSE365AuthContext();
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
+        public AuthRepository(IDataProtectionProvider provider) : this()
+        {           
+            _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
+        }
 
         public void Dispose()
         {
@@ -174,9 +178,6 @@ namespace BSE365.Repository.Repositories
         {
             if (user == null) return string.Empty;
 
-            var provider = new DpapiDataProtectionProvider(Assembly.GetExecutingAssembly().GetName().Name);
-            _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
-
             var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
 
             return code;
@@ -185,10 +186,6 @@ namespace BSE365.Repository.Repositories
         public async Task<IdentityResult> ResetPassword(User user, string code, string newPassword)
         {
             if (user == null) return null;
-
-            var provider = new DpapiDataProtectionProvider(Assembly.GetExecutingAssembly().GetName().Name);
-            _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
-
             var result = await _userManager.ResetPasswordAsync(user.Id, code, newPassword);
             return result;
         }

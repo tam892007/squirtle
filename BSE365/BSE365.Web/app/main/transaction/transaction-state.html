@@ -5,23 +5,23 @@
 </div>
 <div class="bg-info">
     <div class="col-md-2 col-md-offset-1 text-center transaction-step transaction-step__1">
-        <div class="text-default" ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queue</div>
+        <div class="text-default" ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queuing</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>
     </div>
     <div class="col-md-2 text-center transaction-step transaction-step__2">
-        <div class="text-default" ng-class="{'text-unchecked': overviewState.give == -1, 'text-expand': overviewState.give == 0,'text-ok': overviewState.give == 1,}">Give & Confirm</div>
+        <div class="text-default" ng-class="{'text-unchecked': overviewState.give == -1, 'text-expand': overviewState.give == 0,'text-ok': overviewState.give == 1,}">Giving</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.give == -1, 'glyphicon-expand': overviewState.give == 0,'glyphicon-ok': overviewState.give == 1,}"></span>
     </div>
     <div class="col-md-2 text-center transaction-step transaction-step__3">
-        <div class="text-default" ng-class="{'text-unchecked': overviewState.waitCofirm == -1, 'text-expand': overviewState.waitCofirm == 0,'text-ok': overviewState.waitCofirm == 1,}">Wait Cofirm</div>
+        <div class="text-default" ng-class="{'text-unchecked': overviewState.waitCofirm == -1, 'text-expand': overviewState.waitCofirm == 0,'text-ok': overviewState.waitCofirm == 1,}">Confirmation</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.waitCofirm == -1, 'glyphicon-expand': overviewState.waitCofirm == 0,'glyphicon-ok': overviewState.waitCofirm == 1,}"></span>
     </div>
     <div class="col-md-2 text-center transaction-step transaction-step__4">
-        <div class="text-default" ng-class="{'text-unchecked': overviewState.receive == -1, 'text-expand': overviewState.receive == 0,'text-ok': overviewState.receive == 1,}">Receive & Confirm</div>
+        <div class="text-default" ng-class="{'text-unchecked': overviewState.receive == -1, 'text-expand': overviewState.receive == 0,'text-ok': overviewState.receive == 1,}">Receiving</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.receive == -1, 'glyphicon-expand': overviewState.receive == 0,'glyphicon-ok': overviewState.receive == 1,}"></span>
     </div>
     <div class="col-md-2 text-center transaction-step transaction-step__5">
-        <div class="text-default" ng-class="{'text-unchecked': overviewState.ended == -1, 'text-expand': overviewState.ended == 0,'text-ok': overviewState.ended == 1,}">Complete</div>
+        <div class="text-default" ng-class="{'text-unchecked': overviewState.ended == -1, 'text-expand': overviewState.ended == 0,'text-ok': overviewState.ended == 1,}">Completion</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
     </div>
 </div>
@@ -46,7 +46,7 @@
     </div>
     <div class="row not-allow-queue-reason text-center" ng-show="!info.isAllowReceive">
         <div>You can't Request Receive because:</div>
-        <div ng-repeat="reason in info.notAllowReasonReason">
+        <div ng-repeat="reason in info.notAllowReceiveReason">
             <span class="text-danger" data-ng-bind="reason"></span>
         </div>
     </div>

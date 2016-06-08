@@ -1,6 +1,7 @@
 ﻿using BSE365.Providers;
 using BSE365.Web.Providers;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Facebook;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
@@ -16,9 +17,11 @@ namespace BSE365.Web
         public static OAuthBearerAuthenticationOptions OAuthBearerOptions { get; private set; }
         public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
         public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
-
+        internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
         public void ConfigureOAuth(IAppBuilder app)
         {
+            DataProtectionProvider = app.GetDataProtectionProvider();
+
             //use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
             OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
