@@ -9,6 +9,7 @@
 
 @color1: #ffa089;
 @color2: #ff8c70;
+@color2-disable: #ababab;
 @color3: #b2543c;
 @color3-disable: #6e6e6e;
 @color4: #8e4330;
@@ -60,7 +61,7 @@
     }
 
     &__1 {
-        .text-ok {
+        .text-ok, .text-expand {
             background-color: @color1;
 
             &:before {
@@ -80,8 +81,8 @@
             }
         }
 
-        .glyphicon-ok {
-            background-image: url('images/trade1.png');
+        .glyphicon-expand, .glyphicon-unchecked {
+            background-image: url('images/trade1-disable.png');
         }
     }
 
@@ -103,6 +104,26 @@
 
             &:after {
                 border-top-color: @color2;
+            }
+        }
+
+        .text-unchecked {
+            background-color: @color2-disable;
+
+            &:before {
+                position: absolute;
+                top: -100%;
+                left: 50%;
+                content: " ";
+                height: 35px;
+                width: 30px;
+                background-image: url('images/trade2-top-disable.png');
+                margin-top: -15px;
+                margin-left: -15px;
+            }
+
+            &:after {
+                border-top-color: @color2-disable;
             }
         }
 
