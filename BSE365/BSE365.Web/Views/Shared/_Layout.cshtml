@@ -83,7 +83,10 @@
                     <li class="dropdown" data-ng-hide="!authentication.isAuth">
                         <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown">
                             <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
-                            <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
+                            <div class="user-info">
+                                <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
+                                <span id="userPin" class="user-info--pin" title="30000">30000 PIN</span>
+                            </div>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a ui-sref="association">Associated Accounts</a></li>
