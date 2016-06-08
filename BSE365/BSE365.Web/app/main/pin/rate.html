@@ -31,26 +31,21 @@
                     <div class="col-md-12 price-table__content">
                         <div class="table-header">
                             <div class="row">
-                                <div class="col-md-2 padding-5"><span class="quantity">Quantity</span></div>
-                                <div class="col-md-5 border-left border-bottom padding-5">Prise/Pin</div>
-                                <div class="col-md-5 border-left border-bottom padding-5">Total</div>
+                                <div class="col-md-4 col-sm-4 col-xs-4 padding-5"><span class="quantity">Quantity</span></div>
+                                <div class="col-md-8 col-sm-8 col-xs-8 border-left border-bottom padding-5">Prise/Pin</div>
                             </div>
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2 border-left padding-5">USD</div>
-                                <div class="col-md-3 border-left padding-5">Bitcoin</div>
-                                <div class="col-md-2 border-left padding-5">USD</div>
-                                <div class="col-md-3 border-left padding-5">Bitcoin</div>
+                                <div class="col-md-4 col-sm-4 col-xs-4"></div>
+                                <div class="col-md-3 col-sm-3 col-xs-3 border-left padding-5">USD</div>
+                                <div class="col-md-5 col-sm-5 col-xs-5 border-left padding-5">Bitcoin</div>
                             </div>
                         </div>
                         <div class="table-content" ng-repeat="bitPrice in bitPrices">
                             <div class="row border-top">
-                                <div class="col-md-1 padding-5">{{bitPrice.quantity1}}</div>
-                                <div class="col-md-1 border-left padding-5">{{bitPrice.quantity2}}</div>
-                                <div class="col-md-2 border-left padding-5">{{bitPrice.usd | number:2}}</div>
-                                <div class="col-md-3 border-left padding-5">{{bitPrice.bitCoin | number:8}}</div>
-                                <div class="col-md-2 border-left padding-5">{{bitPrice.totalUsd | number:0}}</div>
-                                <div class="col-md-3 border-left padding-5">{{bitPrice.totalBitCoin | number:8}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 padding-5">{{bitPrice.quantity1}}</div>
+                                <div class="col-md-2 col-sm-2 col-xs-2 border-left padding-5">{{bitPrice.quantity2}}</div>
+                                <div class="col-md-3 col-sm-3 col-xs-3 border-left padding-5">{{bitPrice.usd | number:2}}</div>
+                                <div class="col-md-5 col-sm-5 col-xs-5 border-left padding-5">{{bitPrice.bitCoin | number:6}}</div>
                             </div>
                         </div>
                     </div>
