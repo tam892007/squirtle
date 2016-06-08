@@ -285,6 +285,7 @@
     <Content Include="Content\angular-ui-tree.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\images\avatar.png" />
+    <Content Include="Content\images\centument-marketing.jpg" />
     <Content Include="Content\images\complete-logo.png" />
     <Content Include="Content\images\edit-logo.png" />
     <Content Include="Content\images\logo.png" />
