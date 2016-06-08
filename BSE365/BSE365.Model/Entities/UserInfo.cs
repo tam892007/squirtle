@@ -115,7 +115,7 @@ namespace BSE365.Model.Entities
             var result = new List<string>();
             if (GiveOver < 2)
             {
-                result.Add("You must give more!");
+                result.Add("You must use your another secondary account to complete one more give!");
             }
             if (State != UserState.Default)
             {

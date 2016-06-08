@@ -512,10 +512,12 @@ textarea.ng-dirty.ng-valid,
   border-width: 8px;
   margin-left: -8px;
 }
-.transaction-step__1 .text-ok {
+.transaction-step__1 .text-ok,
+.transaction-step__1 .text-expand {
   background-color: #ffa089;
 }
-.transaction-step__1 .text-ok:before {
+.transaction-step__1 .text-ok:before,
+.transaction-step__1 .text-expand:before {
   position: absolute;
   top: -100%;
   left: 50%;
@@ -526,11 +528,13 @@ textarea.ng-dirty.ng-valid,
   margin-top: -15px;
   margin-left: -15px;
 }
-.transaction-step__1 .text-ok:after {
+.transaction-step__1 .text-ok:after,
+.transaction-step__1 .text-expand:after {
   border-top-color: #ffa089;
 }
-.transaction-step__1 .glyphicon-ok {
-  background-image: url('images/trade1.png');
+.transaction-step__1 .glyphicon-expand,
+.transaction-step__1 .glyphicon-unchecked {
+  background-image: url('images/trade1-disable.png');
 }
 .transaction-step__2 .text-ok,
 .transaction-step__2 .text-expand {
@@ -551,6 +555,23 @@ textarea.ng-dirty.ng-valid,
 .transaction-step__2 .text-ok:after,
 .transaction-step__2 .text-expand:after {
   border-top-color: #ff8c70;
+}
+.transaction-step__2 .text-unchecked {
+  background-color: #ababab;
+}
+.transaction-step__2 .text-unchecked:before {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  content: " ";
+  height: 35px;
+  width: 30px;
+  background-image: url('images/trade2-top-disable.png');
+  margin-top: -15px;
+  margin-left: -15px;
+}
+.transaction-step__2 .text-unchecked:after {
+  border-top-color: #ababab;
 }
 .transaction-step__2 .glyphicon-ok {
   background-image: url('images/trade2.png');
