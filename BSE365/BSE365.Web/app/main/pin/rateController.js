@@ -23,9 +23,9 @@ mainApp.controller('rateController', ['$scope', '$q', '_', '$http', function ($s
         $scope.bitPrices[4].quantity1 = 301;
         $scope.bitPrices[4].quantity2 = 400;
         $scope.bitPrices[5].quantity1 = 401;
-        $scope.bitPrices[5].quantity2 = 500;
-        $scope.bitPrices[6].quantity1 = 501;
-        $scope.bitPrices[6].quantity2 = 1000;
+        $scope.bitPrices[5].quantity2 = 1000;
+        $scope.bitPrices[6].quantity1 = 1001;
+        $scope.bitPrices[6].quantity2 = '~';
 
         $scope.bitPrices[0].usd = 9.09;
         $scope.bitPrices[1].usd = 8.18;
@@ -40,8 +40,6 @@ mainApp.controller('rateController', ['$scope', '$q', '_', '$http', function ($s
               $scope.rate.usd = res.data.bpi.USD.rate_float;
               for (var i = 0; i < $scope.bitPrices.length; i++) {
                   $scope.bitPrices[i].bitCoin = $scope.bitPrices[i].usd / $scope.rate.usd;
-                  $scope.bitPrices[i].totalBitCoin = $scope.bitPrices[i].quantity2 * $scope.bitPrices[i].bitCoin;
-                  $scope.bitPrices[i].totalUsd = $scope.bitPrices[i].usd * $scope.bitPrices[i].quantity2;
               }
           });
     }

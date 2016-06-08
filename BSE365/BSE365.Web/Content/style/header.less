@@ -82,14 +82,30 @@
     &-right--custom {
         > li {
             > a {
-                color: @light !important;               
+                color: @light !important;
             }
 
             .dropdown-toggle--custom {
                 padding-top: 9px !important;
 
-                &:hover{
+                &:hover {
                     cursor: pointer;
+                }
+
+                .user-info {
+                    right: 60%;
+                    float: right;
+                    position: relative;
+
+                    @media only screen and (min-width: 768px) {
+                        right: 0;
+                    }
+
+                    &--pin {
+                        position: absolute;
+                        font-size: 11px;
+                        color: #9fa0a1;
+                    }
                 }
             }
         }
