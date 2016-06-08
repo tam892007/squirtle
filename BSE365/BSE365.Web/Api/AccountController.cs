@@ -33,7 +33,7 @@ namespace BSE365.Api
 
         public AccountController()
         {
-            _repo = new AuthRepository();
+            _repo = new AuthRepository(Startup.DataProtectionProvider);
         }
 
         // POST api/Account/Register
