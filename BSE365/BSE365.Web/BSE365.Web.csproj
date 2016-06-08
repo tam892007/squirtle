@@ -291,9 +291,11 @@
     <Content Include="Content\images\plax_sphere_large.png" />
     <Content Include="Content\images\plax_sphere_small.png" />
     <Content Include="Content\images\lauch.png" />
+    <Content Include="Content\images\trade1-disable.png" />
     <Content Include="Content\images\trade1-top.png" />
     <Content Include="Content\images\trade1.png" />
     <Content Include="Content\images\trade2-disable.png" />
+    <Content Include="Content\images\trade2-top-disable.png" />
     <Content Include="Content\images\trade2-top.png" />
     <Content Include="Content\images\trade2.png" />
     <Content Include="Content\images\trade3-disable.png" />
