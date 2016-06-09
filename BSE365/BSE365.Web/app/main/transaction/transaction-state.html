@@ -25,7 +25,7 @@
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
     </div>
 </div>
-<div class="bg-info" ng-show="grState=='' && info.state == AccountState.Default">
+<div class="bg-info padding-30" ng-show="grState=='' && info.state == AccountState.Default">
     <div class="row text-center">
         <div class="col-md-12">
             <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{'btn-success': info.isAllowGive}" ng-click="queueGive()">Request Give</button>
