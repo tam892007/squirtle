@@ -38,6 +38,9 @@ namespace BSE365.ViewModels
 
             public int? RelatedTransactionId { get; set; }
 
+            public int Amount => TransactionConfig.MoneyPerTransaction;
+
+            public string MoneyCurrency => TransactionConfig.MoneyCurrency;
 
             public bool IsEnd { get; set; }
 

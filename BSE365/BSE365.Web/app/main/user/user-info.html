@@ -3,7 +3,8 @@
         <div class="col-md-4">
             <div class="panel panel-default panel-form">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; Profile</h3>
+                    <h3 class="panel-title"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; Profile
+                    </h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -14,21 +15,21 @@
                                 </div>
                                 <span class="avatar-change-btn">Change</span>
                             </a>
-                        </div>                        
-                    </div>    
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12 text-center rating-custom">
                             <uib-rating ng-model="currentUser.rating" max="5" read-only="true" aria-labelledby="user-rating">
 
                             </uib-rating>
                         </div>
-                    </div>                
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="col-md-8" ui-view>
-            
+
         </div>
     </div>
 </div>

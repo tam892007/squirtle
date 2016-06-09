@@ -21,5 +21,9 @@
         public static int GiveAmountAbadon = 1;
 
         public static int ReceiveAmountDefault = 3;
+
+
+        public static int MoneyPerTransaction = 1500000;
+        public static string MoneyCurrency = "VND";
     }
 }

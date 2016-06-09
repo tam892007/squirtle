@@ -1,16 +1,16 @@
 ﻿<div class="panel panel-default panel-table">
     <div class="panel-heading">
-        <span class="badge pull-right">ID: {{item.id}}</span>
+        <span class="badge pull-right">Transaction ID: {{item.id}}</span>
         <h3 class="panel-title">
             <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Giver {{$index + 1}}
         </h3>
     </div>
-    <div class="panel-body">
+    <div class="panel-body transaction-account-info-container">
         <div class="form-group">
-            <table class="table table-bordered">
+            <table class="table table-bordered transaction-account-info">
                 <tr>
                     <td>State</td>
-                    <td>{{TransactionState.display(item.state)}}</td>
+                    <td class="bg-primary">{{TransactionState.display(item.state)}}</td>
                 </tr>
                 <tr>
                     <td>Name</td>
@@ -18,10 +18,10 @@
                 </tr>
                 <tr>
                     <td>Member</td>
-                    <td>{{item.member}}</td>
+                    <td><uib-rating ng-model="item.rating" max="5" read-only="true"></uib-rating></td>
                 </tr>
                 <tr>
-                    <td>ID</td>
+                    <td>Account</td>
                     <td>{{item.giverId}}</td>
                 </tr>
                 <tr>
@@ -38,19 +38,22 @@
                 </tr>
                 <tr>
                     <td>Email</td>
-                    <td>{{item.email}}</td>
+                    <td class="text-truncate">{{item.email}}</td>
                 </tr>
                 <tr>
                     <td>Amount</td>
-                    <td>{{item.amount}}</td>
+                    <td>{{item.amount|currency:item.moneyCurrency}} ({{item.moneyCurrency}})</td>
                 </tr>
-                <tr>
+                <tr ng-show="item.countdown>0">
                     <td>Time left</td>
                     <td>
                         <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
                             {{days}} day - {{hhours}}:{{mminutes}}:{{sseconds}} <span> </span>
                         </timer>
                     </td>
+                </tr>
+                <tr ng-show="item.countdown==0">
+                    <td colspan="2" class="text-center">Time ended</td>
                 </tr>
             </table>
         </div>

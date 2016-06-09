@@ -292,8 +292,30 @@
 }
 
 
+.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 1px;
+}
 
-.transaction-attachment-file{
+.transaction-attachment-file {
     height: 100%;
     width: 100%;
+    padding-left: 15px!important;
+    padding-right: 15px!important;
+}
+
+.transaction-account-info-container{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
+
+.transaction-account-info {
+    td:first-child {
+        white-space: nowrap;
+    }
+
+    td:nth-child(2n) {
+    }
 }
