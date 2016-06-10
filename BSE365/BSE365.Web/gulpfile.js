@@ -8,28 +8,29 @@ var livereload = require('gulp-livereload');
 
 //bundle Javascript
 var paths = {
-    'Common': [
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/bootstrap/dist/js/bootstrap.js',     
-        'bower_components/angular/angular.js',
-        'bower_components/angular-ui-router/release/angular-ui-router.js',
-        'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-        'bower_components/angular-resource/angular-resource.js',
-        'bower_components/angular-local-storage/dist/angular-local-storage.js',
-        'bower_components/angular-smart-table/dist/smart-table.js',
-        'bower_components/angular-ui-tree/dist/angular-ui-tree.js',
-        'bower_components/angular-file-upload/dist/angular-file-upload.js',
-        'bower_components/angular-messages/angular-messages.js',
-        'bower_components/angular-loading-bar/build/loading-bar.js',
-        'bower_components/angular-ui-validate/dist/validate.js',
+    'Common1': [
+        'bower_components/jquery/dist/jquery.min.js',
+        'bower_components/bootstrap/dist/js/bootstrap.min.js',
+        'bower_components/angular/angular.min.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+    ],
+    'Common2': [
+        'bower_components/moment/min/moment-with-locales.min.js',
+        'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+        'bower_components/angular-resource/angular-resource.min.js',
+        'bower_components/angular-local-storage/dist/angular-local-storage.min.js',
+        'bower_components/angular-smart-table/dist/smart-table.min.js',
+        'bower_components/angular-ui-tree/dist/angular-ui-tree.min.js',
+        'bower_components/angular-file-upload/dist/angular-file-upload.min.js',
+        'bower_components/angular-messages/angular-messages.min.js',
+        'bower_components/angular-loading-bar/build/loading-bar.min.js',
+        'bower_components/angular-ui-validate/dist/validate.min.js',
         'bower_components/angular-re-captcha/angular-re-captcha.js',
-        'bower_components/angular-ui-notification/dist/angular-ui-notification.js',
-        'bower_components/moment/min/moment.min.js',
-        'bower_components/moment/min/locales.min.js',
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.js',
         'bower_components/humanize-duration/humanize-duration.js',
         'bower_components/angular-timer/dist/angular-timer.min.js',
-        'bower_components/underscore/underscore.js',
-        'bower_components/ngImgCrop/compile/unminified/ng-img-crop.js',
+        'bower_components/underscore/underscore-min.js',
+        'bower_components/ngImgCrop/compile/minified/ng-img-crop.js',
     ],
     'MainApp': [
         'app/main/*.js',
@@ -47,9 +48,16 @@ var paths = {
     'fonts': "fonts/"
 };
 
-gulp.task('CommonJS', function () {
-    return gulp.src(paths['Common'])
-        .pipe(concat('Common.js'))
+gulp.task('CommonJS1', function () {
+    return gulp.src(paths['Common1'])
+        .pipe(concat('Common1.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('Scripts'));
+});
+
+gulp.task('CommonJS2', function () {
+    return gulp.src(paths['Common2'])
+        .pipe(concat('Common2.js'))
         .pipe(uglify())
         .pipe(gulp.dest('Scripts'));
 });
@@ -75,7 +83,7 @@ gulp.task('AuthAppJS', function () {
         .pipe(gulp.dest('Scripts'));
 });
 
-gulp.task('js', ['CommonJS', 'MainAppJS', 'CommonAppJS', 'AuthAppJS'], function () {
+gulp.task('js', ['CommonJS1', 'CommonJS2', 'MainAppJS', 'CommonAppJS', 'AuthAppJS'], function () {
     //nothing to do here
 });
 
@@ -121,7 +129,8 @@ var LiveReloadLessPath = [
 ];
 
 var LiveReloadJSPath = [
-    paths['CommonJS'],
+    paths['CommonJS1'],
+    paths['CommonJS2'],
     paths['MainAppJS'],
     paths['CommonAppJS'],
     paths['AuthAppJS'],
@@ -135,7 +144,9 @@ var LiveReloadHTMLPath = [
 //liverload
 gulp.task('livereload', function () {
     livereload.listen();
-    gulp.watch(paths['Common'], ['CommonJS'])
+    gulp.watch(paths['Common1'], ['CommonJS1'])
+        .on('change', livereload.changed);
+    gulp.watch(paths['Common2'], ['CommonJS2'])
         .on('change', livereload.changed);
     gulp.watch(LiveReloadHTMLPath)
         .on('change', livereload.changed);
