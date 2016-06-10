@@ -329,7 +329,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\AuthApp.js" />
-    <Content Include="Scripts\Common.js" />
+    <Content Include="Scripts\Common1.js" />
+    <Content Include="Scripts\Common2.js" />
     <Content Include="Scripts\CommonApp.js" />
     <Content Include="Scripts\MainApp.js" />
     <Content Include="SQL\SpMapGiversAndReceivers.sql" />
