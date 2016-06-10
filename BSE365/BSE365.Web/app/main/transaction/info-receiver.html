@@ -2,71 +2,71 @@
     <div class="panel-heading">
         <span class="badge pull-right">Transaction ID: {{item.id}}</span>
         <h3 class="panel-title">
-            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Receiver {{$index + 1}}
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; Receiver {{$index + 1}}
         </h3>
     </div>
+    <table class="table transaction-account-info">
+        <tr>
+            <td>State</td>
+            <td title="{{item.state}}">
+                <span class="label label-success">{{TransactionState.display(item.state)}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{item.displayName}}</td>
+        </tr>
+        <tr>
+            <td>Member</td>
+            <td><uib-rating ng-model="item.rating" max="5" read-only="true"></uib-rating></td>
+        </tr>
+        <tr>
+            <td>Account</td>
+            <td>{{item.receiverId}}</td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>{{item.phoneNumber}}</td>
+        </tr>
+        <tr>
+            <td>Bank Name</td>
+            <td>{{item.bankName}}</td>
+        </tr>
+        <tr>
+            <td>Bank Branch</td>
+            <td>{{item.bankBranch}}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td class="text-truncate">{{item.email}}</td>
+        </tr>
+        <tr>
+            <td>Amount</td>
+            <td>{{item.amount|currency:item.moneyCurrency:0}}</td>
+        </tr>
+        <tr ng-show="item.countdown>0 && !item.isAbadoned">
+            <td>Time left</td>
+            <td>
+                <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
+                    {{days}} day-{{hhours}}:{{mminutes}}:{{sseconds}}
+                </timer>
+            </td>
+        </tr>
+        <tr ng-show="item.countdown==0 && !item.isAbadoned">
+            <td colspan="2" class="text-center">Time ended</td>
+        </tr>
+        <tr ng-show="item.isAbadoned">
+            <td colspan="2" class="text-center">Transaction Abadoned</td>
+        </tr>
+    </table>
     <div class="panel-body transaction-account-info-container">
-        <div class="form-group">
-            <table class="table table-bordered transaction-account-info">
-                <tr>
-                    <td>State</td>
-                    <td class="bg-primary" title="{{item.state}}">{{TransactionState.display(item.state)}}</td>
-                </tr>
-                <tr>
-                    <td>Name</td>
-                    <td>{{item.displayName}}</td>
-                </tr>
-                <tr>
-                    <td>Member</td>
-                    <td><uib-rating ng-model="item.rating" max="5" read-only="true"></uib-rating></td>
-                </tr>
-                <tr>
-                    <td>Account</td>
-                    <td>{{item.receiverId}}</td>
-                </tr>
-                <tr>
-                    <td>Phone</td>
-                    <td>{{item.phoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td>Bank Name</td>
-                    <td>{{item.bankName}}</td>
-                </tr>
-                <tr>
-                    <td>Bank Branch</td>
-                    <td>{{item.bankBranch}}</td>
-                </tr>
-                <tr>
-                    <td>Email</td>
-                    <td class="text-truncate">{{item.email}}</td>
-                </tr>
-                <tr>
-                    <td>Amount</td>
-                    <td>{{item.amount|currency:item.moneyCurrency:0}}</td>
-                </tr>
-                <tr ng-show="item.countdown>0 && !item.isAbadoned">
-                    <td>Time left</td>
-                    <td>
-                        <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
-                            {{hhours}}:{{mminutes}}:{{sseconds}} <span> </span>
-                        </timer>
-                    </td>
-                </tr>
-                <tr ng-show="item.countdown==0 && !item.isAbadoned">
-                    <td colspan="2" class="text-center">Time ended</td>
-                </tr>
-                <tr ng-show="item.isAbadoned">
-                    <td colspan="2" class="text-center">Transaction Abadoned</td>
-                </tr>
-            </table>
-        </div>
         <div class="form-group text-center" ng-show="item.isAllowAttachment">
-            <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}"/><br/>
+            <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" /><br />
             <button class="btn btn-default" ng-show="item.isAllowUploadAttachment" ng-click="upload(item)"><span class="glyphicon glyphicon-upload"></span> Upload</button>
         </div>
         <div class="form-group text-center" ng-show="item.isAllowConfirmGave">
-            <button class="btn btn-success" ng-click="moneyTransfered(item)">Gave?</button>
-            <button class="btn btn-warning" ng-show="item.isAllowAbadonTransaction" ng-click="abadon(item)">Abadon Transaction</button>
+            <button class="btn btn-success" ng-click="moneyTransfered(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Gave?</button>
+            <button class="btn btn-warning" ng-show="item.isAllowAbadonTransaction" ng-click="abadon(item)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Abadon Transaction</button>
         </div>
     </div>
 </div>

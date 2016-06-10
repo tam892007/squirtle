@@ -4,7 +4,7 @@
             <div class="panel panel-default panel-form">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span> &nbsp; Reported Transactions
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span> &nbsp; Reported Transactions
                     </h3>
                 </div>
                 <div class="panel-body">
@@ -146,19 +146,19 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 text-center">
-                            <button class="btn" ng-click="giverTrue()" title="Lock Receiver">Lock Receiver</button>
+                            <button class="btn" ng-click="giverTrue()" title="Lock Receiver"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Lock Receiver</button>
                         </div>
                         <div class="col-md-6 text-center">
-                            <button class="btn" ng-click="receiverTrue()" title="Lock Giver">Lock Giver</button>
+                            <button class="btn" ng-click="receiverTrue()" title="Lock Giver"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Lock Giver</button>
                         </div>
                     </div>
                     <br/>
                     <div class="row">
                         <div class="col-md-6 text-center">
-                            <button class="btn" ng-click="bothTrue()" title="Transaction Completed Successfully">Transaction Completed Successfully!</button>
+                            <button class="btn success" ng-click="bothTrue()" title="Transaction Completed Successfully"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Transaction Completed Successfully!</button>
                         </div>
                         <div class="col-md-6 text-center">
-                            <button class="btn" ng-click="bothFalse()" title="Lock Both">Lock Both</button>
+                            <button class="btn btn-danger" ng-click="bothFalse()" title="Lock Both"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Lock Both</button>
                         </div>
                     </div>
                 </div>

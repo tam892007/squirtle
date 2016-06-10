@@ -95,6 +95,12 @@ mainApp.config([
                 templateUrl: 'app/main/trade/trade-history.html',
                 controller: 'tradeHistoryController'
             })
+            .state('trade.punishment',
+            {
+                url: "/punishment",
+                templateUrl: 'app/main/trade/trade-punishment.html',
+                controller: 'tradePunishmentController'
+            })
             .state('waitinggiver',
             {
                 url: "/waitinggiver",
@@ -227,7 +233,7 @@ mainApp.factory('AccountState',
             NotConfirm: 22,
             ReportedNotTransfer: 23,
 
-            AbadonedOne: 31,
+            AbadonOne: 31,
         };
         data.display = function(value) {
             switch (value) {
@@ -249,7 +255,7 @@ mainApp.factory('AccountState',
                 return 'Not Confirm';
             case data.ReportedNotTransfer:
                 return 'Reported Not Transfer';
-            case data.AbadonedOne:
+            case data.AbadonOne:
                 return 'Abadoned One';
             default:
                 return '';

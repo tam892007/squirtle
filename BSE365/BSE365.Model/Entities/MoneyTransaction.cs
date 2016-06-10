@@ -76,10 +76,10 @@ namespace BSE365.Model.Entities
             // update giver
             Giver.NotTransfer(this);
 
-            // create new transaction
+            // create replacement transaction to parent
             if (giverParentAccount != null)
             {
-                RelatedTransaction = new MoneyTransaction
+                var replacementTransaction = new MoneyTransaction
                 {
                     GiverId = giverParentAccount.UserName,
                     ReceiverId = ReceiverId,
@@ -88,8 +88,11 @@ namespace BSE365.Model.Entities
                     Type = TransactionType.Replacement,
                     WaitingGiverId = WaitingGiverId,
                     WaitingReceiverId = WaitingReceiverId,
-                    ObjectState = ObjectState.Added
+                    RelatedTransactionId = Id,
+                    RelatedTransaction = this,
+                    ObjectState = ObjectState.Added,
                 };
+                giverParentAccount.Gave.Add(replacementTransaction);
             }
         }
 
@@ -149,7 +152,6 @@ namespace BSE365.Model.Entities
 
             // update receiver
             Receiver.NotConfirm(this);
-
         }
     }
 }

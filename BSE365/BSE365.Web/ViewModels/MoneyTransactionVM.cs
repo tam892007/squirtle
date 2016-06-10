@@ -14,6 +14,14 @@ namespace BSE365.ViewModels
         {
         }
 
+        public class Punishment : Base
+        {
+            public int? RelatedTransactionId { get; set; }
+
+            public string ForAccount { get; set; }
+            public string ForUser { get; set; }
+        }
+
         public abstract class Base
         {
             public int Id { get; set; }
@@ -35,8 +43,6 @@ namespace BSE365.ViewModels
 
             public int? WaitingReceiverId { get; set; }
 
-
-            public int? RelatedTransactionId { get; set; }
 
             public int Amount => TransactionConfig.MoneyPerTransaction;
 

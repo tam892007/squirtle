@@ -1,10 +1,15 @@
 ﻿.transaction-title {
+    color: azure;
     background-color: transparent;
     text-align: center;
     font-size: 30px;
     font-family: @font-family-standard;
     font-weight: 600;
     margin-top: 30px;
+
+    &.transaction-title-color {
+        color: #39015d !important;
+    }
 }
 
 @color1: #ffa089;
@@ -302,16 +307,19 @@
 .transaction-attachment-file {
     height: 100%;
     width: 100%;
-    padding-left: 15px!important;
-    padding-right: 15px!important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }
 
-.transaction-account-info-container{
-    padding-left: 0px!important;
-    padding-right: 0px!important;
+.transaction-account-info-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .transaction-account-info {
+    border-top-width: 0px !important;
+    border-bottom-width: 1px !important;
+
     td:first-child {
         white-space: nowrap;
     }

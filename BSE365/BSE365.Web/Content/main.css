@@ -517,12 +517,16 @@ textarea.ng-dirty.ng-valid,
   top: 15px;
 }
 .transaction-title {
+  color: azure;
   background-color: transparent;
   text-align: center;
   font-size: 30px;
   font-family: Roboto, sans-serif;
   font-weight: 600;
   margin-top: 30px;
+}
+.transaction-title.transaction-title-color {
+  color: #39015d !important;
 }
 .transaction-step .glyphicon {
   width: 128px;
@@ -772,12 +776,16 @@ textarea.ng-dirty.ng-valid,
 .transaction-attachment-file {
   height: 100%;
   width: 100%;
-  padding-left: 15px!important;
-  padding-right: 15px!important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
 }
 .transaction-account-info-container {
-  padding-left: 0px!important;
-  padding-right: 0px!important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.transaction-account-info {
+  border-top-width: 0px !important;
+  border-bottom-width: 1px !important;
 }
 .transaction-account-info td:first-child {
   white-space: nowrap;

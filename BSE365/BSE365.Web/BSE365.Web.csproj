@@ -245,9 +245,11 @@
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
     <Content Include="app\main\account\account.html" />
+    <Content Include="app\main\trade\trade-punishment.html" />
     <Content Include="app\main\trade\trade-history.html" />
     <Content Include="app\main\trade\trade-statistic.html" />
     <Content Include="app\main\account\accountController.js" />
+    <Content Include="app\main\trade\tradePunishmentController.js" />
     <Content Include="app\main\trade\tradeStatisticController.js" />
     <Content Include="app\main\trade\tradeService.js" />
     <Content Include="app\main\trade\trade-info.html" />
@@ -255,8 +257,12 @@
     <Content Include="app\main\account\waitingReceiverController.js" />
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\transaction-control.html" />
+    <Content Include="app\main\transaction\transaction-title-withcolor.html" />
+    <Content Include="app\main\transaction\transaction-title.html" />
+    <Content Include="app\main\transaction\transactionPunishmentController.js" />
     <Content Include="app\main\transaction\transactionReported.html" />
-    <Content Include="app\main\transaction\transactionReported.js" />
+    <Content Include="app\main\transaction\transactionReportedController.js" />
     <Content Include="app\main\transaction\errorDlgHandled.html" />
     <Content Include="app\main\transaction\importPopup.html" />
     <Content Include="app\main\transaction\errorDlgController.js" />

@@ -1,9 +1,4 @@
-﻿<div class="bg-primary transaction-title">
-    <div class="" ng-if="grState=='giving'">Giving</div>
-    <div class="" ng-if="grState=='receiving'">Receiving</div>
-    <div class="" ng-if="grState==''">Request First!</div>
-</div>
-<div class="bg-info">
+﻿<div class="bg-info">
     <div class="col-md-2 col-md-offset-1 text-center transaction-step transaction-step__1">
         <div class="text-default" ng-class="{'text-unchecked': overviewState.queued == -1, 'text-expand': overviewState.queued == 0,'text-ok': overviewState.queued == 1,}">Queuing</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.queued == -1, 'glyphicon-expand': overviewState.queued == 0,'glyphicon-ok': overviewState.queued == 1,}"></span>
@@ -23,31 +18,5 @@
     <div class="col-md-2 text-center transaction-step transaction-step__5">
         <div class="text-default" ng-class="{'text-unchecked': overviewState.ended == -1, 'text-expand': overviewState.ended == 0,'text-ok': overviewState.ended == 1,}">Completion</div>
         <span class="glyphicon" ng-class="{'glyphicon-unchecked': overviewState.ended == -1, 'glyphicon-expand': overviewState.ended == 0,'glyphicon-ok': overviewState.ended == 1,}"></span>
-    </div>
-</div>
-<div class="bg-info padding-30" ng-show="grState=='' && info.state == AccountState.Default">
-    <div class="row text-center">
-        <div class="col-md-12">
-            <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{'btn-success': info.isAllowGive}" ng-click="queueGive()">Request Give</button>
-        </div>
-    </div>
-    <div class="row not-allow-queue-reason text-center" ng-show="!info.isAllowGive">
-        <div>You can't Request Give because:</div>
-        <div ng-repeat="reason in info.notAllowGiveReason">
-            <span class="text-danger" data-ng-bind="reason"></span>
-        </div>
-    </div>
-</div>
-<div class="bg-info padding-30" ng-show="grState=='' && info.state == AccountState.Gave">
-    <div class="row text-center">
-        <div class="col-md-12">
-            <button class="btn" ng-disabled="!info.isAllowReceive" ng-class="{'btn-success': info.isAllowReceive}" ng-click="queueReceive()">Request Receive</button>
-        </div>
-    </div>
-    <div class="row not-allow-queue-reason text-center" ng-show="!info.isAllowReceive">
-        <div>You can't Request Receive because:</div>
-        <div ng-repeat="reason in info.notAllowReceiveReason">
-            <span class="text-danger" data-ng-bind="reason"></span>
-        </div>
     </div>
 </div>

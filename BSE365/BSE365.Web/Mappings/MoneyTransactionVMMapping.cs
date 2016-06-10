@@ -27,7 +27,6 @@ namespace BSE365.Mappings
                     ReceivedDate = x.ReceivedDate,
                     WaitingGiverId = x.WaitingGiverId,
                     WaitingReceiverId = x.WaitingReceiverId,
-                    RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Giver.UserInfo.DisplayName,
                     Email = x.Giver.UserInfo.Email,
@@ -56,7 +55,6 @@ namespace BSE365.Mappings
                     ReceivedDate = x.ReceivedDate,
                     WaitingGiverId = x.WaitingGiverId,
                     WaitingReceiverId = x.WaitingReceiverId,
-                    RelatedTransactionId = x.RelatedTransactionId,
                     IsEnd = x.IsEnd,
                     DisplayName = x.Receiver.UserInfo.DisplayName,
                     Email = x.Receiver.UserInfo.Email,
@@ -64,6 +62,37 @@ namespace BSE365.Mappings
                     BankNumber = x.Receiver.UserInfo.BankNumber,
                     BankName = x.Receiver.UserInfo.BankName,
                     BankBranch = x.Receiver.UserInfo.BankBranch
+                };
+            return result;
+        }
+
+        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Punishment>> GetExpToPunismentVM()
+        {
+            Expression<Func<MoneyTransaction, MoneyTransactionVM.Punishment>> result =
+                x => new MoneyTransactionVM.Punishment
+                {
+                    Id = x.Id,
+                    GiverId = x.GiverId,
+                    ReceiverId = x.ReceiverId,
+                    Created = x.Created,
+                    LastModified = x.LastModified,
+                    Type = x.Type,
+                    State = x.State,
+                    AttachmentUrl = x.AttachmentUrl,
+                    TransferedDate = x.TransferedDate,
+                    ReceivedDate = x.ReceivedDate,
+                    WaitingGiverId = x.WaitingGiverId,
+                    WaitingReceiverId = x.WaitingReceiverId,
+                    IsEnd = x.IsEnd,
+                    DisplayName = x.Receiver.UserInfo.DisplayName,
+                    Email = x.Receiver.UserInfo.Email,
+                    PhoneNumber = x.Receiver.UserInfo.PhoneNumber,
+                    BankNumber = x.Receiver.UserInfo.BankNumber,
+                    BankName = x.Receiver.UserInfo.BankName,
+                    BankBranch = x.Receiver.UserInfo.BankBranch,
+                    RelatedTransactionId = x.RelatedTransactionId,
+                    ForAccount = x.RelatedTransaction.GiverId,
+                    ForUser = x.RelatedTransaction.Giver.UserInfo.DisplayName,
                 };
             return result;
         }
@@ -80,7 +109,6 @@ namespace BSE365.Mappings
             vm.ReceivedDate = model.ReceivedDate;
             vm.WaitingGiverId = model.WaitingGiverId;
             vm.WaitingReceiverId = model.WaitingReceiverId;
-            vm.RelatedTransactionId = model.RelatedTransactionId;
             vm.IsEnd = model.IsEnd;
             return vm;
         }

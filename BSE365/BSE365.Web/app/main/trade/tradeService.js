@@ -5,6 +5,7 @@
             queueGive: { method: 'POST', params: { path: 'api/trade/queueGive' } },
             queueReceive: { method: 'POST', params: { path: 'api/trade/queueReceive' } },
             queryHistory: { method: 'POST', params: { path: 'api/trade/queryHistory' }, isArray: true },
+            queryPunishment: { method: 'POST', params: { path: 'api/trade/queryPunishment' }, isArray: true },
         });
     }
 ]);

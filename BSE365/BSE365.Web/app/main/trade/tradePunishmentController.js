@@ -1,12 +1,12 @@
 ﻿'use strict';
-mainApp.controller('tradeHistoryController',
+mainApp.controller('tradePunishmentController',
 [
     '$scope', '$uibModal', 'tradeService', 'Notification', 'AccountState', 'ConfigData',
     function($scope, $uibModal, tradeService, Notification, AccountState, ConfigData) {
 
         $scope.loadData = function() {
             $scope.data = [];
-            tradeService.queryHistory({},
+            tradeService.queryPunishment({},
                 function(response) {
                     $scope.data = response;
                 });
@@ -16,7 +16,7 @@ mainApp.controller('tradeHistoryController',
             var modalInstance = $uibModal.open({
                 templateUrl: 'app/main/transaction/transactionHistory.html',
                 size: 'lg',
-                controller: 'transactionHistoryController',
+                controller: 'transactionPunishmentController',
                 resolve: {
                     targetData: function() {
                         return target;
@@ -24,9 +24,9 @@ mainApp.controller('tradeHistoryController',
                 }
             });
 
-            modalInstance.result.then(function(updatedData) {
-                    $scope.loadData();
-                });
+            modalInstance.result.then(function (updatedData) {
+                $scope.loadData();
+            });
         }
 
         $scope.init = function() {
