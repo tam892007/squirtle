@@ -312,16 +312,20 @@ namespace BSE365.Api
                     break;
                 case MoneyTransactionVM.ReportResult.GiverTrue:
                     transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction);
+                    await _unitOfWork.SaveChangesAsync();
                     break;
                 case MoneyTransactionVM.ReportResult.ReceiverTrue:
                     transaction.NotTransfer(giverParentAccount);
+                    await _unitOfWork.SaveChangesAsync();
                     break;
                 case MoneyTransactionVM.ReportResult.BothTrue:
+                    await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
                     break;
                 case MoneyTransactionVM.ReportResult.BothFalse:
+                    transaction.Failed();
+                    await _unitOfWork.SaveChangesAsync();
                     break;
             }
-            await _unitOfWork.SaveChangesAsync();
         }
 
         #endregion

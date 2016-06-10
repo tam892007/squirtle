@@ -295,6 +295,8 @@ mainApp.factory('TransactionState',
             ReportedNotTransfer: 23,
 
             Abadoned: 31,
+
+            Failed: 51,
         }
         data.display = function(value) {
             switch (value) {
@@ -312,6 +314,8 @@ mainApp.factory('TransactionState',
                 return 'Reported Not Transfer';
             case data.Abadoned:
                 return 'Abadoned';
+            case data.Failed:
+                return 'Failed';
             default:
                 return '';
             }
