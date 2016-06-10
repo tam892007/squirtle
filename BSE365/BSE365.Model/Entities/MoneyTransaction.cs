@@ -136,5 +136,20 @@ namespace BSE365.Model.Entities
             // update receiver
             Receiver.ReQueueWaitingListForAbadonTransaction(this);
         }
+
+        public void Failed()
+        {
+            State = TransactionState.Failed;
+            LastModified = DateTime.Now;
+            IsEnd = true;
+            ObjectState = ObjectState.Modified;
+
+            // update giver
+            Giver.NotTransfer(this);
+
+            // update receiver
+            Receiver.NotConfirm(this);
+
+        }
     }
 }

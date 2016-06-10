@@ -136,12 +136,12 @@ namespace BSE365.Model.Entities
         {
             var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
             return ((dayFromLastCycle >= 7 && State == AccountState.Default) || State == AccountState.AbadonOne) &&
-                   UserInfo.IsAllowQueueGive();
+                   UserInfo.IsAllowQueueGive(this);
         }
 
         public List<string> NotAllowGiveReason()
         {
-            var result = UserInfo.NotAllowGiveReason();
+            var result = UserInfo.NotAllowGiveReason(this);
             var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
             if (dayFromLastCycle < 7)
             {
@@ -238,6 +238,8 @@ namespace BSE365.Model.Entities
                     State = AccountState.Gave;
                     CurrentTransactionGroupId = null;
                     ObjectState = ObjectState.Modified;
+
+                    UserInfo.ResetAbadonStatus();
                 }
                 UserInfo.MoneyGave();
             }

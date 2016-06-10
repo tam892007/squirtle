@@ -10,6 +10,8 @@
         NotConfirm = 22,
         ReportedNotTransfer = 23,
 
-        Abadoned = 31
+        Abadoned = 31,
+
+        Failed = 51,
     }
 }

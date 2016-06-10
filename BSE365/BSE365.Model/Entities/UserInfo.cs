@@ -80,14 +80,15 @@ namespace BSE365.Model.Entities
         /// require accounts
         /// </summary>
         /// <returns></returns>
-        public bool IsAllowQueueGive()
+        public bool IsAllowQueueGive(Account account)
         {
             return DateTime.Now.Date > LastGiveDate &&
                    State == UserState.Default &&
-                   Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction);
+                   Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction) &&
+                   Accounts.Where(x => x.UserName != account.UserName).All(x => x.State != AccountState.AbadonOne);
         }
 
-        public List<string> NotAllowGiveReason()
+        public List<string> NotAllowGiveReason(Account account)
         {
             var result = new List<string>();
             if (DateTime.Now.Date <= LastGiveDate)
@@ -101,6 +102,10 @@ namespace BSE365.Model.Entities
             if (!Accounts.All(x => x.State != AccountState.WaitGive && x.State != AccountState.InGiveTransaction))
             {
                 result.Add("Have another Account in Queue or Transaction.");
+            }
+            if (Accounts.Where(x => x.UserName != account.UserName).Any(x => x.State == AccountState.AbadonOne))
+            {
+                result.Add("Have another Account abadon one Transaction.");
             }
             return result;
         }
@@ -178,12 +183,18 @@ namespace BSE365.Model.Entities
             ObjectState = ObjectState.Modified;
         }
 
-        #endregion
-        
         public void AbadonTransaction()
         {
             IsAllowAbandonOne = false;
             ObjectState = ObjectState.Modified;
         }
+
+        public void ResetAbadonStatus()
+        {
+            IsAllowAbandonOne = true;
+            ObjectState = ObjectState.Modified;
+        }
+
+        #endregion
     }
 }
