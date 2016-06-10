@@ -114,12 +114,18 @@ namespace BSE365.Repository.Helper
                             context.MoneyTransactions.Add(transaction);
 
                             // update giver's account
-                            queuedGiveRaw.Account.State = AccountState.InGiveTransaction;
+                            if (queuedGiveRaw.Account.State == AccountState.WaitGive)
+                            {
+                                queuedGiveRaw.Account.State = AccountState.InGiveTransaction;
+                            }
                             queuedGiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingGiverId;
                             queuedGiveRaw.Account.ObjectState = ObjectState.Modified;
 
                             // update receiver's account
-                            queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
+                            if (queuedReceiveRaw.Account.State == AccountState.WaitReceive)
+                            {
+                                queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
+                            }
                             queuedReceiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
                             queuedReceiveRaw.Account.ObjectState = ObjectState.Modified;
 
@@ -216,7 +222,7 @@ namespace BSE365.Repository.Helper
                 var transactionsToUpdate = context.MoneyTransactions
                     .Include(x => x.Giver.UserInfo)
                     .Include(x => x.Receiver.UserInfo)
-                    .Where(x => !x.IsEnd && x.TransferedDate < timeBase && x.State == TransactionState.Begin)
+                    .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
                     .ToList();
                 foreach (var transaction in transactionsToUpdate)
                 {

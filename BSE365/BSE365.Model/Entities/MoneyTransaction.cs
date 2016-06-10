@@ -61,7 +61,12 @@ namespace BSE365.Model.Entities
             Receiver.MoneyReceived(this, otherReceivingTransactionsInCurrentTransaction);
         }
 
-        public void NotTransfer(Account parentAccount)
+        /// <summary>
+        /// lock giver account 
+        /// create new transaction from giver's parent to receiver
+        /// </summary>
+        /// <param name="giverParentAccount">giver parent account</param>
+        public void NotTransfer(Account giverParentAccount)
         {
             State = TransactionState.NotTransfer;
             LastModified = DateTime.Now;
@@ -72,11 +77,11 @@ namespace BSE365.Model.Entities
             Giver.NotTransfer(this);
 
             // create new transaction
-            if (parentAccount != null)
+            if (giverParentAccount != null)
             {
                 RelatedTransaction = new MoneyTransaction
                 {
-                    GiverId = parentAccount.UserName,
+                    GiverId = giverParentAccount.UserName,
                     ReceiverId = ReceiverId,
                     Created = DateTime.Now,
                     LastModified = DateTime.Now,
@@ -88,6 +93,11 @@ namespace BSE365.Model.Entities
             }
         }
 
+        /// <summary>
+        /// lock receiver account
+        /// giver's transaction mark as gave
+        /// </summary>
+        /// <param name="otherGivingTransactionsInCurrentTransaction"></param>
         public void NotConfirm(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction)
         {
             State = TransactionState.NotConfirm;
@@ -110,6 +120,21 @@ namespace BSE365.Model.Entities
 
             //Receiver.ReportNotTransfer(this);
             //Giver.ReportNotTransfer(this);
+        }
+
+        public void Abadon()
+        {
+            Type = TransactionType.Abadoned;
+            State = TransactionState.Abadoned;
+            LastModified = DateTime.Now;
+            IsEnd = true;
+            ObjectState = ObjectState.Modified;
+
+            // update giver 
+            Giver.AbadonTransaction(this);
+
+            // update receiver
+            Receiver.ReQueueWaitingListForAbadonTransaction(this);
         }
     }
 }

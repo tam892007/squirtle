@@ -59,9 +59,16 @@ namespace BSE365.Model.Entities
 
         #region state
 
+        public bool IsAllowAbadonTransaction()
+        {
+            return UserInfo.State == UserState.Default &&
+                   UserInfo.IsAllowAbandonOne;
+        }
+
         public bool IsAllowChangeState()
         {
-            return UserInfo.State == UserState.Default && State != AccountState.InGiveTransaction &&
+            return UserInfo.State == UserState.Default &&
+                   State != AccountState.InGiveTransaction &&
                    State != AccountState.InReceiveTransaction;
         }
 
@@ -128,7 +135,7 @@ namespace BSE365.Model.Entities
         public bool IsAllowQueueGive()
         {
             var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
-            return dayFromLastCycle >= 7 && (State == AccountState.Default || State == AccountState.AbadonOne) &&
+            return ((dayFromLastCycle >= 7 && State == AccountState.Default) || State == AccountState.AbadonOne) &&
                    UserInfo.IsAllowQueueGive();
         }
 
@@ -252,6 +259,10 @@ namespace BSE365.Model.Entities
             }
         }
 
+        /// <summary>
+        /// giver not give in time
+        /// </summary>
+        /// <param name="transaction"></param>
         public void NotTransfer(MoneyTransaction transaction)
         {
             State = AccountState.NotGive;
@@ -261,6 +272,10 @@ namespace BSE365.Model.Entities
             UserInfo.NotTransfer(this);
         }
 
+        /// <summary>
+        /// receiver not confirm on time
+        /// </summary>
+        /// <param name="transaction"></param>
         public void NotConfirm(MoneyTransaction transaction)
         {
             State = AccountState.NotConfirm;
@@ -270,10 +285,61 @@ namespace BSE365.Model.Entities
             UserInfo.NotConfirm(this);
         }
 
+        /// <summary>
+        /// receiver report giver not give
+        /// </summary>
+        /// <param name="transaction"></param>
         public void ReportNotTransfer(MoneyTransaction transaction)
         {
             State = AccountState.ReportedNotTransfer;
             ObjectState = ObjectState.Modified;
+        }
+
+        /// <summary>
+        /// abadon transaction for giver
+        /// </summary>
+        /// <param name="transaction"></param>
+        public void AbadonTransaction(MoneyTransaction transaction)
+        {
+            if (IsAllowAbadonTransaction())
+            {
+                State = AccountState.AbadonOne;
+                ObjectState = ObjectState.Modified;
+
+                // update user info 
+                UserInfo.AbadonTransaction();
+            }
+        }
+
+        /// <summary>
+        /// requeue waiting receiver list with high priority for receiver 
+        /// </summary>
+        /// <param name="transaction"></param>
+        public void ReQueueWaitingListForAbadonTransaction(MoneyTransaction transaction)
+        {
+            if (WaitingReceivers.Count == 0)
+            {
+                WaitingReceivers.Add(new WaitingReceiver
+                {
+                    AccountId = UserName,
+                    Priority = PriorityLevel.High,
+                    Created = DateTime.Now,
+                    Amount = 1,
+                    ObjectState = ObjectState.Added
+                });
+            }
+            else
+            {
+                var waiting = WaitingReceivers.First();
+                waiting.Amount++;
+                waiting.Priority = PriorityLevel.High;
+                waiting.ObjectState = ObjectState.Modified;
+                if (waiting.Amount == TransactionConfig.ReceiveAmountDefault)
+                {
+                    State = AccountState.WaitReceive;
+                    ObjectState = ObjectState.Modified;
+                }
+            }
         }
 
         #endregion

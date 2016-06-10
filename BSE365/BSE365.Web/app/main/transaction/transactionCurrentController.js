@@ -117,9 +117,17 @@ mainApp.controller('transactionCurrentController',
         function loadTransaction(transactions) {
             _.each(transactions,
                 function(item) {
-                    item.isBegin = item.state == TransactionState.Begin;
                     item.isAllowConfirmGave = item.state == TransactionState.Begin;
                     item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
+
+                    item.isAllowAbadonTransaction = $scope.info.isAllowAbadonTransaction &&
+                        item.state == TransactionState.Begin;
+
+                    item.isAllowAttachment = item.state != TransactionState.Abadoned;
+                    item.isAllowUploadAttachment =
+                        item.state == TransactionState.Begin || item.state == TransactionState.Transfered;
+
+                    item.isAbadoned = item.state == TransactionState.Abadoned;
 
                     // history
                     generateHistory(item);
@@ -229,6 +237,19 @@ mainApp.controller('transactionCurrentController',
                 Notification.success('Upload error.');
             });
         };
+
+        $scope.abadon = function (target) {
+            transactionService.abadonTransaction(target,
+                function (response) {
+                    Notification.success('Transaction Abadoned');
+                    var index = $scope.transactions.indexOf(target);
+                    if (index !== -1) {
+                        $scope.transactions[index] = response;
+                    }
+                    $scope.updateStatus();
+                    getCurrentTransactions();
+                });
+        }
 
 
         $scope.init = function() {

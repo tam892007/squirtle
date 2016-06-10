@@ -31,6 +31,7 @@ namespace BSE365.Api
     {
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
+        private IRepositoryAsync<Account> _accountRepo;
 
         #region
 
@@ -38,10 +39,12 @@ namespace BSE365.Api
 
         public MoneyTransactionController(
             IUnitOfWorkAsync unitOfWork,
-            IRepositoryAsync<MoneyTransaction> transactionRepo)
+            IRepositoryAsync<MoneyTransaction> transactionRepo,
+            IRepositoryAsync<Account> accountRepo)
         {
             _unitOfWork = unitOfWork;
             _transactionRepo = transactionRepo;
+            _accountRepo = accountRepo;
         }
 
         /// <summary>
@@ -108,6 +111,14 @@ namespace BSE365.Api
         }
 
         [HttpPost]
+        [Route("AbadonTransaction")]
+        public async Task<IHttpActionResult> AbadonTransaction(MoneyTransactionVM.Receiver transaction)
+        {
+            var result = await AbadonTransactionAsync(transaction);
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("UpdateImg")]
         public async Task<IHttpActionResult> UpdateImg(MoneyTransactionVM.Receiver transaction)
         {
@@ -136,6 +147,22 @@ namespace BSE365.Api
         {
             var result = await HistoryAsync(instance);
             return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("ReportedTransactions")]
+        public async Task<IHttpActionResult> ReportedTransactions(FilterVM filter)
+        {
+            var result = await ReportedTransactionsAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("ApplyReport")]
+        public async Task<IHttpActionResult> ApplyReport(MoneyTransactionVM.Reported instance)
+        {
+            await ApplyReportAsync(instance);
+            return Ok();
         }
 
         #region internal method
@@ -205,11 +232,25 @@ namespace BSE365.Api
             return transaction.UpdateVm(tran);
         }
 
+        private async Task<MoneyTransactionVM.Receiver> AbadonTransactionAsync(MoneyTransactionVM.Receiver tran)
+        {
+            var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Giver.UserInfo)
+                .Include(x => x.Giver.WaitingGivers)
+                .Include(x => x.Receiver.UserInfo)
+                .Include(x => x.Receiver.WaitingReceivers)
+                .FirstAsync(x => x.Id == tran.Id);
+            transaction.Abadon();
+            await _unitOfWork.SaveChangesAsync();
+            return transaction.UpdateVm(tran);
+        }
+
         private async Task<MoneyTransactionVM.Receiver> UpdateImgAsync(MoneyTransactionVM.Receiver tran)
         {
             var transaction = await _transactionRepo.Queryable()
                 .FirstAsync(x => x.Id == tran.Id);
             transaction.AttachmentUrl = tran.AttachmentUrl;
+            transaction.LastModified = DateTime.Now;
             transaction.ObjectState = ObjectState.Modified;
             await _unitOfWork.SaveChangesAsync();
             return tran;
@@ -238,6 +279,49 @@ namespace BSE365.Api
                     .ToListAsync();
                 return data.Select(x => x as MoneyTransactionVM.Base).ToList();
             }
+        }
+
+        private async Task<List<MoneyTransactionVM.Reported>> ReportedTransactionsAsync(FilterVM filter)
+        {
+            var expression = MoneyTransactionVMMapping.GetExpToReportVM();
+            var data = await _transactionRepo.Queryable()
+                .Include(x => x.Giver.UserInfo)
+                .Include(x => x.Receiver.UserInfo)
+                .Where(x => x.State == TransactionState.ReportedNotTransfer)
+                .Select(expression)
+                .ToListAsync();
+            return data;
+        }
+
+        private async Task ApplyReportAsync(MoneyTransactionVM.Reported instance)
+        {
+            var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Giver.UserInfo)
+                .Include(x => x.Receiver.UserInfo)
+                .Where(x => x.Id == instance.Id)
+                .FirstAsync();
+            var otherGivingTransactionsInCurrentTransaction = _transactionRepo.Queryable()
+                .Where(x =>
+                    x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
+                .ToList();
+            var giverParentAccount = _accountRepo.Queryable()
+                .FirstOrDefault(x => x.UserName == transaction.Giver.UserInfo.ParentId);
+            switch (instance.Result)
+            {
+                case MoneyTransactionVM.ReportResult.Default:
+                    break;
+                case MoneyTransactionVM.ReportResult.GiverTrue:
+                    transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction);
+                    break;
+                case MoneyTransactionVM.ReportResult.ReceiverTrue:
+                    transaction.NotTransfer(giverParentAccount);
+                    break;
+                case MoneyTransactionVM.ReportResult.BothTrue:
+                    break;
+                case MoneyTransactionVM.ReportResult.BothFalse:
+                    break;
+            }
+            await _unitOfWork.SaveChangesAsync();
         }
 
         #endregion

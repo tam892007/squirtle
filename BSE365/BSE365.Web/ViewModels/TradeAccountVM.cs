@@ -14,6 +14,7 @@ namespace BSE365.ViewModels
         public bool IsAllowGive { get; set; }
         public bool IsAllowReceive { get; set; }
         public bool IsAllowChangeState { get; set; }
+        public bool IsAllowAbadonTransaction { get; set; }
 
         public List<string> NotAllowGiveReason { get; set; }
         public List<string> NotAllowReceiveReason { get; set; }

@@ -132,6 +132,12 @@ mainApp.config([
                 templateUrl: 'app/main/transaction/current.html',
                 controller: 'transactionCurrentController'
             })
+            .state('reportedTransactions',
+            {
+                url: "/trade/reported-transactions",
+                templateUrl: 'app/main/transaction/transactionReported.html',
+                controller: 'transactionReportedController'
+            })
             .state('association',
             {
                 url: "/association",
@@ -258,7 +264,6 @@ mainApp.factory('PriorityLevel',
             Default: 0,
             Priority: 1,
             High: 2,
-            ReceiveFail: 3,
             Highest: 10,
         }
         data.display = function(value) {
@@ -269,8 +274,6 @@ mainApp.factory('PriorityLevel',
                 return 'Priority';
             case data.High:
                 return 'High';
-            case data.ReceiveFail:
-                return 'Receive Fail';
             case data.Highest:
                 return 'Highest';
             default:
@@ -338,6 +341,34 @@ mainApp.factory('TransactionType',
         return data;
     });
 
+mainApp.factory('ReportResult',
+    function() {
+        var data = {
+            Default: 0,
+            GiverTrue: 1,
+            ReceiverTrue: 2,
+            BothTrue: 11,
+            BothFalse: 12,
+        }
+        data.display = function(value) {
+            switch (value) {
+            case data.Default:
+                return 'Default';
+            case data.GiverTrue:
+                return 'Giver True';
+            case data.ReceiverTrue:
+                return 'Receiver True';
+            case data.BothTrue:
+                return 'Both True';
+            case data.BothFalse:
+                return 'Both False';
+            default:
+                return '';
+            }
+        }
+        return data;
+    });
+
 mainApp.factory('UserState',
     function() {
         var data = {
@@ -385,16 +416,19 @@ mainApp.filter('yesno',
 function StringToXML(oString) {
     //code for IE
     if (window.ActiveXObject) {
-        var oXML = new ActiveXObject("Microsoft.XMLDOM"); oXML.loadXML(oString);
+        var oXML = new ActiveXObject("Microsoft.XMLDOM");
+        oXML.loadXML(oString);
         return oXML;
     }
-        // code for Chrome, Safari, Firefox, Opera, etc. 
+    // code for Chrome, Safari, Firefox, Opera, etc. 
     else {
         return (new DOMParser()).parseFromString(oString, "text/xml");
     }
 }
 
-mainApp.config(['stConfig', 'filterSetting', function (stConfig, filterSetting) {
-    stConfig.pagination.itemsByPage = filterSetting.pagination.itemsByPage;
-    stConfig.pagination.displayedPages = filterSetting.pagination.displayedPages;
-}]);
+mainApp.config([
+    'stConfig', 'filterSetting', function(stConfig, filterSetting) {
+        stConfig.pagination.itemsByPage = filterSetting.pagination.itemsByPage;
+        stConfig.pagination.displayedPages = filterSetting.pagination.displayedPages;
+    }
+]);

@@ -80,5 +80,57 @@ namespace BSE365.ViewModels
                 }
             }
         }
+
+        public class Reported
+        {
+            public int Id { get; set; }
+
+            public string GiverId { get; set; }
+            public string GiverDisplayName { get; set; }
+            public string GiverEmail { get; set; }
+            public string GiverPhoneNumber { get; set; }
+            public string GiverBankNumber { get; set; }
+            public string GiverBankName { get; set; }
+            public string GiverBankBranch { get; set; }
+
+
+            public string ReceiverId { get; set; }
+            public string ReceiverDisplayName { get; set; }
+            public string ReceiverEmail { get; set; }
+            public string ReceiverPhoneNumber { get; set; }
+            public string ReceiverBankNumber { get; set; }
+            public string ReceiverBankName { get; set; }
+            public string ReceiverBankBranch { get; set; }
+
+
+            public DateTime Created { get; set; }
+            public DateTime LastModified { get; set; }
+
+            public TransactionType Type { get; set; }
+            public TransactionState State { get; set; }
+            public string AttachmentUrl { get; set; }
+
+            public DateTime? TransferedDate { get; set; }
+
+            public ReportResult Result { get; set; }
+        }
+
+        public enum ReportResult
+        {
+            Default = 0,
+
+            /// <summary>
+            /// receiver not confirmed
+            /// </summary>
+            GiverTrue = 1,
+
+            /// <summary>
+            /// giver not transfered
+            /// </summary>
+            ReceiverTrue = 2,
+
+            BothTrue = 11,
+            BothFalse = 12,
+        }
     }
 }

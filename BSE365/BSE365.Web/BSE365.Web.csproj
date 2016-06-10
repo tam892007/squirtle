@@ -255,6 +255,8 @@
     <Content Include="app\main\account\waitingReceiverController.js" />
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\transactionReported.html" />
+    <Content Include="app\main\transaction\transactionReported.js" />
     <Content Include="app\main\transaction\errorDlgHandled.html" />
     <Content Include="app\main\transaction\importPopup.html" />
     <Content Include="app\main\transaction\errorDlgController.js" />

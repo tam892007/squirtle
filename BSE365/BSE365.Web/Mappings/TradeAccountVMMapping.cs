@@ -22,6 +22,8 @@ namespace BSE365.Mappings
                 NotAllowReceiveReason = target.NotAllowReceiveReason(),
 
                 IsAllowChangeState = target.IsAllowChangeState(),
+                IsAllowAbadonTransaction = target.IsAllowAbadonTransaction(),
+
                 State = target.State,
                 Priority = target.Priority,
                 LastCycleDate = target.LastCycleDate,

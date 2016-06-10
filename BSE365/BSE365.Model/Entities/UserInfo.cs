@@ -156,6 +156,10 @@ namespace BSE365.Model.Entities
             ObjectState = ObjectState.Modified;
         }
 
+        /// <summary>
+        /// giver account not give
+        /// </summary>
+        /// <param name="account"></param>
         public void NotTransfer(Account account)
         {
             State = UserState.NotGive;
@@ -163,6 +167,10 @@ namespace BSE365.Model.Entities
             ObjectState = ObjectState.Modified;
         }
 
+        /// <summary>
+        /// receiver account not confirm 
+        /// </summary>
+        /// <param name="account"></param>
         public void NotConfirm(Account account)
         {
             State = UserState.NotConfirm;
@@ -171,5 +179,11 @@ namespace BSE365.Model.Entities
         }
 
         #endregion
+        
+        public void AbadonTransaction()
+        {
+            IsAllowAbandonOne = false;
+            ObjectState = ObjectState.Modified;
+        }
     }
 }

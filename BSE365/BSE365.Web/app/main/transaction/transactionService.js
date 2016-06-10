@@ -8,6 +8,9 @@
             moneyReceived: { method: 'POST', params: { path: 'api/transaction/moneyReceived' } },
             reportNotTransfer: { method: 'POST', params: { path: 'api/transaction/reportNotTransfer' } },
             updateImg: { method: 'POST', params: { path: 'api/transaction/updateImg' } },
+            abadonTransaction: { method: 'POST', params: { path: 'api/transaction/abadonTransaction' } },
+            reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' }, isArray: true },
+            applyReport: { method: 'POST', params: { path: 'api/transaction/applyReport' } },
         });
     }
 ]);

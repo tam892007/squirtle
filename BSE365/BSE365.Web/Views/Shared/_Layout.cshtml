@@ -58,7 +58,9 @@
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Management <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in">Accounts</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="reportedTransactions" data-toggle="collapse" data-target=".navbar-collapse.in">Reported Transactions</a></li>
                             <li role="separator" class="divider"></li>
+                            <li class="dropdown-header">Waiting Accounts</li>
                             <li ui-sref-active-eq='active'><a ui-sref="waitinggiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Givers</a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="waitingreceiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Receivers</a></li>
                         </ul>
@@ -69,10 +71,6 @@
                             <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in">Introduction</a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">Separated link</a></li>
-                            <li ui-sref-active-eq='active'><a href="#" data-toggle="collapse" data-target=".navbar-collapse.in">One more separated link</a></li>
                         </ul>
                     </li>
                     <li ui-sref-active-eq='active' ng-if="forAdmin()"><a ui-sref="system">System</a></li>

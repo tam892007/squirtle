@@ -10,7 +10,7 @@
             <table class="table table-bordered transaction-account-info">
                 <tr>
                     <td>State</td>
-                    <td class="bg-primary">{{TransactionState.display(item.state)}}</td>
+                    <td class="bg-primary" title="{{item.state}}">{{TransactionState.display(item.state)}}</td>
                 </tr>
                 <tr>
                     <td>Name</td>
@@ -44,25 +44,28 @@
                     <td>Amount</td>
                     <td>{{item.amount|currency:item.moneyCurrency}} ({{item.moneyCurrency}})</td>
                 </tr>
-                <tr ng-show="item.countdown>0">
+                <tr ng-show="item.countdown>0 && !item.isAbadoned">
                     <td>Time left</td>
                     <td>
                         <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
-                            {{days}} day - {{hhours}}:{{mminutes}}:{{sseconds}} <span> </span>
+                            {{hhours}}:{{mminutes}}:{{sseconds}} <span> </span>
                         </timer>
                     </td>
                 </tr>
-                <tr ng-show="item.countdown==0">
+                <tr ng-show="item.countdown==0 && !item.isAbadoned">
                     <td colspan="2" class="text-center">Time ended</td>
+                </tr>
+                <tr ng-show="item.isAbadoned">
+                    <td colspan="2" class="text-center">Transaction Abadoned</td>
                 </tr>
             </table>
         </div>
-        <div class="form-group text-center">
+        <div class="form-group text-center" ng-show="item.isAllowAttachment">
             <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" />
         </div>
-        <div class="form-group text-center" ng-show="item.isAllowConfirmReceived && !item.isEnd">
+        <div class="form-group text-center" ng-show="item.isAllowConfirmReceived">
             <button class="btn btn-success" ng-click="moneyReceived(item)">Receive?</button>
-            <!--<button class="btn btn-danger" ng-click="reportNotTransfer(item)">Report</button>-->
+            <button class="btn btn-danger" ng-click="reportNotTransfer(item)">Report</button>
         </div>
     </div>
 </div>

@@ -84,5 +84,36 @@ namespace BSE365.Mappings
             vm.IsEnd = model.IsEnd;
             return vm;
         }
+
+
+        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Reported>> GetExpToReportVM()
+        {
+            Expression<Func<MoneyTransaction, MoneyTransactionVM.Reported>> result =
+                x => new MoneyTransactionVM.Reported
+                {
+                    Id = x.Id,
+                    GiverId = x.GiverId,
+                    ReceiverId = x.ReceiverId,
+                    Created = x.Created,
+                    LastModified = x.LastModified,
+                    Type = x.Type,
+                    State = x.State,
+                    AttachmentUrl = x.AttachmentUrl,
+                    TransferedDate = x.TransferedDate,
+                    GiverDisplayName = x.Giver.UserInfo.DisplayName,
+                    GiverEmail = x.Giver.UserInfo.Email,
+                    GiverPhoneNumber = x.Giver.UserInfo.PhoneNumber,
+                    GiverBankNumber = x.Giver.UserInfo.BankNumber,
+                    GiverBankName = x.Giver.UserInfo.BankName,
+                    GiverBankBranch = x.Giver.UserInfo.BankBranch,
+                    ReceiverDisplayName = x.Receiver.UserInfo.DisplayName,
+                    ReceiverEmail = x.Receiver.UserInfo.Email,
+                    ReceiverPhoneNumber = x.Receiver.UserInfo.PhoneNumber,
+                    ReceiverBankNumber = x.Receiver.UserInfo.BankNumber,
+                    ReceiverBankName = x.Receiver.UserInfo.BankName,
+                    ReceiverBankBranch = x.Receiver.UserInfo.BankBranch
+                };
+            return result;
+        }
     }
 }
