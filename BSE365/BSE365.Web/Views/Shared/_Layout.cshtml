@@ -84,7 +84,7 @@
                             <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
                             <div class="user-info">
                                 <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
-                                <p id="userPin" class="user-info--pin" title="30000">30000 PIN</p>
+                                <p id="userPin" class="user-info--pin" title="{{userContext.pinBalance}}"><span>PIN: </span><span data-ng-bind="userContext.pinBalance"></span></p>
                             </div>
                         </a>
                         <ul class="dropdown-menu">
@@ -107,7 +107,8 @@
         </div>
     </footer>
 
-    <script src="Scripts/Common.js?cacheKey=@ViewBag.Version"></script>
+    <script src="Scripts/Common1.js?cacheKey=@ViewBag.Version"></script>
+    <script src="Scripts/Common2.js?cacheKey=@ViewBag.Version"></script>
     <script src="Scripts/MainApp.js?cacheKey=@ViewBag.Version"></script>
     <script src="Scripts/CommonApp.js?cacheKey=@ViewBag.Version"></script>
     <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>

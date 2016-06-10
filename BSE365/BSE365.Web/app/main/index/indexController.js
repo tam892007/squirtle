@@ -18,6 +18,8 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
 
    
     $scope.getUserContext = function () {
+        $scope.userContext = {};
+
         userService.getCurrentUserContext(function (res) {
             $scope.userContext = res;
         });
