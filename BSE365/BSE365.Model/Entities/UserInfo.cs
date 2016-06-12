@@ -15,6 +15,8 @@ namespace BSE365.Model.Entities
             State = UserState.Default;
             GiveOver = -1;
             LastGiveDate = DateTime.Now.AddDays(-1).Date;
+            DayBonusTemp = DateTime.Now.AddDays(-1).Date;
+            LastClaimBonusDate = DateTime.Now.AddDays(-1).Date;
             Accounts = new HashSet<Account>();
         }
 
