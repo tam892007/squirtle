@@ -32,6 +32,7 @@ namespace BSE365.Api
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
         private IRepositoryAsync<Account> _accountRepo;
+        private UserProfileRepository _userRepo;
 
         #region
 
@@ -45,6 +46,7 @@ namespace BSE365.Api
             _unitOfWork = unitOfWork;
             _transactionRepo = transactionRepo;
             _accountRepo = accountRepo;
+            _userRepo = new UserProfileRepository();
         }
 
         /// <summary>
@@ -394,8 +396,14 @@ namespace BSE365.Api
                 .Where(x =>
                     x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
                 .ToList();
-            var giverParentAccount = _accountRepo.Queryable()
-                .FirstOrDefault(x => x.UserName == transaction.Giver.UserInfo.ParentId);
+            Account giverParentAccount = null;
+            var giverParentId = transaction.Giver.UserInfo.ParentId;
+            if (!string.IsNullOrEmpty(giverParentId))
+            {
+                var giverParentAuthAccount = await _userRepo.FindUser(giverParentId);
+                giverParentAccount = _accountRepo.Queryable()
+                    .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
+            }
             switch (instance.Result)
             {
                 case MoneyTransactionVM.ReportResult.Default:

@@ -303,32 +303,46 @@ namespace BSE365.Repository.Helper
         {
             using (var context = new BSE365Context())
             {
-                var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                var transactionsToUpdate = context.MoneyTransactions
-                    .Include(x => x.Giver.UserInfo)
-                    .Include(x => x.Receiver.UserInfo)
-                    .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
-                    .ToList();
-                foreach (var transaction in transactionsToUpdate)
+                using (var authContext = new BSE365AuthContext())
                 {
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    var timeBase = DateTime.Now;
+                    timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
+                    var transactionsToUpdate = context.MoneyTransactions
+                        .Include(x => x.Giver.UserInfo)
+                        .Include(x => x.Receiver.UserInfo)
+                        .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
+                        .ToList();
+                    foreach (var transaction in transactionsToUpdate)
                     {
-                        try
+                        using (var dbContextTransaction = context.Database.BeginTransaction())
                         {
-                            var giverParentAccount = context.Accounts
-                                .FirstOrDefault(x => x.UserName == transaction.Giver.UserInfo.ParentId);
-                            // update transaction
-                            transaction.NotTransfer(giverParentAccount);
+                            try
+                            {
+                                Account giverParentAccount = null;
+                                var giverParentId = transaction.Giver.UserInfo.ParentId;
+                                if (!string.IsNullOrEmpty(giverParentId))
+                                {
+                                    var giverParentAuthAccount = authContext.Users
+                                        .FirstOrDefault(x => x.Id == giverParentId);
+                                    if (giverParentAuthAccount != null)
+                                    {
+                                        giverParentAccount = context.Accounts
+                                            .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
+                                    }
+                                }
+
+                                // update transaction
+                                transaction.NotTransfer(giverParentAccount);
 
 
-                            context.SaveChanges();
+                                context.SaveChanges();
 
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            dbContextTransaction.Rollback();
+                                dbContextTransaction.Commit();
+                            }
+                            catch (Exception)
+                            {
+                                dbContextTransaction.Rollback();
+                            }
                         }
                     }
                 }
