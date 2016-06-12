@@ -1,5 +1,5 @@
 ﻿
-<table st-table="displayData" st-safe-src="data" class="table table-striped">
+<table st-table="data" st-pipe="loadData" class="table table-striped">
     <thead>
         <tr>
             <th>#</th>
@@ -14,14 +14,14 @@
         <tr>
             <td colspan="6">
                 <div class="form-inline">
-                    <input st-search="" class="form-control" placeholder="search ..." />
+                    <input st-search="userName" class="form-control" placeholder="search ..." />
                     <button class="btn btn-success" ng-click="reload()">
                         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
                     </button>
                 </div>
             </td>
         </tr>
-        <tr ng-repeat="item in displayData" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
             <td>
                 <span>{{ $index + 1 }}</span>
             </td>
@@ -42,4 +42,9 @@
             </td>
         </tr>
     </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="6"></td>
+        </tr>
+    </tfoot>
 </table>

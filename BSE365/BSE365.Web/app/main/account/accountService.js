@@ -12,8 +12,8 @@
             queryAccount: { method: 'POST', params: { path: 'api/trade/queryAccount' } },
             queryHistory: { method: 'POST', params: { path: 'api/trade/queryHistory', key: 'key' }, isArray: true },
 
-            queryWaitingGivers: { method: 'POST', params: { path: 'api/trade/queryWaitingGivers' }, isArray:true },
-            queryWaitingReceivers: { method: 'POST', params: { path: 'api/trade/queryWaitingReceivers' }, isArray: true },
+            queryWaitingGivers: { method: 'POST', params: { path: 'api/trade/queryWaitingGivers' } },
+            queryWaitingReceivers: { method: 'POST', params: { path: 'api/trade/queryWaitingReceivers' } },
 
             mapForReceiver: { method: 'POST', params: { path: 'api/trade/mapForReceiver' } },
         });

@@ -4,11 +4,12 @@ mainApp.controller('waitingReceiverController',
     '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'ConfigData',
     function($scope, $state, accountService, Notification, PriorityLevel, ConfigData) {
 
-        $scope.loadData = function() {
+        $scope.loadData = function (tableState) {
             $scope.data = [];
-            accountService.queryWaitingReceivers({},
+            accountService.queryWaitingReceivers(JSON.stringify(tableState),
                 function(response) {
-                    $scope.data = response;
+                    $scope.data = response.data;
+                    tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);
                 });
         }
 
@@ -56,8 +57,6 @@ mainApp.controller('waitingReceiverController',
             $scope.selected = false;
             $scope.isGiver = false;
             $scope.isReceiver = true;
-
-            $scope.loadData();
         }
 
         $scope.init();

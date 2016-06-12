@@ -20,6 +20,10 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
         $scope.userContext.pinBalance = data;
     })
 
+    $scope.$on('user:removePinBalance', function (event, data) {
+        if (!isNaN($scope.userContext.pinBalance))
+        $scope.userContext.pinBalance -= data;
+    })
    
     $scope.getUserContext = function () {
         $scope.userContext = {};
