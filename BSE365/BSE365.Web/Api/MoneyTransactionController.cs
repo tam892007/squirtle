@@ -32,6 +32,7 @@ namespace BSE365.Api
         IUnitOfWorkAsync _unitOfWork;
         IRepositoryAsync<MoneyTransaction> _transactionRepo;
         private IRepositoryAsync<Account> _accountRepo;
+        private IRepositoryAsync<UserInfo> _userInfoRepo;
         private UserProfileRepository _userRepo;
 
         #region
@@ -41,11 +42,13 @@ namespace BSE365.Api
         public MoneyTransactionController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<MoneyTransaction> transactionRepo,
-            IRepositoryAsync<Account> accountRepo)
+            IRepositoryAsync<Account> accountRepo,
+            IRepositoryAsync<UserInfo> userInfoRepo)
         {
             _unitOfWork = unitOfWork;
             _transactionRepo = transactionRepo;
             _accountRepo = accountRepo;
+            _userInfoRepo = userInfoRepo;
             _userRepo = new UserProfileRepository();
         }
 
@@ -225,8 +228,12 @@ namespace BSE365.Api
             var otherReceivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
                 .Where(x => x.WaitingReceiverId == transaction.WaitingReceiverId && x.Id != transaction.Id)
                 .ToListAsync();
+            var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+            var giverParentInfos = await _userInfoRepo.Queryable()
+                .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
             transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
-                otherReceivingTransactionsInCurrentTransaction);
+                otherReceivingTransactionsInCurrentTransaction,
+                giverParentInfos);
             await _unitOfWork.SaveChangesAsync();
             return transaction.UpdateVm(tran);
         }
@@ -409,7 +416,10 @@ namespace BSE365.Api
                 case MoneyTransactionVM.ReportResult.Default:
                     break;
                 case MoneyTransactionVM.ReportResult.GiverTrue:
-                    transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction);
+                    var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+                    var giverParentInfos = await _userInfoRepo.Queryable()
+                        .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
+                    transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
                     await _unitOfWork.SaveChangesAsync();
                     break;
                 case MoneyTransactionVM.ReportResult.ReceiverTrue:

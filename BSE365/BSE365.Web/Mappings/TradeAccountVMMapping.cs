@@ -24,6 +24,8 @@ namespace BSE365.Mappings
                 IsAllowChangeState = target.IsAllowChangeState(),
                 IsAllowAbadonTransaction = target.IsAllowAbadonTransaction(),
 
+                IsAllowExchangeBonusPoint = target.IsAllowExchangeBonusPoint(),
+
                 State = target.State,
                 Priority = target.Priority,
                 LastCycleDate = target.LastCycleDate,
@@ -43,6 +45,10 @@ namespace BSE365.Mappings
                 Rating = target.UserInfo.Rating,
                 Level = target.UserInfo.Level,
                 TreePath = target.UserInfo.TreePath,
+
+                BonusPoint = target.UserInfo.BonusPoint,
+                TotalBonusPoint = target.UserInfo.TotalBonusPoint,
+                TotalGiveCount = target.UserInfo.TotalGiveCount,
             };
             return result;
         }

@@ -15,6 +15,7 @@ namespace BSE365.ViewModels
         public bool IsAllowReceive { get; set; }
         public bool IsAllowChangeState { get; set; }
         public bool IsAllowAbadonTransaction { get; set; }
+        public bool IsAllowExchangeBonusPoint { get; set; }
 
         public List<string> NotAllowGiveReason { get; set; }
         public List<string> NotAllowReceiveReason { get; set; }
@@ -54,6 +55,10 @@ namespace BSE365.ViewModels
         public int Rating { get; set; }
         public int Level { get; set; }
         public string TreePath { get; set; }
+
+        public int BonusPoint { get; set; }
+        public int TotalBonusPoint { get; set; }
+        public int TotalGiveCount { get; set; }
 
         public class SetPriorityVM
         {

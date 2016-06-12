@@ -27,22 +27,15 @@ mainApp.controller('waitingReceiverController',
         }
 
         $scope.mapForReceiver = function() {
-            var index = $scope.data.indexOf($scope.target);
             accountService.mapForReceiver($scope.target,
                 function(response) {
-                    console.log(response);
+                    $scope.reload();
                     if (response.amountLeft > 0) {
-                        if (index !== -1) {
-                            $scope.data[index] = response;
-                            $scope.target = response;
-                        }
+                        $scope.target.amount = response.amountLeft;
                         Notification.success('Not enough Givers!');
                     } else {
-                        if (index !== -1) {
-                            $scope.data.splice(index, 1);
-                            $scope.target = {};
-                            $scope.selected = false;
-                        }
+                        $scope.target = {};
+                        $scope.selected = false;
                         Notification.success('Map successful!');
                     }
                 });

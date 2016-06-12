@@ -353,38 +353,56 @@ namespace BSE365.Repository.Helper
         {
             using (var context = new BSE365Context())
             {
-                var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                var transactionsToUpdate = context.MoneyTransactions
-                    .Include(x => x.Giver.UserInfo)
-                    .Include(x => x.Receiver.UserInfo)
-                    .Include(x => x.Giver.WaitingGivers)
-                    .Where(x => !x.IsEnd && x.TransferedDate < timeBase && x.State == TransactionState.Transfered)
-                    .OrderBy(x => x.LastModified)
-                    .ToList();
-                var giveGroupIds = transactionsToUpdate.Select(x => x.WaitingGiverId).ToArray();
-                var relatedTransactions = context.MoneyTransactions
-                    .Where(x => giveGroupIds.Contains(x.WaitingGiverId))
-                    .ToList();
-                foreach (var transaction in transactionsToUpdate)
+                using (var authContext = new BSE365AuthContext())
                 {
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    var timeBase = DateTime.Now;
+                    timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
+                    var transactionsToUpdate = context.MoneyTransactions
+                        .Include(x => x.Giver.UserInfo)
+                        .Include(x => x.Receiver.UserInfo)
+                        .Include(x => x.Giver.WaitingGivers)
+                        .Where(x => !x.IsEnd && x.TransferedDate < timeBase && x.State == TransactionState.Transfered)
+                        .OrderBy(x => x.LastModified)
+                        .ToList();
+                    var giveGroupIds = transactionsToUpdate.Select(x => x.WaitingGiverId).ToArray();
+                    var relatedTransactions = context.MoneyTransactions
+                        .Where(x => giveGroupIds.Contains(x.WaitingGiverId))
+                        .ToList();
+                    foreach (var transaction in transactionsToUpdate)
                     {
-                        try
+                        using (var dbContextTransaction = context.Database.BeginTransaction())
                         {
-                            var otherGivingTransactionsInCurrentTransaction = relatedTransactions.Where(x =>
-                                x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
-                                .ToList();
-                            // update transaction
-                            transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction);
+                            try
+                            {
+                                var otherGivingTransactionsInCurrentTransaction = relatedTransactions.Where(x =>
+                                    x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
+                                    .ToList();
 
-                            context.SaveChanges();
+                                var giverParentInfoIds = new List<int>();
+                                var giverTreePath = transaction.Giver.UserInfo.TreePath;
+                                if (!string.IsNullOrEmpty(giverTreePath))
+                                {
+                                    var giverParentIds = giverTreePath.Split(
+                                        new string[] {BSE365.Common.Constants.SystemAdmin.TreePathSplitter},
+                                        StringSplitOptions.RemoveEmptyEntries);
+                                    giverParentInfoIds = authContext.Users
+                                        .Where(x => giverParentIds.Contains(x.Id))
+                                        .Select(x => x.UserInfo.Id).ToList();
+                                }
+                                var giverParentInfos = context.UserInfos
+                                    .Where(x => giverParentInfoIds.Contains(x.Id)).ToList();
 
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            dbContextTransaction.Rollback();
+                                // update transaction
+                                transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
+
+                                context.SaveChanges();
+
+                                dbContextTransaction.Commit();
+                            }
+                            catch (Exception)
+                            {
+                                dbContextTransaction.Rollback();
+                            }
                         }
                     }
                 }

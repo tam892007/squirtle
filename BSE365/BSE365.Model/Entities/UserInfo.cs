@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using BSE365.Base.Infrastructures;
+using BSE365.Common.Constants;
 using BSE365.Model.Enum;
 
 namespace BSE365.Model.Entities
@@ -22,6 +23,12 @@ namespace BSE365.Model.Entities
         public int Level { get; set; }
 
         public string TreePath { get; set; }
+
+        public int BonusPoint { get; set; }
+
+        public int TotalBonusPoint { get; set; }
+
+        public int TotalGiveCount { get; set; }
 
         public virtual Image Avatar { get; set; }
 
@@ -154,11 +161,16 @@ namespace BSE365.Model.Entities
         /// <summary>
         ///     A transaction give money successed
         /// </summary>
-        public void MoneyGave()
+        public void MoneyGave(List<UserInfo> parentInfos)
         {
-            GiveOver += 1;
             Rating += 1;
+
+            GiveOver += 1;
+            TotalGiveCount += 1;
+
             ObjectState = ObjectState.Modified;
+
+            AddBonusPointToParents(parentInfos);
         }
 
         /// <summary>
@@ -192,6 +204,48 @@ namespace BSE365.Model.Entities
         public void ResetAbadonStatus()
         {
             IsAllowAbandonOne = true;
+            ObjectState = ObjectState.Modified;
+        }
+
+        #endregion
+
+        #region bonus point
+
+        public bool IsAllowExchangeBonusPoint()
+        {
+            return State == UserState.Default && BonusPoint >= TransactionConfig.BonusPointToExchange;
+        }
+
+        public void ExchangeBonusPoint()
+        {
+            if (IsAllowExchangeBonusPoint())
+            {
+                BonusPoint -= TransactionConfig.BonusPointToExchange;
+                ObjectState = ObjectState.Modified;
+                // do something
+            }
+        }
+
+        public void AddBonusPointToParents(List<UserInfo> parentInfos)
+        {
+            for (int i = 0; i < parentInfos.Count; i++)
+            {
+                if (i >= TransactionConfig.BonusMaxLevel)
+                {
+                    break;
+                }
+                var bonusPoint = i == 0
+                    ? TransactionConfig.BonusPointToParent
+                    : TransactionConfig.BonusPointToTreePath;
+                var userInfo = parentInfos[i];
+                userInfo.AddBonusPoint(bonusPoint);
+            }
+        }
+
+        public void AddBonusPoint(int point)
+        {
+            BonusPoint += point;
+            TotalBonusPoint += point;
             ObjectState = ObjectState.Modified;
         }
 

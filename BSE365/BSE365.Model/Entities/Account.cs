@@ -123,6 +123,11 @@ namespace BSE365.Model.Entities
             }
         }
 
+        public bool IsAllowExchangeBonusPoint()
+        {
+            return UserInfo.IsAllowExchangeBonusPoint();
+        }
+
         #endregion
 
         #region waiting list
@@ -227,7 +232,8 @@ namespace BSE365.Model.Entities
         ///     A transaction give money successed
         /// </summary>
         public void MoneyGave(MoneyTransaction transaction,
-            List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction)
+            List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction,
+            List<UserInfo> parentInfos)
         {
             if (transaction.Type != TransactionType.Replacement)
             {
@@ -241,7 +247,7 @@ namespace BSE365.Model.Entities
 
                     UserInfo.ResetAbadonStatus();
                 }
-                UserInfo.MoneyGave();
+                UserInfo.MoneyGave(parentInfos);
             }
         }
 

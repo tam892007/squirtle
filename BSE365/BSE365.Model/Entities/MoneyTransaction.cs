@@ -49,7 +49,8 @@ namespace BSE365.Model.Entities
         }
 
         public void MoneyReceived(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction,
-            List<MoneyTransaction> otherReceivingTransactionsInCurrentTransaction)
+            List<MoneyTransaction> otherReceivingTransactionsInCurrentTransaction,
+            List<UserInfo> giverParentInfos)
         {
             State = TransactionState.Confirmed;
             ReceivedDate = DateTime.Now;
@@ -57,7 +58,7 @@ namespace BSE365.Model.Entities
             IsEnd = true;
             ObjectState = ObjectState.Modified;
 
-            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction);
+            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction, giverParentInfos);
             Receiver.MoneyReceived(this, otherReceivingTransactionsInCurrentTransaction);
         }
 
@@ -101,7 +102,9 @@ namespace BSE365.Model.Entities
         /// giver's transaction mark as gave
         /// </summary>
         /// <param name="otherGivingTransactionsInCurrentTransaction"></param>
-        public void NotConfirm(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction)
+        /// <param name="giverParentInfos"></param>
+        public void NotConfirm(List<MoneyTransaction> otherGivingTransactionsInCurrentTransaction,
+            List<UserInfo> giverParentInfos)
         {
             State = TransactionState.NotConfirm;
             LastModified = DateTime.Now;
@@ -112,7 +115,7 @@ namespace BSE365.Model.Entities
             Receiver.NotConfirm(this);
 
             // update giver
-            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction);
+            Giver.MoneyGave(this, otherGivingTransactionsInCurrentTransaction, giverParentInfos);
         }
 
         public void ReportNotTransfer()

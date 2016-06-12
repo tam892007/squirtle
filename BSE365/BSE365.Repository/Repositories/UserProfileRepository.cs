@@ -182,5 +182,17 @@ namespace BSE365.Repository.Repositories
 
             return result;
         }
+
+        public async Task<List<int>> GetParentInfoIdsFromTreePath(string treePath)
+        {
+            var result = new List<int>();
+            if (!string.IsNullOrEmpty(treePath))
+            {
+                var parentIds = treePath.Split(new string[] {BSE365.Common.Constants.SystemAdmin.TreePathSplitter},
+                    StringSplitOptions.RemoveEmptyEntries);
+                result = await _ctx.Users.Where(x => parentIds.Contains(x.Id)).Select(x => x.UserInfo.Id).ToListAsync();
+            }
+            return result;
+        }
     }
 }

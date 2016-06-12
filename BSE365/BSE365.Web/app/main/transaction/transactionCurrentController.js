@@ -115,6 +115,7 @@ mainApp.controller('transactionCurrentController',
         }
 
         function loadTransaction(transactions) {
+            $scope.histories = [];
             _.each(transactions,
                 function(item) {
                     item.isAllowConfirmGave = item.state == TransactionState.Begin;

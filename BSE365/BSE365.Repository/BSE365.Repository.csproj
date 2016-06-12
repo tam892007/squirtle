@@ -126,6 +126,10 @@
     <Compile Include="BSE365AuthContextMigration\201606060321455_UpdateTransactionFields.Designer.cs">
       <DependentUpon>201606060321455_UpdateTransactionFields.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201606121912079_AddBonusPoint.cs" />
+    <Compile Include="BSE365AuthContextMigration\201606121912079_AddBonusPoint.Designer.cs">
+      <DependentUpon>201606121912079_AddBonusPoint.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -154,6 +158,10 @@
     <Compile Include="BSE365ContextMigration\201606060321314_UpdateTransactionFields.cs" />
     <Compile Include="BSE365ContextMigration\201606060321314_UpdateTransactionFields.Designer.cs">
       <DependentUpon>201606060321314_UpdateTransactionFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201606121912285_AddBonusPoint.cs" />
+    <Compile Include="BSE365ContextMigration\201606121912285_AddBonusPoint.Designer.cs">
+      <DependentUpon>201606121912285_AddBonusPoint.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -189,6 +197,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201606060321455_UpdateTransactionFields.resx">
       <DependentUpon>201606060321455_UpdateTransactionFields.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201606121912079_AddBonusPoint.resx">
+      <DependentUpon>201606121912079_AddBonusPoint.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -209,6 +220,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201606060321314_UpdateTransactionFields.resx">
       <DependentUpon>201606060321314_UpdateTransactionFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606121912285_AddBonusPoint.resx">
+      <DependentUpon>201606121912285_AddBonusPoint.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

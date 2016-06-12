@@ -81,6 +81,16 @@
         </div>
         <div class="row">
             <div class="col-md-6">
+                <label>Bonus Points</label>
+                <p class="form-control-static" data-ng-bind="info.bonusPoint"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Can Exchange Bonus</label>
+                <p class="form-control-static" data-ng-bind="info.isAllowExchangeBonusPoint|yesno"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <label>PhoneNumber</label>
                 <p class="form-control-static" data-ng-bind="info.phoneNumber"></p>
             </div>
