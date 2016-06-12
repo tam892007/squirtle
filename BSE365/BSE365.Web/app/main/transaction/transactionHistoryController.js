@@ -57,7 +57,7 @@ mainApp.controller('transactionHistoryController',
         function generateHistory(item) {
             $scope.histories.push({
                 userName: "System",
-                rating: 5,
+                rating: 6,
                 time: item.created,
                 action: 'Created',
             });

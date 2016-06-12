@@ -11,6 +11,7 @@
         </div>
         <div class="form-group text-center" ng-show="isReceiver">
             <button class="btn btn-success" ng-click="mapForReceiver()"><span class="glyphicon glyphicon-asterisk" aria-hidden="true"></span> &nbsp;Map With Givers</button>
+            <div class="alert alert-danger" role="alert" ng-show="message" data-ng-bind="message"></div>
         </div>
         <div class="row">
             <div class="col-md-6">
@@ -28,9 +29,13 @@
                 <p class="form-control-static" data-ng-bind="target.amount"></p>
             </div>
             <div class="col-md-6">
-                <label>Priority</label>
-                <p class="form-control-static" data-ng-bind="PriorityLevel.display(target.priority)"></p>
+                <label>Type</label>
+                <p class="form-control-static" data-ng-bind="WaitingType.display(target.type)"></p>
             </div>
+        </div>
+        <div class="form-group">
+            <label>Priority</label>
+            <p class="form-control-static" data-ng-bind="PriorityLevel.display(target.priority)"></p>
         </div>
         <div class="form-group">
             <label>Created</label>

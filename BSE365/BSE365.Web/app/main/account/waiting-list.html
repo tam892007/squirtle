@@ -1,18 +1,19 @@
 ﻿
-<table st-table="data" st-pipe="loadData" class="table table-striped">
+<table st-table="data" st-pipe="loadData" class="table">
     <thead>
         <tr>
             <th>#</th>
             <th st-sort="accountId">Account</th>
             <th st-sort="displayName">Name</th>
-            <th st-sort="priority">Priority</th>
             <th st-sort="amount">Amount</th>
+            <th st-sort="priority">Priority</th>
+            <th st-sort="type">Type</th>
             <th st-sort="created">Created</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td colspan="6">
+            <td colspan="7">
                 <div class="form-inline">
                     <input st-search="userName" class="form-control" placeholder="search ..." />
                     <button class="btn btn-success" ng-click="reload()">
@@ -21,7 +22,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'danger': item.type==WaitingType.Bonus, 'warning': item.type==WaitingType.Abadon}">
             <td>
                 <span>{{ $index + 1 }}</span>
             </td>
@@ -32,10 +33,13 @@
                 <span data-ng-bind="item.displayName"></span>
             </td>
             <td>
+                <span data-ng-bind="item.amount"></span>
+            </td>
+            <td>
                 <span data-ng-bind="PriorityLevel.display(item.priority)"></span>
             </td>
             <td>
-                <span data-ng-bind="item.amount"></span>
+                <span data-ng-bind="WaitingType.display(item.type)"></span>
             </td>
             <td>
                 <span data-ng-bind="item.created|date:ConfigData.dateFormat"></span>
@@ -44,7 +48,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="6"></td>
+            <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="7"></td>
         </tr>
     </tfoot>
 </table>

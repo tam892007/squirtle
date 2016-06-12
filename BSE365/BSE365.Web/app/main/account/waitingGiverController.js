@@ -1,10 +1,15 @@
 ﻿'use strict';
 mainApp.controller('waitingGiverController',
 [
-    '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'ConfigData',
-    function ($scope, $state, accountService, Notification, PriorityLevel, ConfigData) {
+    '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'WaitingType', 'ConfigData',
+    function ($scope, $state, accountService, Notification, PriorityLevel, WaitingType, ConfigData) {
 
         $scope.loadData = function (tableState) {
+            if (tableState) {
+                $scope.tableState = tableState;
+            } else {
+                tableState = $scope.tableState;
+            }
             $scope.data = [];
             accountService.queryWaitingGivers(JSON.stringify(tableState),
                 function(response) {
@@ -29,6 +34,7 @@ mainApp.controller('waitingGiverController',
         $scope.init = function () {
             $scope.PriorityLevel = PriorityLevel;
             $scope.ConfigData = ConfigData;
+            $scope.WaitingType = WaitingType;
             $scope.data = [];
             $scope.target = {};
             $scope.selected = false;

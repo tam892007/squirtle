@@ -1,8 +1,8 @@
 ﻿'use strict';
 mainApp.controller('transactionReportedController',
 [
-    '$scope', '$state', 'transactionService', 'Notification', 'TransactionType', 'ReportResult', 'ConfigData',
-    function($scope, $state, transactionService, Notification, TransactionType, ReportResult, ConfigData) {
+    '$scope', '$state', 'transactionService', 'Notification', 'TransactionState', 'TransactionType', 'ReportResult', 'ConfigData',
+    function($scope, $state, transactionService, Notification, TransactionState, TransactionType, ReportResult, ConfigData) {
 
         $scope.loadData = function (tableState) {
             if (tableState) {
@@ -59,6 +59,7 @@ mainApp.controller('transactionReportedController',
         $scope.init = function() {
             $scope.ConfigData = ConfigData;
             $scope.TransactionType = TransactionType;
+            $scope.TransactionState = TransactionState;
             $scope.ReportResult = ReportResult;
 
             $scope.data = [];

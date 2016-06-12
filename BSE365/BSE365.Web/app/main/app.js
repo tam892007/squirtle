@@ -101,6 +101,12 @@ mainApp.config([
                 templateUrl: 'app/main/trade/trade-punishment.html',
                 controller: 'tradePunishmentController'
             })
+            .state('trade.bonus',
+            {
+                url: "/bonus",
+                templateUrl: 'app/main/trade/trade-bonus.html',
+                controller: 'tradeBonusController'
+            })
             .state('waitinggiver',
             {
                 url: "/waitinggiver",
@@ -270,6 +276,28 @@ mainApp.factory('AccountState',
         return data;
     });
 
+mainApp.factory('WaitingType',
+    function() {
+        var data = {
+            Default: 0,
+            Abadon: 31,
+            Bonus: 51,
+        }
+        data.display = function(value) {
+            switch (value) {
+            case data.Default:
+                return 'Default';
+            case data.Abadon:
+                return 'Abadoned';
+            case data.Bonus:
+                return 'Bonus';
+            default:
+                return '';
+            }
+        }
+        return data;
+    });
+
 mainApp.factory('PriorityLevel',
     function() {
         var data = {
@@ -341,6 +369,7 @@ mainApp.factory('TransactionType',
             Begin: 0,
             Abadoned: 31,
             Replacement: 41,
+            Bonus: 51,
         }
         data.display = function(value) {
             switch (value) {
@@ -350,6 +379,8 @@ mainApp.factory('TransactionType',
                 return 'Abadoned';
             case data.Replacement:
                 return 'Replacement';
+            case data.Bonus:
+                return 'Bonus';
             default:
                 return '';
             }

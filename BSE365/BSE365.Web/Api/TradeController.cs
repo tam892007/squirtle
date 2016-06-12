@@ -159,6 +159,14 @@ namespace BSE365.Api
         }
 
         [HttpPost]
+        [Route("ClaimBonus")]
+        public async Task<IHttpActionResult> ClaimBonus(string key = null)
+        {
+            await ClaimBonusAsync(key);
+            return Ok();
+        }
+
+        [HttpPost]
         [Route("QueryWaitingGivers")]
         public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
         {
@@ -179,14 +187,6 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> QueryHistory(FilterVM filter)
         {
             var result = await QueryHistoryAsync(filter);
-            return Ok(result);
-        }
-
-        [HttpPost]
-        [Route("QueryPunishment")]
-        public async Task<IHttpActionResult> QueryPunishment(FilterVM filter)
-        {
-            var result = await QueryPunishmentAsync(filter);
             return Ok(result);
         }
 
@@ -320,6 +320,16 @@ namespace BSE365.Api
             await _unitOfWork.SaveChangesAsync();
         }
 
+        private async Task ClaimBonusAsync(string key)
+        {
+            var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            var account = await _accountRepo.Queryable()
+                .Include(x => x.UserInfo)
+                .Where(x => x.UserName == username).FirstAsync();
+            account.ClaimBonus();
+            await _unitOfWork.SaveChangesAsync();
+        }
+
         private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
         {
             int totalPageCount;
@@ -337,9 +347,9 @@ namespace BSE365.Api
             var expression = WaitingAccountVMMapping.GetExpToGiverVM();
             var data = await query
                 .OrderBy(x => x.OrderByDescending(a => a.Priority).ThenBy(t => t.Created))
-                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
-                            out totalPageCount).Select<WaitingGiver, WaitingAccountVM>(expression)
-                .ToListAsync();   
+                .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
+                    out totalPageCount).Select<WaitingGiver, WaitingAccountVM>(expression)
+                .ToListAsync();
 
             var page = new PageViewModel<WaitingAccountVM>
             {
@@ -367,8 +377,8 @@ namespace BSE365.Api
             var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
             var data = await query
                 .OrderBy(x => x.OrderByDescending(a => a.Priority).ThenBy(t => t.Created))
-                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
-                            out totalPageCount).Select<WaitingReceiver, WaitingAccountVM>(expression)
+                .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
+                    out totalPageCount).Select<WaitingReceiver, WaitingAccountVM>(expression)
                 .ToListAsync();
 
             var page = new PageViewModel<WaitingAccountVM>
@@ -380,13 +390,15 @@ namespace BSE365.Api
             return page;
         }
 
-
         private async Task<List<TransactionHistoryVM>> QueryHistoryAsync(FilterVM filter)
         {
             var username = User.Identity.GetUserName();
             var expression = TransactionHistoryVMMapping.GetExpToVM(username);
             var giveTrans = _transactionRepo.Queryable()
-                .Where(x => x.GiverId == username && x.Type != TransactionType.Replacement)
+                .Where(x =>
+                    x.GiverId == username &&
+                    x.Type != TransactionType.Replacement &&
+                    x.Type != TransactionType.Bonus)
                 .OrderByDescending(x => x.Created)
                 .GroupBy(x => x.WaitingGiverId)
                 .Select(expression);
@@ -401,18 +413,6 @@ namespace BSE365.Api
                 .OrderByDescending(x => x.BeginDate)
                 .ToListAsync();
             data.ForEach(x => x.AccountId = username);
-            return data;
-        }
-
-        private async Task<List<MoneyTransactionVM.Punishment>> QueryPunishmentAsync(FilterVM filter)
-        {
-            var username = User.Identity.GetUserName();
-            var expression = MoneyTransactionVMMapping.GetExpToPunismentVM();
-            var data = await _transactionRepo.Queryable()
-                .Where(x => x.GiverId == username && x.Type == TransactionType.Replacement)
-                .OrderByDescending(x => x.Created)
-                .Select(expression)
-                .ToListAsync();
             return data;
         }
 

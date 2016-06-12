@@ -5,12 +5,12 @@
         /// <summary>
         /// in millisecond
         /// </summary>
-        public static double TransactionCheckerTimeout = /*60*60*1000;*/ 1*60*1000; //for test
+        public static double TransactionCheckerTimeout = /*60*60*1000;*/ 60*60*1000; //for test
 
         /// <summary>
         /// in millisecond
         /// </summary>
-        public static double WaitingHelperTimeout = /*60*60*1000;*/ 1*60*1000; //for test
+        public static double WaitingHelperTimeout = /*60*60*1000;*/ 60*60*1000; //for test
 
         /// <summary>
         /// Time for each step of Transaction in hours
@@ -21,6 +21,7 @@
         public static int GiveAmountAbadon = 1;
 
         public static int ReceiveAmountDefault = 3;
+        public static int ReceiveAmountBonus = 1;
 
 
         public static int MoneyPerTransaction = 1500000;
@@ -31,5 +32,6 @@
         public static int BonusMaxLevel = 9;
 
         public static int BonusPointToExchange = 100;
+        public static int MaxBonusPointPerDay = 100;
     }
 }

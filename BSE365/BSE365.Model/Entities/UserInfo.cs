@@ -18,22 +18,6 @@ namespace BSE365.Model.Entities
             Accounts = new HashSet<Account>();
         }
 
-        public string ParentId { get; set; }
-
-        public int Level { get; set; }
-
-        public string TreePath { get; set; }
-
-        public int BonusPoint { get; set; }
-
-        public int TotalBonusPoint { get; set; }
-
-        public int TotalGiveCount { get; set; }
-
-        public virtual Image Avatar { get; set; }
-
-        public virtual ICollection<Account> Accounts { get; set; }
-
         #region user's infomations
 
         [Required]
@@ -71,6 +55,8 @@ namespace BSE365.Model.Entities
 
         public int GiveOver { get; set; }
 
+        public int TotalGiveCount { get; set; }
+
         public int Rating { get; set; }
 
         public UserState State { get; set; }
@@ -80,6 +66,42 @@ namespace BSE365.Model.Entities
         public string RelatedAccount { get; set; }
 
         #endregion
+
+        #region treepath and bonus informations
+
+        public string ParentId { get; set; }
+
+        public string TreePath { get; set; }
+
+        public int Level { get; set; }
+
+        public int BonusPoint { get; set; }
+
+        public int TotalBonusPoint { get; set; }
+
+        /// <summary>
+        /// temp to count bonus point per day
+        /// </summary>
+        [DataType(DataType.Date)]
+        public DateTime DayBonusTemp { get; set; }
+
+        /// <summary>
+        /// temp to count bonus point per day
+        /// </summary>
+        public int DayBonusPoint { get; set; }
+
+        /// <summary>
+        /// last time using bonus point
+        /// can't claim 2 times in one day
+        /// </summary>
+        [DataType(DataType.Date)]
+        public DateTime LastClaimBonusDate { get; set; }
+
+        #endregion
+
+        public virtual Image Avatar { get; set; }
+
+        public virtual ICollection<Account> Accounts { get; set; }
 
         #region waiting list
 
@@ -209,25 +231,25 @@ namespace BSE365.Model.Entities
 
         #endregion
 
-        #region bonus point
+        #region bonus
 
-        public bool IsAllowExchangeBonusPoint()
+        public bool IsAllowClaimBonus()
         {
-            return State == UserState.Default && BonusPoint >= TransactionConfig.BonusPointToExchange;
+            return State == UserState.Default &&
+                   LastClaimBonusDate < DateTime.Now.Date &&
+                   BonusPoint >= TransactionConfig.BonusPointToExchange;
         }
 
-        public void ExchangeBonusPoint()
+        public void ClaimBonus()
         {
-            if (IsAllowExchangeBonusPoint())
-            {
-                BonusPoint -= TransactionConfig.BonusPointToExchange;
-                ObjectState = ObjectState.Modified;
-                // do something
-            }
+            BonusPoint -= TransactionConfig.BonusPointToExchange;
+            LastClaimBonusDate = DateTime.Now;
+            ObjectState = ObjectState.Modified;
         }
 
         public void AddBonusPointToParents(List<UserInfo> parentInfos)
         {
+            parentInfos.Reverse();
             for (int i = 0; i < parentInfos.Count; i++)
             {
                 if (i >= TransactionConfig.BonusMaxLevel)
@@ -244,9 +266,35 @@ namespace BSE365.Model.Entities
 
         public void AddBonusPoint(int point)
         {
-            BonusPoint += point;
-            TotalBonusPoint += point;
-            ObjectState = ObjectState.Modified;
+            if (DayBonusTemp < DateTime.Now.Date)
+            {
+                DayBonusTemp = DateTime.Now.Date;
+                DayBonusPoint = point;
+
+                BonusPoint += point;
+                TotalBonusPoint += point;
+                ObjectState = ObjectState.Modified;
+            }
+            else if (DayBonusPoint < TransactionConfig.MaxBonusPointPerDay)
+            {
+                if (DayBonusPoint + point <= TransactionConfig.MaxBonusPointPerDay)
+                {
+                    DayBonusPoint += point;
+
+                    BonusPoint += point;
+                    TotalBonusPoint += point;
+                    ObjectState = ObjectState.Modified;
+                }
+                else
+                {
+                    var pointToAdd = TransactionConfig.MaxBonusPointPerDay - DayBonusPoint;
+                    DayBonusPoint += pointToAdd;
+
+                    BonusPoint += pointToAdd;
+                    TotalBonusPoint += pointToAdd;
+                    ObjectState = ObjectState.Modified;
+                }
+            }
         }
 
         #endregion

@@ -130,6 +130,10 @@
     <Compile Include="BSE365AuthContextMigration\201606121912079_AddBonusPoint.Designer.cs">
       <DependentUpon>201606121912079_AddBonusPoint.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201606122156507_AddWaitingType.cs" />
+    <Compile Include="BSE365AuthContextMigration\201606122156507_AddWaitingType.Designer.cs">
+      <DependentUpon>201606122156507_AddWaitingType.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -162,6 +166,10 @@
     <Compile Include="BSE365ContextMigration\201606121912285_AddBonusPoint.cs" />
     <Compile Include="BSE365ContextMigration\201606121912285_AddBonusPoint.Designer.cs">
       <DependentUpon>201606121912285_AddBonusPoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201606122157138_AddWaitingType.cs" />
+    <Compile Include="BSE365ContextMigration\201606122157138_AddWaitingType.Designer.cs">
+      <DependentUpon>201606122157138_AddWaitingType.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -200,6 +208,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201606121912079_AddBonusPoint.resx">
       <DependentUpon>201606121912079_AddBonusPoint.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201606122156507_AddWaitingType.resx">
+      <DependentUpon>201606122156507_AddWaitingType.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,6 +234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201606121912285_AddBonusPoint.resx">
       <DependentUpon>201606121912285_AddBonusPoint.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606122157138_AddWaitingType.resx">
+      <DependentUpon>201606122157138_AddWaitingType.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

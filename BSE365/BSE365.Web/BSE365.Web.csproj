@@ -247,10 +247,12 @@
     <Content Include="app\main\pin\pin.html" />
     <Content Include="app\main\pin\pinService.js" />
     <Content Include="app\main\account\account.html" />
+    <Content Include="app\main\trade\trade-bonus.html" />
     <Content Include="app\main\trade\trade-punishment.html" />
     <Content Include="app\main\trade\trade-history.html" />
     <Content Include="app\main\trade\trade-statistic.html" />
     <Content Include="app\main\account\accountController.js" />
+    <Content Include="app\main\trade\tradeBonusController.js" />
     <Content Include="app\main\trade\tradePunishmentController.js" />
     <Content Include="app\main\trade\tradeStatisticController.js" />
     <Content Include="app\main\trade\tradeService.js" />

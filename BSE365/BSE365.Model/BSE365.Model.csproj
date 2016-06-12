@@ -54,6 +54,7 @@
     <Compile Include="Entities\WaitingBase.cs" />
     <Compile Include="Entities\WaitingGiver.cs" />
     <Compile Include="Entities\WaitingReceiver.cs" />
+    <Compile Include="Enum\WaitingType.cs" />
     <Compile Include="Enum\TransactionType.cs" />
     <Compile Include="Enum\UserState.cs" />
     <Compile Include="Enum\AccountState.cs" />

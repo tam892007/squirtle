@@ -178,6 +178,22 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [HttpPost]
+        [Route("QueryPunishment")]
+        public async Task<IHttpActionResult> QueryPunishment(FilterVM filter)
+        {
+            var result = await QueryPunishmentAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("QueryBonus")]
+        public async Task<IHttpActionResult> QueryBonus(FilterVM filter)
+        {
+            var result = await QueryBonusAsync(filter);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<List<MoneyTransactionVM.Receiver>> GiveRequestedAsync()
@@ -330,7 +346,7 @@ namespace BSE365.Api
             }
 
             var expression = MoneyTransactionVMMapping.GetExpToVM();
-            var data = await query.OrderBy(x => x.OrderBy(a => a.Id))
+            var data = await query.OrderBy(x => x.OrderByDescending(a => a.Id))
                 .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
                     filter.Pagination.Number, out totalPageCount)
                 .ToListAsync();
@@ -416,7 +432,8 @@ namespace BSE365.Api
                 case MoneyTransactionVM.ReportResult.Default:
                     break;
                 case MoneyTransactionVM.ReportResult.GiverTrue:
-                    var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+                    var giverParentInfoIds =
+                        await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
                     var giverParentInfos = await _userInfoRepo.Queryable()
                         .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
                     transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
@@ -434,6 +451,30 @@ namespace BSE365.Api
                     await _unitOfWork.SaveChangesAsync();
                     break;
             }
+        }
+
+        private async Task<List<MoneyTransactionVM.Punishment>> QueryPunishmentAsync(FilterVM filter)
+        {
+            var username = User.Identity.GetUserName();
+            var expression = MoneyTransactionVMMapping.GetExpToPunismentVM();
+            var data = await _transactionRepo.Queryable()
+                .Where(x => x.GiverId == username && x.Type == TransactionType.Replacement)
+                .OrderByDescending(x => x.Created)
+                .Select(expression)
+                .ToListAsync();
+            return data;
+        }
+
+        private async Task<List<MoneyTransactionVM.Giver>> QueryBonusAsync(FilterVM filter)
+        {
+            var username = User.Identity.GetUserName();
+            var expression = MoneyTransactionVMMapping.GetExpToGiverVM();
+            var data = await _transactionRepo.Queryable()
+                .Where(x => x.ReceiverId == username && x.Type == TransactionType.Bonus)
+                .OrderByDescending(x => x.Created)
+                .Select(expression)
+                .ToListAsync();
+            return data;
         }
 
         #endregion

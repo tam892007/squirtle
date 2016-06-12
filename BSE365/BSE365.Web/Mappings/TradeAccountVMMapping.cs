@@ -17,15 +17,11 @@ namespace BSE365.Mappings
                 UserName = target.UserName,
                 IsAllowGive = target.IsAllowQueueGive(),
                 IsAllowReceive = target.IsAllowQueueReceive(),
-
                 NotAllowGiveReason = target.NotAllowGiveReason(),
                 NotAllowReceiveReason = target.NotAllowReceiveReason(),
-
                 IsAllowChangeState = target.IsAllowChangeState(),
                 IsAllowAbadonTransaction = target.IsAllowAbadonTransaction(),
-
-                IsAllowExchangeBonusPoint = target.IsAllowExchangeBonusPoint(),
-
+                IsAllowClaimBonus = target.IsAllowClaimBonus(),
                 State = target.State,
                 Priority = target.Priority,
                 LastCycleDate = target.LastCycleDate,
@@ -45,10 +41,12 @@ namespace BSE365.Mappings
                 Rating = target.UserInfo.Rating,
                 Level = target.UserInfo.Level,
                 TreePath = target.UserInfo.TreePath,
-
                 BonusPoint = target.UserInfo.BonusPoint,
                 TotalBonusPoint = target.UserInfo.TotalBonusPoint,
                 TotalGiveCount = target.UserInfo.TotalGiveCount,
+                DayBonusTemp = target.UserInfo.DayBonusTemp,
+                DayBonusPoint = target.UserInfo.DayBonusPoint,
+                LastClaimBonusDate = target.UserInfo.LastClaimBonusDate,
             };
             return result;
         }

@@ -123,11 +123,6 @@ namespace BSE365.Model.Entities
             }
         }
 
-        public bool IsAllowExchangeBonusPoint()
-        {
-            return UserInfo.IsAllowExchangeBonusPoint();
-        }
-
         #endregion
 
         #region waiting list
@@ -191,6 +186,7 @@ namespace BSE365.Model.Entities
                 {
                     AccountId = UserName,
                     Priority = Priority,
+                    Type = WaitingType.Abadon,
                     Created = DateTime.Now,
                     ObjectState = ObjectState.Added
                 };
@@ -218,6 +214,29 @@ namespace BSE365.Model.Entities
                 {
                     AccountId = UserName,
                     Priority = Priority,
+                    Created = DateTime.Now,
+                    ObjectState = ObjectState.Added
+                });
+            }
+        }
+
+        public bool IsAllowClaimBonus()
+        {
+            return UserInfo.IsAllowClaimBonus();
+        }
+
+        public void ClaimBonus()
+        {
+            if (IsAllowClaimBonus())
+            {
+                UserInfo.ClaimBonus();
+
+                WaitingReceivers.Add(new WaitingReceiver
+                {
+                    AccountId = UserName,
+                    Priority = Priority,
+                    Type = WaitingType.Bonus,
+                    Amount = TransactionConfig.ReceiveAmountBonus,
                     Created = DateTime.Now,
                     ObjectState = ObjectState.Added
                 });
@@ -257,13 +276,16 @@ namespace BSE365.Model.Entities
         public void MoneyReceived(MoneyTransaction transaction,
             List<MoneyTransaction> otherReceivingTransactionsInCurrentTransaction)
         {
-            if (otherReceivingTransactionsInCurrentTransaction.All(x => x.IsEnd) &&
-                State == AccountState.InReceiveTransaction &&
-                WaitingReceivers.Count == 0)
+            if (transaction.Type != TransactionType.Bonus)
             {
-                State = AccountState.Default;
-                CurrentTransactionGroupId = null;
-                ObjectState = ObjectState.Modified;
+                if (otherReceivingTransactionsInCurrentTransaction.All(x => x.IsEnd) &&
+                    State == AccountState.InReceiveTransaction &&
+                    WaitingReceivers.Count == 0)
+                {
+                    State = AccountState.Default;
+                    CurrentTransactionGroupId = null;
+                    ObjectState = ObjectState.Modified;
+                }
             }
         }
 

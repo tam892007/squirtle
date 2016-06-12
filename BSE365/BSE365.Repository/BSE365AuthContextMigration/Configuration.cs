@@ -19,7 +19,6 @@ namespace BSE365.Repository.BSE365AuthContextMigration
 
         protected override void Seed(BSE365.Repository.DataContext.BSE365AuthContext context)
         {
-            return;
             ////Add User Admin
             var numOfUser = context.UserInfos.Count();
             if (numOfUser == 0)

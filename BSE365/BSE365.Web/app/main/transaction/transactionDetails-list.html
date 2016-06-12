@@ -1,5 +1,5 @@
 ﻿
-<table st-table="data" st-pipe="loadData" class="table table-striped">
+<table st-table="data" st-pipe="loadData" class="table">
     <thead>
         <tr>
             <th>ID</th>
@@ -22,7 +22,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'success':item.state==TransactionState.Confirmed, 'warning':item.state==TransactionState.Abadoned, 'danger':item.state==TransactionState.NotTransfer||item.state==TransactionState.NotConfirm||item.state==TransactionState.Failed }">
             <td>
                 <span data-ng-bind="item.id"></span>
             </td>
@@ -33,7 +33,7 @@
                 <span data-ng-bind="item.receiverId"></span>
             </td>
             <td>
-                <span data-ng-bind="TransactionType.display(item.type)"></span>
+                <span data-ng-bind="TransactionType.display(item.type)"></span>&nbsp;<span class="glyphicon glyphicon-heart" aria-hidden="true" ng-show="item.type==TransactionType.Bonus"></span><span class="glyphicon glyphicon-warning-sign" aria-hidden="true" ng-show="item.type==TransactionType.Replacement"></span>
             </td>
             <td>
                 <span data-ng-bind="TransactionState.display(item.state)"></span>

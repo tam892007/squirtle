@@ -1,10 +1,15 @@
 ﻿'use strict';
 mainApp.controller('waitingReceiverController',
 [
-    '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'ConfigData',
-    function($scope, $state, accountService, Notification, PriorityLevel, ConfigData) {
+    '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'WaitingType', 'ConfigData',
+    function ($scope, $state, accountService, Notification, PriorityLevel, WaitingType, ConfigData) {
 
         $scope.loadData = function (tableState) {
+            if (tableState) {
+                $scope.tableState = tableState;
+            } else {
+                tableState = $scope.tableState;
+            }
             $scope.data = [];
             accountService.queryWaitingReceivers(JSON.stringify(tableState),
                 function(response) {
@@ -33,6 +38,7 @@ mainApp.controller('waitingReceiverController',
                     $scope.reload();
                     if (response.amountLeft > 0) {
                         $scope.target.amount = response.amountLeft;
+                        $scope.message = 'Not enough Givers!';
                         Notification.success('Not enough Givers!');
                     } else {
                         $scope.target = {};
@@ -45,6 +51,7 @@ mainApp.controller('waitingReceiverController',
         $scope.init = function() {
             $scope.PriorityLevel = PriorityLevel;
             $scope.ConfigData = ConfigData;
+            $scope.WaitingType = WaitingType;
             $scope.data = [];
             $scope.target = {};
             $scope.selected = false;

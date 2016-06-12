@@ -9,6 +9,7 @@ namespace BSE365.ViewModels
 
         public string AccountId { get; set; }
         public PriorityLevel Priority { get; set; }
+        public WaitingType Type { get; set; }
         public DateTime Created { get; set; }
         public int Amount { get; set; }
 

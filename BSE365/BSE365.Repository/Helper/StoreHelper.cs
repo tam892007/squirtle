@@ -53,6 +53,11 @@ namespace BSE365.Repository.Helper
                                 ObjectState = ObjectState.Added
                             };
 
+                            if (waitingReceiver.Type == WaitingType.Bonus)
+                            {
+                                transaction.Type = TransactionType.Bonus;
+                            }
+
                             waitingGiver.Amount--;
                             waitingGiver.ObjectState = waitingGiver.Amount == 0
                                 ? ObjectState.Deleted
@@ -75,13 +80,16 @@ namespace BSE365.Repository.Helper
                             ? ObjectState.Deleted
                             : ObjectState.Modified;
 
-                        // update receiver's account
-                        if (waitingReceiver.Account.State == AccountState.WaitReceive)
+                        if (waitingReceiver.Type != WaitingType.Bonus)
                         {
-                            waitingReceiver.Account.State = AccountState.InReceiveTransaction;
+                            // update receiver's account
+                            if (waitingReceiver.Account.State == AccountState.WaitReceive)
+                            {
+                                waitingReceiver.Account.State = AccountState.InReceiveTransaction;
+                            }
+                            waitingReceiver.Account.CurrentTransactionGroupId = waitingReceiver.Id;
+                            waitingReceiver.Account.ObjectState = ObjectState.Modified;
                         }
-                        waitingReceiver.Account.CurrentTransactionGroupId = waitingReceiver.Id;
-                        waitingReceiver.Account.ObjectState = ObjectState.Modified;
 
                         context.SaveChanges();
 
@@ -180,6 +188,11 @@ namespace BSE365.Repository.Helper
                         ObjectState = ObjectState.Added
                     };
 
+                    if (queuedReceiveRaw.Type == WaitingType.Bonus)
+                    {
+                        transaction.Type = TransactionType.Bonus;
+                    }
+
 
                     // update data to database
                     using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -207,13 +220,16 @@ namespace BSE365.Repository.Helper
                             queuedGiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingGiverId;
                             queuedGiveRaw.Account.ObjectState = ObjectState.Modified;
 
-                            // update receiver's account
-                            if (queuedReceiveRaw.Account.State == AccountState.WaitReceive)
+                            if (queuedReceiveRaw.Type != WaitingType.Bonus)
                             {
-                                queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
+                                // update receiver's account
+                                if (queuedReceiveRaw.Account.State == AccountState.WaitReceive)
+                                {
+                                    queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
+                                }
+                                queuedReceiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
+                                queuedReceiveRaw.Account.ObjectState = ObjectState.Modified;
                             }
-                            queuedReceiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
-                            queuedReceiveRaw.Account.ObjectState = ObjectState.Modified;
 
                             context.SaveChanges();
 

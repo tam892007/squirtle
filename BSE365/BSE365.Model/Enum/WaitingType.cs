@@ -1,10 +1,9 @@
 ﻿namespace BSE365.Model.Enum
 {
-    public enum TransactionType
+    public enum WaitingType
     {
         Default = 0,
-        Abadoned = 31,
-        Replacement = 41,
+        Abadon = 31,
         Bonus = 51
     }
 }

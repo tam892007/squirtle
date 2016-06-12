@@ -16,7 +16,7 @@ namespace BSE365.ViewModels
         public bool IsAllowReceive { get; set; }
         public bool IsAllowChangeState { get; set; }
         public bool IsAllowAbadonTransaction { get; set; }
-        public bool IsAllowExchangeBonusPoint { get; set; }
+        public bool IsAllowClaimBonus { get; set; }
 
         public List<string> NotAllowGiveReason { get; set; }
         public List<string> NotAllowReceiveReason { get; set; }
@@ -65,6 +65,12 @@ namespace BSE365.ViewModels
         {
             get { return BonusPoint*TransactionConfig.MoneyPerTransaction/100; }
         }
+
+        public DateTime DayBonusTemp { get; set; }
+
+        public int DayBonusPoint { get; set; }
+
+        public DateTime LastClaimBonusDate { get; set; }
 
         public int MoneyPerTransaction
         {
