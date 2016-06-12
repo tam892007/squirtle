@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
 using BSE365.Common.Constants;
 using BSE365.Model.Entities;
@@ -12,6 +13,91 @@ namespace BSE365.Repository.Helper
 {
     public class StoreHelper
     {
+        public static int MapWaitingReceiver(int waitingReceiverId)
+        {
+            var result = 0;
+            using (var context = new BSE365Context())
+            {
+                var waitingReceiver = context.WaitingReceivers
+                    .Include(x => x.Account.UserInfo)
+                    .First(x => x.Id == waitingReceiverId);
+
+                var existGiverIdsInGiverTransaction = context.MoneyTransactions
+                    .Where(x => x.WaitingReceiverId == waitingReceiverId)
+                    .Select(x => x.GiverId).ToList();
+
+                var waitingGivers = context.WaitingGivers
+                    .Include(x => x.Account.UserInfo)
+                    .Where(x => !existGiverIdsInGiverTransaction.Contains(x.AccountId))
+                    .OrderBy(x => x.Created)
+                    .Take(waitingReceiver.Amount)
+                    .ToList();
+
+
+                // update data to database
+                using (var dbContextTransaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var now = DateTime.Now;
+                        foreach (var waitingGiver in waitingGivers)
+                        {
+                            var transaction = new MoneyTransaction
+                            {
+                                GiverId = waitingGiver.AccountId,
+                                ReceiverId = waitingReceiver.AccountId,
+                                Created = now,
+                                LastModified = now,
+                                WaitingGiverId = waitingGiver.Id,
+                                WaitingReceiverId = waitingReceiver.Id,
+                                ObjectState = ObjectState.Added
+                            };
+
+                            waitingGiver.Amount--;
+                            waitingGiver.ObjectState = waitingGiver.Amount == 0
+                                ? ObjectState.Deleted
+                                : ObjectState.Modified;
+
+                            context.MoneyTransactions.Add(transaction);
+
+                            // update giver's account
+                            if (waitingGiver.Account.State == AccountState.WaitGive)
+                            {
+                                waitingGiver.Account.State = AccountState.InGiveTransaction;
+                            }
+                            waitingGiver.Account.CurrentTransactionGroupId = waitingGiver.Id;
+                            waitingGiver.Account.ObjectState = ObjectState.Modified;
+                        }
+
+                        waitingReceiver.Amount -= waitingGivers.Count;
+                        result = waitingReceiver.Amount;
+                        waitingReceiver.ObjectState = waitingReceiver.Amount == 0
+                            ? ObjectState.Deleted
+                            : ObjectState.Modified;
+
+                        // update receiver's account
+                        if (waitingReceiver.Account.State == AccountState.WaitReceive)
+                        {
+                            waitingReceiver.Account.State = AccountState.InReceiveTransaction;
+                        }
+                        waitingReceiver.Account.CurrentTransactionGroupId = waitingReceiver.Id;
+                        waitingReceiver.Account.ObjectState = ObjectState.Modified;
+
+                        context.SaveChanges();
+
+                        dbContextTransaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dbContextTransaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+            return result;
+        }
+
+
         public static void MapWaitingGiversAndWaitingReceivers()
         {
             var now = DateTime.Now;
@@ -217,32 +303,46 @@ namespace BSE365.Repository.Helper
         {
             using (var context = new BSE365Context())
             {
-                var timeBase = DateTime.Now;
-                timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                var transactionsToUpdate = context.MoneyTransactions
-                    .Include(x => x.Giver.UserInfo)
-                    .Include(x => x.Receiver.UserInfo)
-                    .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
-                    .ToList();
-                foreach (var transaction in transactionsToUpdate)
+                using (var authContext = new BSE365AuthContext())
                 {
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    var timeBase = DateTime.Now;
+                    timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
+                    var transactionsToUpdate = context.MoneyTransactions
+                        .Include(x => x.Giver.UserInfo)
+                        .Include(x => x.Receiver.UserInfo)
+                        .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
+                        .ToList();
+                    foreach (var transaction in transactionsToUpdate)
                     {
-                        try
+                        using (var dbContextTransaction = context.Database.BeginTransaction())
                         {
-                            var giverParentAccount = context.Accounts
-                                .FirstOrDefault(x => x.UserName == transaction.Giver.UserInfo.ParentId);
-                            // update transaction
-                            transaction.NotTransfer(giverParentAccount);
+                            try
+                            {
+                                Account giverParentAccount = null;
+                                var giverParentId = transaction.Giver.UserInfo.ParentId;
+                                if (!string.IsNullOrEmpty(giverParentId))
+                                {
+                                    var giverParentAuthAccount = authContext.Users
+                                        .FirstOrDefault(x => x.Id == giverParentId);
+                                    if (giverParentAuthAccount != null)
+                                    {
+                                        giverParentAccount = context.Accounts
+                                            .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
+                                    }
+                                }
+
+                                // update transaction
+                                transaction.NotTransfer(giverParentAccount);
 
 
-                            context.SaveChanges();
+                                context.SaveChanges();
 
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            dbContextTransaction.Rollback();
+                                dbContextTransaction.Commit();
+                            }
+                            catch (Exception)
+                            {
+                                dbContextTransaction.Rollback();
+                            }
                         }
                     }
                 }

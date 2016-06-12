@@ -9,7 +9,8 @@
             reportNotTransfer: { method: 'POST', params: { path: 'api/transaction/reportNotTransfer' } },
             updateImg: { method: 'POST', params: { path: 'api/transaction/updateImg' } },
             abadonTransaction: { method: 'POST', params: { path: 'api/transaction/abadonTransaction' } },
-            reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' }, isArray: true },
+            queryTransaction: { method: 'POST', params: { path: 'api/transaction/queryTransaction' } },
+            reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' } },
             applyReport: { method: 'POST', params: { path: 'api/transaction/applyReport' } },
         });
     }

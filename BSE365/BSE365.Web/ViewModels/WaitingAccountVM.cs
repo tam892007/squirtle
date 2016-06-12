@@ -23,5 +23,13 @@ namespace BSE365.ViewModels
 
 
         public int? AvatarId { get; set; }
+        public string AvatarUrl
+        {
+            get
+            {
+                var result = ImageViewModel.ImageUrl + (AvatarId ?? 0);
+                return result;
+            }
+        }
     }
 }

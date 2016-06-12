@@ -16,6 +16,10 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
         $scope.userContext.avatar.url = data;
     });
 
+    $scope.$on('user:getPinBalance', function (event, data) {
+        $scope.userContext.pinBalance = data;
+    })
+
    
     $scope.getUserContext = function () {
         $scope.userContext = {};

@@ -98,7 +98,7 @@ namespace BSE365.Mappings
         }
 
         public static T UpdateVm<T>(this MoneyTransaction model, T vm)
-            where T : MoneyTransactionVM.Base
+            where T : MoneyTransactionVM.Simple
         {
             vm.Created = model.Created;
             vm.LastModified = model.LastModified;
@@ -114,10 +114,10 @@ namespace BSE365.Mappings
         }
 
 
-        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Reported>> GetExpToReportVM()
+        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Base>> GetExpToVM()
         {
-            Expression<Func<MoneyTransaction, MoneyTransactionVM.Reported>> result =
-                x => new MoneyTransactionVM.Reported
+            Expression<Func<MoneyTransaction, MoneyTransactionVM.Base>> result =
+                x => new MoneyTransactionVM.Base
                 {
                     Id = x.Id,
                     GiverId = x.GiverId,
@@ -128,6 +128,10 @@ namespace BSE365.Mappings
                     State = x.State,
                     AttachmentUrl = x.AttachmentUrl,
                     TransferedDate = x.TransferedDate,
+                    ReceivedDate = x.ReceivedDate,
+                    WaitingGiverId = x.WaitingGiverId,
+                    WaitingReceiverId = x.WaitingReceiverId,
+                    IsEnd = x.IsEnd,
                     GiverDisplayName = x.Giver.UserInfo.DisplayName,
                     GiverEmail = x.Giver.UserInfo.Email,
                     GiverPhoneNumber = x.Giver.UserInfo.PhoneNumber,

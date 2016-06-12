@@ -12,7 +12,7 @@ mainApp.controller('waitingReceiverController',
                 });
         }
 
-        $scope.reload = function () {
+        $scope.reload = function() {
             $scope.loadData();
         }
 
@@ -26,12 +26,36 @@ mainApp.controller('waitingReceiverController',
             $scope.selected = true;
         }
 
+        $scope.mapForReceiver = function() {
+            var index = $scope.data.indexOf($scope.target);
+            accountService.mapForReceiver($scope.target,
+                function(response) {
+                    console.log(response);
+                    if (response.amountLeft > 0) {
+                        if (index !== -1) {
+                            $scope.data[index] = response;
+                            $scope.target = response;
+                        }
+                        Notification.success('Not enough Givers!');
+                    } else {
+                        if (index !== -1) {
+                            $scope.data.splice(index, 1);
+                            $scope.target = {};
+                            $scope.selected = false;
+                        }
+                        Notification.success('Map successful!');
+                    }
+                });
+        }
+
         $scope.init = function() {
             $scope.PriorityLevel = PriorityLevel;
             $scope.ConfigData = ConfigData;
             $scope.data = [];
             $scope.target = {};
             $scope.selected = false;
+            $scope.isGiver = false;
+            $scope.isReceiver = true;
 
             $scope.loadData();
         }

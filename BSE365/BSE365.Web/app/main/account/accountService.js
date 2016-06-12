@@ -14,6 +14,8 @@
 
             queryWaitingGivers: { method: 'POST', params: { path: 'api/trade/queryWaitingGivers' }, isArray:true },
             queryWaitingReceivers: { method: 'POST', params: { path: 'api/trade/queryWaitingReceivers' }, isArray: true },
+
+            mapForReceiver: { method: 'POST', params: { path: 'api/trade/mapForReceiver' } },
         });
     }
 ]);

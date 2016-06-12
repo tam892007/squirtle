@@ -1,8 +1,8 @@
 ﻿'use strict';
-mainApp.controller('transactionReportedController',
+mainApp.controller('transactionListController',
 [
-    '$scope', '$state', 'transactionService', 'Notification', 'TransactionType', 'ReportResult', 'ConfigData',
-    function($scope, $state, transactionService, Notification, TransactionType, ReportResult, ConfigData) {
+    '$scope', '$state', 'transactionService', 'Notification', 'TransactionType', 'TransactionState', 'ConfigData',
+    function($scope, $state, transactionService, Notification, TransactionType, TransactionState, ConfigData) {
 
         $scope.loadData = function (tableState) {
             if (tableState) {
@@ -34,32 +34,10 @@ mainApp.controller('transactionReportedController',
             $scope.selected = true;
         }
 
-        $scope.giverTrue = function() {
-            applyReport(ReportResult.GiverTrue);
-        }
-        $scope.receiverTrue = function() {
-            applyReport(ReportResult.ReceiverTrue);
-        }
-        $scope.bothTrue = function() {
-            applyReport(ReportResult.BothTrue);
-        }
-        $scope.bothFalse = function() {
-            applyReport(ReportResult.BothFalse);
-        }
-
-        function applyReport(state) {
-            $scope.target.result = state;
-            transactionService.applyReport($scope.target,
-                function(response) {
-                    Notification.success('Transaction Applied.');
-                    $scope.reload();
-                });
-        }
-        
         $scope.init = function() {
             $scope.ConfigData = ConfigData;
             $scope.TransactionType = TransactionType;
-            $scope.ReportResult = ReportResult;
+            $scope.TransactionState = TransactionState;
 
             $scope.data = [];
             $scope.target = {};

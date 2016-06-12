@@ -27,6 +27,7 @@ mainApp.controller('pinController', ['$scope', 'userService', 'pinService', '$q'
         
         $scope.getCurrentUserPinInfo().then(function (res) {
             $scope.currentPinBalance = res;
+            $scope.$emit('user:getPinBalance', $scope.currentPinBalance.pinBalance);
         });
 
         $scope.transaction = { step: 1 };
