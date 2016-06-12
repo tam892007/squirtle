@@ -10,6 +10,7 @@ using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork.Contracts;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
+using BSE365.Model.Enum;
 using BSE365.Repository.DataContext;
 using BSE365.Repository.Helper;
 using BSE365.Repository.Repositories;
@@ -181,10 +182,18 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("QueryPunishment")]
+        public async Task<IHttpActionResult> QueryPunishment(FilterVM filter)
+        {
+            var result = await QueryPunishmentAsync(filter);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
-        {                      
+        {
             int totalPageCount;
             IQueryFluent<Account> query = null;
             if (filter.Search.PredicateObject == null)
@@ -197,9 +206,13 @@ namespace BSE365.Api
                 query = _accountRepo.Query(x => x.UserName.Contains(userName));
             }
 
-            var rawData = await query.OrderBy(x => x.OrderBy(a => a.UserName)).SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number, out totalPageCount)
-                .Include(x => x.UserInfo.Accounts)
-                .ToListAsync();
+            var rawData =
+                await
+                    query.OrderBy(x => x.OrderBy(a => a.UserName))
+                        .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
+                            out totalPageCount)
+                        .Include(x => x.UserInfo.Accounts)
+                        .ToListAsync();
             var data = rawData.Select(x => x.ToVM());
 
             var page = new PageViewModel<TradeAccountVM>
@@ -303,6 +316,8 @@ namespace BSE365.Api
         {
             var expression = WaitingAccountVMMapping.GetExpToGiverVM();
             var data = await _waitingGiverRepo.Queryable()
+                .OrderByDescending(x => x.Priority)
+                .ThenBy(x => x.Created)
                 .Select(expression)
                 .ToListAsync();
             return data;
@@ -312,6 +327,8 @@ namespace BSE365.Api
         {
             var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
             var data = await _waitingReceiverRepo.Queryable()
+                .OrderByDescending(x => x.Priority)
+                .ThenBy(x => x.Created)
                 .Select(expression)
                 .ToListAsync();
             return data;
@@ -323,18 +340,33 @@ namespace BSE365.Api
             var username = User.Identity.GetUserName();
             var expression = TransactionHistoryVMMapping.GetExpToVM(username);
             var giveTrans = _transactionRepo.Queryable()
-                .Where(x => x.GiverId == username)
+                .Where(x => x.GiverId == username && x.Type != TransactionType.Replacement)
+                .OrderByDescending(x => x.Created)
                 .GroupBy(x => x.WaitingGiverId)
                 .Select(expression);
 
             var receiveTrans = _transactionRepo.Queryable()
                 .Where(x => x.ReceiverId == username)
+                .OrderByDescending(x => x.Created)
                 .GroupBy(x => x.WaitingReceiverId)
                 .Select(expression);
 
             var data = await giveTrans.Union(receiveTrans)
+                .OrderByDescending(x => x.BeginDate)
                 .ToListAsync();
             data.ForEach(x => x.AccountId = username);
+            return data;
+        }
+
+        private async Task<List<MoneyTransactionVM.Punishment>> QueryPunishmentAsync(FilterVM filter)
+        {
+            var username = User.Identity.GetUserName();
+            var expression = MoneyTransactionVMMapping.GetExpToPunismentVM();
+            var data = await _transactionRepo.Queryable()
+                .Where(x => x.GiverId == username && x.Type == TransactionType.Replacement)
+                .OrderByDescending(x => x.Created)
+                .Select(expression)
+                .ToListAsync();
             return data;
         }
 

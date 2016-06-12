@@ -1,6 +1,8 @@
 ﻿<div>
     <div class="">
+        <ng-include src="'/app/main/transaction/transaction-title.html'"></ng-include>
         <ng-include src="'/app/main/transaction/transaction-state.html'"></ng-include>
+        <ng-include src="'/app/main/transaction/transaction-control.html'"></ng-include>
     </div>
     <div class="row center-block">
         <div class="col-md-4" ng-repeat="item in transactions" ng-include="accountDisplayTemplate">

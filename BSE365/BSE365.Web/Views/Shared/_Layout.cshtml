@@ -49,9 +49,10 @@
                     <li class="dropdown" ui-sref-active="{'active' : 'ga'}">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Give / Accept <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in">Current Transaction</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in">Current State</a></li>
                             <li role="separator" class="divider"></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">History</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">Transaction History</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="trade.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forAdmin()">
@@ -83,7 +84,7 @@
                             <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
                             <div class="user-info">
                                 <span id="userName" title="{{authentication.userName}}">{{authentication.userName}}<b class="caret"></b></span>
-                                <p id="userPin" class="user-info--pin" title="30000"><span>PIN: </span><span data-ng-bind="userContext.pinBalance"></span></p>
+                                <p id="userPin" class="user-info--pin" title="{{userContext.pinBalance}}"><span>PIN: </span><span data-ng-bind="userContext.pinBalance"></span></p>
                             </div>
                         </a>
                         <ul class="dropdown-menu">

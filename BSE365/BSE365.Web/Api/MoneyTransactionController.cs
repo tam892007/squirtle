@@ -287,6 +287,7 @@ namespace BSE365.Api
             var data = await _transactionRepo.Queryable()
                 .Include(x => x.Giver.UserInfo)
                 .Include(x => x.Receiver.UserInfo)
+                .OrderBy(x=>x.LastModified)
                 .Where(x => x.State == TransactionState.ReportedNotTransfer)
                 .Select(expression)
                 .ToListAsync();

@@ -1,0 +1,26 @@
+﻿<div class="bg-info padding-30" ng-show="grState=='' && (info.state == AccountState.Default || info.state == AccountState.AbadonOne)">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <button class="btn" ng-disabled="!info.isAllowGive" ng-class="{'btn-success': info.isAllowGive}" ng-click="queueGive()"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;Request Give</button>
+        </div>
+    </div>
+    <div class="row not-allow-queue-reason text-center" ng-show="!info.isAllowGive">
+        <div>You can't Request Give because:</div>
+        <div ng-repeat="reason in info.notAllowGiveReason">
+            <span class="text-danger" data-ng-bind="reason"></span>
+        </div>
+    </div>
+</div>
+<div class="bg-info padding-30" ng-show="grState=='' && info.state == AccountState.Gave">
+    <div class="row text-center">
+        <div class="col-md-12">
+            <button class="btn" ng-disabled="!info.isAllowReceive" ng-class="{'btn-success': info.isAllowReceive}" ng-click="queueReceive()"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>&nbsp;Request Receive</button>
+        </div>
+    </div>
+    <div class="row not-allow-queue-reason text-center" ng-show="!info.isAllowReceive">
+        <div>You can't Request Receive because:</div>
+        <div ng-repeat="reason in info.notAllowReceiveReason">
+            <span class="text-danger" data-ng-bind="reason"></span>
+        </div>
+    </div>
+</div>
