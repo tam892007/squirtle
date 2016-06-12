@@ -45,19 +45,31 @@ namespace BSE365.Api
         }
 
         [Route("GetAll")]
-        [HttpGet]
-        public async Task<IHttpActionResult> GetAll()
+        [HttpPost]
+        public async Task<IHttpActionResult> GetAll(FilterVM filter)
         {
-            var result = await GetAllAsync();
+            var result = await GetAllAsync(filter);
             return Ok(result);
         }
 
-        private async Task<IEnumerable<PinTransactionViewModel>> GetAllAsync()
+        private async Task<PageViewModel<PinTransactionViewModel>> GetAllAsync(FilterVM filter)
         {
+            int totalPageCount;
             var userId = User.Identity.GetUserId();
             var transactionHistories = await _historyRepo.Query(x=>x.FromId == userId)
-                .OrderBy(x=>x.OrderByDescending(i=>i.CreatedDate)).SelectAsync();
-            return transactionHistories.Select(x => x.ToViewModel());
+                .OrderBy(x => x.OrderByDescending(i => i.CreatedDate))
+                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
+                            out totalPageCount).ToListAsync();
+
+            var data = transactionHistories.Select(x => x.ToViewModel());
+
+            var page = new PageViewModel<PinTransactionViewModel>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         private async Task<ResultViewModel<PinBalanceViewModel>> TransferAsync(PinTransactionViewModel transactionVM)

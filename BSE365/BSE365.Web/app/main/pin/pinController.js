@@ -9,21 +9,24 @@ mainApp.controller('pinController', ['$scope', 'userService', 'pinService', '$q'
         return pinService.getCurrentUserHistory().$promise;
     }
 
+    $scope.loadData = function (tableState) {
+        $scope.transactionHistories = [];
+        pinService.getCurrentUserHistory(JSON.stringify(tableState),
+            function (response) {
+                $scope.transactionHistories = response.data;
+                tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);
+            });
+    }
+
     $scope.init = function () {
         $scope.failed = 0;
 
         $scope.submitted = false;
 
         $scope.currentPinBalance = {};
-
-        $scope.transactionHistories = [];
         
         $scope.getCurrentUserPinInfo().then(function (res) {
             $scope.currentPinBalance = res;
-        });
-
-        $scope.getCurrentUserPinTransactionHistory().then(function (res) {
-            $scope.transactionHistories = res;
         });
 
         $scope.transaction = { step: 1 };
