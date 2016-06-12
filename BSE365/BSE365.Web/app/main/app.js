@@ -138,6 +138,12 @@ mainApp.config([
                 templateUrl: 'app/main/transaction/current.html',
                 controller: 'transactionCurrentController'
             })
+            .state('allTransactions',
+            {
+                url: "/trade/all-transactions",
+                templateUrl: 'app/main/transaction/transactionList.html',
+                controller: 'transactionListController'
+            })
             .state('reportedTransactions',
             {
                 url: "/trade/reported-transactions",

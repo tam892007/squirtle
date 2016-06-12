@@ -1,0 +1,103 @@
+﻿<div class="panel panel-default panel-table" ng-show="selected">
+    <div class="panel-heading">
+        <span class="badge pull-right">ID: {{target.id}}</span>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Transaction Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Giver Account</label>
+                <p class="form-control-static" data-ng-bind="target.giverId"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Receiver Account</label>
+                <p class="form-control-static" data-ng-bind="target.receiverId"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="target.giverDisplayName"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="target.receiverDisplayName"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="target.giverPhoneNumber"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="target.receiverPhoneNumber"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="target.giverEmail"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="target.receiverEmail"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Bank Name</label>
+                <p class="form-control-static" data-ng-bind="target.giverBankName"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Bank Name</label>
+                <p class="form-control-static" data-ng-bind="target.receiverBankName"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            <p class="form-control-static" data-ng-bind="target.amount|currency:target.moneyCurrency:0"></p>
+        </div>
+        <div class="form-group">
+            <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" />
+        </div>
+
+        <div class="form-group">
+            <label>Transfered Date</label>
+            <p class="form-control-static" data-ng-bind="target.transferedDate|date:ConfigData.dateTimeFormat"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Created</label>
+                <p class="form-control-static" data-ng-bind="target.created|date:ConfigData.dateTimeFormat"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Last Modified</label>
+                <p class="form-control-static" data-ng-bind="target.lastModified|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <button class="btn" ng-click="giverTrue()" title="Lock Receiver"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Lock Receiver</button>
+            </div>
+            <div class="col-md-6 text-center">
+                <button class="btn" ng-click="receiverTrue()" title="Lock Giver"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Lock Giver</button>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <button class="btn success" ng-click="bothTrue()" title="Transaction Completed Successfully"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Transaction Completed Successfully!</button>
+            </div>
+            <div class="col-md-6 text-center">
+                <button class="btn btn-danger" ng-click="bothFalse()" title="Lock Both"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Lock Both</button>
+            </div>
+        </div>
+    </div>
+</div>

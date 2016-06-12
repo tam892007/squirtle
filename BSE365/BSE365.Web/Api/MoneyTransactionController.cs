@@ -150,6 +150,14 @@ namespace BSE365.Api
         }
 
         [HttpPost]
+        [Route("QueryTransaction")]
+        public async Task<IHttpActionResult> QueryTransaction(FilterVM filter)
+        {
+            var result = await QueryTransactionAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
         [Route("ReportedTransactions")]
         public async Task<IHttpActionResult> ReportedTransactions(FilterVM filter)
         {
@@ -256,7 +264,7 @@ namespace BSE365.Api
             return tran;
         }
 
-        private async Task<List<MoneyTransactionVM.Base>> HistoryAsync(TransactionHistoryVM instance)
+        private async Task<List<MoneyTransactionVM.Simple>> HistoryAsync(TransactionHistoryVM instance)
         {
             var username = User.Identity.GetUserName();
             if (instance.Type == AccountState.InGiveTransaction)
@@ -267,7 +275,7 @@ namespace BSE365.Api
                     .Include(x => x.Receiver.UserInfo)
                     .Select(expression)
                     .ToListAsync();
-                return data.Select(x => x as MoneyTransactionVM.Base).ToList();
+                return data.Select(x => x as MoneyTransactionVM.Simple).ToList();
             }
             else
             {
@@ -277,21 +285,102 @@ namespace BSE365.Api
                     .Include(x => x.Giver.UserInfo)
                     .Select(expression)
                     .ToListAsync();
-                return data.Select(x => x as MoneyTransactionVM.Base).ToList();
+                return data.Select(x => x as MoneyTransactionVM.Simple).ToList();
             }
         }
 
-        private async Task<List<MoneyTransactionVM.Reported>> ReportedTransactionsAsync(FilterVM filter)
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryTransactionAsync(FilterVM filter)
         {
-            var expression = MoneyTransactionVMMapping.GetExpToReportVM();
-            var data = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Receiver.UserInfo)
-                .OrderBy(x=>x.LastModified)
-                .Where(x => x.State == TransactionState.ReportedNotTransfer)
-                .Select(expression)
+            int totalPageCount;
+            IQueryFluent<MoneyTransaction> query = null;
+            if (filter.Search.PredicateObject == null)
+            {
+                query = _transactionRepo.Query();
+            }
+            else
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    if (int.TryParse(summary, out id))
+                    {
+                        query = _transactionRepo.Query(
+                            x => x.Id == id || x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary));
+                    }
+                    else
+                    {
+                        query = _transactionRepo.Query(
+                            x => x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary));
+                    }
+                }
+                else
+                {
+                    query = _transactionRepo.Query();
+                }
+            }
+
+            var expression = MoneyTransactionVMMapping.GetExpToVM();
+            var data = await query.OrderBy(x => x.OrderBy(a => a.Id))
+                .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
+                    filter.Pagination.Number, out totalPageCount)
                 .ToListAsync();
-            return data;
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
+        }
+
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> ReportedTransactionsAsync(FilterVM filter)
+        {
+            int totalPageCount;
+            IQueryFluent<MoneyTransaction> query = null;
+            if (filter.Search.PredicateObject == null)
+            {
+                query = _transactionRepo.Query();
+            }
+            else
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    if (int.TryParse(summary, out id))
+                    {
+                        query = _transactionRepo.Query(x =>
+                            x.State == TransactionState.ReportedNotTransfer &&
+                            (x.Id == id || x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary)));
+                    }
+                    else
+                    {
+                        query = _transactionRepo.Query(x =>
+                            x.State == TransactionState.ReportedNotTransfer &&
+                            (x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary)));
+                    }
+                }
+                else
+                {
+                    query = _transactionRepo.Query();
+                }
+            }
+
+            var expression = MoneyTransactionVMMapping.GetExpToVM();
+            var data = await query.OrderBy(x => x.OrderBy(a => a.Id))
+                .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
+                    filter.Pagination.Number, out totalPageCount)
+                .ToListAsync();
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         private async Task ApplyReportAsync(MoneyTransactionVM.Reported instance)

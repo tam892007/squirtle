@@ -6,15 +6,15 @@ namespace BSE365.ViewModels
 {
     public class MoneyTransactionVM
     {
-        public class Giver : Base
+        public class Giver : Simple
         {
         }
 
-        public class Receiver : Base
+        public class Receiver : Simple
         {
         }
 
-        public class Punishment : Base
+        public class Punishment : Simple
         {
             public int? RelatedTransactionId { get; set; }
 
@@ -22,7 +22,7 @@ namespace BSE365.ViewModels
             public string ForUser { get; set; }
         }
 
-        public abstract class Base
+        public abstract class Simple
         {
             public int Id { get; set; }
 
@@ -87,7 +87,7 @@ namespace BSE365.ViewModels
             }
         }
 
-        public class Reported
+        public class Base
         {
             public int Id { get; set; }
 
@@ -117,7 +117,50 @@ namespace BSE365.ViewModels
             public string AttachmentUrl { get; set; }
 
             public DateTime? TransferedDate { get; set; }
+            public DateTime? ReceivedDate { get; set; }
 
+            public int? WaitingGiverId { get; set; }
+
+            public int? WaitingReceiverId { get; set; }
+
+
+            public int Amount => TransactionConfig.MoneyPerTransaction;
+
+            public string MoneyCurrency => TransactionConfig.MoneyCurrency;
+
+            public bool IsEnd { get; set; }
+
+            public int Countdown
+            {
+                get
+                {
+                    var now = DateTime.Now;
+                    var result = 0;
+                    if (State == TransactionState.Begin)
+                    {
+                        var endTime = Created.AddHours(TransactionConfig.TimeForEachStepInHours);
+                        if (endTime > now)
+                        {
+                            var timeLeft = endTime - now;
+                            result = (int) timeLeft.TotalSeconds;
+                        }
+                    }
+                    else if (State == TransactionState.Transfered)
+                    {
+                        var endTime = TransferedDate.Value.AddHours(TransactionConfig.TimeForEachStepInHours);
+                        if (endTime > now)
+                        {
+                            var timeLeft = endTime - now;
+                            result = (int) timeLeft.TotalSeconds;
+                        }
+                    }
+                    return result;
+                }
+            }
+        }
+
+        public class Reported : Base
+        {
             public ReportResult Result { get; set; }
         }
 

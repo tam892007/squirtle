@@ -1,0 +1,94 @@
+﻿<div class="panel panel-default panel-table" ng-show="selected">
+    <div class="panel-heading">
+        <span class="badge pull-right">ID: {{target.id}}</span>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Transaction Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Giver Account</label>
+                <p class="form-control-static" data-ng-bind="target.giverId"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Receiver Account</label>
+                <p class="form-control-static" data-ng-bind="target.receiverId"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="target.giverDisplayName"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="target.receiverDisplayName"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="target.giverPhoneNumber"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="target.receiverPhoneNumber"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="target.giverEmail"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="target.receiverEmail"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <p class="form-control-static" data-ng-bind="TransactionType.display(target.type)"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>State</label>
+                <p class="form-control-static" data-ng-bind="TransactionState.display(target.state)"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Ended</label>
+                <p class="form-control-static" data-ng-bind="target.isEnd|yesno"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            <p class="form-control-static" data-ng-bind="target.amount|currency:target.moneyCurrency:0"></p>
+        </div>
+        <div class="form-group">
+            <img class="transaction-attachment-file" ng-show="target.attachmentUrl" src="{{target.attachmentUrl}}" />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Transfered Date</label>
+                <p class="form-control-static" data-ng-bind="target.transferedDate|date:ConfigData.dateTimeFormat"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Received Date</label>
+                <p class="form-control-static" data-ng-bind="target.receivedDate|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Created</label>
+                <p class="form-control-static" data-ng-bind="target.created|date:ConfigData.dateTimeFormat"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Last Modified</label>
+                <p class="form-control-static" data-ng-bind="target.lastModified|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -262,8 +262,13 @@
     <Content Include="app\main\transaction\transaction-control.html" />
     <Content Include="app\main\transaction\transaction-title-withcolor.html" />
     <Content Include="app\main\transaction\transaction-title.html" />
+    <Content Include="app\main\transaction\transactionDetails-report.html" />
+    <Content Include="app\main\transaction\transactionDetails-details.html" />
     <Content Include="app\main\transaction\transactionPunishmentController.js" />
+    <Content Include="app\main\transaction\transactionDetails-list.html" />
+    <Content Include="app\main\transaction\transactionList.html" />
     <Content Include="app\main\transaction\transactionReported.html" />
+    <Content Include="app\main\transaction\transactionListController.js" />
     <Content Include="app\main\transaction\transactionReportedController.js" />
     <Content Include="app\main\transaction\errorDlgHandled.html" />
     <Content Include="app\main\transaction\importPopup.html" />
