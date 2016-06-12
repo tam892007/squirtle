@@ -4,8 +4,7 @@ mainApp.controller('accountController',
     '$scope', '$state', 'accountService', 'Notification', 'AccountState', 'PriorityLevel', 'UserState', 'ConfigData',
     function ($scope, $state, accountService, Notification, AccountState, PriorityLevel, UserState, ConfigData) {
 
-        $scope.loadData = function (tableState) {
-            console.log(tableState);
+        $scope.loadData = function (tableState) {  
             $scope.data = [];
             accountService.queryAccount(JSON.stringify(tableState),
                 function (response) {

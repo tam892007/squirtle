@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BSE365.Common.Constants;
 using BSE365.Model.Enum;
 
 namespace BSE365.ViewModels
@@ -59,6 +60,22 @@ namespace BSE365.ViewModels
         public int BonusPoint { get; set; }
         public int TotalBonusPoint { get; set; }
         public int TotalGiveCount { get; set; }
+
+        public int BonusMoney
+        {
+            get { return BonusPoint*TransactionConfig.MoneyPerTransaction/100; }
+        }
+
+        public int MoneyPerTransaction
+        {
+            get { return TransactionConfig.MoneyPerTransaction; }
+        }
+
+        public string MoneyCurrency
+        {
+            get { return TransactionConfig.MoneyCurrency; }
+        }
+
 
         public class SetPriorityVM
         {

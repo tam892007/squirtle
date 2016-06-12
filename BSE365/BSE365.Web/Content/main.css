@@ -308,7 +308,7 @@ code {
   padding: 0px 5px 0px 5px;
 }
 .panel-form .panel-body .rating-custom .glyphicon-star {
-  color: red;
+  color: #FFA500;
 }
 .panel-form .panel-body .rating-custom .glyphicon-star-empty {
   color: black;

@@ -320,26 +320,64 @@ namespace BSE365.Api
             await _unitOfWork.SaveChangesAsync();
         }
 
-        private async Task<List<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
+        private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
         {
+            int totalPageCount;
+            IQueryFluent<WaitingGiver> query = null;
+            if (filter.Search.PredicateObject == null)
+            {
+                query = _waitingGiverRepo.Query();
+            }
+            else
+            {
+                var userName = filter.Search.PredicateObject.Value<string>("userName");
+                query = _waitingGiverRepo.Query(x => x.AccountId.Contains(userName));
+            }
+
             var expression = WaitingAccountVMMapping.GetExpToGiverVM();
-            var data = await _waitingGiverRepo.Queryable()
-                .OrderByDescending(x => x.Priority)
-                .ThenBy(x => x.Created)
-                .Select(expression)
-                .ToListAsync();
-            return data;
+            var data = await query
+                .OrderBy(x => x.OrderByDescending(a => a.Priority).ThenBy(t => t.Created))
+                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
+                            out totalPageCount).Select<WaitingGiver, WaitingAccountVM>(expression)
+                .ToListAsync();   
+
+            var page = new PageViewModel<WaitingAccountVM>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
-        private async Task<List<WaitingAccountVM>> QueryWaitingReceiversAsync(FilterVM filter)
+        private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingReceiversAsync(FilterVM filter)
         {
+            int totalPageCount;
+            IQueryFluent<WaitingReceiver> query = null;
+            if (filter.Search.PredicateObject == null)
+            {
+                query = _waitingReceiverRepo.Query();
+            }
+            else
+            {
+                var userName = filter.Search.PredicateObject.Value<string>("userName");
+                query = _waitingReceiverRepo.Query(x => x.AccountId.Contains(userName));
+            }
+
             var expression = WaitingAccountVMMapping.GetExpToReceiverVM();
-            var data = await _waitingReceiverRepo.Queryable()
-                .OrderByDescending(x => x.Priority)
-                .ThenBy(x => x.Created)
-                .Select(expression)
+            var data = await query
+                .OrderBy(x => x.OrderByDescending(a => a.Priority).ThenBy(t => t.Created))
+                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
+                            out totalPageCount).Select<WaitingReceiver, WaitingAccountVM>(expression)
                 .ToListAsync();
-            return data;
+
+            var page = new PageViewModel<WaitingAccountVM>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
 

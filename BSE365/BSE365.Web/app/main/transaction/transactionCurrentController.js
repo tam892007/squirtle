@@ -75,6 +75,7 @@ mainApp.controller('transactionCurrentController',
             tradeService.queueGive({},
                 function(response) {
                     Notification.success('Queue give successful!');
+                    $scope.$emit('user:removePinBalance', 1);
                     $scope.updateStatus();
                 },
                 function(response) {
