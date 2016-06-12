@@ -31,6 +31,8 @@ mainApp.controller('waitingGiverController',
             $scope.data = [];
             $scope.target = {};
             $scope.selected = false;
+            $scope.isGiver = true;
+            $scope.isReceiver = false;
 
             $scope.loadData();
         }

@@ -10,7 +10,9 @@
 
         public string Url
         {
-            get { return "/image/getUserPicture/" + Id; }
+            get { return ImageUrl + Id; }
         }
+
+        public static string ImageUrl = @"/image/getUserPicture/";
     }
 }

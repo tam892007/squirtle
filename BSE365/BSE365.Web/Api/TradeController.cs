@@ -190,6 +190,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("MapForReceiver")]
+        public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)
+        {
+            var result = await MapForReceiverAsync(instance);
+            return Ok(new {AmountLeft = result});
+        }
+
         #region internal method
 
         private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
@@ -368,6 +376,12 @@ namespace BSE365.Api
                 .Select(expression)
                 .ToListAsync();
             return data;
+        }
+
+        private async Task<int> MapForReceiverAsync(WaitingAccountVM instance)
+        {
+            var result = StoreHelper.MapWaitingReceiver(instance.Id);
+            return result;
         }
 
         #endregion

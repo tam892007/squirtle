@@ -15,8 +15,8 @@ namespace BSE365.Web
             var transactionTimer = new TransactionTimer();
             transactionTimer.Start();
 
-            var waitingTimer = new WaitingTimer();
-            waitingTimer.Start();
+            /*var waitingTimer = new WaitingTimer();
+            waitingTimer.Start();*/
         }
     }
 }
