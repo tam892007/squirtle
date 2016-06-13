@@ -49,55 +49,6 @@ namespace BSE365.Api
             _userRepo = new UserProfileRepository();
         }
 
-        [HttpGet]
-        [Route("InitDatabase")]
-        public async Task<IHttpActionResult> InitDatabase(int key = 0)
-        {
-            switch (key)
-            {
-                case 10:
-                    Repository.BSE365AuthContextMigration.Configuration.InitData(
-                        new BSE365AuthContext());
-                    Repository.BSE365ContextMigration.Configuration.CreateAccount(
-                        new BSE365Context());
-                    Repository.BSE365ContextMigration.Configuration.QueueWaitingList(
-                        new BSE365Context());
-                    break;
-                case 1:
-                    Repository.BSE365AuthContextMigration.Configuration.InitData(
-                        new BSE365AuthContext());
-                    break;
-                case 2:
-                    Repository.BSE365ContextMigration.Configuration.CreateAccount(
-                        new BSE365Context());
-                    break;
-                case 0:
-                    Repository.BSE365ContextMigration.Configuration.ClearWaitingTransactionData(
-                        new BSE365Context());
-                    break;
-            }
-            return Ok();
-        }
-
-
-        [HttpGet]
-        [Route("MapGiversAndReceivers")]
-        public async Task<IHttpActionResult> MapGiversAndReceivers()
-        {
-            StoreHelper.MapWaitingGiversAndWaitingReceivers();
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("UpdateTransactions")]
-        public async Task<IHttpActionResult> UpdateTransactions()
-        {
-            StoreHelper.UpdateNotTransferedTransactions();
-            StoreHelper.UpdateNotConfirmedTransactions();
-            return Ok();
-        }
-
-
         [HttpPost]
         [Route("QueryAccount")]
         public async Task<IHttpActionResult> QueryAccount(FilterVM filter)
@@ -267,8 +218,18 @@ namespace BSE365.Api
                 .Include(x => x.WaitingGivers)
                 .Include(x => x.WaitingReceivers)
                 .Where(x => x.UserName == username).FirstAsync();
-            account.ChangeState(state.State);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                account.ChangeState(state.State);
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
 
         private async Task QueueGiveAsync(string key)
@@ -306,6 +267,7 @@ namespace BSE365.Api
                 {
                     authTransaction.Rollback();
                     _unitOfWork.Rollback();
+                    throw;
                 }
             }
         }
@@ -317,7 +279,18 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
             account.QueueReceive();
-            await _unitOfWork.SaveChangesAsync();
+
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
 
         private async Task ClaimBonusAsync(string key)
@@ -326,8 +299,18 @@ namespace BSE365.Api
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
-            account.ClaimBonus();
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                account.ClaimBonus();
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
         }
 
         private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)

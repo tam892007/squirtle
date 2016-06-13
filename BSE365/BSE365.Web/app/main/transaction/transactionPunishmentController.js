@@ -24,8 +24,9 @@ mainApp.controller('transactionPunishmentController',
         }
 
         function loadTransaction(transactions) {
+            $scope.histories = [];
             _.each(transactions,
-                function (item) {
+                function(item) {
                     item.isAllowConfirmGave = item.state == TransactionState.Begin;
                     item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
 
@@ -104,6 +105,7 @@ mainApp.controller('transactionPunishmentController',
         }
 
         $scope.moneyTransfered = function(target) {
+            $scope.isProcessing = true;
             transactionService.moneyTransfered(target,
                 function(response) {
                     Notification.success('Money Transfered');
@@ -113,10 +115,12 @@ mainApp.controller('transactionPunishmentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
         $scope.moneyReceived = function(target) {
+            $scope.isProcessing = true;
             transactionService.moneyReceived(target,
                 function(response) {
                     Notification.success('Money Received');
@@ -126,10 +130,12 @@ mainApp.controller('transactionPunishmentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
         $scope.reportNotTransfer = function(target) {
+            $scope.isProcessing = true;
             transactionService.reportNotTransfer(target,
                 function(response) {
                     Notification.success('Transaction Reported');
@@ -139,6 +145,7 @@ mainApp.controller('transactionPunishmentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -171,9 +178,10 @@ mainApp.controller('transactionPunishmentController',
                 });
         };
 
-        $scope.abadon = function (target) {
+        $scope.abadon = function(target) {
+            $scope.isProcessing = true;
             transactionService.abadonTransaction(target,
-                function (response) {
+                function(response) {
                     Notification.success('Transaction Abadoned');
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
@@ -181,6 +189,7 @@ mainApp.controller('transactionPunishmentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -201,6 +210,8 @@ mainApp.controller('transactionPunishmentController',
                 ended: -1,
             };
             $scope.histories = [];
+
+            $scope.isProcessing = false;
 
             $scope.getCurrentTransactions();
         }

@@ -186,12 +186,13 @@ namespace BSE365.Model.Entities
                 {
                     AccountId = UserName,
                     Priority = Priority,
-                    Type = WaitingType.Abadon,
+                    Type = WaitingType.Default,
                     Created = DateTime.Now,
                     ObjectState = ObjectState.Added
                 };
                 if (State == AccountState.AbadonOne)
                 {
+                    giveRequest.Type = WaitingType.Abadon;
                     giveRequest.Amount = TransactionConfig.GiveAmountAbadon;
                 }
                 WaitingGivers.Add(giveRequest);

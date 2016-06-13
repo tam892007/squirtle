@@ -29,6 +29,10 @@
             <td>{{item.phoneNumber}}</td>
         </tr>
         <tr>
+            <td>Bank Number</td>
+            <td>{{item.bankNumber}}</td>
+        </tr>
+        <tr>
             <td>Bank Name</td>
             <td>{{item.bankName}}</td>
         </tr>
@@ -65,8 +69,8 @@
             <button class="btn btn-default" ng-show="item.isAllowUploadAttachment" ng-click="upload(item)"><span class="glyphicon glyphicon-upload"></span> Upload</button>
         </div>
         <div class="form-group text-center" ng-show="item.isAllowConfirmGave">
-            <button class="btn btn-success" ng-click="moneyTransfered(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Gave?</button>
-            <button class="btn btn-warning" ng-show="item.isAllowAbadonTransaction" ng-click="abadon(item)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Abadon Transaction</button>
+            <button class="btn btn-success" ng-disabled="isProcessing" ng-click="moneyTransfered(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Gave?</button>
+            <button class="btn btn-warning" ng-show="item.isAllowAbadonTransaction" ng-disabled="isProcessing" ng-click="abadon(item)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Abadon Transaction</button>
         </div>
     </div>
 </div>

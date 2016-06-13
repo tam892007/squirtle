@@ -171,6 +171,7 @@ mainApp.controller('transactionCurrentController',
         }
 
         $scope.moneyTransfered = function(target) {
+            $scope.isProcessing = true;
             transactionService.moneyTransfered(target,
                 function(response) {
                     Notification.success('Money Transfered');
@@ -180,10 +181,12 @@ mainApp.controller('transactionCurrentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
         $scope.moneyReceived = function(target) {
+            $scope.isProcessing = true;
             transactionService.moneyReceived(target,
                 function(response) {
                     Notification.success('Money Received');
@@ -193,10 +196,12 @@ mainApp.controller('transactionCurrentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
         $scope.reportNotTransfer = function(target) {
+            $scope.isProcessing = true;
             transactionService.reportNotTransfer(target,
                 function(response) {
                     Notification.success('Transaction Reported');
@@ -206,6 +211,7 @@ mainApp.controller('transactionCurrentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -228,21 +234,22 @@ mainApp.controller('transactionCurrentController',
                 }
             });
 
-            modalInstance.result.then(function (returnData) {
-                Notification.success('Upload successful.');
-                var fileData = $window.StringToXML(returnData);
-                target.attachmentUrl = returnData;//fileData.childNodes[0].innerHTML;
-                target.attachmentUrl = target.attachmentUrl.replace('~/', '');
-                $scope.updateImg(target);
-            },
-            function() {
-                Notification.success('Upload error.');
-            });
+            modalInstance.result.then(function(returnData) {
+                    Notification.success('Upload successful.');
+                    var fileData = $window.StringToXML(returnData);
+                    target.attachmentUrl = returnData; //fileData.childNodes[0].innerHTML;
+                    target.attachmentUrl = target.attachmentUrl.replace('~/', '');
+                    $scope.updateImg(target);
+                },
+                function() {
+                    Notification.success('Upload error.');
+                });
         };
 
-        $scope.abadon = function (target) {
+        $scope.abadon = function(target) {
+            $scope.isProcessing = true;
             transactionService.abadonTransaction(target,
-                function (response) {
+                function(response) {
                     Notification.success('Transaction Abadoned');
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
@@ -250,6 +257,7 @@ mainApp.controller('transactionCurrentController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -269,6 +277,8 @@ mainApp.controller('transactionCurrentController',
                 ended: -1,
             };
             $scope.histories = [];
+
+            $scope.isProcessing = false;
 
             $scope.updateStatus()
                 .then(function(response) {
