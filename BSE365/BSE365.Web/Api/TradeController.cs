@@ -17,6 +17,8 @@ using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Hangfire;
+using BSE365.Helper;
 
 namespace BSE365.Api
 {
@@ -146,9 +148,16 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)
         {
             var result = await MapForReceiverAsync(instance);
+            
+            ////Map Successful
+            if (result == 0)
+            {
+                await SendEmailNotification(instance);
+            }
+
             return Ok(new {AmountLeft = result});
         }
-
+     
         #region internal method
 
         private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
@@ -403,6 +412,35 @@ namespace BSE365.Api
         {
             var result = StoreHelper.MapWaitingReceiver(instance.Id);
             return result;
+        }
+
+        private async Task SendEmailNotification(WaitingAccountVM instance)
+        {
+            ////Send Email
+            var request = System.Web.HttpContext.Current.Request;
+            var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+
+            var transactions = await _transactionRepo.Query(x => x.WaitingReceiverId == instance.Id && x.State == TransactionState.Begin
+                && !x.IsEnd && (int)x.Type == (int)instance.Type).Include(x => x.Giver.UserInfo).Include(x=>x.Receiver.UserInfo).SelectAsync();
+
+            if (transactions.Count() == 0) return;
+
+            var giverIds = new List<string>();
+            var receiverEmail = string.Empty;
+            var receiverId = string.Empty;
+
+            foreach (var transaction in transactions)
+            {
+                if (string.IsNullOrEmpty(receiverEmail)) {
+                    receiverEmail = transaction.Receiver.UserInfo.Email;
+                    receiverId = transaction.ReceiverId;
+                }
+
+                giverIds.Add(transaction.GiverId);
+                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationToGive(transaction.Giver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
+            }
+
+            BackgroundJob.Enqueue(() => EmailHelper.SendNotificationToReceive(receiverEmail, giverIds, receiverId, baseUri));
         }
 
         #endregion

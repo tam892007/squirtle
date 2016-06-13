@@ -23,6 +23,7 @@ using BSE365.Model.Enum;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
+using Hangfire;
 
 namespace BSE365.Api
 {
@@ -232,6 +233,11 @@ namespace BSE365.Api
                 transaction.MoneyTransfered(tran.AttachmentUrl);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
+
+                ////Send email
+                var request = System.Web.HttpContext.Current.Request;
+                var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+                BackgroundJob.Enqueue(()=>EmailHelper.SendNotificationBeingGived(tran.Email, tran.GiverId, tran.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
@@ -266,6 +272,11 @@ namespace BSE365.Api
                     giverParentInfos);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
+
+                ////Send email
+                var request = System.Web.HttpContext.Current.Request;
+                var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationConfirmReceived(transaction.Giver.UserInfo.Email, tran.GiverId, tran.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
