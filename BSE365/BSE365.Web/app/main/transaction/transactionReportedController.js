@@ -11,7 +11,7 @@ mainApp.controller('transactionReportedController',
                 tableState = $scope.tableState;
             }
             $scope.data = [];
-            transactionService.queryTransaction(JSON.stringify(tableState),
+            transactionService.reportedTransactions(JSON.stringify(tableState),
                 function (response) {
                     console.log(response);
                     $scope.data = response.data;

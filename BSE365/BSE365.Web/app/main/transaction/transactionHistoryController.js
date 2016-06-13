@@ -34,7 +34,7 @@ mainApp.controller('transactionHistoryController',
         function loadTransaction(transactions) {
             $scope.histories = [];
             _.each(transactions,
-                function (item) {
+                function(item) {
                     item.isAllowConfirmGave = item.state == TransactionState.Begin;
                     item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
 
@@ -126,6 +126,7 @@ mainApp.controller('transactionHistoryController',
         }
 
         $scope.moneyReceived = function(target) {
+            $scope.isProcessing = true;
             transactionService.moneyReceived(target,
                 function(response) {
                     Notification.success('Money Received');
@@ -135,10 +136,12 @@ mainApp.controller('transactionHistoryController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
         $scope.reportNotTransfer = function(target) {
+            $scope.isProcessing = true;
             transactionService.reportNotTransfer(target,
                 function(response) {
                     Notification.success('Transaction Reported');
@@ -148,6 +151,7 @@ mainApp.controller('transactionHistoryController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -180,9 +184,10 @@ mainApp.controller('transactionHistoryController',
                 });
         };
 
-        $scope.abadon = function (target) {
+        $scope.abadon = function(target) {
+            $scope.isProcessing = true;
             transactionService.abadonTransaction(target,
-                function (response) {
+                function(response) {
                     Notification.success('Transaction Abadoned');
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
@@ -190,6 +195,7 @@ mainApp.controller('transactionHistoryController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -210,6 +216,8 @@ mainApp.controller('transactionHistoryController',
                 ended: -1,
             };
             $scope.histories = [];
+
+            $scope.isProcessing = false;
 
             $scope.getCurrentTransactions();
         }

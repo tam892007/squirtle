@@ -68,8 +68,8 @@
             <img class="transaction-attachment-file" ng-show="item.attachmentUrl" src="{{item.attachmentUrl}}" />
         </div>
         <div class="form-group text-center" ng-show="item.isAllowConfirmReceived">
-            <button class="btn btn-success" ng-click="moneyReceived(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Receive?</button>
-            <button class="btn btn-danger" ng-click="reportNotTransfer(item)"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Report</button>
+            <button class="btn btn-success" ng-disabled="isProcessing" ng-click="moneyReceived(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Receive?</button>
+            <button class="btn btn-danger" ng-disabled="isProcessing" ng-click="reportNotTransfer(item)"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Report</button>
         </div>
     </div>
 </div>

@@ -36,12 +36,12 @@ namespace BSE365.Repository.BSE365ContextMigration
             //    );
             //
             //InitData(context);
-            var accountCount = context.Accounts.Count();
-            if (accountCount == 1)
-            {
-                CreateAccount(context);
-                QueueWaitingList(context);
-            }
+            //var accountCount = context.Accounts.Count();
+            //if (accountCount == 1)
+            //{
+            //    CreateAccount(context);
+            //    QueueWaitingList(context);
+            //}
         }
 
         public static void CreateAccount(BSE365.Repository.DataContext.BSE365Context context)

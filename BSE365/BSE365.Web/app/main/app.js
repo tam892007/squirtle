@@ -366,15 +366,15 @@ mainApp.factory('TransactionState',
 mainApp.factory('TransactionType',
     function() {
         var data = {
-            Begin: 0,
+            Default: 0,
             Abadoned: 31,
             Replacement: 41,
             Bonus: 51,
         }
         data.display = function(value) {
             switch (value) {
-            case data.Begin:
-                return 'Begin';
+            case data.Default:
+                return 'Default';
             case data.Abadoned:
                 return 'Abadoned';
             case data.Replacement:

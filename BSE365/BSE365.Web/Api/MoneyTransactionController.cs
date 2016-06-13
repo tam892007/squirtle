@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.IO;
@@ -225,8 +226,18 @@ namespace BSE365.Api
             var transaction = await _transactionRepo.Queryable()
                 .Include(x => x.Receiver)
                 .FirstAsync(x => x.Id == tran.Id);
-            transaction.MoneyTransfered(tran.AttachmentUrl);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                transaction.MoneyTransfered(tran.AttachmentUrl);
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
             return transaction.UpdateVm(tran);
         }
 
@@ -247,10 +258,20 @@ namespace BSE365.Api
             var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
             var giverParentInfos = await _userInfoRepo.Queryable()
                 .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
-            transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
-                otherReceivingTransactionsInCurrentTransaction,
-                giverParentInfos);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
+                    otherReceivingTransactionsInCurrentTransaction,
+                    giverParentInfos);
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
             return transaction.UpdateVm(tran);
         }
 
@@ -260,8 +281,18 @@ namespace BSE365.Api
                 .Include(x => x.Receiver)
                 .Include(x => x.Giver)
                 .FirstAsync(x => x.Id == tran.Id);
-            transaction.ReportNotTransfer();
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                transaction.ReportNotTransfer();
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
             return transaction.UpdateVm(tran);
         }
 
@@ -273,8 +304,18 @@ namespace BSE365.Api
                 .Include(x => x.Receiver.UserInfo)
                 .Include(x => x.Receiver.WaitingReceivers)
                 .FirstAsync(x => x.Id == tran.Id);
-            transaction.Abadon();
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                transaction.Abadon();
+                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
+            }
             return transaction.UpdateVm(tran);
         }
 
@@ -366,7 +407,7 @@ namespace BSE365.Api
             IQueryFluent<MoneyTransaction> query = null;
             if (filter.Search.PredicateObject == null)
             {
-                query = _transactionRepo.Query();
+                query = _transactionRepo.Query(x => x.State == TransactionState.ReportedNotTransfer);
             }
             else
             {
@@ -389,7 +430,7 @@ namespace BSE365.Api
                 }
                 else
                 {
-                    query = _transactionRepo.Query();
+                    query = _transactionRepo.Query(x => x.State == TransactionState.ReportedNotTransfer);
                 }
             }
 
@@ -427,29 +468,39 @@ namespace BSE365.Api
                 giverParentAccount = _accountRepo.Queryable()
                     .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
             }
-            switch (instance.Result)
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
             {
-                case MoneyTransactionVM.ReportResult.Default:
-                    break;
-                case MoneyTransactionVM.ReportResult.GiverTrue:
-                    var giverParentInfoIds =
-                        await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
-                    var giverParentInfos = await _userInfoRepo.Queryable()
-                        .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
-                    transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
-                    await _unitOfWork.SaveChangesAsync();
-                    break;
-                case MoneyTransactionVM.ReportResult.ReceiverTrue:
-                    transaction.NotTransfer(giverParentAccount);
-                    await _unitOfWork.SaveChangesAsync();
-                    break;
-                case MoneyTransactionVM.ReportResult.BothTrue:
-                    await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
-                    break;
-                case MoneyTransactionVM.ReportResult.BothFalse:
-                    transaction.Failed();
-                    await _unitOfWork.SaveChangesAsync();
-                    break;
+                switch (instance.Result)
+                {
+                    case MoneyTransactionVM.ReportResult.Default:
+                        break;
+                    case MoneyTransactionVM.ReportResult.GiverTrue:
+                        var giverParentInfoIds =
+                            await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+                        var giverParentInfos = await _userInfoRepo.Queryable()
+                            .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
+                        transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
+                        await _unitOfWork.SaveChangesAsync();
+                        break;
+                    case MoneyTransactionVM.ReportResult.ReceiverTrue:
+                        transaction.NotTransfer(giverParentAccount);
+                        await _unitOfWork.SaveChangesAsync();
+                        break;
+                    case MoneyTransactionVM.ReportResult.BothTrue:
+                        await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
+                        break;
+                    case MoneyTransactionVM.ReportResult.BothFalse:
+                        transaction.Failed();
+                        await _unitOfWork.SaveChangesAsync();
+                        break;
+                }
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+                throw;
             }
         }
 
