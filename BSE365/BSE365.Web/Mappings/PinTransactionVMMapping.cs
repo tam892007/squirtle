@@ -24,7 +24,7 @@ namespace BSE365.Mappings
             return result;
         }
 
-        public static PinTransactionHistoryViewModel ToViewModel(this PinTransactionHistory model)
+        public static PinTransactionHistoryViewModel ToViewModel(this PinTransactionHistory model, string userName)
         {
             if (model == null) return null;
             var result = new PinTransactionHistoryViewModel
@@ -34,7 +34,8 @@ namespace BSE365.Mappings
                 ToId = model.ToId,
                 Amount = model.Amount,
                 Note = model.Note,
-                CreatedDate = model.CreatedDate,
+                CreatedDate = model.CreatedDate,    
+                Type = model.FromName == userName ? PinTransactionType.Give : PinTransactionType.Receive,
             };
 
             return result;

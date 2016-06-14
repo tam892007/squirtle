@@ -55,13 +55,13 @@ namespace BSE365.Api
         private async Task<PageViewModel<PinTransactionViewModel>> GetAllAsync(FilterVM filter)
         {
             int totalPageCount;
-            var userId = User.Identity.GetUserId();
-            var transactionHistories = await _historyRepo.Query(x=>x.FromId == userId)
+            var userId = User.Identity.GetUserName();
+            var transactionHistories = await _historyRepo.Query(x=>x.FromName == userId || x.ToId == userId)
                 .OrderBy(x => x.OrderByDescending(i => i.CreatedDate))
                 .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
                             out totalPageCount).ToListAsync();
 
-            var data = transactionHistories.Select(x => x.ToViewModel());
+            var data = transactionHistories.Select(x => x.ToViewModel(userId));
 
             var page = new PageViewModel<PinTransactionViewModel>
             {
