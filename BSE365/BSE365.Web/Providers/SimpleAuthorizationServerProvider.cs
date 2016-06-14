@@ -96,6 +96,11 @@ namespace BSE365.Web.Providers
                     context.SetError("invalid_grant", "The user name or password is incorrect.");
                     return;
                 }
+                else if (user.IsLocked())
+                {
+                    context.SetError("invalid_grant", "The user has been locked.");
+                    return;
+                }
 
                 userId = user.Id;
             }

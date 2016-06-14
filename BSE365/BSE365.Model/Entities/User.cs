@@ -24,5 +24,10 @@ namespace BSE365.Model.Entities
         {
             PinBalance--;
         }
+
+        public bool IsLocked()
+        {
+            return UserInfo == null || UserInfo.State != 0 ? true : false;
+        }
     }
 }
