@@ -143,13 +143,13 @@ namespace BSE365.Model.Entities
 
         public bool IsAllowQueueReceive()
         {
-            return GiveOver >= 2 && State == UserState.Default;
+            return GiveOver >= TransactionConfig.GiveOverToQueueReceive && State == UserState.Default;
         }
 
         public List<string> NotAllowReceiveReason()
         {
             var result = new List<string>();
-            if (GiveOver < 2)
+            if (GiveOver < TransactionConfig.GiveOverToQueueReceive)
             {
                 result.Add("You must use your another secondary account to complete one more give!");
             }
@@ -174,7 +174,7 @@ namespace BSE365.Model.Entities
         /// </summary>
         public void ReceiveQueued()
         {
-            GiveOver -= 2;
+            GiveOver -= TransactionConfig.GiveOverToQueueReceive;
             ObjectState = ObjectState.Modified;
         }
 

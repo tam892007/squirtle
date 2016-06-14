@@ -172,8 +172,9 @@ namespace BSE365.Model.Entities
         /// <summary>
         ///     Queued in WaitingGive
         /// </summary>
-        public void QueueGive()
+        public WaitingGiver QueueGive()
         {
+            WaitingGiver waitingqueue = null;
             if (IsAllowQueueGive())
             {
                 State = AccountState.WaitGive;
@@ -182,7 +183,7 @@ namespace BSE365.Model.Entities
 
                 UserInfo.GiveQueued();
 
-                var giveRequest = new WaitingGiver
+                waitingqueue = new WaitingGiver
                 {
                     AccountId = UserName,
                     Priority = Priority,
@@ -192,18 +193,20 @@ namespace BSE365.Model.Entities
                 };
                 if (State == AccountState.AbadonOne)
                 {
-                    giveRequest.Type = WaitingType.Abadon;
-                    giveRequest.Amount = TransactionConfig.GiveAmountAbadon;
+                    waitingqueue.Type = WaitingType.Abadon;
+                    waitingqueue.Amount = TransactionConfig.GiveAmountAbadon;
                 }
-                WaitingGivers.Add(giveRequest);
+                WaitingGivers.Add(waitingqueue);
             }
+            return waitingqueue;
         }
 
         /// <summary>
         ///     Queued in WaitingReceive
         /// </summary>
-        public void QueueReceive()
+        public WaitingReceiver QueueReceive()
         {
+            WaitingReceiver waitingqueue = null;
             if (IsAllowQueueReceive())
             {
                 State = AccountState.WaitReceive;
@@ -211,14 +214,16 @@ namespace BSE365.Model.Entities
 
                 UserInfo.ReceiveQueued();
 
-                WaitingReceivers.Add(new WaitingReceiver
+                waitingqueue = new WaitingReceiver
                 {
                     AccountId = UserName,
                     Priority = Priority,
                     Created = DateTime.Now,
                     ObjectState = ObjectState.Added
-                });
+                };
+                WaitingReceivers.Add(waitingqueue);
             }
+            return waitingqueue;
         }
 
         public bool IsAllowClaimBonus()
@@ -226,13 +231,14 @@ namespace BSE365.Model.Entities
             return UserInfo.IsAllowClaimBonus();
         }
 
-        public void ClaimBonus()
+        public WaitingReceiver ClaimBonus()
         {
+            WaitingReceiver waitingqueue = null;
             if (IsAllowClaimBonus())
             {
                 UserInfo.ClaimBonus();
 
-                WaitingReceivers.Add(new WaitingReceiver
+                waitingqueue = new WaitingReceiver
                 {
                     AccountId = UserName,
                     Priority = Priority,
@@ -240,8 +246,10 @@ namespace BSE365.Model.Entities
                     Amount = TransactionConfig.ReceiveAmountBonus,
                     Created = DateTime.Now,
                     ObjectState = ObjectState.Added
-                });
+                };
+                WaitingReceivers.Add(waitingqueue);
             }
+            return waitingqueue;
         }
 
         #endregion
@@ -346,31 +354,34 @@ namespace BSE365.Model.Entities
         /// requeue waiting receiver list with high priority for receiver 
         /// </summary>
         /// <param name="transaction"></param>
-        public void ReQueueWaitingListForAbadonTransaction(MoneyTransaction transaction)
+        public WaitingReceiver ReQueueWaitingListForAbadonTransaction(MoneyTransaction transaction)
         {
+            WaitingReceiver waitingqueue = null;
             if (WaitingReceivers.Count == 0)
             {
-                WaitingReceivers.Add(new WaitingReceiver
+                waitingqueue = new WaitingReceiver
                 {
                     AccountId = UserName,
                     Priority = PriorityLevel.High,
                     Created = DateTime.Now,
                     Amount = 1,
                     ObjectState = ObjectState.Added
-                });
+                };
+                WaitingReceivers.Add(waitingqueue);
             }
             else
             {
-                var waiting = WaitingReceivers.First();
-                waiting.Amount++;
-                waiting.Priority = PriorityLevel.High;
-                waiting.ObjectState = ObjectState.Modified;
-                if (waiting.Amount == TransactionConfig.ReceiveAmountDefault)
+                waitingqueue = WaitingReceivers.First();
+                waitingqueue.Amount++;
+                waitingqueue.Priority = PriorityLevel.High;
+                waitingqueue.ObjectState = ObjectState.Modified;
+                if (waitingqueue.Amount == TransactionConfig.ReceiveAmountDefault)
                 {
                     State = AccountState.WaitReceive;
                     ObjectState = ObjectState.Modified;
                 }
             }
+            return waitingqueue;
         }
 
         #endregion

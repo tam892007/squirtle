@@ -425,5 +425,48 @@ namespace BSE365.Repository.Helper
                 }
             }
         }
+
+
+        public static void AutoQueueReceive()
+        {
+            using (var context = new BSE365Context())
+            {
+                var accountCanQueueReceives = context.Accounts
+                    .Include(x => x.UserInfo)
+                    .Where(x =>
+                        x.State == AccountState.Gave &&
+                        x.UserInfo.State == UserState.Default &&
+                        x.UserInfo.GiveOver >= TransactionConfig.GiveOverToQueueReceive).ToList();
+
+                // select one account for each user
+                var accountToQueues = accountCanQueueReceives.GroupBy(x => x.UserInfoId).Select(x => x.First());
+                foreach (var account in accountToQueues)
+                {
+                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    {
+                        WaitingReceiver waitingqueue = null;
+                        try
+                        {
+                            waitingqueue = account.QueueReceive();
+
+                            context.SaveChanges();
+
+                            dbContextTransaction.Commit();
+                        }
+                        catch (Exception)
+                        {
+                            dbContextTransaction.Rollback();
+
+                            account.ObjectState = ObjectState.Unchanged;
+
+                            account.UserInfo.ObjectState = ObjectState.Unchanged;
+
+                            if (waitingqueue != null)
+                                waitingqueue.ObjectState = ObjectState.Unchanged;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

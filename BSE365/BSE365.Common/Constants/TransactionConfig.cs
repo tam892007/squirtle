@@ -5,12 +5,17 @@
         /// <summary>
         /// in millisecond
         /// </summary>
-        public static double TransactionCheckerTimeout = /*60*60*1000;*/ 60*60*1000; //for test
+        public static double TransactionCheckerTimeout = /*60*60*1000;*/ 30*60*1000; //for test
 
         /// <summary>
         /// in millisecond
         /// </summary>
-        public static double WaitingHelperTimeout = /*60*60*1000;*/ 60*60*1000; //for test
+        public static double MappingHelperTimeout = /*60*60*1000;*/ 60*60*1000; //for test
+
+        /// <summary>
+        /// in millisecond
+        /// </summary>
+        public static double WaitingHelperTimeout = /*60*60*1000;*/ 30*60*1000; //for test
 
         /// <summary>
         /// Time for each step of Transaction in hours
@@ -23,6 +28,7 @@
         public static int ReceiveAmountDefault = 3;
         public static int ReceiveAmountBonus = 1;
 
+        public static int GiveOverToQueueReceive = 2;
 
         public static int MoneyPerTransaction = 1500000;
         public static string MoneyCurrency = "VND";

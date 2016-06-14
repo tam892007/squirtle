@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Web;
 using BSE365.Common.Constants;
 using BSE365.Repository.Helper;
 
 namespace BSE365.Timers
 {
-    public class TransactionTimer
+    public class MappingTimer
     {
         private System.Timers.Timer _timer;
         public bool IsRunning { get; private set; }
@@ -20,7 +18,7 @@ namespace BSE365.Timers
             {
                 IsRunning = true;
                 timer_Elapsed(null, null);
-                this._timer = new System.Timers.Timer(TransactionConfig.TransactionCheckerTimeout);
+                this._timer = new System.Timers.Timer(TransactionConfig.MappingHelperTimeout);
                 this._timer.AutoReset = true;
                 this._timer.Elapsed += new System.Timers.ElapsedEventHandler(this.timer_Elapsed);
                 this._timer.Enabled = true;
@@ -53,10 +51,10 @@ namespace BSE365.Timers
                 Trace.WriteLine("Exception : {0}", exception.Message);
             }
         }
-        
+
         public void Execute()
         {
-            Thread thread = new Thread(StoreHelper.UpdateTransactions);
+            Thread thread = new Thread(StoreHelper.MapWaitingGiversAndWaitingReceivers);
             thread.Start();
         }
     }

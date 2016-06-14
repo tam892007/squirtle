@@ -12,11 +12,14 @@ namespace BSE365.Web
     {
         public static void ConfigureTimer(HttpConfiguration config)
         {
+            /*var mappingTimer = new MappingTimer();
+            mappingTimer.Start();*/
+
             var transactionTimer = new TransactionTimer();
             transactionTimer.Start();
 
-            /*var waitingTimer = new WaitingTimer();
-            waitingTimer.Start();*/
+            var waitingTimer = new WaitingTimer();
+            waitingTimer.Start();
         }
     }
 }

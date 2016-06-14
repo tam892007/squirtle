@@ -54,7 +54,7 @@ namespace BSE365.Timers
 
         public void Execute()
         {
-            Thread thread = new Thread(StoreHelper.MapWaitingGiversAndWaitingReceivers);
+            Thread thread = new Thread(StoreHelper.AutoQueueReceive);
             thread.Start();
         }
     }
