@@ -148,7 +148,7 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)
         {
             var result = await MapForReceiverAsync(instance);
-            
+
             ////Map Successful
             if (result == 0)
             {
@@ -157,7 +157,7 @@ namespace BSE365.Api
 
             return Ok(new {AmountLeft = result});
         }
-     
+
         #region internal method
 
         private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
@@ -248,11 +248,10 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
 
-            var _ctx = new BSE365AuthContext();
-            var _userManager = new UserManager<User>(new UserStore<User>(_ctx));
 
             var userId = User.Identity.GetUserId();
-            var user = await _userManager.FindByIdAsync(userId);
+            var _ctx = new BSE365AuthContext();
+            var user = await _ctx.Users.FirstAsync(x => x.Id == userId);
 
 
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
@@ -261,21 +260,20 @@ namespace BSE365.Api
                 try
                 {
                     account.QueueGive();
+                    await _unitOfWork.SaveChangesAsync();
 
                     user.GiveQueued();
-
-                    await _userManager.UpdateAsync(user);
-
-                    await _unitOfWork.SaveChangesAsync();
                     await _ctx.SaveChangesAsync();
 
-                    authTransaction.Commit();
                     _unitOfWork.Commit();
+
+                    authTransaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    authTransaction.Rollback();
                     _unitOfWork.Rollback();
+
+                    authTransaction.Rollback();
                     throw;
                 }
             }
@@ -420,8 +418,13 @@ namespace BSE365.Api
             var request = System.Web.HttpContext.Current.Request;
             var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
 
-            var transactions = await _transactionRepo.Query(x => x.WaitingReceiverId == instance.Id && x.State == TransactionState.Begin
-                && !x.IsEnd && (int)x.Type == (int)instance.Type).Include(x => x.Giver.UserInfo).Include(x=>x.Receiver.UserInfo).SelectAsync();
+            var transactions =
+                await
+                    _transactionRepo.Query(x => x.WaitingReceiverId == instance.Id && x.State == TransactionState.Begin
+                                                && !x.IsEnd && (int) x.Type == (int) instance.Type)
+                        .Include(x => x.Giver.UserInfo)
+                        .Include(x => x.Receiver.UserInfo)
+                        .SelectAsync();
 
             if (transactions.Count() == 0) return;
 
@@ -431,16 +434,21 @@ namespace BSE365.Api
 
             foreach (var transaction in transactions)
             {
-                if (string.IsNullOrEmpty(receiverEmail)) {
+                if (string.IsNullOrEmpty(receiverEmail))
+                {
                     receiverEmail = transaction.Receiver.UserInfo.Email;
                     receiverId = transaction.ReceiverId;
                 }
 
                 giverIds.Add(transaction.GiverId);
-                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationToGive(transaction.Giver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
+                BackgroundJob.Enqueue(
+                    () =>
+                        EmailHelper.SendNotificationToGive(transaction.Giver.UserInfo.Email, transaction.GiverId,
+                            transaction.ReceiverId, baseUri));
             }
 
-            BackgroundJob.Enqueue(() => EmailHelper.SendNotificationToReceive(receiverEmail, giverIds, receiverId, baseUri));
+            BackgroundJob.Enqueue(
+                () => EmailHelper.SendNotificationToReceive(receiverEmail, giverIds, receiverId, baseUri));
         }
 
         #endregion

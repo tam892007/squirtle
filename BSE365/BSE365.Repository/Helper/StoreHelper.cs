@@ -29,7 +29,8 @@ namespace BSE365.Repository.Helper
                 var waitingGivers = context.WaitingGivers
                     .Include(x => x.Account.UserInfo)
                     .Where(x => !existGiverIdsInGiverTransaction.Contains(x.AccountId))
-                    .OrderBy(x => x.Created)
+                    .OrderByDescending(x => x.Priority)
+                    .ThenBy(x => x.Created)
                     .Take(waitingReceiver.Amount)
                     .ToList();
 
