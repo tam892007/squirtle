@@ -1,0 +1,54 @@
+﻿
+<table st-table="data" st-pipe="loadData" class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Giver</th>
+            <th>Receiver</th>
+            <th>Type</th>
+            <th>State</th>
+            <th>Created</th>
+            <th>Last Modified</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="7">
+                <div class="form-inline">
+                    <input st-search="" class="form-control" placeholder="search by id, giver, receiver" />
+                    <button class="btn btn-success" ng-click="reload()">
+                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'success':item.state==TransactionState.Confirmed, 'warning':item.state==TransactionState.Abandoned, 'danger':item.state==TransactionState.NotTransfer||item.state==TransactionState.NotConfirm||item.state==TransactionState.Failed }">
+            <td>
+                <span data-ng-bind="item.id"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.giverId"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.receiverId"></span>
+            </td>
+            <td>
+                <span data-ng-bind="TransactionType.display(item.type)"></span>&nbsp;<span class="glyphicon glyphicon-heart" aria-hidden="true" ng-show="item.type==TransactionType.Bonus"></span><span class="glyphicon glyphicon-warning-sign" aria-hidden="true" ng-show="item.type==TransactionType.Replacement"></span>
+            </td>
+            <td>
+                <span data-ng-bind="TransactionState.display(item.state)"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.created|date:ConfigData.dateFormat"></span>
+            </td>
+            <td>
+                <span data-ng-bind="item.lastModified|date:ConfigData.dateFormat"></span>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="7"></td>
+        </tr>
+    </tfoot>
+</table>

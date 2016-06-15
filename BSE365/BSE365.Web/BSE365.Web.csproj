@@ -264,6 +264,8 @@
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
     <Content Include="app\main\transaction\info.html" />
+    <Content Include="app\main\transaction\transactionDetails-list-for-user.html" />
+    <Content Include="app\main\transaction\transactionInfoDetailsController.js" />
     <Content Include="app\main\transaction\transactionInfoHistoryController.js" />
     <Content Include="app\main\transaction\transactionInfoController.js" />
     <Content Include="app\main\transaction\transaction-control.html" />

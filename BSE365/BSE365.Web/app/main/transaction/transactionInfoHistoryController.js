@@ -20,18 +20,17 @@ mainApp.controller('transactionInfoHistoryController',
         }
 
         $scope.reload = function() {
-            $scope.target = {};
             $scope.loadData();
         }
 
         $scope.viewDefails = function(target) {
-            if ($scope.target) {
-                $scope.target.selected = false;
+            if ($scope.current) {
+                $scope.current.selected = false;
             }
             target.selected = true;
+            $scope.current = target;
 
-            $scope.target = target;
-            $scope.selected = true;
+            $state.go('.details', { key: target.id });
         }
 
         $scope.init = function() {
@@ -40,8 +39,6 @@ mainApp.controller('transactionInfoHistoryController',
             $scope.TransactionState = TransactionState;
 
             $scope.data = [];
-            $scope.target = {};
-            $scope.selected = false;
         }
 
         $scope.init();

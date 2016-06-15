@@ -112,7 +112,8 @@ mainApp.controller('transactionHistoryController',
             console.log($scope.overviewState);
         }
 
-        $scope.moneyTransfered = function(target) {
+        $scope.moneyTransfered = function (target) {
+            $scope.isProcessing = true;
             transactionService.moneyTransfered(target,
                 function(response) {
                     Notification.success('Money Transfered');
@@ -122,6 +123,7 @@ mainApp.controller('transactionHistoryController',
                     }
                     $scope.updateStatus();
                     getCurrentTransactions();
+                    $scope.isProcessing = false;
                 });
         }
 

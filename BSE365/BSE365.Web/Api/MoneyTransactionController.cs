@@ -200,6 +200,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("TransactionDetails")]
+        public async Task<IHttpActionResult> TransactionDetails(int key)
+        {
+            var result = await TransactionDetailsAsync(key);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<List<MoneyTransactionVM.Receiver>> GiveRequestedAsync()
@@ -229,7 +237,7 @@ namespace BSE365.Api
         private async Task<MoneyTransactionVM.Receiver> MoneyTransferedAsync(MoneyTransactionVM.Receiver tran)
         {
             var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Receiver)
+                .Include(x => x.Receiver.UserInfo)
                 .FirstAsync(x => x.Id == tran.Id);
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             try
@@ -241,8 +249,8 @@ namespace BSE365.Api
                 ////Send email
                 var request = System.Web.HttpContext.Current.Request;
                 var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(
-                    () => EmailHelper.SendNotificationBeingGived(tran.Email, tran.GiverId, tran.ReceiverId, baseUri));
+                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationBeingGived(
+                    transaction.Receiver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
@@ -281,10 +289,8 @@ namespace BSE365.Api
                 ////Send email
                 var request = System.Web.HttpContext.Current.Request;
                 var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(
-                    () =>
-                        EmailHelper.SendNotificationConfirmReceived(transaction.Giver.UserInfo.Email, tran.GiverId,
-                            tran.ReceiverId, baseUri));
+                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationConfirmReceived(
+                    transaction.Giver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
@@ -559,7 +565,7 @@ namespace BSE365.Api
                 }
             }
 
-            var expression = MoneyTransactionVMMapping.GetExpToVM();
+            var expression = MoneyTransactionVMMapping.GetExpToVM(username);
             var data = await query.OrderBy(x => x.OrderByDescending(a => a.Id))
                 .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
                     filter.Pagination.Number, out totalPageCount)
@@ -572,6 +578,17 @@ namespace BSE365.Api
             };
 
             return page;
+        }
+
+        private async Task<MoneyTransactionVM.Base> TransactionDetailsAsync(int key)
+        {
+            var username = User.Identity.GetUserName();
+            var expression = MoneyTransactionVMMapping.GetExpToVM(username);
+            var result = await _transactionRepo.Queryable()
+                .Where(x => x.Id == key)
+                .Select(expression)
+                .FirstAsync();
+            return result;
         }
 
         #endregion

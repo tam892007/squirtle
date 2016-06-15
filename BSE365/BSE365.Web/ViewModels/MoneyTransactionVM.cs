@@ -62,6 +62,7 @@ namespace BSE365.ViewModels
             public string BankNumber { get; set; }
             public string BankName { get; set; }
             public string BankBranch { get; set; }
+            public int Rating { get; set; }
 
             public int Countdown
             {
@@ -103,6 +104,7 @@ namespace BSE365.ViewModels
             public string GiverBankNumber { get; set; }
             public string GiverBankName { get; set; }
             public string GiverBankBranch { get; set; }
+            public int GiverRating { get; set; }
 
 
             public string ReceiverId { get; set; }
@@ -112,6 +114,7 @@ namespace BSE365.ViewModels
             public string ReceiverBankNumber { get; set; }
             public string ReceiverBankName { get; set; }
             public string ReceiverBankBranch { get; set; }
+            public int ReceiverRating { get; set; }
 
 
             public DateTime Created { get; set; }
@@ -168,6 +171,11 @@ namespace BSE365.ViewModels
                     return result;
                 }
             }
+
+            /// <summary>
+            /// who quering this data
+            /// </summary>
+            public string CurrentAccount { get; set; }
         }
 
         public class Reported : Base

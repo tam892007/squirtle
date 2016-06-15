@@ -2,8 +2,7 @@
 mainApp.controller('importPopupController',
 [
     '$scope', '$window', '$uibModal', '$log', '$uibModalInstance', '_', 'FileUploader', 'cfpLoadingBar',
-    'localStorageService',
-    'targetData',
+    'localStorageService', 'targetData',
     function($scope,
         $window,
         $uibModal,
@@ -32,7 +31,6 @@ mainApp.controller('importPopupController',
         };
 
         $scope.ok = function(response) {
-            console.log(response);
             var url = response.url;
             url = url.replace('~/', '');
             $uibModalInstance.close(url);
@@ -99,7 +97,7 @@ mainApp.controller('importPopupController',
             });
         };
 
-        $scope.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+        $scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
             $scope.uploaded = true;
             $scope.importing = false;
             cfpLoadingBar.complete();

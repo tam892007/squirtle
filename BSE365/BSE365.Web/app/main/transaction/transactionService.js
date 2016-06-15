@@ -13,6 +13,7 @@
             reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' } },
             applyReport: { method: 'POST', params: { path: 'api/transaction/applyReport' } },
             queryUserHistory: { method: 'POST', params: { path: 'api/transaction/queryUserHistory' } },
+            transactionDetails: { method: 'POST', params: { path: 'api/transaction/transactionDetails', key: 'key' } },
         });
     }
 ]);

@@ -120,6 +120,12 @@ mainApp.config([
                 templateUrl: 'app/main/transaction/info-history.html',
                 controller: 'transactionInfoHistoryController'
             })
+            .state('transaction.history.details',
+            {
+                url: "/:key",
+                templateUrl: 'app/main/transaction/transactionDetails-details.html',
+                controller: 'transactionInfoDetailsController'
+            })
             .state('waitinggiver',
             {
                 url: "/waitinggiver",

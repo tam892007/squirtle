@@ -28,6 +28,20 @@
         </div>
         <div class="row">
             <div class="col-md-6">
+                <label>Member</label>
+                <p>
+                    <uib-rating ng-model="target.giverRating" max="6" read-only="true"></uib-rating>
+                </p>
+            </div>
+            <div class="col-md-6">
+                <label>Member</label>
+                <p>
+                    <uib-rating ng-model="target.receiverRating" max="6" read-only="true"></uib-rating>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <label>Phone Number</label>
                 <p class="form-control-static" data-ng-bind="target.giverPhoneNumber"></p>
             </div>
@@ -74,7 +88,8 @@
         <div class="row">
             <div class="col-md-6">
                 <label>State</label>
-                <p class="form-control-static" data-ng-bind="TransactionState.display(target.state)"></p>
+                <br />
+                <p class="form-control-static label label-success" data-ng-bind="TransactionState.display(target.state)"></p>
             </div>
             <div class="col-md-6">
                 <label>Ended</label>
@@ -108,6 +123,38 @@
             <div class="col-md-6">
                 <label>Last Modified</label>
                 <p class="form-control-static" data-ng-bind="target.lastModified|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div ng-show="target.countdown>0 && !target.isAbandoned">
+                <label>Time left</label>
+                <p>
+                    <timer interval="1000" countdown="target.countdown" ng-if="target.countdown>0">
+                        {{days}} day-{{hhours}}:{{mminutes}}:{{sseconds}}
+                    </timer>
+                </p>
+            </div>
+            <div ng-show="target.countdown==0 && !target.isAbandoned">
+                <p colspan="2" class="text-center">Time ended</p>
+            </div>
+            <div ng-show="target.isAbandoned">
+                <p colspan="2" class="text-center">Transaction Abandoned</p>
+            </div>
+        </div>
+        <div class="panel-body transaction-account-info-container">
+            <div class="form-group text-center" ng-show="target.isAllowAttachment">
+                <img class="transaction-attachment-file" ng-show="target.attachmentUrl" src="{{target.attachmentUrl}}"/><br />
+                <button class="btn btn-default" ng-show="target.isAllowUploadAttachment" ng-click="upload(target)"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+            </div>
+
+            <div class="form-group text-center" ng-show="target.isAllowConfirmGave">
+                <button class="btn btn-success" ng-disabled="isProcessing" ng-click="moneyTransfered(target)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Gave?</button>
+                <button class="btn btn-warning" ng-show="target.isAllowAbandonTransaction" ng-disabled="isProcessing" ng-really-click="abandon(target)" ng-really-message="Are you sure you want to abandon this transaction?"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;Abandon Transaction</button>
+            </div>
+
+            <div class="form-group text-center" ng-show="target.isAllowConfirmReceived">
+                <button class="btn btn-success" ng-disabled="isProcessing" ng-click="moneyReceived(target)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Receive?</button>
+                <button class="btn btn-danger" ng-disabled="isProcessing" ng-really-click="reportNotTransfer(target)" ng-really-message="Report Giver did not transfer money."><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Report</button>
             </div>
         </div>
     </div>

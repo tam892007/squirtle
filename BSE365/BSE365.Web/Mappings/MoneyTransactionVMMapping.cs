@@ -33,7 +33,8 @@ namespace BSE365.Mappings
                     PhoneNumber = x.Giver.UserInfo.PhoneNumber,
                     BankNumber = x.Giver.UserInfo.BankNumber,
                     BankName = x.Giver.UserInfo.BankName,
-                    BankBranch = x.Giver.UserInfo.BankBranch
+                    BankBranch = x.Giver.UserInfo.BankBranch,
+                    Rating = x.Giver.UserInfo.Rating
                 };
             return result;
         }
@@ -61,7 +62,8 @@ namespace BSE365.Mappings
                     PhoneNumber = x.Receiver.UserInfo.PhoneNumber,
                     BankNumber = x.Receiver.UserInfo.BankNumber,
                     BankName = x.Receiver.UserInfo.BankName,
-                    BankBranch = x.Receiver.UserInfo.BankBranch
+                    BankBranch = x.Receiver.UserInfo.BankBranch,
+                    Rating = x.Receiver.UserInfo.Rating
                 };
             return result;
         }
@@ -90,6 +92,7 @@ namespace BSE365.Mappings
                     BankNumber = x.Receiver.UserInfo.BankNumber,
                     BankName = x.Receiver.UserInfo.BankName,
                     BankBranch = x.Receiver.UserInfo.BankBranch,
+                    Rating = x.Receiver.UserInfo.Rating,
                     RelatedTransactionId = x.RelatedTransactionId,
                     ForAccount = x.RelatedTransaction.GiverId,
                     ForUser = x.RelatedTransaction.Giver.UserInfo.DisplayName,
@@ -114,7 +117,8 @@ namespace BSE365.Mappings
         }
 
 
-        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Base>> GetExpToVM()
+        public static Expression<Func<MoneyTransaction, MoneyTransactionVM.Base>> GetExpToVM(
+            string currentAccount = null)
         {
             Expression<Func<MoneyTransaction, MoneyTransactionVM.Base>> result =
                 x => new MoneyTransactionVM.Base
@@ -138,12 +142,15 @@ namespace BSE365.Mappings
                     GiverBankNumber = x.Giver.UserInfo.BankNumber,
                     GiverBankName = x.Giver.UserInfo.BankName,
                     GiverBankBranch = x.Giver.UserInfo.BankBranch,
+                    GiverRating = x.Giver.UserInfo.Rating,
                     ReceiverDisplayName = x.Receiver.UserInfo.DisplayName,
                     ReceiverEmail = x.Receiver.UserInfo.Email,
                     ReceiverPhoneNumber = x.Receiver.UserInfo.PhoneNumber,
                     ReceiverBankNumber = x.Receiver.UserInfo.BankNumber,
                     ReceiverBankName = x.Receiver.UserInfo.BankName,
-                    ReceiverBankBranch = x.Receiver.UserInfo.BankBranch
+                    ReceiverBankBranch = x.Receiver.UserInfo.BankBranch,
+                    ReceiverRating = x.Receiver.UserInfo.Rating,
+                    CurrentAccount = currentAccount,
                 };
             return result;
         }
