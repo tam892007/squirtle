@@ -219,22 +219,18 @@ namespace BSE365.Model.Entities
 
         public WaitingReceiver ClaimBonus()
         {
-            WaitingReceiver waitingqueue = null;
-            if (IsAllowClaimBonus())
+            var waitingqueue = new WaitingReceiver
             {
-                UserInfo.ClaimBonus();
+                AccountId = UserName,
+                Priority = Priority,
+                Type = WaitingType.Bonus,
+                Amount = TransactionConfig.ReceiveAmountBonus,
+                Created = DateTime.Now,
+                ObjectState = ObjectState.Added
+            };
+            WaitingReceivers.Add(waitingqueue);
 
-                waitingqueue = new WaitingReceiver
-                {
-                    AccountId = UserName,
-                    Priority = Priority,
-                    Type = WaitingType.Bonus,
-                    Amount = TransactionConfig.ReceiveAmountBonus,
-                    Created = DateTime.Now,
-                    ObjectState = ObjectState.Added
-                };
-                WaitingReceivers.Add(waitingqueue);
-            }
+            UserInfo.ClaimBonus();
             return waitingqueue;
         }
 

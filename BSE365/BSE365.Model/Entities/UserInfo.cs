@@ -245,7 +245,7 @@ namespace BSE365.Model.Entities
         public void ClaimBonus()
         {
             BonusPoint -= TransactionConfig.BonusPointToExchange;
-            LastClaimBonusDate = DateTime.Now;
+            LastClaimBonusDate = DateTime.Now.Date;
             ObjectState = ObjectState.Modified;
         }
 
@@ -271,32 +271,12 @@ namespace BSE365.Model.Entities
             if (DayBonusTemp < DateTime.Now.Date)
             {
                 DayBonusTemp = DateTime.Now.Date;
-                DayBonusPoint = point;
-
-                BonusPoint += point;
-                TotalBonusPoint += point;
-                ObjectState = ObjectState.Modified;
+                DayBonusPoint = 0;
             }
-            else if (DayBonusPoint < TransactionConfig.MaxBonusPointPerDay)
-            {
-                if (DayBonusPoint + point <= TransactionConfig.MaxBonusPointPerDay)
-                {
-                    DayBonusPoint += point;
-
-                    BonusPoint += point;
-                    TotalBonusPoint += point;
-                    ObjectState = ObjectState.Modified;
-                }
-                else
-                {
-                    var pointToAdd = TransactionConfig.MaxBonusPointPerDay - DayBonusPoint;
-                    DayBonusPoint += pointToAdd;
-
-                    BonusPoint += pointToAdd;
-                    TotalBonusPoint += pointToAdd;
-                    ObjectState = ObjectState.Modified;
-                }
-            }
+            DayBonusPoint += point;
+            BonusPoint += point;
+            TotalBonusPoint += point;
+            ObjectState = ObjectState.Modified;
         }
 
         #endregion

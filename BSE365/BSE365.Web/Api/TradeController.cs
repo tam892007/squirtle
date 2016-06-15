@@ -244,7 +244,7 @@ namespace BSE365.Api
             }
             else
             {
-                throw new Exception("Current State not allow to change State.");
+                throw new Exception("Current Account's State not allow to change State.");
             }
         }
 
@@ -328,16 +328,23 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            try
+            if (account.IsAllowClaimBonus())
             {
-                account.ClaimBonus();
-                await _unitOfWork.SaveChangesAsync();
-                _unitOfWork.Commit();
+                try
+                {
+                    account.ClaimBonus();
+                    await _unitOfWork.SaveChangesAsync();
+                    _unitOfWork.Commit();
+                }
+                catch (Exception ex)
+                {
+                    _unitOfWork.Rollback();
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _unitOfWork.Rollback();
-                throw;
+                throw new Exception("Current Account' State now allow to Claim Bonus");
             }
         }
 

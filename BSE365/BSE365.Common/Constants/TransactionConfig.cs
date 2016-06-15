@@ -38,6 +38,5 @@
         public static int BonusMaxLevel = 9;
 
         public static int BonusPointToExchange = 100;
-        public static int MaxBonusPointPerDay = 100;
     }
 }
