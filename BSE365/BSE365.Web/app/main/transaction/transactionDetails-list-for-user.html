@@ -22,7 +22,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'success':item.state==TransactionState.Confirmed, 'warning':item.state==TransactionState.Abandoned, 'danger':item.state==TransactionState.NotTransfer||item.state==TransactionState.NotConfirm||item.state==TransactionState.Failed }">
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'warning':item.isGiving, 'success':item.isReceiving }">
             <td>
                 <span data-ng-bind="item.id"></span>
             </td>
@@ -33,7 +33,7 @@
                 <span data-ng-bind="item.receiverId"></span>
             </td>
             <td>
-                <span data-ng-bind="TransactionType.display(item.type)"></span>&nbsp;<span class="glyphicon glyphicon-heart" aria-hidden="true" ng-show="item.type==TransactionType.Bonus"></span><span class="glyphicon glyphicon-warning-sign" aria-hidden="true" ng-show="item.type==TransactionType.Replacement"></span>
+                <span ng-show="item.isGiving">Give - </span><span ng-show="item.isReceiving">Receive - </span><span data-ng-bind="TransactionType.display(item.type)"></span>&nbsp;<span class="glyphicon glyphicon-heart" aria-hidden="true" ng-show="item.type==TransactionType.Bonus"></span><span class="glyphicon glyphicon-warning-sign" aria-hidden="true" ng-show="item.type==TransactionType.Replacement"></span>
             </td>
             <td>
                 <span data-ng-bind="TransactionState.display(item.state)"></span>
