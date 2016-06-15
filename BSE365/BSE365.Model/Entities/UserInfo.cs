@@ -249,7 +249,7 @@ namespace BSE365.Model.Entities
             ObjectState = ObjectState.Modified;
         }
 
-        public void AddBonusPointToParents(List<UserInfo> parentInfos)
+        private void AddBonusPointToParents(List<UserInfo> parentInfos)
         {
             parentInfos.Reverse();
             for (int i = 0; i < parentInfos.Count; i++)
@@ -266,7 +266,7 @@ namespace BSE365.Model.Entities
             }
         }
 
-        public void AddBonusPoint(int point)
+        private void AddBonusPoint(int point)
         {
             if (DayBonusTemp < DateTime.Now.Date)
             {

@@ -105,7 +105,7 @@ namespace BSE365.Model.Entities
             }
         }
 
-        public void ClearQueued()
+        private void ClearQueued()
         {
             foreach (var waitingGiver in WaitingGivers)
             {
