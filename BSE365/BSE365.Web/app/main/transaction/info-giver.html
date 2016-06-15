@@ -48,7 +48,7 @@
             <td>Amount</td>
             <td>{{item.amount|currency:item.moneyCurrency:0}}</td>
         </tr>
-        <tr ng-show="item.countdown>0 && !item.isAbadoned">
+        <tr ng-show="item.countdown>0 && !item.isAbandoned">
             <td>Time left</td>
             <td>
                 <timer interval="1000" countdown="item.countdown" ng-if="item.countdown>0">
@@ -56,11 +56,11 @@
                 </timer>
             </td>
         </tr>
-        <tr ng-show="item.countdown==0 && !item.isAbadoned">
+        <tr ng-show="item.countdown==0 && !item.isAbandoned">
             <td colspan="2" class="text-center">Time ended</td>
         </tr>
-        <tr ng-show="item.isAbadoned">
-            <td colspan="2" class="text-center">Transaction Abadoned</td>
+        <tr ng-show="item.isAbandoned">
+            <td colspan="2" class="text-center">Transaction Abandoned</td>
         </tr>
     </table>
     <div class="panel-body transaction-account-info-container">
@@ -69,7 +69,7 @@
         </div>
         <div class="form-group text-center" ng-show="item.isAllowConfirmReceived">
             <button class="btn btn-success" ng-disabled="isProcessing" ng-click="moneyReceived(item)"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;Receive?</button>
-            <button class="btn btn-danger" ng-disabled="isProcessing" ng-click="reportNotTransfer(item)"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Report</button>
+            <button class="btn btn-danger" ng-disabled="isProcessing" ng-really-click="reportNotTransfer(item)" ng-really-message="Report Giver did not transfer money."><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Report</button>
         </div>
     </div>
 </div>

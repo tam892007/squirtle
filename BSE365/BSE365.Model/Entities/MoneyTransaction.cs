@@ -128,19 +128,19 @@ namespace BSE365.Model.Entities
             //Giver.ReportNotTransfer(this);
         }
 
-        public void Abadon()
+        public void Abandon()
         {
-            Type = TransactionType.Abadoned;
-            State = TransactionState.Abadoned;
+            Type = TransactionType.Abandoned;
+            State = TransactionState.Abandoned;
             LastModified = DateTime.Now;
             IsEnd = true;
             ObjectState = ObjectState.Modified;
 
             // update giver 
-            Giver.AbadonTransaction(this);
+            Giver.AbandonTransaction(this);
 
             // update receiver
-            Receiver.ReQueueWaitingListForAbadonTransaction(this);
+            Receiver.ReQueueWaitingListForAbandonTransaction(this);
         }
 
         public void Failed()

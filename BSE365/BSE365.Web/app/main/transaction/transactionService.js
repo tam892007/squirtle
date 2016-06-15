@@ -8,7 +8,7 @@
             moneyReceived: { method: 'POST', params: { path: 'api/transaction/moneyReceived' } },
             reportNotTransfer: { method: 'POST', params: { path: 'api/transaction/reportNotTransfer' } },
             updateImg: { method: 'POST', params: { path: 'api/transaction/updateImg' } },
-            abadonTransaction: { method: 'POST', params: { path: 'api/transaction/abadonTransaction' } },
+            abandonTransaction: { method: 'POST', params: { path: 'api/transaction/abandonTransaction' } },
             queryTransaction: { method: 'POST', params: { path: 'api/transaction/queryTransaction' } },
             reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' } },
             applyReport: { method: 'POST', params: { path: 'api/transaction/applyReport' } },

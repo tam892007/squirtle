@@ -20,7 +20,7 @@ namespace BSE365.Mappings
                 NotAllowGiveReason = target.NotAllowGiveReason(),
                 NotAllowReceiveReason = target.NotAllowReceiveReason(),
                 IsAllowChangeState = target.IsAllowChangeState(),
-                IsAllowAbadonTransaction = target.IsAllowAbadonTransaction(),
+                IsAllowAbandonTransaction = target.IsAllowAbandonTransaction(),
                 IsAllowClaimBonus = target.IsAllowClaimBonus(),
                 State = target.State,
                 Priority = target.Priority,

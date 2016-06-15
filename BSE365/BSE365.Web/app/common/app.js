@@ -1,16 +1,19 @@
-﻿var commonApp = angular.module('commonApp', ['ngResource', 'ui.router']);
+﻿var commonApp = angular.module('commonApp', ['ngResource', 'ui.router', 'ui.bootstrap']);
 
 var serviceBase = 'http://localhost:2736/';
-commonApp.constant('ngAuthSettings', {
+commonApp.constant('ngAuthSettings',
+{
     apiServiceBaseUri: serviceBase,
     clientId: 'SHARE'
 });
 
-commonApp.constant('recaptchaSettings', {
+commonApp.constant('recaptchaSettings',
+{
     publicKey: '6LcFKCETAAAAAN6JPAwzot2fExNpZUumgKXj Jugq',
 });
 
-commonApp.constant('filterSetting', {
+commonApp.constant('filterSetting',
+{
     pagination: {
         template: 'template/smart-table/pagination.html',
         itemsByPage: 30,
@@ -35,4 +38,3 @@ commonApp.constant('filterSetting', {
         delay: 100 //ms
     }
 });
-

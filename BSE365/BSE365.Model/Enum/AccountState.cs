@@ -30,6 +30,6 @@
         NotConfirm = 22,
         ReportedNotTransfer = 23,
 
-        AbadonOne = 31
+        AbandonOne = 31
     }
 }

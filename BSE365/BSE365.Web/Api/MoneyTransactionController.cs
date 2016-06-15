@@ -118,10 +118,10 @@ namespace BSE365.Api
         }
 
         [HttpPost]
-        [Route("AbadonTransaction")]
-        public async Task<IHttpActionResult> AbadonTransaction(MoneyTransactionVM.Receiver transaction)
+        [Route("AbandonTransaction")]
+        public async Task<IHttpActionResult> AbandonTransaction(MoneyTransactionVM.Receiver transaction)
         {
-            var result = await AbadonTransactionAsync(transaction);
+            var result = await AbandonTransactionAsync(transaction);
             return Ok(result);
         }
 
@@ -307,7 +307,7 @@ namespace BSE365.Api
             return transaction.UpdateVm(tran);
         }
 
-        private async Task<MoneyTransactionVM.Receiver> AbadonTransactionAsync(MoneyTransactionVM.Receiver tran)
+        private async Task<MoneyTransactionVM.Receiver> AbandonTransactionAsync(MoneyTransactionVM.Receiver tran)
         {
             var transaction = await _transactionRepo.Queryable()
                 .Include(x => x.Giver.UserInfo)
@@ -318,7 +318,7 @@ namespace BSE365.Api
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             try
             {
-                transaction.Abadon();
+                transaction.Abandon();
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
             }

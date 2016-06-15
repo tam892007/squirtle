@@ -22,7 +22,7 @@
                 </div>
             </td>
         </tr>
-        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'success':item.state==TransactionState.Confirmed, 'warning':item.state==TransactionState.Abadoned, 'danger':item.state==TransactionState.NotTransfer||item.state==TransactionState.NotConfirm||item.state==TransactionState.Failed }">
+        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected, 'success':item.state==TransactionState.Confirmed, 'warning':item.state==TransactionState.Abandoned, 'danger':item.state==TransactionState.NotTransfer||item.state==TransactionState.NotConfirm||item.state==TransactionState.Failed }">
             <td>
                 <span data-ng-bind="item.id"></span>
             </td>

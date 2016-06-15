@@ -59,7 +59,7 @@ namespace BSE365.Model.Entities
 
         #region state
 
-        public bool IsAllowAbadonTransaction()
+        public bool IsAllowAbandonTransaction()
         {
             return UserInfo.State == UserState.Default &&
                    UserInfo.IsAllowAbandonOne;
@@ -129,7 +129,7 @@ namespace BSE365.Model.Entities
         public bool IsAllowQueueGive()
         {
             var dayFromLastCycle = (DateTime.Now.Date - LastCycleDate).Days;
-            return ((dayFromLastCycle >= 7 && State == AccountState.Default) || State == AccountState.AbadonOne) &&
+            return ((dayFromLastCycle >= 7 && State == AccountState.Default) || State == AccountState.AbandonOne) &&
                    UserInfo.IsAllowQueueGive(this);
         }
 
@@ -141,7 +141,7 @@ namespace BSE365.Model.Entities
             {
                 result.Add("Last receive date is less than 7 days.");
             }
-            if (State != AccountState.Default && State != AccountState.AbadonOne)
+            if (State != AccountState.Default && State != AccountState.AbandonOne)
             {
                 result.Add("Account's State not allowed.");
             }
@@ -182,10 +182,10 @@ namespace BSE365.Model.Entities
                 Created = DateTime.Now,
                 ObjectState = ObjectState.Added
             };
-            if (State == AccountState.AbadonOne)
+            if (State == AccountState.AbandonOne)
             {
-                waitingqueue.Type = WaitingType.Abadon;
-                waitingqueue.Amount = TransactionConfig.GiveAmountAbadon;
+                waitingqueue.Type = WaitingType.Abandon;
+                waitingqueue.Amount = TransactionConfig.GiveAmountAbandon;
             }
             WaitingGivers.Add(waitingqueue);
             return waitingqueue;
@@ -255,7 +255,7 @@ namespace BSE365.Model.Entities
                     CurrentTransactionGroupId = null;
                     ObjectState = ObjectState.Modified;
 
-                    UserInfo.ResetAbadonStatus();
+                    UserInfo.ResetAbandonStatus();
                 }
                 UserInfo.MoneyGave(parentInfos);
             }
@@ -317,18 +317,18 @@ namespace BSE365.Model.Entities
         }
 
         /// <summary>
-        /// abadon transaction for giver
+        /// abandon transaction for giver
         /// </summary>
         /// <param name="transaction"></param>
-        public void AbadonTransaction(MoneyTransaction transaction)
+        public void AbandonTransaction(MoneyTransaction transaction)
         {
-            if (IsAllowAbadonTransaction())
+            if (IsAllowAbandonTransaction())
             {
-                State = AccountState.AbadonOne;
+                State = AccountState.AbandonOne;
                 ObjectState = ObjectState.Modified;
 
                 // update user info 
-                UserInfo.AbadonTransaction();
+                UserInfo.AbandonTransaction();
             }
         }
 
@@ -336,7 +336,7 @@ namespace BSE365.Model.Entities
         /// requeue waiting receiver list with high priority for receiver 
         /// </summary>
         /// <param name="transaction"></param>
-        public WaitingReceiver ReQueueWaitingListForAbadonTransaction(MoneyTransaction transaction)
+        public WaitingReceiver ReQueueWaitingListForAbandonTransaction(MoneyTransaction transaction)
         {
             WaitingReceiver waitingqueue = null;
             if (WaitingReceivers.Count == 0)

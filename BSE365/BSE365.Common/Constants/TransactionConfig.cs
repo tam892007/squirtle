@@ -23,7 +23,7 @@
         public static int TimeForEachStepInHours = 32;
 
         public static int GiveAmountDefault = 2;
-        public static int GiveAmountAbadon = 1;
+        public static int GiveAmountAbandon = 1;
 
         public static int ReceiveAmountDefault = 3;
         public static int ReceiveAmountBonus = 1;

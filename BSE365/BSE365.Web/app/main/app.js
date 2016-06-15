@@ -245,7 +245,7 @@ mainApp.factory('AccountState',
             NotConfirm: 22,
             ReportedNotTransfer: 23,
 
-            AbadonOne: 31,
+            AbandonOne: 31,
         };
         data.display = function(value) {
             switch (value) {
@@ -267,8 +267,8 @@ mainApp.factory('AccountState',
                 return 'Not Confirm';
             case data.ReportedNotTransfer:
                 return 'Reported Not Transfer';
-            case data.AbadonOne:
-                return 'Abadoned One';
+            case data.AbandonOne:
+                return 'Abandoned One';
             default:
                 return '';
             }
@@ -280,15 +280,15 @@ mainApp.factory('WaitingType',
     function() {
         var data = {
             Default: 0,
-            Abadon: 31,
+            Abandon: 31,
             Bonus: 51,
         }
         data.display = function(value) {
             switch (value) {
             case data.Default:
                 return 'Default';
-            case data.Abadon:
-                return 'Abadoned';
+            case data.Abandon:
+                return 'Abandoned';
             case data.Bonus:
                 return 'Bonus';
             default:
@@ -334,7 +334,7 @@ mainApp.factory('TransactionState',
             NotConfirm: 22,
             ReportedNotTransfer: 23,
 
-            Abadoned: 31,
+            Abandoned: 31,
 
             Failed: 51,
         }
@@ -352,8 +352,8 @@ mainApp.factory('TransactionState',
                 return 'Not Confirm';
             case data.ReportedNotTransfer:
                 return 'Reported Not Transfer';
-            case data.Abadoned:
-                return 'Abadoned';
+            case data.Abandoned:
+                return 'Abandoned';
             case data.Failed:
                 return 'Failed';
             default:
@@ -367,7 +367,7 @@ mainApp.factory('TransactionType',
     function() {
         var data = {
             Default: 0,
-            Abadoned: 31,
+            Abandoned: 31,
             Replacement: 41,
             Bonus: 51,
         }
@@ -375,8 +375,8 @@ mainApp.factory('TransactionType',
             switch (value) {
             case data.Default:
                 return 'Default';
-            case data.Abadoned:
-                return 'Abadoned';
+            case data.Abandoned:
+                return 'Abandoned';
             case data.Replacement:
                 return 'Replacement';
             case data.Bonus:

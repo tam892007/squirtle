@@ -3,7 +3,7 @@
     public enum WaitingType
     {
         Default = 0,
-        Abadon = 31,
+        Abandon = 31,
         Bonus = 51
     }
 }

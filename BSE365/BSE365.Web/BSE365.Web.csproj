@@ -223,6 +223,7 @@
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
+    <Content Include="app\common\directives\confirmClickDirective.js" />
     <Content Include="app\common\directives\httpSrc.js" />
     <Content Include="app\common\directives\syncFocusWith.js" />
     <Content Include="app\common\services\imageService.js" />
