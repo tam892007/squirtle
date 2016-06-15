@@ -230,6 +230,7 @@
     <Content Include="app\common\templates\empty.html" />
     <Content Include="app\main\account\account-default.html" />
     <Content Include="app\main\account\account-edit.html" />
+    <Content Include="app\main\account\account-info-horizontal.html" />
     <Content Include="app\main\account\waiting-details.html" />
     <Content Include="app\main\account\accountService.js" />
     <Content Include="app\main\account\account-info.html" />
@@ -262,11 +263,15 @@
     <Content Include="app\main\account\waitingReceiverController.js" />
     <Content Include="app\main\trade\tradeInfoController.js" />
     <Content Include="app\main\trade\tradeHistoryController.js" />
+    <Content Include="app\main\transaction\info.html" />
+    <Content Include="app\main\transaction\transactionInfoHistoryController.js" />
+    <Content Include="app\main\transaction\transactionInfoController.js" />
     <Content Include="app\main\transaction\transaction-control.html" />
     <Content Include="app\main\transaction\transaction-title-withcolor.html" />
     <Content Include="app\main\transaction\transaction-title.html" />
     <Content Include="app\main\transaction\transactionDetails-report.html" />
     <Content Include="app\main\transaction\transactionDetails-details.html" />
+    <Content Include="app\main\transaction\info-history.html" />
     <Content Include="app\main\transaction\transactionPunishmentController.js" />
     <Content Include="app\main\transaction\transactionDetails-list.html" />
     <Content Include="app\main\transaction\transactionList.html" />
