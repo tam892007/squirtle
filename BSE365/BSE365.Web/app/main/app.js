@@ -107,6 +107,19 @@ mainApp.config([
                 templateUrl: 'app/main/trade/trade-bonus.html',
                 controller: 'tradeBonusController'
             })
+            .state('transaction',
+            {
+                abstract: true,
+                url: "/transaction",
+                templateUrl: 'app/main/transaction/info.html',
+                controller: 'transactionInfoController'
+            })
+            .state('transaction.history',
+            {
+                url: "/history",
+                templateUrl: 'app/main/transaction/info-history.html',
+                controller: 'transactionInfoHistoryController'
+            })
             .state('waitinggiver',
             {
                 url: "/waitinggiver",

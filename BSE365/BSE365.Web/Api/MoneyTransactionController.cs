@@ -37,10 +37,6 @@ namespace BSE365.Api
         private IRepositoryAsync<UserInfo> _userInfoRepo;
         private UserProfileRepository _userRepo;
 
-        #region
-
-        #endregion
-
         public MoneyTransactionController(
             IUnitOfWorkAsync unitOfWork,
             IRepositoryAsync<MoneyTransaction> transactionRepo,
@@ -196,6 +192,14 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [HttpPost]
+        [Route("QueryUserHistory")]
+        public async Task<IHttpActionResult> QueryUserHistory(FilterVM filter)
+        {
+            var result = await QueryUserHistoryAsync(filter);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<List<MoneyTransactionVM.Receiver>> GiveRequestedAsync()
@@ -237,7 +241,8 @@ namespace BSE365.Api
                 ////Send email
                 var request = System.Web.HttpContext.Current.Request;
                 var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(()=>EmailHelper.SendNotificationBeingGived(tran.Email, tran.GiverId, tran.ReceiverId, baseUri));
+                BackgroundJob.Enqueue(
+                    () => EmailHelper.SendNotificationBeingGived(tran.Email, tran.GiverId, tran.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
@@ -276,7 +281,10 @@ namespace BSE365.Api
                 ////Send email
                 var request = System.Web.HttpContext.Current.Request;
                 var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationConfirmReceived(transaction.Giver.UserInfo.Email, tran.GiverId, tran.ReceiverId, baseUri));
+                BackgroundJob.Enqueue(
+                    () =>
+                        EmailHelper.SendNotificationConfirmReceived(transaction.Giver.UserInfo.Email, tran.GiverId,
+                            tran.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
@@ -369,12 +377,8 @@ namespace BSE365.Api
         private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryTransactionAsync(FilterVM filter)
         {
             int totalPageCount;
-            IQueryFluent<MoneyTransaction> query = null;
-            if (filter.Search.PredicateObject == null)
-            {
-                query = _transactionRepo.Query();
-            }
-            else
+            IQueryFluent<MoneyTransaction> query = _transactionRepo.Query();
+            if (filter.Search.PredicateObject != null)
             {
                 var summary = filter.Search.PredicateObject.Value<string>("$");
                 if (!string.IsNullOrWhiteSpace(summary))
@@ -390,10 +394,6 @@ namespace BSE365.Api
                         query = _transactionRepo.Query(
                             x => x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary));
                     }
-                }
-                else
-                {
-                    query = _transactionRepo.Query();
                 }
             }
 
@@ -415,12 +415,9 @@ namespace BSE365.Api
         private async Task<PageViewModel<MoneyTransactionVM.Base>> ReportedTransactionsAsync(FilterVM filter)
         {
             int totalPageCount;
-            IQueryFluent<MoneyTransaction> query = null;
-            if (filter.Search.PredicateObject == null)
-            {
-                query = _transactionRepo.Query(x => x.State == TransactionState.ReportedNotTransfer);
-            }
-            else
+            IQueryFluent<MoneyTransaction> query =
+                _transactionRepo.Query(x => x.State == TransactionState.ReportedNotTransfer);
+            if (filter.Search.PredicateObject != null)
             {
                 var summary = filter.Search.PredicateObject.Value<string>("$");
                 if (!string.IsNullOrWhiteSpace(summary))
@@ -438,10 +435,6 @@ namespace BSE365.Api
                             x.State == TransactionState.ReportedNotTransfer &&
                             (x.GiverId.Contains(summary) || x.ReceiverId.Contains(summary)));
                     }
-                }
-                else
-                {
-                    query = _transactionRepo.Query(x => x.State == TransactionState.ReportedNotTransfer);
                 }
             }
 
@@ -537,6 +530,48 @@ namespace BSE365.Api
                 .Select(expression)
                 .ToListAsync();
             return data;
+        }
+
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserHistoryAsync(FilterVM filter)
+        {
+            int totalPageCount;
+            var username = User.Identity.GetUserName();
+            IQueryFluent<MoneyTransaction> query =
+                _transactionRepo.Query(x => x.GiverId == username || x.ReceiverId == username);
+            if (filter.Search.PredicateObject != null)
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    if (int.TryParse(summary, out id))
+                    {
+                        query = _transactionRepo.Query(x =>
+                            (x.GiverId == username && (x.Id == id || x.ReceiverId.Contains(summary))) ||
+                            (x.ReceiverId == username && (x.Id == id || x.GiverId.Contains(summary))));
+                    }
+                    else
+                    {
+                        query = _transactionRepo.Query(x =>
+                            (x.GiverId == username && x.ReceiverId.Contains(summary)) ||
+                            (x.ReceiverId == username && x.GiverId.Contains(summary)));
+                    }
+                }
+            }
+
+            var expression = MoneyTransactionVMMapping.GetExpToVM();
+            var data = await query.OrderBy(x => x.OrderByDescending(a => a.Id))
+                .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
+                    filter.Pagination.Number, out totalPageCount)
+                .ToListAsync();
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         #endregion

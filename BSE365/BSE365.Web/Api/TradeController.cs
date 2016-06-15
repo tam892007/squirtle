@@ -163,12 +163,8 @@ namespace BSE365.Api
         private async Task<PageViewModel<TradeAccountVM>> QueryAccountAsync(FilterVM filter)
         {
             int totalPageCount;
-            IQueryFluent<Account> query = null;
-            if (filter.Search.PredicateObject == null)
-            {
-                query = _accountRepo.Query();
-            }
-            else
+            IQueryFluent<Account> query = _accountRepo.Query();
+            if (filter.Search.PredicateObject != null)
             {
                 var userName = filter.Search.PredicateObject.Value<string>("userName");
                 query = _accountRepo.Query(x => x.UserName.Contains(userName));
@@ -351,12 +347,8 @@ namespace BSE365.Api
         private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingGiversAsync(FilterVM filter)
         {
             int totalPageCount;
-            IQueryFluent<WaitingGiver> query = null;
-            if (filter.Search.PredicateObject == null)
-            {
-                query = _waitingGiverRepo.Query();
-            }
-            else
+            IQueryFluent<WaitingGiver> query = _waitingGiverRepo.Query();
+            if (filter.Search.PredicateObject != null)
             {
                 var userName = filter.Search.PredicateObject.Value<string>("userName");
                 query = _waitingGiverRepo.Query(x => x.AccountId.Contains(userName));
@@ -381,12 +373,8 @@ namespace BSE365.Api
         private async Task<PageViewModel<WaitingAccountVM>> QueryWaitingReceiversAsync(FilterVM filter)
         {
             int totalPageCount;
-            IQueryFluent<WaitingReceiver> query = null;
-            if (filter.Search.PredicateObject == null)
-            {
-                query = _waitingReceiverRepo.Query();
-            }
-            else
+            IQueryFluent<WaitingReceiver> query = _waitingReceiverRepo.Query();
+            if (filter.Search.PredicateObject != null)
             {
                 var userName = filter.Search.PredicateObject.Value<string>("userName");
                 query = _waitingReceiverRepo.Query(x => x.AccountId.Contains(userName));

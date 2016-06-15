@@ -129,9 +129,15 @@ namespace BSE365.ViewModels
             public int? WaitingReceiverId { get; set; }
 
 
-            public int Amount => TransactionConfig.MoneyPerTransaction;
+            public int Amount
+            {
+                get { return TransactionConfig.MoneyPerTransaction; }
+            }
 
-            public string MoneyCurrency => TransactionConfig.MoneyCurrency;
+            public string MoneyCurrency
+            {
+                get { return TransactionConfig.MoneyCurrency; }
+            }
 
             public bool IsEnd { get; set; }
 
