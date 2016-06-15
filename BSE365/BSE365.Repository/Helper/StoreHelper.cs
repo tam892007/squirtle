@@ -41,6 +41,7 @@ namespace BSE365.Repository.Helper
                     try
                     {
                         var now = DateTime.Now;
+                        var transactionsToAdd = new List<MoneyTransaction>();
                         foreach (var waitingGiver in waitingGivers)
                         {
                             var transaction = new MoneyTransaction
@@ -59,20 +60,29 @@ namespace BSE365.Repository.Helper
                                 transaction.Type = TransactionType.Bonus;
                             }
 
+                            // update waiting raw
                             waitingGiver.Amount--;
                             waitingGiver.ObjectState = waitingGiver.Amount == 0
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
-
-                            context.MoneyTransactions.Add(transaction);
 
                             // update giver's account
                             if (waitingGiver.Account.State == AccountState.WaitGive)
                             {
                                 waitingGiver.Account.State = AccountState.InGiveTransaction;
                             }
-                            waitingGiver.Account.CurrentTransactionGroupId = waitingGiver.Id;
+                            // update current transaction group id if needed
+                            if (waitingGiver.Account.CurrentTransactionGroupId == null)
+                            {
+                                waitingGiver.Account.CurrentTransactionGroupId = waitingGiver.Id;
+                            }
+                            else
+                            {
+                                transaction.WaitingGiverId = waitingGiver.Account.CurrentTransactionGroupId.Value;
+                            }
                             waitingGiver.Account.ObjectState = ObjectState.Modified;
+
+                            transactionsToAdd.Add(transaction);
                         }
 
                         waitingReceiver.Amount -= waitingGivers.Count;
@@ -88,9 +98,21 @@ namespace BSE365.Repository.Helper
                             {
                                 waitingReceiver.Account.State = AccountState.InReceiveTransaction;
                             }
-                            waitingReceiver.Account.CurrentTransactionGroupId = waitingReceiver.Id;
+                            // update current transaction group id if needed
+                            if (waitingReceiver.Account.CurrentTransactionGroupId == null)
+                            {
+                                waitingReceiver.Account.CurrentTransactionGroupId = waitingReceiver.Id;
+                            }
+                            else
+                            {
+                                transactionsToAdd.ForEach(
+                                    x => { x.WaitingReceiverId = waitingReceiver.Account.CurrentTransactionGroupId.Value; });
+                            }
                             waitingReceiver.Account.ObjectState = ObjectState.Modified;
                         }
+
+                        // add transactions
+                        transactionsToAdd.ForEach(x => { context.MoneyTransactions.Add(x); });
 
                         context.SaveChanges();
 
@@ -211,14 +233,21 @@ namespace BSE365.Repository.Helper
                                 ? ObjectState.Deleted
                                 : ObjectState.Modified;
 
-                            context.MoneyTransactions.Add(transaction);
-
                             // update giver's account
                             if (queuedGiveRaw.Account.State == AccountState.WaitGive)
                             {
                                 queuedGiveRaw.Account.State = AccountState.InGiveTransaction;
                             }
-                            queuedGiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingGiverId;
+                            // update current transaction group id if needed
+                            if (queuedGiveRaw.Account.CurrentTransactionGroupId == null)
+                            {
+                                queuedGiveRaw.Account.CurrentTransactionGroupId = queuedGiveRaw.Id;
+                            }
+                            else
+                            {
+                                transaction.WaitingGiverId =
+                                    queuedGiveRaw.Account.CurrentTransactionGroupId.Value;
+                            }
                             queuedGiveRaw.Account.ObjectState = ObjectState.Modified;
 
                             if (queuedReceiveRaw.Type != WaitingType.Bonus)
@@ -228,9 +257,21 @@ namespace BSE365.Repository.Helper
                                 {
                                     queuedReceiveRaw.Account.State = AccountState.InReceiveTransaction;
                                 }
-                                queuedReceiveRaw.Account.CurrentTransactionGroupId = transaction.WaitingReceiverId;
+                                // update current transaction group id if needed
+                                if (queuedReceiveRaw.Account.CurrentTransactionGroupId == null)
+                                {
+                                    queuedReceiveRaw.Account.CurrentTransactionGroupId = queuedReceiveRaw.Id;
+                                }
+                                else
+                                {
+                                    transaction.WaitingReceiverId =
+                                        queuedReceiveRaw.Account.CurrentTransactionGroupId.Value;
+                                }
                                 queuedReceiveRaw.Account.ObjectState = ObjectState.Modified;
                             }
+
+                            // add transaction
+                            context.MoneyTransactions.Add(transaction);
 
                             context.SaveChanges();
 
