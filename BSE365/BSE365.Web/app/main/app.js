@@ -446,7 +446,7 @@ mainApp.factory('ConfigData',
     function() {
         var data = {
             dateFormat: 'yyyy/MM/dd',
-            dateTimeFormat: 'yyyy/MM/dd - hh:mm:ss',
+            dateTimeFormat: 'yyyy/MM/dd - HH:mm:ss',
         }
         return data;
     });

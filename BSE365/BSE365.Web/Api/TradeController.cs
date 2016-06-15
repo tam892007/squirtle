@@ -228,16 +228,23 @@ namespace BSE365.Api
                 .Include(x => x.WaitingReceivers)
                 .Where(x => x.UserName == username).FirstAsync();
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            try
+            if (account.IsAllowChangeState())
             {
-                account.ChangeState(state.State);
-                await _unitOfWork.SaveChangesAsync();
-                _unitOfWork.Commit();
+                try
+                {
+                    account.ChangeState(state.State);
+                    await _unitOfWork.SaveChangesAsync();
+                    _unitOfWork.Commit();
+                }
+                catch (Exception ex)
+                {
+                    _unitOfWork.Rollback();
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _unitOfWork.Rollback();
-                throw;
+                throw new Exception("Current State not allow to change State.");
             }
         }
 
@@ -248,34 +255,40 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
 
-
-            var userId = User.Identity.GetUserId();
-            var _ctx = new BSE365AuthContext();
-            var user = await _ctx.Users.FirstAsync(x => x.Id == userId);
-
-
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            using (var authTransaction = _ctx.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+            if (account.IsAllowQueueReceive())
             {
-                try
+                var userId = User.Identity.GetUserId();
+                var _ctx = new BSE365AuthContext();
+                var user = await _ctx.Users.FirstAsync(x => x.Id == userId);
+
+                _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+                using (var authTransaction = _ctx.Database.BeginTransaction(IsolationLevel.RepeatableRead))
                 {
-                    account.QueueGive();
-                    await _unitOfWork.SaveChangesAsync();
+                    try
+                    {
+                        account.QueueGive();
+                        await _unitOfWork.SaveChangesAsync();
 
-                    user.GiveQueued();
-                    await _ctx.SaveChangesAsync();
+                        user.GiveQueued();
+                        await _ctx.SaveChangesAsync();
 
-                    _unitOfWork.Commit();
+                        _unitOfWork.Commit();
 
-                    authTransaction.Commit();
+                        authTransaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _unitOfWork.Rollback();
+
+                        authTransaction.Rollback();
+                        throw;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    _unitOfWork.Rollback();
-
-                    authTransaction.Rollback();
-                    throw;
-                }
+            }
+            else
+            {
+                var message = string.Join(",", account.NotAllowGiveReason());
+                throw new Exception(message);
             }
         }
 
@@ -285,18 +298,26 @@ namespace BSE365.Api
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
-            account.QueueReceive();
+            if (account.IsAllowQueueReceive())
+            {
+                account.QueueReceive();
 
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            try
-            {
-                await _unitOfWork.SaveChangesAsync();
-                _unitOfWork.Commit();
+                _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+                try
+                {
+                    await _unitOfWork.SaveChangesAsync();
+                    _unitOfWork.Commit();
+                }
+                catch (Exception ex)
+                {
+                    _unitOfWork.Rollback();
+                    throw;
+                }
             }
-            catch (Exception ex)
+            else
             {
-                _unitOfWork.Rollback();
-                throw;
+                var message = string.Join(",", account.NotAllowReceiveReason());
+                throw new Exception(message);
             }
         }
 

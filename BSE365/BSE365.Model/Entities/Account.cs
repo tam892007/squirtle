@@ -75,39 +75,33 @@ namespace BSE365.Model.Entities
         public void ChangeState(AccountState state)
         {
             var now = DateTime.Now.Date;
-            if (IsAllowChangeState())
+            switch (state)
             {
-                switch (state)
-                {
-                    case AccountState.Default:
-                        ClearQueued();
-                        State = AccountState.Default;
-                        var dayFromLastCycle = (now - LastCycleDate).Days;
-                        if (dayFromLastCycle < 7)
-                        {
-                            LastCycleDate = now.AddDays(-8);
-                        }
-                        ObjectState = ObjectState.Modified;
+                case AccountState.Default:
+                    ClearQueued();
+                    State = AccountState.Default;
+                    var dayFromLastCycle = (now - LastCycleDate).Days;
+                    if (dayFromLastCycle < 7)
+                    {
+                        LastCycleDate = now.AddDays(-8);
+                    }
+                    ObjectState = ObjectState.Modified;
 
-                        var dayFromLastGive = (now - UserInfo.LastGiveDate).Days;
-                        if (dayFromLastGive < 1)
-                        {
-                            UserInfo.LastGiveDate = now.AddDays(-2);
-                            UserInfo.ObjectState = ObjectState.Modified;
-                        }
-                        break;
-                    case AccountState.Gave:
-                        ClearQueued();
-                        State = AccountState.Gave;
-                        ObjectState = ObjectState.Modified;
+                    if (now == UserInfo.LastGiveDate)
+                    {
+                        UserInfo.LastGiveDate = now.AddDays(-1);
+                        UserInfo.ObjectState = ObjectState.Modified;
+                    }
+                    break;
+                case AccountState.Gave:
+                    ClearQueued();
+                    State = AccountState.Gave;
+                    ObjectState = ObjectState.Modified;
+                    QueueReceive();
 
-                        while (UserInfo.GiveOver < 2)
-                        {
-                            UserInfo.GiveOver += 2;
-                            UserInfo.ObjectState = ObjectState.Modified;
-                        }
-                        break;
-                }
+                    UserInfo.GiveOver += TransactionConfig.GiveOverToQueueReceive;
+                    UserInfo.ObjectState = ObjectState.Unchanged;
+                    break;
             }
         }
 
@@ -174,30 +168,26 @@ namespace BSE365.Model.Entities
         /// </summary>
         public WaitingGiver QueueGive()
         {
-            WaitingGiver waitingqueue = null;
-            if (IsAllowQueueGive())
+            State = AccountState.WaitGive;
+            LastCycleDate = DateTime.Now.Date;
+            ObjectState = ObjectState.Modified;
+
+            UserInfo.GiveQueued();
+
+            var waitingqueue = new WaitingGiver
             {
-                State = AccountState.WaitGive;
-                LastCycleDate = DateTime.Now.Date;
-                ObjectState = ObjectState.Modified;
-
-                UserInfo.GiveQueued();
-
-                waitingqueue = new WaitingGiver
-                {
-                    AccountId = UserName,
-                    Priority = Priority,
-                    Type = WaitingType.Default,
-                    Created = DateTime.Now,
-                    ObjectState = ObjectState.Added
-                };
-                if (State == AccountState.AbadonOne)
-                {
-                    waitingqueue.Type = WaitingType.Abadon;
-                    waitingqueue.Amount = TransactionConfig.GiveAmountAbadon;
-                }
-                WaitingGivers.Add(waitingqueue);
+                AccountId = UserName,
+                Priority = Priority,
+                Type = WaitingType.Default,
+                Created = DateTime.Now,
+                ObjectState = ObjectState.Added
+            };
+            if (State == AccountState.AbadonOne)
+            {
+                waitingqueue.Type = WaitingType.Abadon;
+                waitingqueue.Amount = TransactionConfig.GiveAmountAbadon;
             }
+            WaitingGivers.Add(waitingqueue);
             return waitingqueue;
         }
 
@@ -206,23 +196,19 @@ namespace BSE365.Model.Entities
         /// </summary>
         public WaitingReceiver QueueReceive()
         {
-            WaitingReceiver waitingqueue = null;
-            if (IsAllowQueueReceive())
+            State = AccountState.WaitReceive;
+            ObjectState = ObjectState.Modified;
+
+            UserInfo.ReceiveQueued();
+
+            var waitingqueue = new WaitingReceiver
             {
-                State = AccountState.WaitReceive;
-                ObjectState = ObjectState.Modified;
-
-                UserInfo.ReceiveQueued();
-
-                waitingqueue = new WaitingReceiver
-                {
-                    AccountId = UserName,
-                    Priority = Priority,
-                    Created = DateTime.Now,
-                    ObjectState = ObjectState.Added
-                };
-                WaitingReceivers.Add(waitingqueue);
-            }
+                AccountId = UserName,
+                Priority = Priority,
+                Created = DateTime.Now,
+                ObjectState = ObjectState.Added
+            };
+            WaitingReceivers.Add(waitingqueue);
             return waitingqueue;
         }
 
