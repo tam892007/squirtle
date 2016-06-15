@@ -251,7 +251,7 @@ namespace BSE365.Api
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
 
-            if (account.IsAllowQueueReceive())
+            if (account.IsAllowQueueGive())
             {
                 var userId = User.Identity.GetUserId();
                 var _ctx = new BSE365AuthContext();
