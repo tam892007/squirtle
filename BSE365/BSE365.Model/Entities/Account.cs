@@ -168,12 +168,6 @@ namespace BSE365.Model.Entities
         /// </summary>
         public WaitingGiver QueueGive()
         {
-            State = AccountState.WaitGive;
-            LastCycleDate = DateTime.Now.Date;
-            ObjectState = ObjectState.Modified;
-
-            UserInfo.GiveQueued();
-
             var waitingqueue = new WaitingGiver
             {
                 AccountId = UserName,
@@ -188,6 +182,13 @@ namespace BSE365.Model.Entities
                 waitingqueue.Amount = TransactionConfig.GiveAmountAbandon;
             }
             WaitingGivers.Add(waitingqueue);
+
+            State = AccountState.WaitGive;
+            LastCycleDate = DateTime.Now.Date;
+            ObjectState = ObjectState.Modified;
+
+            UserInfo.GiveQueued();
+
             return waitingqueue;
         }
 
