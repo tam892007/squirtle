@@ -223,7 +223,7 @@ mainApp.config([
 mainApp.config([
     'NotificationProvider', function(NotificationProvider) {
         NotificationProvider.setOptions({
-            delay: 1500,
+            delay: 2500,
             startTop: 20,
             startRight: 10,
             verticalSpacing: 20,

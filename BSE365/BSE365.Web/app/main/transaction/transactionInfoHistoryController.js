@@ -50,7 +50,7 @@ mainApp.controller('transactionInfoHistoryController',
             target.selected = true;
             $scope.current = target;
 
-            $state.go('.details', { key: target.id });
+            $state.go('transaction.history.details', { key: target.id });
         }
 
         $scope.init = function() {

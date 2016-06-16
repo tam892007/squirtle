@@ -52,7 +52,7 @@
                 <div class="form-group">
                     <label for="bankNumber">Bank Number:</label>
                     <input type="text" class="form-control" name="bankNumber" data-ng-model="newUser.userInfo.bankNumber" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
-                           required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13">
+                           required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13" ng-pattern="/^\d+$/">
                     <div ng-messages="regForm.bankNumber.$error" ng-if="interacted(regForm.bankNumber)" class="error-messages">
                         <div ng-messages-include="validation-messages"></div>
                         <div ng-message="unknown">This bank number has been used</div>
