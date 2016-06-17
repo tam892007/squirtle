@@ -602,12 +602,91 @@ namespace BSE365.Api
 
         private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserPunishmentAsync(FilterVM filter)
         {
-            return await QueryUserTransactionAsync(filter, TransactionType.Replacement);
+            int totalPageCount;
+            var username = User.Identity.GetUserName();
+
+            Expression<Func<MoneyTransaction, bool>> byGiver = x => x.GiverId == username;
+            Expression<Func<MoneyTransaction, bool>> byType = x => x.Type == TransactionType.Replacement;
+
+            var predicate = byGiver.And(byType);
+
+            if (filter.Search.PredicateObject != null)
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    Expression<Func<MoneyTransaction, bool>> byReceiverContains = x => x.ReceiverId.Contains(summary);
+                    if (int.TryParse(summary, out id))
+                    {
+                        Expression<Func<MoneyTransaction, bool>> byId = x => x.Id == id;
+                        predicate = predicate.And(byId.Or(byReceiverContains));
+                    }
+                    else
+                    {
+                        predicate = predicate.And(byReceiverContains);
+                    }
+                }
+            }
+            var selectExpression = MoneyTransactionVMMapping.GetExpToVM(username);
+            var data = await _transactionRepo.Query(predicate)
+                .OrderBy(x => x.OrderByDescending(a => a.Id))
+                .SelectQueryable(selectExpression,
+                    filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number, out totalPageCount)
+                .ToListAsync();
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserBonusAsync(FilterVM filter)
         {
-            return await QueryUserTransactionAsync(filter, TransactionType.Bonus);
+            int totalPageCount;
+            var username = User.Identity.GetUserName();
+
+            Expression<Func<MoneyTransaction, bool>> byReceiver = x => x.ReceiverId == username;
+            Expression<Func<MoneyTransaction, bool>> byType = x => x.Type == TransactionType.Bonus;
+
+            var predicate = byReceiver.And(byType);
+
+            if (filter.Search.PredicateObject != null)
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    Expression<Func<MoneyTransaction, bool>> byGiverContains = x => x.GiverId.Contains(summary);
+                    if (int.TryParse(summary, out id))
+                    {
+                        Expression<Func<MoneyTransaction, bool>> byId = x => x.Id == id;
+                        predicate = predicate.And(byId.Or(byGiverContains));
+                    }
+                    else
+                    {
+                        predicate = predicate.And(byGiverContains);
+                    }
+                }
+            }
+
+            var selectExpression = MoneyTransactionVMMapping.GetExpToVM(username);
+            var data = await _transactionRepo.Query(predicate)
+                .OrderBy(x => x.OrderByDescending(a => a.Id))
+                .SelectQueryable(selectExpression,
+                    filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number, out totalPageCount)
+                .ToListAsync();
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
         }
 
         private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserTransactionAsync(
