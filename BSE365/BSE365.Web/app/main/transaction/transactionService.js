@@ -13,6 +13,8 @@
             reportedTransactions: { method: 'POST', params: { path: 'api/transaction/reportedTransactions' } },
             applyReport: { method: 'POST', params: { path: 'api/transaction/applyReport' } },
             queryUserHistory: { method: 'POST', params: { path: 'api/transaction/queryUserHistory' } },
+            queryUserPunishment: { method: 'POST', params: { path: 'api/transaction/queryUserPunishment' } },
+            queryUserBonus: { method: 'POST', params: { path: 'api/transaction/queryUserBonus' } },
             transactionDetails: { method: 'POST', params: { path: 'api/transaction/transactionDetails', key: 'key' } },
         });
     }

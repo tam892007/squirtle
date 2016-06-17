@@ -126,6 +126,30 @@ mainApp.config([
                 templateUrl: 'app/main/transaction/transactionDetails-details.html',
                 controller: 'transactionInfoDetailsController'
             })
+            .state('transaction.punishment',
+            {
+                url: "/punishment",
+                templateUrl: 'app/main/transaction/info-punishment.html',
+                controller: 'transactionInfoPunishmentController'
+            })
+            .state('transaction.punishment.details',
+            {
+                url: "/:key",
+                templateUrl: 'app/main/transaction/transactionDetails-details.html',
+                controller: 'transactionInfoDetailsController'
+            })
+            .state('transaction.bonus',
+            {
+                url: "/bonus",
+                templateUrl: 'app/main/transaction/info-bonus.html',
+                controller: 'transactionInfoBonusController'
+            })
+            .state('transaction.bonus.details',
+            {
+                url: "/:key",
+                templateUrl: 'app/main/transaction/transactionDetails-details.html',
+                controller: 'transactionInfoDetailsController'
+            })
             .state('waitinggiver',
             {
                 url: "/waitinggiver",

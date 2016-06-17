@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
@@ -24,6 +25,7 @@ using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
 using Hangfire;
+using LinqKit;
 
 namespace BSE365.Api
 {
@@ -197,6 +199,22 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> QueryUserHistory(FilterVM filter)
         {
             var result = await QueryUserHistoryAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("QueryUserPunishment")]
+        public async Task<IHttpActionResult> QueryUserPunishment(FilterVM filter)
+        {
+            var result = await QueryUserPunishmentAsync(filter);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [Route("QueryUserBonus")]
+        public async Task<IHttpActionResult> QueryUserBonus(FilterVM filter)
+        {
+            var result = await QueryUserBonusAsync(filter);
             return Ok(result);
         }
 
@@ -540,6 +558,8 @@ namespace BSE365.Api
 
         private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserHistoryAsync(FilterVM filter)
         {
+            return await QueryUserTransactionAsync(filter);
+
             int totalPageCount;
             var username = User.Identity.GetUserName();
             IQueryFluent<MoneyTransaction> query =
@@ -565,10 +585,77 @@ namespace BSE365.Api
                 }
             }
 
-            var expression = MoneyTransactionVMMapping.GetExpToVM(username);
+            var selectExpression = MoneyTransactionVMMapping.GetExpToVM(username);
             var data = await query.OrderBy(x => x.OrderByDescending(a => a.Id))
-                .SelectQueryable(expression, filter.Pagination.Start/filter.Pagination.Number + 1,
+                .SelectQueryable(selectExpression, filter.Pagination.Start/filter.Pagination.Number + 1,
                     filter.Pagination.Number, out totalPageCount)
+                .ToListAsync();
+
+            var page = new PageViewModel<MoneyTransactionVM.Base>
+            {
+                Data = data,
+                TotalItems = totalPageCount
+            };
+
+            return page;
+        }
+
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserPunishmentAsync(FilterVM filter)
+        {
+            return await QueryUserTransactionAsync(filter, TransactionType.Replacement);
+        }
+
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserBonusAsync(FilterVM filter)
+        {
+            return await QueryUserTransactionAsync(filter, TransactionType.Bonus);
+        }
+
+        private async Task<PageViewModel<MoneyTransactionVM.Base>> QueryUserTransactionAsync(
+            FilterVM filter, TransactionType? type = null)
+        {
+            int totalPageCount;
+            var username = User.Identity.GetUserName();
+
+            var predicate = PredicateBuilder.True<MoneyTransaction>();
+            Expression<Func<MoneyTransaction, bool>> byGiver = x => x.GiverId == username;
+            Expression<Func<MoneyTransaction, bool>> byReceiver = x => x.ReceiverId == username;
+
+            predicate = predicate.And(byGiver.Or(byReceiver));
+
+            if (filter.Search.PredicateObject != null)
+            {
+                var summary = filter.Search.PredicateObject.Value<string>("$");
+                if (!string.IsNullOrWhiteSpace(summary))
+                {
+                    int id;
+                    Expression<Func<MoneyTransaction, bool>> byGiverContains = x => x.GiverId.Contains(summary);
+                    Expression<Func<MoneyTransaction, bool>> byReceiverContains = x => x.ReceiverId.Contains(summary);
+                    if (int.TryParse(summary, out id))
+                    {
+                        Expression<Func<MoneyTransaction, bool>> byId = x => x.Id == id;
+                        predicate = PredicateBuilder.False<MoneyTransaction>()
+                            .Or(byGiver.And(byId.Or(byReceiverContains)))
+                            .Or(byReceiver.And(byId.Or(byGiverContains)));
+                    }
+                    else
+                    {
+                        predicate = PredicateBuilder.False<MoneyTransaction>()
+                            .Or(byGiver.And(byReceiverContains))
+                            .Or(byReceiver.And(byGiverContains));
+                    }
+                }
+            }
+            if (type != null)
+            {
+                Expression<Func<MoneyTransaction, bool>> byType = x => x.Type == type.Value;
+                predicate = predicate.And(byType);
+            }
+
+            var selectExpression = MoneyTransactionVMMapping.GetExpToVM(username);
+            var data = await _transactionRepo.Query(predicate)
+                .OrderBy(x => x.OrderByDescending(a => a.Id))
+                .SelectQueryable(selectExpression,
+                    filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number, out totalPageCount)
                 .ToListAsync();
 
             var page = new PageViewModel<MoneyTransactionVM.Base>
