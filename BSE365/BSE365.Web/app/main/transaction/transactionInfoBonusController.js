@@ -1,8 +1,16 @@
 ﻿'use strict';
 mainApp.controller('transactionInfoBonusController',
 [
-    '$scope', '$state', 'transactionService', 'Notification', 'TransactionType', 'TransactionState', 'ConfigData',
-    function($scope, $state, transactionService, Notification, TransactionType, TransactionState, ConfigData) {
+    '$scope', '$state', 'transactionService', 'tradeService', 'Notification', 'TransactionType', 'TransactionState',
+    'ConfigData',
+    function($scope,
+        $state,
+        transactionService,
+        tradeService,
+        Notification,
+        TransactionType,
+        TransactionState,
+        ConfigData) {
 
         $scope.loadData = function(tableState) {
             if (tableState) {
@@ -22,7 +30,7 @@ mainApp.controller('transactionInfoBonusController',
 
         function loadTransaction(transactions) {
             _.each(transactions,
-                function (item) {
+                function(item) {
                     item.isGiving = item.currentAccount == item.giverId;
                     item.isReceiving = item.currentAccount == item.receiverId;
 
@@ -53,12 +61,35 @@ mainApp.controller('transactionInfoBonusController',
             $state.go('transaction.bonus.details', { key: target.id });
         }
 
+        function updateAccountStatus() {
+            tradeService.status({},
+                function(response) {
+                    $scope.info = response;
+                });
+        }
+
+        $scope.claimBonus = function() {
+            $scope.info.isAllowClaimBonus = false;
+            tradeService.claimBonus({ key: $scope.info.userName },
+                { key: $scope.info.userName },
+                function(response) {
+                    Notification.success('Claim bonus successful!');
+                    updateAccountStatus();
+                },
+                function(response) {
+                    $scope.info.isAllowClaimBonus = true;
+                    Notification.success(response);
+                });
+        }
+
         $scope.init = function() {
             $scope.ConfigData = ConfigData;
             $scope.TransactionType = TransactionType;
             $scope.TransactionState = TransactionState;
 
             $scope.data = [];
+
+            updateAccountStatus();
         }
 
         $scope.init();
