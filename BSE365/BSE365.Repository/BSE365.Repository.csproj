@@ -59,6 +59,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -86,6 +87,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BSE365.Common\BSE365.Common.csproj">
@@ -175,7 +177,6 @@
     <Compile Include="DataContext\BSE365AuthContext.cs" />
     <Compile Include="DataContext\BSE365Context.cs" />
     <Compile Include="Extensions\EntityTypeConfigurationExtension.cs" />
-    <Compile Include="Helper\StoreHelper.cs" />
     <Compile Include="Mappings\AccountMapping.cs" />
     <Compile Include="Mappings\ConfigMapping.cs" />
     <Compile Include="Mappings\MoneyTransactionMapping.cs" />

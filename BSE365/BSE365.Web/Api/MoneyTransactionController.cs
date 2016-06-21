@@ -255,6 +255,7 @@ namespace BSE365.Api
         private async Task<MoneyTransactionVM.Receiver> MoneyTransferedAsync(MoneyTransactionVM.Receiver tran)
         {
             var transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Giver.UserInfo)
                 .Include(x => x.Receiver.UserInfo)
                 .FirstAsync(x => x.Id == tran.Id);
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
@@ -263,18 +264,21 @@ namespace BSE365.Api
                 transaction.MoneyTransfered(tran.AttachmentUrl);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
-
-                ////Send email
-                var request = System.Web.HttpContext.Current.Request;
-                var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationBeingGived(
-                    transaction.Receiver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
                 throw;
             }
+            ////Send email
+            var request = System.Web.HttpContext.Current.Request;
+            var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+            BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionGived(transaction.Id,
+                transaction.GiverId, transaction.ReceiverId));
+            BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionGived(transaction.Id,
+                transaction.GiverId, transaction.Giver.UserInfo.Email,
+                transaction.ReceiverId, transaction.Receiver.UserInfo.Email,
+                baseUri));
             return transaction.UpdateVm(tran);
         }
 
@@ -303,18 +307,21 @@ namespace BSE365.Api
                     giverParentInfos);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
-
-                ////Send email
-                var request = System.Web.HttpContext.Current.Request;
-                var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-                BackgroundJob.Enqueue(() => EmailHelper.SendNotificationConfirmReceived(
-                    transaction.Giver.UserInfo.Email, transaction.GiverId, transaction.ReceiverId, baseUri));
             }
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
                 throw;
             }
+            ////Send email
+            var request = System.Web.HttpContext.Current.Request;
+            var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
+            BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionReceived(transaction.Id,
+                transaction.GiverId, transaction.ReceiverId));
+            BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionReceived(transaction.Id,
+                transaction.GiverId, transaction.Giver.UserInfo.Email,
+                transaction.ReceiverId, transaction.Receiver.UserInfo.Email,
+                baseUri));
             return transaction.UpdateVm(tran);
         }
 

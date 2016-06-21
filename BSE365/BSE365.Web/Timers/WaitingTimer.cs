@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using BSE365.Common.Constants;
-using BSE365.Repository.Helper;
+using BSE365.Helper;
 
 namespace BSE365.Timers
 {

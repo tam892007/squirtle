@@ -12,7 +12,6 @@ using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
 using BSE365.Repository.DataContext;
-using BSE365.Repository.Helper;
 using BSE365.Repository.Repositories;
 using BSE365.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -148,13 +147,6 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)
         {
             var result = await MapForReceiverAsync(instance);
-
-            ////Map Successful
-            if (result == 0)
-            {
-                await SendEmailNotification(instance);
-            }
-
             return Ok(new {AmountLeft = result});
         }
 
@@ -170,13 +162,11 @@ namespace BSE365.Api
                 query = _accountRepo.Query(x => x.UserName.Contains(userName));
             }
 
-            var rawData =
-                await
-                    query.OrderBy(x => x.OrderBy(a => a.UserName))
-                        .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
-                            out totalPageCount)
-                        .Include(x => x.UserInfo.Accounts)
-                        .ToListAsync();
+            var rawData = await query.OrderBy(x => x.OrderBy(a => a.UserName))
+                .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
+                    out totalPageCount)
+                .Include(x => x.UserInfo.Accounts)
+                .ToListAsync();
             var data = rawData.Select(x => x.ToVM());
 
             var page = new PageViewModel<TradeAccountVM>
@@ -426,45 +416,6 @@ namespace BSE365.Api
         {
             var result = StoreHelper.MapWaitingReceiver(instance.Id);
             return result;
-        }
-
-        private async Task SendEmailNotification(WaitingAccountVM instance)
-        {
-            ////Send Email
-            var request = System.Web.HttpContext.Current.Request;
-            var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
-
-            var transactions =
-                await
-                    _transactionRepo.Query(x => x.WaitingReceiverId == instance.Id && x.State == TransactionState.Begin
-                                                && !x.IsEnd && (int) x.Type == (int) instance.Type)
-                        .Include(x => x.Giver.UserInfo)
-                        .Include(x => x.Receiver.UserInfo)
-                        .SelectAsync();
-
-            if (transactions.Count() == 0) return;
-
-            var giverIds = new List<string>();
-            var receiverEmail = string.Empty;
-            var receiverId = string.Empty;
-
-            foreach (var transaction in transactions)
-            {
-                if (string.IsNullOrEmpty(receiverEmail))
-                {
-                    receiverEmail = transaction.Receiver.UserInfo.Email;
-                    receiverId = transaction.ReceiverId;
-                }
-
-                giverIds.Add(transaction.GiverId);
-                BackgroundJob.Enqueue(
-                    () =>
-                        EmailHelper.SendNotificationToGive(transaction.Giver.UserInfo.Email, transaction.GiverId,
-                            transaction.ReceiverId, baseUri));
-            }
-
-            BackgroundJob.Enqueue(
-                () => EmailHelper.SendNotificationToReceive(receiverEmail, giverIds, receiverId, baseUri));
         }
 
         #endregion

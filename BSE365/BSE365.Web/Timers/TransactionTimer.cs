@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web;
 using BSE365.Common.Constants;
-using BSE365.Repository.Helper;
+using BSE365.Helper;
 
 namespace BSE365.Timers
 {

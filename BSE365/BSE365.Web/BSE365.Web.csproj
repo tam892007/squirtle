@@ -379,6 +379,8 @@
     <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Helper\EmailHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Helper\NotificationHelper.cs" />
+    <Compile Include="Helper\StoreHelper.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="Timers\MappingTimer.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
