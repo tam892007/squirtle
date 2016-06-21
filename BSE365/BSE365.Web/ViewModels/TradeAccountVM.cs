@@ -61,9 +61,14 @@ namespace BSE365.ViewModels
         public int TotalBonusPoint { get; set; }
         public int TotalGiveCount { get; set; }
 
-        public int BonusMoney
+        public double BonusMoney
         {
-            get { return BonusPoint*TransactionConfig.MoneyPerTransaction/100; }
+            get { return ((double) BonusPoint/100)*TransactionConfig.MoneyPerTransaction; }
+        }
+
+        public double BonusMoneyInMillion
+        {
+            get { return ((double) BonusPoint/100)*((double) TransactionConfig.MoneyPerTransaction/1000000); }
         }
 
         public DateTime DayBonusTemp { get; set; }
