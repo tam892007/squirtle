@@ -1,4 +1,5 @@
-﻿using BSE365.Helper;
+﻿using BSE365.Common.Constants;
+using BSE365.Helper;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Repository.Repositories;
@@ -72,6 +73,20 @@ namespace BSE365.Api
             
             return Ok(true);
         }
+        
+        [HttpGet]
+        //[Authorize(Roles=UserRolesText.SuperAdmin)]
+        [Route("ForceResetPassword")]
+        public async Task<IHttpActionResult> ForceResetPassword(string id)
+        {
+            var user = await _repo.FindUserByName(id);
+            if (user == null) return BadRequest("Wrong user id");
+
+            var result = await _repo.ForceResetPassword(user);           
+
+            if (result.Succeeded) return Ok(result);
+            else return BadRequest();
+        }
 
         [AllowAnonymous]
         [HttpPost]
@@ -82,8 +97,6 @@ namespace BSE365.Api
             if (user == null) return Ok(false);
 
             var result = await _repo.ResetPassword(user, vm.Code, vm.NewPassword);
-
-            //EmailHelper.SendLinkResetPassword(code, user.UserInfo.Email, userName);
 
             if (result.Succeeded) return Ok(result);
             else return BadRequest();

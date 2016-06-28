@@ -51,6 +51,7 @@
     <Compile Include="Entities\RefreshToken.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Entities\UserInfo.cs" />
+    <Compile Include="Entities\UserTree.cs" />
     <Compile Include="Entities\WaitingBase.cs" />
     <Compile Include="Entities\WaitingGiver.cs" />
     <Compile Include="Entities\WaitingReceiver.cs" />

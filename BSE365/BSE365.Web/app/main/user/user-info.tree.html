@@ -9,7 +9,7 @@
                 <a class="btn btn-success btn-xs" ng-if="(node.nodes && node.nodes.length > 0) || !node.isLoaded" data-nodrag ng-click="loadDataForSingleNode(node);toggle(this);">
                     <span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed }"></span>
                 </a>
-                {{node.name }} - {{node.title}}
+                {{node.userName }} - {{node.displayName}} <span ng-if="node.userName.endsWith('A')">( {{node.numberOfChildren}} )</span>
             </div>
             <ol ui-tree-nodes="" ng-model="node.nodes" ng-class="{hidden: collapsed}">
                 <li ng-repeat="node in node.nodes" ui-tree-node ng-include="'nodes_renderer.html'">

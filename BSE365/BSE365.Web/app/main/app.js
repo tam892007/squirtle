@@ -28,6 +28,12 @@ mainApp.config([
                 templateUrl: 'app/authentication/password/resetPassword.html',
                 controller: 'resetPasswordController'
             })
+            .state('forceResetPassword',
+            {
+                url: "/forceResetPassword",
+                templateUrl: 'app/main/account/account-resetPassword.html',
+                controller: 'accountPasswordController'
+            })
             .state('refresh',
             {
                 url: "/refresh",

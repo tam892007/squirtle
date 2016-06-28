@@ -235,6 +235,8 @@
     <Content Include="app\main\account\account-default.html" />
     <Content Include="app\main\account\account-edit.html" />
     <Content Include="app\main\account\account-info-horizontal.html" />
+    <Content Include="app\main\account\account-resetPassword.html" />
+    <Content Include="app\main\account\accountPasswordController.js" />
     <Content Include="app\main\account\waiting-details.html" />
     <Content Include="app\main\account\accountService.js" />
     <Content Include="app\main\account\account-info.html" />
@@ -379,12 +381,14 @@
     <Compile Include="App_Start\Startup.Timer.cs" />
     <Compile Include="Helper\EmailHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
+    <Compile Include="Mappings\UserTreeVMMapping.cs" />
     <Compile Include="Mappings\WaitingAccountVMMapping.cs" />
     <Compile Include="Timers\MappingTimer.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
     <Compile Include="ViewModels\TransactionHistoryVm.cs" />
+    <Compile Include="ViewModels\UserTreeViewModel.cs" />
     <Compile Include="ViewModels\WaitingAccountVM.cs" />
     <Content Include="app\common\underscoreModule.js" />
     <Compile Include="App_Start\RouteConfig.cs" />

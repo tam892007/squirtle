@@ -150,9 +150,9 @@ namespace BSE365.Api
             return viewModel;
         }
 
-        private async Task<IEnumerable<UserInfoViewModel>> GetChildrenAsync(string id)
-        {
-            var result = await _repo.FindChildren(id);
+        private async Task<IEnumerable<UserTreeViewModel>> GetChildrenAsync(string id)
+        {            
+            var result = await _repo.FindChildren(id);  
             return result.Select(x => x.ToViewModel());
         }
 

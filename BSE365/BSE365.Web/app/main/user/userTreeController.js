@@ -15,7 +15,8 @@ mainApp.controller('userTreeController', ['$scope', 'userService', '_', function
 
     $scope.loadData = function () {
         $scope.getCurrentUserProfile().then(function (res) {
-            $scope.data.push({ id: res.id, title: res.displayName, name : res.userName });
+            $scope.data.push({ userId: res.id, displayName: res.displayName, userName: res.userName });
+            $scope.loadDataForSingleNode($scope.data[0]);
         });
     }
 
@@ -23,8 +24,13 @@ mainApp.controller('userTreeController', ['$scope', 'userService', '_', function
         if (node.isLoaded) return;
         node.isLoaded = true;  ////Load only one time
 
-        $scope.getUserChildren(node.id).then(function (res) {
-            node.nodes = _.map(res, function (user) { return { id: user.id, title: user.displayName, name: user.userName } })
+        $scope.getUserChildren(node.userId).then(function (res) {        
+            node.nodes = res;
+
+            ////for root node
+            if (!node.numberOfChildren) {
+                node.numberOfChildren = _.reduce(node.nodes, function (memo, child) { return memo + child.numberOfChildren; }, 0);
+            }
         });
     }
 

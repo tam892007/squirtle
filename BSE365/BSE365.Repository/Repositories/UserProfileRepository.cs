@@ -96,9 +96,17 @@ namespace BSE365.Repository.Repositories
             return exist;
         }
 
-        public async Task<IEnumerable<User>> FindChildren(string id)
+        public async Task<IEnumerable<UserTree>> FindChildren(string id)
         {
-            var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).ToListAsync();
+            //var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).ToListAsync();
+
+            var users = _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).Select(x => new UserTree 
+                { 
+                    UserName = x.UserName,
+                    NumberOfChildren = _ctx.UserInfos.Where(y => y.ParentId == x.Id).Count(),
+                    UserId = x.Id,
+                    DisplayName = x.UserInfo.DisplayName,
+                });
 
             return users;
         }

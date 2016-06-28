@@ -108,13 +108,12 @@ namespace BSE365.Repository.Repositories
 
         public async Task<bool> AddRefreshToken(RefreshToken token)
         {
-            var existingToken =
-                _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId)
-                    .SingleOrDefault();
+            var existingTokens =
+                _ctx.RefreshTokens.Where(r => r.Subject == token.Subject && r.ClientId == token.ClientId);
 
-            if (existingToken != null)
+            if (existingTokens != null && existingTokens.Count() > 0)
             {
-                var result = await RemoveRefreshToken(existingToken);
+                var result = await RemoveRangeRefreshToken(existingTokens);
             }
 
             _ctx.RefreshTokens.Add(token);
@@ -138,6 +137,12 @@ namespace BSE365.Repository.Repositories
         public async Task<bool> RemoveRefreshToken(RefreshToken refreshToken)
         {
             _ctx.RefreshTokens.Remove(refreshToken);
+            return await _ctx.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> RemoveRangeRefreshToken(IEnumerable<RefreshToken> refreshTokens)
+        {
+            _ctx.RefreshTokens.RemoveRange(refreshTokens);
             return await _ctx.SaveChangesAsync() > 0;
         }
 
@@ -187,6 +192,13 @@ namespace BSE365.Repository.Repositories
         {
             if (user == null) return null;
             var result = await _userManager.ResetPasswordAsync(user.Id, code, newPassword);
+            return result;
+        }
+        public async Task<IdentityResult> ForceResetPassword(User user)
+        {
+            if (user == null) return null;
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+            var result = await _userManager.ResetPasswordAsync(user.Id, code, SystemAdmin.DefaultPassword);
             return result;
         }
     }
