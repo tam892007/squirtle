@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Threading.Tasks;
 using BSE365.Base.Infrastructures;
 using BSE365.Common.Constants;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
 using BSE365.Repository.DataContext;
+using Hangfire;
 
-namespace BSE365.Repository.Helper
+namespace BSE365.Helper
 {
     public class StoreHelper
     {
         public static int MapWaitingReceiver(int waitingReceiverId)
         {
-            var result = 0;
+            int result;
+            var giverIds = new List<string>();
+            var giverEmails = new List<string>();
+            var receiverId = string.Empty;
+            var receiverEmail = string.Empty;
             using (var context = new BSE365Context())
             {
                 var waitingReceiver = context.WaitingReceivers
@@ -34,6 +38,11 @@ namespace BSE365.Repository.Helper
                     .Take(waitingReceiver.Amount)
                     .ToList();
 
+                // fill data to notify
+                giverIds = waitingGivers.Select(x => x.AccountId).ToList();
+                giverEmails = waitingGivers.Select(x => x.Account.UserInfo.Email).ToList();
+                receiverId = waitingReceiver.AccountId;
+                receiverEmail = waitingReceiver.Account.UserInfo.Email;
 
                 // update data to database
                 using (var dbContextTransaction = context.Database.BeginTransaction())
@@ -106,7 +115,10 @@ namespace BSE365.Repository.Helper
                             else
                             {
                                 transactionsToAdd.ForEach(
-                                    x => { x.WaitingReceiverId = waitingReceiver.Account.CurrentTransactionGroupId.Value; });
+                                    x =>
+                                    {
+                                        x.WaitingReceiverId = waitingReceiver.Account.CurrentTransactionGroupId.Value;
+                                    });
                             }
                             waitingReceiver.Account.ObjectState = ObjectState.Modified;
                         }
@@ -125,6 +137,11 @@ namespace BSE365.Repository.Helper
                     }
                 }
             }
+            BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionMapped(
+                giverIds, receiverId));
+            BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionMapped(
+                giverIds, giverEmails, receiverId, receiverEmail,
+                string.Empty));
             return result;
         }
 
@@ -317,9 +334,8 @@ namespace BSE365.Repository.Helper
             Check_Duplicate_Point:
             countTried++;
             // check duplicate
-            var existReceiverIdsInGiverTransaction = context.MoneyTransactions.Where(
-                x => x.GiverId == giveRequest.AccountId &&
-                     x.WaitingGiverId == giveRequest.Id)
+            var existReceiverIdsInGiverTransaction = context.MoneyTransactions
+                .Where(x => x.GiverId == giveRequest.AccountId && x.WaitingGiverId == giveRequest.Id)
                 .Select(x => x.ReceiverId);
 
             // select single receive request
@@ -385,6 +401,7 @@ namespace BSE365.Repository.Helper
                                     if (giverParentAuthAccount != null)
                                     {
                                         giverParentAccount = context.Accounts
+                                            .Include(x => x.UserInfo)
                                             .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
                                     }
                                 }
@@ -392,6 +409,15 @@ namespace BSE365.Repository.Helper
                                 // update transaction
                                 transaction.NotTransfer(giverParentAccount);
 
+                                BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionNotTransfered(
+                                    transaction.Id,
+                                    transaction.GiverId, transaction.ReceiverId,
+                                    giverParentId));
+                                var giverParentEmail = giverParentAccount?.UserInfo.Email;
+                                BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionNotTransfered(transaction.Id,
+                                    transaction.GiverId, transaction.Giver.UserInfo.Email,
+                                    transaction.ReceiverId, transaction.Receiver.UserInfo.Email,
+                                    giverParentId, giverParentEmail));
 
                                 context.SaveChanges();
 
@@ -441,7 +467,7 @@ namespace BSE365.Repository.Helper
                                 if (!string.IsNullOrEmpty(giverTreePath))
                                 {
                                     var giverParentIds = giverTreePath.Split(
-                                        new string[] {BSE365.Common.Constants.SystemAdmin.TreePathSplitter},
+                                        new[] {SystemAdmin.TreePathSplitter},
                                         StringSplitOptions.RemoveEmptyEntries);
                                     giverParentInfoIds = authContext.Users
                                         .Where(x => giverParentIds.Contains(x.Id))
@@ -452,6 +478,13 @@ namespace BSE365.Repository.Helper
 
                                 // update transaction
                                 transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
+
+                                BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionNotConfirmed(
+                                    transaction.Id,
+                                    transaction.GiverId, transaction.ReceiverId));
+                                BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionNotConfirmed(transaction.Id,
+                                    transaction.GiverId, transaction.Giver.UserInfo.Email,
+                                    transaction.ReceiverId, transaction.Receiver.UserInfo.Email));
 
                                 context.SaveChanges();
 
