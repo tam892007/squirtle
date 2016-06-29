@@ -503,39 +503,59 @@ namespace BSE365.Api
                 giverParentAccount = _accountRepo.Queryable()
                     .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
             }
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            try
+            switch (instance.Result)
             {
-                switch (instance.Result)
-                {
-                    case MoneyTransactionVM.ReportResult.Default:
-                        break;
-                    case MoneyTransactionVM.ReportResult.GiverTrue:
+                case MoneyTransactionVM.ReportResult.Default:
+                    break;
+                case MoneyTransactionVM.ReportResult.GiverTrue:
+                    _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+                    try
+                    {
                         var giverParentInfoIds =
                             await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
                         var giverParentInfos = await _userInfoRepo.Queryable()
                             .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
                         transaction.NotConfirm(otherGivingTransactionsInCurrentTransaction, giverParentInfos);
                         await _unitOfWork.SaveChangesAsync();
-                        break;
-                    case MoneyTransactionVM.ReportResult.ReceiverTrue:
+                        _unitOfWork.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _unitOfWork.Rollback();
+                        throw;
+                    }
+                    break;
+                case MoneyTransactionVM.ReportResult.ReceiverTrue:
+                    _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+                    try
+                    {
                         transaction.NotTransfer(giverParentAccount);
                         await _unitOfWork.SaveChangesAsync();
-                        break;
-                    case MoneyTransactionVM.ReportResult.BothTrue:
-                        await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
-                        break;
-                    case MoneyTransactionVM.ReportResult.BothFalse:
+                        _unitOfWork.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _unitOfWork.Rollback();
+                        throw;
+                    }
+                    break;
+                case MoneyTransactionVM.ReportResult.BothTrue:
+                    await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
+                    break;
+                case MoneyTransactionVM.ReportResult.BothFalse:
+                    _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+                    try
+                    {
                         transaction.Failed();
                         await _unitOfWork.SaveChangesAsync();
-                        break;
-                }
-                _unitOfWork.Commit();
-            }
-            catch (Exception ex)
-            {
-                _unitOfWork.Rollback();
-                throw;
+                        _unitOfWork.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        _unitOfWork.Rollback();
+                        throw;
+                    }
+                    break;
             }
         }
 

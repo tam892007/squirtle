@@ -21,6 +21,7 @@ mainApp.controller('transactionReportedController',
 
         $scope.reload = function() {
             $scope.target = {};
+            $scope.selected = false;
             $scope.loadData();
         }
 
