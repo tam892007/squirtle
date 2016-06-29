@@ -106,7 +106,7 @@ namespace BSE365.Web.Providers
             }
             
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
+            identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName.ToUpper()));
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));  ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
 
             var props = new AuthenticationProperties(new Dictionary<string, string>

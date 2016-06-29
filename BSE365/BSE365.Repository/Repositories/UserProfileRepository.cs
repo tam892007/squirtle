@@ -103,7 +103,7 @@ namespace BSE365.Repository.Repositories
             var users = _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).Select(x => new UserTree 
                 { 
                     UserName = x.UserName,
-                    NumberOfChildren = _ctx.UserInfos.Where(y => y.ParentId == x.Id).Count(),
+                    NumberOfChildren = _ctx.UserInfos.Where(y => y.TreePath.Contains(x.Id)).Count(),
                     UserId = x.Id,
                     DisplayName = x.UserInfo.DisplayName,
                 });

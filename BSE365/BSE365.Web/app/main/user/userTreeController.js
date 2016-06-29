@@ -29,7 +29,10 @@ mainApp.controller('userTreeController', ['$scope', 'userService', '_', function
 
             ////for root node
             if (!node.numberOfChildren) {
-                node.numberOfChildren = _.reduce(node.nodes, function (memo, child) { return memo + child.numberOfChildren; }, 0);
+                node.numberOfChildren = _.reduce(node.nodes, function (memo, child) {
+                    if (child.userName.endsWith('A')) return memo + 1 + child.numberOfChildren;
+                    else return memo;
+                }, 0);
             }
         });
     }
