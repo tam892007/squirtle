@@ -97,8 +97,7 @@ angular.module('localization', ['LocalStorageModule'])
                                     // works for iOS, Android 4.x and other devices
                                     lang = $window.navigator.userLanguage || $window.navigator.language;
                                 }
-
-                                alert(lang);
+                                
                                 // set language
                                 localize.language = this.fallbackLanguage(lang);
                             }

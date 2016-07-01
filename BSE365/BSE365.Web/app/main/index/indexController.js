@@ -1,4 +1,5 @@
 ﻿'use strict';
+
 mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userService', '$location', '_', '$timeout', 'localize'
     , function ($scope, $state, authService, userService, $location, _, $timeout, localize) {
     $scope.logOut = function () {
@@ -39,7 +40,7 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
         $scope.getUserContext();
     }
 
-    $scope.forAdmin = function () {
+    $scope.forAdmin = function() {
         return $scope.userContext && _.contains($scope.userContext.roles, 'superadmin');
     }
 
@@ -53,3 +54,4 @@ mainApp.controller('indexController', ['$scope', '$state', 'authService', 'userS
         return localize.isCurrentLanguage(language);
     }
 }]);
+

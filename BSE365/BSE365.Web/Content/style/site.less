@@ -170,10 +170,31 @@ code {
     padding: 30px;
 }
 
+.notification-container {
+    position: relative;
 
+    .notification-content {
+        position: absolute;
+        right: 0px;
+        width: 400px;
+        /*margin-top: 9px;*/
+    }
+
+    .alert {
+        margin-bottom: 0px;
+        border-radius: 0px;
+    }
+
+    .panel .panel-body {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+    button:first-of-type {
+        margin-right: 0px !important;
+    }
+}
 ////smart-table
-
-
 .st-sort-ascent::before {
     content: "▲";
 }
@@ -187,9 +208,9 @@ code {
     color: white !important;
 }
 
-.table-container{
-    height:500px;
-    overflow-y:scroll;
+.table-container {
+    height: 500px;
+    overflow-y: scroll;
 }
 
 .loading-indicator {
@@ -198,7 +219,8 @@ code {
     -moz-box-sizing: border-box;
     width: 100%;
     text-align: center;
-    padding: 0.7em; }
+    padding: 0.7em;
+}
 
 .loading-indicator:before {
     display: inline-block;
@@ -214,30 +236,35 @@ code {
     -moz-animation: halfspin 1s ease infinite;
     -o-animation: halfspin 1s ease infinite;
     animation: halfspin 1s ease infinite;
-    border-radius: 100%; }
+    border-radius: 100%;
+}
 
 @-webkit-keyframes halfspin {
     to {
         -webkit-transform: rotate(180deg);
         -moz-transform: rotate(180deg);
-        transform: rotate(180deg); } }
+        transform: rotate(180deg);
+    }
+}
 
 @-moz-keyframes halfspin {
     to {
         -webkit-transform: rotate(180deg);
         -moz-transform: rotate(180deg);
-        transform: rotate(180deg); } }
+        transform: rotate(180deg);
+    }
+}
 
 @keyframes halfspin {
     to {
         -webkit-transform: rotate(180deg);
         -moz-transform: rotate(180deg);
-        transform: rotate(180deg); }
-
+        transform: rotate(180deg);
+    }
 }
 
 .pagination li a input {
-  padding: 0;
-  margin: -5px 0;
-  width: 50px;
+    padding: 0;
+    margin: -5px 0;
+    width: 50px;
 }

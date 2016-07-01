@@ -46,7 +46,7 @@ namespace BSE365.Helper
                 giverIds, giverEmails, receiverId, receiverEmail, appUrl));
         }
 
-        private static void NotifyGiverToGive(
+        public static void NotifyGiverToGive(
             string giverId, string giverEmail, string receiverId, string receiverEmail,
             string appUrl)
         {
@@ -71,7 +71,7 @@ namespace BSE365.Helper
             mailClient.Send(mailMessage);
         }
 
-        private static void NotifyReceiverToReceive(
+        public static void NotifyReceiverToReceive(
             IList<string> giverIds, IList<string> giverEmails, string receiverId, string receiverEmail,
             string appUrl)
         {
@@ -260,7 +260,7 @@ namespace BSE365.Helper
                         receiverId, giverId, transactionId);
 
                 var contentBuilder = new StringBuilder();
-                contentBuilder.AppendFormat("Dear {0}, <br/>", giverId);
+                contentBuilder.AppendFormat("Dear {0}, <br/>", receiverId);
                 contentBuilder.AppendFormat(
                     "Your transaction with <b>{0}</b> wasn't confirmed in time. All of your accounts will be locked.<br/>",
                     giverId);

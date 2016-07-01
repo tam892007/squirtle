@@ -136,6 +136,10 @@
     <Compile Include="BSE365AuthContextMigration\201606122156507_AddWaitingType.Designer.cs">
       <DependentUpon>201606122156507_AddWaitingType.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201606300103504_AddMessage.cs" />
+    <Compile Include="BSE365AuthContextMigration\201606300103504_AddMessage.Designer.cs">
+      <DependentUpon>201606300103504_AddMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -172,6 +176,10 @@
     <Compile Include="BSE365ContextMigration\201606122157138_AddWaitingType.cs" />
     <Compile Include="BSE365ContextMigration\201606122157138_AddWaitingType.Designer.cs">
       <DependentUpon>201606122157138_AddWaitingType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201606300103305_AddMessage.cs" />
+    <Compile Include="BSE365ContextMigration\201606300103305_AddMessage.Designer.cs">
+      <DependentUpon>201606300103305_AddMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -212,6 +220,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201606122156507_AddWaitingType.resx">
       <DependentUpon>201606122156507_AddWaitingType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201606300103504_AddMessage.resx">
+      <DependentUpon>201606300103504_AddMessage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,6 +249,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201606122157138_AddWaitingType.resx">
       <DependentUpon>201606122157138_AddWaitingType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201606300103305_AddMessage.resx">
+      <DependentUpon>201606300103305_AddMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

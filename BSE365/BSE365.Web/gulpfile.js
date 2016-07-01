@@ -27,10 +27,13 @@ var paths = {
         'bower_components/angular-ui-validate/dist/validate.min.js',
         'bower_components/angular-re-captcha/angular-re-captcha.js',
         'bower_components/angular-ui-notification/dist/angular-ui-notification.min.js',
+        'bower_components/angular-signalr-hub/signalr-hub.min.js',
         'bower_components/humanize-duration/humanize-duration.js',
         'bower_components/angular-timer/dist/angular-timer.min.js',
         'bower_components/underscore/underscore-min.js',
         'bower_components/ngImgCrop/compile/minified/ng-img-crop.js',
+        'bower_components/angular-sanitize/angular-sanitize.min.js',
+        'bower_components/signalr/jquery.signalR.min.js',
     ],
     'MainApp': [
         'app/main/*.js',

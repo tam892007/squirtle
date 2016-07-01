@@ -20,6 +20,8 @@ namespace BSE365.Repository.DataContext
 
         public virtual DbSet<UserInfo> UserInfos { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+
         public virtual DbSet<MoneyTransferGroup> MoneyTransferGroups { get; set; }
         public virtual DbSet<MoneyTransaction> MoneyTransactions { get; set; }
         public virtual DbSet<WaitingGiver> WaitingGivers { get; set; }

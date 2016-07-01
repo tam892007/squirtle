@@ -55,8 +55,8 @@
                             <li ui-sref-active-eq='active'><a ui-sref="transaction.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="transaction.bonus" data-toggle="collapse" data-target=".navbar-collapse.in">Bonus Transaction</a></li>
                             @*<li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">Transaction History</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="trade.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="trade.bonus" data-toggle="collapse" data-target=".navbar-collapse.in">Bonus Transaction</a></li>*@
+                                <li ui-sref-active-eq='active'><a ui-sref="trade.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
+                                <li ui-sref-active-eq='active'><a ui-sref="trade.bonus" data-toggle="collapse" data-target=".navbar-collapse.in">Bonus Transaction</a></li>*@
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forAdmin()">
@@ -81,9 +81,10 @@
                             <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
                         </ul>
                     </li>
-                    <li ui-sref-active-eq='active' ng-if="forAdmin()"><a ui-sref="system">System</a></li>
                 </ul>
-
+                <div class="navbar-form navbar-right">
+                    <ng-include src="'@Url.Content("~/app/main/index/notification-container.html")'"> </ng-include>
+                </div>
                 <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
                     <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
                     <li class="dropdown" data-ng-hide="!authentication.isAuth">
@@ -107,6 +108,9 @@
     <div class="container container--custom">
         @RenderBody()
     </div>
+    <div>
+        <ng-include src="'@Url.Content("~/app/main/index/chat-container.html")'"> </ng-include>
+    </div>
 
     <footer class="footer navbar--custom">
         <div class="container">
@@ -128,5 +132,6 @@
     <script src="Scripts/MainApp.js?cacheKey=@ViewBag.Version"></script>
     <script src="Scripts/CommonApp.js?cacheKey=@ViewBag.Version"></script>
     <script src="Scripts/AuthApp.js?cacheKey=@ViewBag.Version"></script>
+    <script src="~/signalr/hubs?cacheKey=@ViewBag.Version"> </script>
 </body>
 </html>

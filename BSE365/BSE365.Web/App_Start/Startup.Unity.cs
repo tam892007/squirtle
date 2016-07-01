@@ -56,6 +56,7 @@ namespace BSE365.Web
                 .RegisterType<IRepositoryAsync<Config>, Repository<Config>>()
                 .RegisterType<IRepositoryAsync<Account>, Repository<Account>>()
                 .RegisterType<IRepositoryAsync<UserInfo>, Repository<UserInfo>>()
+                .RegisterType<IRepositoryAsync<Message>, Repository<Message>>()
                 .RegisterType<IRepositoryAsync<WaitingGiver>, Repository<WaitingGiver>>()
                 .RegisterType<IRepositoryAsync<WaitingReceiver>, Repository<WaitingReceiver>>()
                 .RegisterType<IRepositoryAsync<MoneyTransaction>, Repository<MoneyTransaction>>()
