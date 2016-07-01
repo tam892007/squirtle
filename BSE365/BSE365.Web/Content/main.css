@@ -144,6 +144,26 @@ code {
 .padding-30 {
   padding: 30px;
 }
+.notification-container {
+  position: relative;
+}
+.notification-container .notification-content {
+  position: absolute;
+  right: 0px;
+  width: 400px;
+  /*margin-top: 9px;*/
+}
+.notification-container .alert {
+  margin-bottom: 0px;
+  border-radius: 0px;
+}
+.notification-container .panel .panel-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.notification-container button:first-of-type {
+  margin-right: 0px !important;
+}
 .angular-ui-tree-handle {
   background: #f8faff;
   border: 1px solid #dae2ea;

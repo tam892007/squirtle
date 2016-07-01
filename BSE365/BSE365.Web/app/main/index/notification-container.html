@@ -1,0 +1,29 @@
+﻿
+<div class="notification-container control" ng-controller="notificationController">
+    <div ng-mouseleave="isOverButton = false">
+        <div>
+            <button class="btn" ng-class="{'btn-primary' : messageData.notifications.length > 0, 'btn-default' : messageData.notifications.length == 0 }" title="show notifications" ng-mouseover="isOverButton = true" ng-click="isShowNotification = !isShowNotification">
+                <span class="glyphicon glyphicon-envelope"></span> Notifications <span class="badge" ng-show="messageData.notifications.length>0">{{messageData.notifications.length}}</span>
+            </button>
+        </div>
+
+        <div class="notification-content">
+            <div class="panel panel-default" ng-show="isOverButton || isShowNotification">
+                <div class="panel-body" ng-show="messageData.notifications.length==0">
+                    <div>Nothing to show!</div>
+                </div>
+                <div class="panel-body" ng-show="messageData.notifications.length>0">
+                    <div ng-repeat="item in messageData.notifications" class="row alert alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" ng-click="dissmiss(item)"><span aria-hidden="true">&times;</span><span class="sr-only">Dismiss</span></button>
+                        <span>[{{item.Created|date:'dd/MM-hh:mm'}}]</span>
+                        <span ng-bind-html="item.Messsage"></span>
+                    </div>
+                </div>
+                <div class="panel-footer text-right">
+                    <button class="btn btn-default" ng-click="clear()" ng-show="messageData.notifications.length>0"><span class="glyphicon glyphicon-remove"></span>&ensp;Clear</button>
+                    <button class="btn btn-default" ng-click="refresh()"><span class="glyphicon glyphicon-refresh"></span>&ensp;Refresh</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

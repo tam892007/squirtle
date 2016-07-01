@@ -260,7 +260,7 @@ namespace BSE365.Helper
                         receiverId, giverId, transactionId);
 
                 var contentBuilder = new StringBuilder();
-                contentBuilder.AppendFormat("Dear {0}, <br/>", giverId);
+                contentBuilder.AppendFormat("Dear {0}, <br/>", receiverId);
                 contentBuilder.AppendFormat(
                     "Your transaction with <b>{0}</b> wasn't confirmed in time. All of your accounts will be locked.<br/>",
                     giverId);

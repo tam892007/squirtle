@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
+
 namespace BSE365.Web
 {
     /// <summary>
@@ -18,17 +19,20 @@ namespace BSE365.Web
         public static GoogleOAuth2AuthenticationOptions googleAuthOptions { get; private set; }
         public static FacebookAuthenticationOptions facebookAuthOptions { get; private set; }
         internal static IDataProtectionProvider DataProtectionProvider { get; private set; }
+
         public void ConfigureOAuth(IAppBuilder app)
         {
             DataProtectionProvider = app.GetDataProtectionProvider();
 
             //use a cookie to temporarily store information about a user logging in with a third party login provider
             app.UseExternalSignInCookie(Microsoft.AspNet.Identity.DefaultAuthenticationTypes.ExternalCookie);
-            OAuthBearerOptions = new OAuthBearerAuthenticationOptions();
-
-            OAuthAuthorizationServerOptions OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            OAuthBearerOptions = new OAuthBearerAuthenticationOptions
             {
+                Provider = new CookieOAuthBearerAuthenticationProvider()
+            };
 
+            var OAuthServerOptions = new OAuthAuthorizationServerOptions()
+            {
                 AllowInsecureHttp = true,
                 TokenEndpointPath = new PathString("/token"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(1),

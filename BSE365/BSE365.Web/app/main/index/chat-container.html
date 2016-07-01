@@ -1,0 +1,10 @@
+﻿<div class="chat-container" ng-contronller="chatController">
+    <div ng-repeat="withAccount in messageData.messages">
+        <p data-ng-bind="withAccount"></p>
+        <div class="chat-message-container" ng-repeat="message in withAccount">
+            <p>
+                <span class="message-sender" data-ng-bind="message.message"></span>: <span class="message-message" data-ng-bind="message.message"></span>
+            </p>
+        </div>
+    </div>
+</div>

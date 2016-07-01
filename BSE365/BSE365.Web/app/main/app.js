@@ -1,8 +1,8 @@
 ﻿var mainApp = angular.module('mainApp',
 [
     'ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload',
-    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification',
-    'timer'
+    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification', 'ngSanitize',
+    'timer', 'SignalR'
 ]);
 
 mainApp.config([
@@ -484,6 +484,28 @@ mainApp.factory('UserState',
                 return 'Not Give';
             case data.NotConfirm:
                 return 'Not Confirm';
+            default:
+                return '';
+            }
+        }
+        return data;
+    });
+
+mainApp.factory('MessageState',
+    function() {
+        var data = {
+            UnRead: 0,
+            Readed: 1,
+            Dissmissed: 2,
+        };
+        data.display = function(value) {
+            switch (value) {
+            case data.UnRead:
+                return 'UnRead';
+            case data.Readed:
+                return 'Readed';
+            case data.Dissmissed:
+                return 'Dissmissed';
             default:
                 return '';
             }

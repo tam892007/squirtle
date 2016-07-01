@@ -35,6 +35,9 @@ namespace BSE365.Web
 
             ////HangFire
             ConfigureHangFire(app);
+
+            ////SignalR
+            ConfigureSignalR(app);
         }
     }
 }

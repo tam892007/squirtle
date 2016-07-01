@@ -17,7 +17,6 @@ namespace BSE365.Web.Providers
     {
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
-
             string clientId = string.Empty;
             string clientSecret = string.Empty;
             Client client = null;
@@ -43,7 +42,8 @@ namespace BSE365.Web.Providers
 
             if (client == null)
             {
-                context.SetError("invalid_clientId", string.Format("Client '{0}' is not registered in the system.", context.ClientId));
+                context.SetError("invalid_clientId",
+                    string.Format("Client '{0}' is not registered in the system.", context.ClientId));
                 return Task.FromResult<object>(null);
             }
 
@@ -79,12 +79,11 @@ namespace BSE365.Web.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-
             var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
 
             if (allowedOrigin == null) allowedOrigin = "*";
 
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {allowedOrigin});
 
             var userId = string.Empty;
             using (AuthRepository _repo = new AuthRepository())
@@ -104,20 +103,21 @@ namespace BSE365.Web.Providers
 
                 userId = user.Id;
             }
-            
+
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));  ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));
+                ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
                 {
-                    { 
-                        "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
-                    },
-                    { 
-                        "userName", context.UserName
-                    }
-                });
+                    "as:client_id", (context.ClientId == null) ? string.Empty : context.ClientId
+                },
+                {
+                    "userName", context.UserName
+                }
+            });
 
             var ticket = new AuthenticationTicket(identity, props);
             context.Validated(ticket);
@@ -159,6 +159,5 @@ namespace BSE365.Web.Providers
 
             return Task.FromResult<object>(null);
         }
-
     }
 }
