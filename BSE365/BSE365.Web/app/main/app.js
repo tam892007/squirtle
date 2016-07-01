@@ -2,7 +2,7 @@
 [
     'ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload',
     'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification',
-    'timer'
+    'timer', 'localization'
 ]);
 
 mainApp.config([
@@ -526,5 +526,6 @@ mainApp.config([
     'stConfig', 'filterSetting', function(stConfig, filterSetting) {
         stConfig.pagination.itemsByPage = filterSetting.pagination.itemsByPage;
         stConfig.pagination.displayedPages = filterSetting.pagination.displayedPages;
+        stConfig.pagination.template = 'app/common/templates/pagination.html';
     }
 ]);

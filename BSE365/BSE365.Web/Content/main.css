@@ -144,6 +144,70 @@ code {
 .padding-30 {
   padding: 30px;
 }
+.st-sort-ascent::before {
+  content: "▲";
+}
+.st-sort-descent::before {
+  content: "▼";
+}
+.st-selected {
+  background: none repeat scroll 0 0 #216eff !important;
+  color: white !important;
+}
+.table-container {
+  height: 500px;
+  overflow-y: scroll;
+}
+.loading-indicator {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+  padding: 0.7em;
+}
+.loading-indicator:before {
+  display: inline-block;
+  margin: 0 0.4em;
+  min-width: 1em;
+  min-height: 1em;
+  border-top: 4px solid #646464;
+  border-right: 4px solid #e6e6e6;
+  border-left: 4px solid #e6e6e6;
+  border-bottom: 4px solid #646464;
+  content: "";
+  -webkit-animation: halfspin 1s ease infinite;
+  -moz-animation: halfspin 1s ease infinite;
+  -o-animation: halfspin 1s ease infinite;
+  animation: halfspin 1s ease infinite;
+  border-radius: 100%;
+}
+@-webkit-keyframes halfspin {
+  to {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
+@-moz-keyframes halfspin {
+  to {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
+@keyframes halfspin {
+  to {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+}
+.pagination li a input {
+  padding: 0;
+  margin: -5px 0;
+  width: 50px;
+}
 .angular-ui-tree-handle {
   background: #f8faff;
   border: 1px solid #dae2ea;

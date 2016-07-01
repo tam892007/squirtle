@@ -231,7 +231,9 @@
     <Content Include="app\common\directives\httpSrc.js" />
     <Content Include="app\common\directives\syncFocusWith.js" />
     <Content Include="app\common\services\imageService.js" />
+    <Content Include="app\common\smartTableModule.js" />
     <Content Include="app\common\templates\empty.html" />
+    <Content Include="app\common\templates\pagination.html" />
     <Content Include="app\main\account\account-default.html" />
     <Content Include="app\main\account\account-edit.html" />
     <Content Include="app\main\account\account-info-horizontal.html" />
@@ -353,10 +355,13 @@
     <Content Include="Content\ng-img-crop.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="gulpfile.js" />
+    <Content Include="i18n\resources-locale_vi-VN.js" />
+    <Content Include="i18n\resources-locale_en-US.js" />
     <Content Include="Scripts\AuthApp.js" />
     <Content Include="Scripts\Common1.js" />
     <Content Include="Scripts\Common2.js" />
     <Content Include="Scripts\CommonApp.js" />
+    <Content Include="Scripts\localize.js" />
     <Content Include="Scripts\MainApp.js" />
     <Content Include="SQL\SpMapGiversAndReceivers.sql" />
     <Content Include="SQL\SpMapGiversAndReceivers_Drop.sql" />

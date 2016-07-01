@@ -39,6 +39,7 @@ var paths = {
     'CommonApp': [
         'app/common/*.js',
         'app/common/**/*.js',
+        'Scripts/localize.js',
     ],
     'AuthApp': [
         'app/authentication/*.js',
@@ -118,6 +119,7 @@ gulp.task('watch', ['less', 'js'], function () {
     gulp.watch('Content/**/*.less', ['less']);
     gulp.watch('app/**/*.js', ['js']);
     gulp.watch('app/**/**/*.js', ['js']);
+    gulp.watch('Scripts/localize.js', ['js']);
     //gulp.watch('Content/images/*.jpg', ['jpg']);
     //gulp.watch('Content/images/*.png', ['png']);
     //gulp.watch('fonts/*.ttf', ['ttf']);
