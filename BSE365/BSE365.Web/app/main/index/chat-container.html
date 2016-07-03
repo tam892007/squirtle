@@ -4,15 +4,13 @@
             <span class="glyphicon glyphicon-plus"></span>
         </button>
     </div>
-    <div class="chat-control input-group" ng-show="isShowNewChatWith">
-        <input class="form-control" ng-model="newChatWith" />
-        <span class="input-group-btn">
-            <button class="btn btn-success"
-                    ng-enter="newChat(newChatWith); newChatWith =''; isShowNewChatWith = false;"
-                    ng-click="newChat(newChatWith); newChatWith =''; isShowNewChatWith = false;">
-                <span class="glyphicon glyphicon-plus"></span>
-            </button>
-        </span>
+    <div class="chat-control new-chat" ng-show="isShowNewChatWith">
+        <input class="form-control" ng-model="newChatWith" placeholder="chat with account" />
+        <button class="btn btn-success"
+                ng-enter="newChat(newChatWith); newChatWith =''; isShowNewChatWith = false;"
+                ng-click="newChat(newChatWith); newChatWith =''; isShowNewChatWith = false;">
+            <span class="glyphicon glyphicon-plus"></span>
+        </button>
     </div>
     <div ng-repeat="withAccount in messageData.chatData">
         <div class="panel panel-success">
@@ -32,15 +30,12 @@
                 </ul>
             </div>
             <div class="panel-footer">
-                <div class="input-group">
-                    <input class="form-control" ng-model="withAccount.newMessage"
-                           ng-enter="sendMessageTo(withAccount);"
-                           ng-focus="onfocus(withAccount)"
-                           ng-blur="onblur(withAccount)" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-success" ng-click="sendMessageTo(withAccount);"><span class="glyphicon glyphicon-share"></span></button>
-                    </span>
-                </div>
+                <input class="" placeholder="&nbsp;&nbsp;type a message"
+                       ng-model="withAccount.newMessage"
+                       ng-enter="sendMessageTo(withAccount);"
+                       ng-focus="onfocus(withAccount)"
+                       ng-blur="onblur(withAccount)" />
+                <button class="btn btn-success right" ng-click="sendMessageTo(withAccount);"><span class="glyphicon glyphicon-share"></span></button>
             </div>
         </div>
     </div>
