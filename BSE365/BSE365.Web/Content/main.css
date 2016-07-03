@@ -144,26 +144,6 @@ code {
 .padding-30 {
   padding: 30px;
 }
-.notification-container {
-  position: relative;
-}
-.notification-container .notification-content {
-  position: absolute;
-  right: 0px;
-  width: 400px;
-  /*margin-top: 9px;*/
-}
-.notification-container .alert {
-  margin-bottom: 0px;
-  border-radius: 0px;
-}
-.notification-container .panel .panel-body {
-  padding-top: 0px;
-  padding-bottom: 0px;
-}
-.notification-container button:first-of-type {
-  margin-right: 0px !important;
-}
 .st-sort-ascent::before {
   content: "▲";
 }
@@ -257,7 +237,7 @@ code {
   height: 60px;
 }
 @media (min-width: 768px) {
-  .navbar-right {
+  .navbar-right:first-of-type {
     margin-right: -22px !important;
   }
 }
@@ -349,6 +329,29 @@ code {
 .navbar-right--custom .dropdown-menu > li > a:hover {
   color: white !important;
   background-color: #f35f5f !important;
+}
+.navbar .notification-container {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.navbar .notification-container a:hover {
+  cursor: pointer;
+}
+.navbar .notification-container .glyphicon-lg {
+  font-size: 18px;
+}
+.navbar .notification-container .notification-content {
+  position: absolute;
+  right: 0px;
+  width: 400px;
+  /*margin-top: 9px;*/
+}
+.navbar .notification-container .alert {
+  margin-bottom: 0px;
+  border-radius: 0px;
+}
+.navbar .notification-container .panel .panel-body {
+  padding: 0px;
 }
 .panel-form .panel-heading {
   background-color: #4b2218;

@@ -13,7 +13,9 @@
 
 @media (min-width: 768px) {
     .navbar-right {
-        margin-right: -22px !important;
+        &:first-of-type {
+            margin-right: -22px !important;
+        }
     }
 }
 
@@ -124,6 +126,39 @@
                     color: white !important;
                     background-color: @red-light !important;
                 }
+            }
+        }
+    }
+
+    .notification-container {
+        padding-left: 10px;
+        padding-right: 10px;
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        .glyphicon {
+            &-lg {
+                font-size: 18px;
+            }
+        }
+
+        .notification-content {
+            position: absolute;
+            right: 0px;
+            width: 400px;
+            /*margin-top: 9px;*/
+        }
+
+        .alert {
+            margin-bottom: 0px;
+            border-radius: 0px;
+        }
+
+        .panel {
+            .panel-body {
+                padding: 0px;
             }
         }
     }
