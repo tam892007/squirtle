@@ -103,38 +103,39 @@ mainApp.controller('transactionCurrentController',
                 $scope.grState = 'giving';
                 transactionService.giveRequested({},
                     function(response) {
-                        loadTransaction(response);
+                        loadTransactions(response);
                     });
             } else if ($scope.info.state == AccountState.InReceiveTransaction) {
                 $scope.accountDisplayTemplate = $scope.giverInfoTemplateUrl;
                 $scope.grState = 'receiving';
                 transactionService.receiveRequested({},
                     function(response) {
-                        loadTransaction(response);
+                        loadTransactions(response);
                     });
             }
         }
 
-        function loadTransaction(transactions) {
+        function loadTransactions(transactions) {
             $scope.histories = [];
-            _.each(transactions,
-                function(item) {
-                    item.isAllowConfirmGave = item.state == TransactionState.Begin;
-                    item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
-
-                    item.isAllowAbandonTransaction = $scope.info.isAllowAbandonTransaction &&
-                        item.state == TransactionState.Begin;
-
-                    item.isAllowAttachment = item.state != TransactionState.Abandoned;
-                    item.isAllowUploadAttachment =
-                        item.state == TransactionState.Begin || item.state == TransactionState.Transfered;
-
-                    item.isAbandoned = item.state == TransactionState.Abandoned;
-
-                    // history
-                    generateHistory(item);
-                });
+            _.each(transactions, generateTransactionData);
             $scope.transactions = transactions;
+        }
+
+        function generateTransactionData(item) {
+            item.isAllowConfirmGave = item.state == TransactionState.Begin;
+            item.isAllowConfirmReceived = item.state == TransactionState.Transfered;
+
+            item.isAllowAbandonTransaction = $scope.info.isAllowAbandonTransaction &&
+                item.state == TransactionState.Begin;
+
+            item.isAllowAttachment = item.state != TransactionState.Abandoned;
+            item.isAllowUploadAttachment =
+                item.state == TransactionState.Begin || item.state == TransactionState.Transfered;
+
+            item.isAbandoned = item.state == TransactionState.Abandoned;
+
+            // history
+            generateHistory(item);
         }
 
         function generateHistory(item) {
@@ -175,29 +176,43 @@ mainApp.controller('transactionCurrentController',
             transactionService.moneyTransfered(target,
                 function(response) {
                     Notification.success('Money Transfered');
+                    generateTransactionData(response);
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
                         $scope.transactions[index] = response;
                     }
                     $scope.updateStatus();
-                    getCurrentTransactions();
                     $scope.isProcessing = false;
                 });
         }
 
-        $scope.moneyReceived = function(target) {
+        $scope.moneyReceived = function (target) {
             $scope.isProcessing = true;
             transactionService.moneyReceived(target,
                 function(response) {
                     Notification.success('Money Received');
+                    generateTransactionData(response);
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
                         $scope.transactions[index] = response;
                     }
-                    $scope.updateStatus();
-                    getCurrentTransactions();
+                    $scope.updateStatus().then(checkAllTransactionsCompleted);
                     $scope.isProcessing = false;
                 });
+        }
+
+        function checkAllTransactionsCompleted() {
+            var notcompleted = _.filter($scope.transactions,
+                function(item) {
+                    return item.state != TransactionState.Confirmed;
+                });
+            if (notcompleted.length == 0) {
+                $scope.overviewState.queued = 1;
+                $scope.overviewState.give = 1;
+                $scope.overviewState.waitCofirm = 1;
+                $scope.overviewState.receive = 1;
+                $scope.overviewState.ended = 1;
+            }
         }
 
         $scope.reportNotTransfer = function(target) {
@@ -205,12 +220,12 @@ mainApp.controller('transactionCurrentController',
             transactionService.reportNotTransfer(target,
                 function(response) {
                     Notification.success('Transaction Reported');
+                    generateTransactionData(response);
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
                         $scope.transactions[index] = response;
                     }
                     $scope.updateStatus();
-                    getCurrentTransactions();
                     $scope.isProcessing = false;
                 });
         }
@@ -251,12 +266,12 @@ mainApp.controller('transactionCurrentController',
             transactionService.abandonTransaction(target,
                 function(response) {
                     Notification.success('Transaction Abandoned');
+                    generateTransactionData(response);
                     var index = $scope.transactions.indexOf(target);
                     if (index !== -1) {
                         $scope.transactions[index] = response;
                     }
                     $scope.updateStatus();
-                    getCurrentTransactions();
                     $scope.isProcessing = false;
                 });
         }
