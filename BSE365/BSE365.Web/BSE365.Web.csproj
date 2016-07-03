@@ -235,6 +235,7 @@
     <Content Include="app\authentication\services\authInterceptorService.js" />
     <Content Include="app\authentication\services\authService.js" />
     <Content Include="app\common\app.js" />
+    <Content Include="app\common\directives\enterDirective.js" />
     <Content Include="app\common\directives\confirmClickDirective.js" />
     <Content Include="app\common\directives\httpSrc.js" />
     <Content Include="app\common\directives\syncFocusWith.js" />
@@ -375,6 +376,7 @@
     <Content Include="Scripts\Common2.js" />
     <Content Include="Scripts\CommonApp.js" />
     <Content Include="Scripts\localize.js" />
+    <Content Include="Content\style\message.less" />
     <None Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

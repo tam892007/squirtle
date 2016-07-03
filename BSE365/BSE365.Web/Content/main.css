@@ -877,5 +877,24 @@ textarea.ng-dirty.ng-valid,
 .transaction-account-info td:first-child {
   white-space: nowrap;
 }
+.chat-container {
+  position: absolute;
+  bottom: 60px;
+  right: 0px;
+}
+.chat-container > div {
+  display: inline-block;
+  margin-right: 10px;
+}
+.chat-container .panel {
+  width: 260px;
+}
+.chat-container .panel .panel-body {
+  height: 200px;
+  overflow-y: auto;
+}
+.chat-container .chat-control {
+  bottom: 0px;
+}
 
 /*# sourceMappingURL=main.css.map */

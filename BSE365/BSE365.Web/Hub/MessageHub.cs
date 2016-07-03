@@ -39,6 +39,12 @@ namespace BSE365.Hub
             return CurrentAccount;
         }
 
+        public bool ValidAccount(string targetAccount)
+        {
+            var result = _unitOfWork.Repository<Account>().Queryable().Any(x => x.UserName == targetAccount);
+            return result;
+        }
+
         /// <summary>
         /// Get UnRead Messages
         /// </summary>
@@ -103,8 +109,7 @@ namespace BSE365.Hub
         public void UpdateMessageStates(string[] messageIds)
         {
             var messages = _repository.Queryable()
-                .Where(x => x.Type == MessageType.Message && x.State == MessageState.UnRead &&
-                            x.ToAccount == CurrentAccount).ToList();
+                .Where(x => messageIds.Contains(x.Id)).ToList();
             foreach (var message in messages)
             {
                 message.State = MessageState.Readed;
@@ -160,8 +165,7 @@ namespace BSE365.Hub
         public void UpdateNotificationStates(string[] notificationIds)
         {
             var notifications = _repository.Queryable()
-                .Where(x => x.Type == MessageType.Notification && x.State == MessageState.UnRead &&
-                            x.ToAccount == CurrentAccount).ToList();
+                .Where(x => notificationIds.Contains(x.Id)).ToList();
             foreach (var notification in notifications)
             {
                 notification.State = MessageState.Readed;
