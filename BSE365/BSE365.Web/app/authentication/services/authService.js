@@ -90,7 +90,7 @@ authApp.factory('authService',
             _authentication.useRefreshTokens = false;
             // cookie token for signalR
             setCookie('BearerToken', '', 0);
-
+            $rootScope.$broadcast('user:signedout');
         };
 
         var _fillAuthData = function() {

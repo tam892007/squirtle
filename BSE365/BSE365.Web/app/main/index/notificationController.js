@@ -10,7 +10,7 @@ mainApp.controller('notificationController',
         }
 
         $scope.clear = function() {
-            var ids = messageService.notifications.map(function (item) {
+            var ids = messageService.notifications.map(function(item) {
                 return item.Id;
             });
             messageService.updateNotificationStates(ids);
@@ -22,10 +22,17 @@ mainApp.controller('notificationController',
             messageService.getUnreadNotifications();
         }
 
-        function initData() {
-            messageService.promise.done(function() {
-                messageService.getUnreadNotifications();
+        $scope.$on('message:hub-initiated',
+            function(event, data) {
+                messageService.promise.done(function() {
+                    messageService.getUnreadNotifications();
+                });
             });
+
+        function initData() {
+            if (!messageService.isInitialed) {
+                messageService.initHub();
+            }
         }
 
         initData();

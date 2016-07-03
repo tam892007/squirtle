@@ -7,6 +7,54 @@ mainApp.factory('messageService',
         data.chatData = [];
         data.notifications = [];
         data.currentAccount = null;
+        data.isInitialed = false;
+        //hub options
+        var hubOptions = {
+            autoConnect: false,
+            //client side methods
+            listeners: {
+                'notify': onServerNotify,
+                'message': onServerMessage,
+            },
+            //server side methods
+            methods: [
+                'getCurrentAccount', 'validAccount',
+                'getUnreadMessages', 'getMessageHistoryWith', 'sendMessageTo', 'updateMessageStates',
+                'getUnreadNotifications', 'updateNotificationStates'
+            ],
+            //query params sent on initial connection
+            queryParams: {
+                'token': 'nazi-token'
+            },
+            //handle connection error
+            errorHandler: function(error) {
+                console.error(error);
+            },
+            logging: true,
+            //specify a non default root
+            //rootPath: '/api
+        };
+
+        var hub = new Hub('Message', hubOptions);
+        data.hub = hub;
+
+        data.initHub = function() {
+            data.promise = data.hub.promise = data.hub.connect();
+            data.hub.promise.done(function () {
+                data.getCurrentAccount();
+                $rootScope.$broadcast('message:hub-initiated');
+                data.isInitialed = true;
+            });
+        }
+
+        data.destroyHub = function() {
+            data.hub.disconnect();
+            $rootScope.$broadcast('message:hub-destroyed');
+        }
+
+        $rootScope.$on('user:authenticated', data.initHub);
+
+        $rootScope.$on('user:signedout', data.destroyHub);
 
         function getChat(targetAccount) {
             if (!targetAccount) {
@@ -79,55 +127,21 @@ mainApp.factory('messageService',
             $rootScope.$apply();
         };
 
-        //declaring the hub connection
-        var hub = new Hub('Message',
-        {
-            //client side methods
-            listeners: {
-                'notify': onServerNotify,
-                'message': onServerMessage,
-            },
-            //server side methods
-            methods: [
-                'getCurrentAccount', 'validAccount',
-                'getUnreadMessages', 'getMessageHistoryWith', 'sendMessageTo', 'updateMessageStates',
-                'getUnreadNotifications', 'updateNotificationStates'
-            ],
-            //query params sent on initial connection
-            queryParams: {
-                'token': 'nazi-token'
-            },
-            //handle connection error
-            errorHandler: function(error) {
-                console.error(error);
-            },
-            logging: true,
-            //specify a non default root
-            //rootPath: '/api
-        });
-
-        data.hub = hub;
-        data.promise = hub.promise;
-
-        hub.promise.done(function() {
-            data.getCurrentAccount();
-        });
-
         data.getCurrentAccount = function() {
-            var promise = hub.getCurrentAccount();
+            var promise = data.hub.getCurrentAccount();
             promise.done(function(result) {
                 data.currentAccount = result;
             });
             return promise;
         };
 
-        data.validAccount = function (targetAccount) {
-            var promise = hub.validAccount(targetAccount);
+        data.validAccount = function(targetAccount) {
+            var promise = data.hub.validAccount(targetAccount);
             return promise;
         };
 
         data.getUnreadMessages = function() {
-            var promise = hub.getUnreadMessages();
+            var promise = data.hub.getUnreadMessages();
             promise.done(function(messages) {
                 if (messages) {
                     _.each(messages, addMessage);
@@ -138,7 +152,7 @@ mainApp.factory('messageService',
         };
 
         data.getMessageHistoryWith = function(targetAccount, pointTime) {
-            var promise = hub.getMessageHistoryWith(targetAccount, pointTime);
+            var promise = data.hub.getMessageHistoryWith(targetAccount, pointTime);
             promise.done(function(messages) {
                 if (messages) {
                     _.each(messages, addMessage);
@@ -149,7 +163,7 @@ mainApp.factory('messageService',
         };
 
         data.sendMessageTo = function(targetAccount, message) {
-            var promise = hub.sendMessageTo(targetAccount, message);
+            var promise = data.hub.sendMessageTo(targetAccount, message);
             promise.done(function(result) {
                 addMessage(result);
                 $rootScope.$apply();
@@ -158,7 +172,7 @@ mainApp.factory('messageService',
         };
 
         data.updateMessageStates = function(messageIds) {
-            var promise = hub.updateMessageStates(messageIds);
+            var promise = data.hub.updateMessageStates(messageIds);
             promise.done(function() {
                 var messages = [];
                 _.each(data.chatData,
@@ -177,7 +191,7 @@ mainApp.factory('messageService',
         };
 
         data.getUnreadNotifications = function() {
-            var promise = hub.getUnreadNotifications();
+            var promise = data.hub.getUnreadNotifications();
             promise.done(function(notifications) {
                 _.each(notifications,
                     function(item) {
@@ -191,7 +205,7 @@ mainApp.factory('messageService',
         };
 
         data.updateNotificationStates = function(notificationIds) {
-            var promise = hub.updateNotificationStates(notificationIds);
+            var promise = data.hub.updateNotificationStates(notificationIds);
             promise.done(function() {
                 _.each(notificationIds,
                     function(id) {

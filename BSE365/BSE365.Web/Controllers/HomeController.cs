@@ -7,7 +7,7 @@ namespace BSE365.Controllers
     {
         public ActionResult Index()
         {
-            this.ViewBag.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();            
+            this.ViewBag.Version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             return View();
         }
     }

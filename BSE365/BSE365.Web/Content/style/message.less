@@ -15,21 +15,30 @@
         .panel-body {
             height: 200px;
             overflow-y: auto;
+            padding: 5px;
         }
     }
 
     .chat-message-container {
+        padding: 0;
+        list-style-type: none;
 
         .message-sender {
+            font-weight: bold;
         }
 
         .message-message {
+            font-style: italic;
         }
 
         .message-time {
         }
 
         .message-state {
+        }
+
+        li:last-child {
+            height: 20px;
         }
     }
 

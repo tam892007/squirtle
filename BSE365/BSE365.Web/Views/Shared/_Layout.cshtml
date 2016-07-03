@@ -82,7 +82,7 @@
                         </ul>
                     </li>
                 </ul>
-                <ng-include src="'@Url.Content("~/app/main/index/notification-container.html")'"> </ng-include>
+                <ng-include src="'@Url.Content("~/app/main/index/notification-container.html")'" ng-if="authentication.isAuth"></ng-include>
                 <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
                     <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
                     <li class="dropdown" data-ng-hide="!authentication.isAuth">
@@ -107,7 +107,7 @@
         @RenderBody()
     </div>
     <div>
-        <ng-include src="'@Url.Content("~/app/main/index/chat-container.html")'"> </ng-include>
+        <ng-include src="'@Url.Content("~/app/main/index/chat-container.html")'" ng-if="authentication.isAuth"></ng-include>
     </div>
 
     <footer class="footer navbar--custom">

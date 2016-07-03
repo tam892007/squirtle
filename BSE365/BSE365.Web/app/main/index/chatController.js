@@ -1,8 +1,8 @@
 ﻿
 mainApp.controller('chatController',
 [
-    '$scope', 'messageService', 'MessageState',
-    function($scope, messageService, MessageState) {
+    '$scope', '$location', '$anchorScroll', 'messageService', 'MessageState',
+    function($scope, $location, $anchorScroll, messageService, MessageState) {
         $scope.messageData = messageService;
 
         $scope.newChat = function(targetAccount) {
@@ -17,6 +17,7 @@ mainApp.controller('chatController',
         $scope.sendMessageTo = function(chat) {
             var newMessage = chat.newMessage;
             chat.newMessage = '';
+            gotoLastMessage(chat.account);
             return messageService.sendMessageTo(chat.account, newMessage);
         }
 
@@ -44,19 +45,43 @@ mainApp.controller('chatController',
             $scope.currentTarget = null;
         }
 
+        function gotoLastMessage(withAccount) {
+            if (!withAccount) {
+                return;
+            }
+            var hashAccount = 'end-of-' + withAccount;
+            console.log(hashAccount);
+            if ($location.hash() !== hashAccount) {
+                // set the $location.hash to `newHash` and
+                // $anchorScroll will automatically scroll to it
+                $location.hash(hashAccount);
+            } else {
+                // call $anchorScroll() explicitly,
+                // since $location.hash hasn't changed
+                $anchorScroll();
+            }
+        };
+
         $scope.$on('message:new-message-received',
             function(event, message) {
                 if (message.targetAccount == $scope.currentTarget) {
                     messageService.updateMessageStates([message.Id]);
+                    gotoLastMessage($scope.currentTarget);
                 }
+            });
+
+        $scope.$on('message:hub-initiated',
+            function(event, data) {
+                messageService.promise.done(function() {
+                    messageService.getUnreadMessages();
+                });
             });
 
         function initData() {
             $scope.MessageState = MessageState;
-
-            messageService.promise.done(function() {
-                messageService.getUnreadMessages();
-            });
+            if (!messageService.isInitialed) {
+                messageService.initHub();
+            }
         }
 
         initData();

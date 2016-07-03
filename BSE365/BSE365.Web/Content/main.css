@@ -892,6 +892,20 @@ textarea.ng-dirty.ng-valid,
 .chat-container .panel .panel-body {
   height: 200px;
   overflow-y: auto;
+  padding: 5px;
+}
+.chat-container .chat-message-container {
+  padding: 0;
+  list-style-type: none;
+}
+.chat-container .chat-message-container .message-sender {
+  font-weight: bold;
+}
+.chat-container .chat-message-container .message-message {
+  font-style: italic;
+}
+.chat-container .chat-message-container li:last-child {
+  height: 20px;
 }
 .chat-container .chat-control {
   bottom: 0px;
