@@ -208,12 +208,12 @@ namespace BSE365.Api
         private async Task SetAccountStateAsync(TradeAccountVM.SetStateVM state)
         {
             var username = state.UserName;
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Include(x => x.WaitingGivers)
                 .Include(x => x.WaitingReceivers)
                 .Where(x => x.UserName == username).FirstAsync();
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             if (account.IsAllowChangeState())
             {
                 try
@@ -237,21 +237,22 @@ namespace BSE365.Api
         private async Task QueueGiveAsync(string key)
         {
             var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
 
             if (account.IsAllowQueueGive())
             {
+
                 var userId = User.Identity.GetUserId();
                 var _ctx = new BSE365AuthContext();
-                var user = await _ctx.Users.FirstAsync(x => x.Id == userId);
 
-                _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
                 using (var authTransaction = _ctx.Database.BeginTransaction(IsolationLevel.RepeatableRead))
                 {
                     try
                     {
+                        var user = await _ctx.Users.FirstAsync(x => x.Id == userId);
                         account.QueueGive();
                         await _unitOfWork.SaveChangesAsync();
 
@@ -281,6 +282,7 @@ namespace BSE365.Api
         private async Task QueueReceiveAsync(string key)
         {
             var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
@@ -288,7 +290,6 @@ namespace BSE365.Api
             {
                 account.QueueReceive();
 
-                _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
                 try
                 {
                     await _unitOfWork.SaveChangesAsync();
@@ -310,10 +311,10 @@ namespace BSE365.Api
         private async Task ClaimBonusAsync(string key)
         {
             var username = string.IsNullOrEmpty(key) ? User.Identity.GetUserName() : key;
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             var account = await _accountRepo.Queryable()
                 .Include(x => x.UserInfo)
                 .Where(x => x.UserName == username).FirstAsync();
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             if (account.IsAllowClaimBonus())
             {
                 try

@@ -175,6 +175,7 @@ namespace BSE365.Helper
                 mailMessage.To.Add(new MailAddress(receiverEmail));
                 mailClient.Send(mailMessage);
             }
+            if (!string.IsNullOrEmpty(newGiverEmail))
             {
                 // for parent
                 var subject = string.Format(
