@@ -254,13 +254,14 @@ namespace BSE365.Api
 
         private async Task<MoneyTransactionVM.Receiver> MoneyTransferedAsync(MoneyTransactionVM.Receiver tran)
         {
-            var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Receiver.UserInfo)
-                .FirstAsync(x => x.Id == tran.Id);
+            MoneyTransaction transaction;
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             try
             {
+                transaction = await _transactionRepo.Queryable()
+                .Include(x => x.Giver.UserInfo)
+                .Include(x => x.Receiver.UserInfo)
+                .FirstAsync(x => x.Id == tran.Id);
                 transaction.MoneyTransfered(tran.AttachmentUrl);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
@@ -284,24 +285,25 @@ namespace BSE365.Api
 
         private async Task<MoneyTransactionVM.Giver> MoneyReceivedAsync(MoneyTransactionVM.Giver tran)
         {
-            var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Receiver.UserInfo)
-                .Include(x => x.Giver.WaitingGivers)
-                .Include(x => x.Receiver.WaitingReceivers)
-                .FirstAsync(x => x.Id == tran.Id);
-            var otherGivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
-                .Where(x => x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
-                .ToListAsync();
-            var otherReceivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
-                .Where(x => x.WaitingReceiverId == transaction.WaitingReceiverId && x.Id != transaction.Id)
-                .ToListAsync();
-            var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
-            var giverParentInfos = await _userInfoRepo.Queryable()
-                .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
+            MoneyTransaction transaction;
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             try
             {
+                transaction = await _transactionRepo.Queryable()
+                    .Include(x => x.Giver.UserInfo)
+                    .Include(x => x.Receiver.UserInfo)
+                    .Include(x => x.Giver.WaitingGivers)
+                    .Include(x => x.Receiver.WaitingReceivers)
+                    .FirstAsync(x => x.Id == tran.Id);
+                var otherGivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
+                    .Where(x => x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
+                    .ToListAsync();
+                var otherReceivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
+                    .Where(x => x.WaitingReceiverId == transaction.WaitingReceiverId && x.Id != transaction.Id)
+                    .ToListAsync();
+                var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+                var giverParentInfos = await _userInfoRepo.Queryable()
+                    .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
                 transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
                     otherReceivingTransactionsInCurrentTransaction,
                     giverParentInfos);
@@ -327,13 +329,14 @@ namespace BSE365.Api
 
         private async Task<MoneyTransactionVM.Giver> ReportNotTransferAsync(MoneyTransactionVM.Giver tran)
         {
-            var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Receiver)
-                .Include(x => x.Giver)
-                .FirstAsync(x => x.Id == tran.Id);
+            MoneyTransaction transaction;
             _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
             try
             {
+                transaction = await _transactionRepo.Queryable()
+                    .Include(x => x.Receiver)
+                    .Include(x => x.Giver)
+                    .FirstAsync(x => x.Id == tran.Id);
                 transaction.ReportNotTransfer();
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
@@ -348,15 +351,16 @@ namespace BSE365.Api
 
         private async Task<MoneyTransactionVM.Receiver> AbandonTransactionAsync(MoneyTransactionVM.Receiver tran)
         {
-            var transaction = await _transactionRepo.Queryable()
+            MoneyTransaction transaction;
+            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
+            try
+            {
+                transaction = await _transactionRepo.Queryable()
                 .Include(x => x.Giver.UserInfo)
                 .Include(x => x.Giver.WaitingGivers)
                 .Include(x => x.Receiver.UserInfo)
                 .Include(x => x.Receiver.WaitingReceivers)
                 .FirstAsync(x => x.Id == tran.Id);
-            _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
-            try
-            {
                 transaction.Abandon();
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
@@ -486,23 +490,6 @@ namespace BSE365.Api
 
         private async Task ApplyReportAsync(MoneyTransactionVM.Reported instance)
         {
-            var transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Receiver.UserInfo)
-                .Where(x => x.Id == instance.Id)
-                .FirstAsync();
-            var otherGivingTransactionsInCurrentTransaction = _transactionRepo.Queryable()
-                .Where(x =>
-                    x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
-                .ToList();
-            Account giverParentAccount = null;
-            var giverParentId = transaction.Giver.UserInfo.ParentId;
-            if (!string.IsNullOrEmpty(giverParentId))
-            {
-                var giverParentAuthAccount = await _userRepo.FindUser(giverParentId);
-                giverParentAccount = _accountRepo.Queryable()
-                    .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
-            }
             switch (instance.Result)
             {
                 case MoneyTransactionVM.ReportResult.Default:
@@ -511,6 +498,15 @@ namespace BSE365.Api
                     _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
                     try
                     {
+                        var transaction = await _transactionRepo.Queryable()
+                            .Include(x => x.Giver.UserInfo)
+                            .Include(x => x.Receiver.UserInfo)
+                            .Where(x => x.Id == instance.Id)
+                            .FirstAsync();
+                        var otherGivingTransactionsInCurrentTransaction = _transactionRepo.Queryable()
+                            .Where(x =>
+                                x.WaitingGiverId == transaction.WaitingGiverId && x.Id != transaction.Id)
+                            .ToList();
                         var giverParentInfoIds =
                             await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
                         var giverParentInfos = await _userInfoRepo.Queryable()
@@ -529,6 +525,19 @@ namespace BSE365.Api
                     _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
                     try
                     {
+                        var transaction = await _transactionRepo.Queryable()
+                            .Include(x => x.Giver.UserInfo)
+                            .Include(x => x.Receiver.UserInfo)
+                            .Where(x => x.Id == instance.Id)
+                            .FirstAsync();
+                        Account giverParentAccount = null;
+                        var giverParentId = transaction.Giver.UserInfo.ParentId;
+                        if (!string.IsNullOrEmpty(giverParentId))
+                        {
+                            var giverParentAuthAccount = await _userRepo.FindUser(giverParentId);
+                            giverParentAccount = _accountRepo.Queryable()
+                                .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
+                        }
                         transaction.NotTransfer(giverParentAccount);
                         await _unitOfWork.SaveChangesAsync();
                         _unitOfWork.Commit();
@@ -540,12 +549,17 @@ namespace BSE365.Api
                     }
                     break;
                 case MoneyTransactionVM.ReportResult.BothTrue:
-                    await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = transaction.Id});
+                    await MoneyReceivedAsync(new MoneyTransactionVM.Giver {Id = instance.Id});
                     break;
                 case MoneyTransactionVM.ReportResult.BothFalse:
                     _unitOfWork.BeginTransaction(IsolationLevel.RepeatableRead);
                     try
                     {
+                        var transaction = await _transactionRepo.Queryable()
+                            .Include(x => x.Giver.UserInfo)
+                            .Include(x => x.Receiver.UserInfo)
+                            .Where(x => x.Id == instance.Id)
+                            .FirstAsync();
                         transaction.Failed();
                         await _unitOfWork.SaveChangesAsync();
                         _unitOfWork.Commit();

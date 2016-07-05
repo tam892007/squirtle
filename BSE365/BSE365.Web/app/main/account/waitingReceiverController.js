@@ -2,9 +2,9 @@
 mainApp.controller('waitingReceiverController',
 [
     '$scope', '$state', 'accountService', 'Notification', 'PriorityLevel', 'WaitingType', 'ConfigData',
-    function ($scope, $state, accountService, Notification, PriorityLevel, WaitingType, ConfigData) {
+    function($scope, $state, accountService, Notification, PriorityLevel, WaitingType, ConfigData) {
 
-        $scope.loadData = function (tableState) {
+        $scope.loadData = function(tableState) {
             if (tableState) {
                 $scope.tableState = tableState;
             } else {
@@ -33,6 +33,7 @@ mainApp.controller('waitingReceiverController',
         }
 
         $scope.mapForReceiver = function() {
+            $scope.isProcessing = true;
             accountService.mapForReceiver($scope.target,
                 function(response) {
                     $scope.reload();
@@ -45,6 +46,10 @@ mainApp.controller('waitingReceiverController',
                         $scope.selected = false;
                         Notification.success('Map successful!');
                     }
+                    $scope.isProcessing = false;
+                },
+                function() {
+                    $scope.isProcessing = false;
                 });
         }
 
@@ -57,6 +62,7 @@ mainApp.controller('waitingReceiverController',
             $scope.selected = false;
             $scope.isGiver = false;
             $scope.isReceiver = true;
+            $scope.isProcessing = false;
         }
 
         $scope.init();

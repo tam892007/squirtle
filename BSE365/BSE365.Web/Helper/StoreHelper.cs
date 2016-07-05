@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using BSE365.Base.Infrastructures;
@@ -22,7 +23,9 @@ namespace BSE365.Helper
             var receiverEmail = string.Empty;
             using (var context = new BSE365Context())
             {
-                var waitingReceiver = context.WaitingReceivers
+                using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                {
+                    var waitingReceiver = context.WaitingReceivers
                     .Include(x => x.Account.UserInfo)
                     .First(x => x.Id == waitingReceiverId);
 
@@ -45,8 +48,6 @@ namespace BSE365.Helper
                 receiverEmail = waitingReceiver.Account.UserInfo.Email;
 
                 // update data to database
-                using (var dbContextTransaction = context.Database.BeginTransaction())
-                {
                     try
                     {
                         var now = DateTime.Now;
@@ -235,7 +236,7 @@ namespace BSE365.Helper
 
 
                     // update data to database
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
+                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
                     {
                         try
                         {
@@ -381,19 +382,21 @@ namespace BSE365.Helper
                 {
                     var timeBase = DateTime.Now;
                     timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                    var transactionsToUpdate = context.MoneyTransactions
+                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                    {
+                        var transactionsToUpdate = context.MoneyTransactions
                         .Include(x => x.Giver.UserInfo)
                         .Include(x => x.Receiver.UserInfo)
                         .Where(x => !x.IsEnd && x.Created < timeBase && x.State == TransactionState.Begin)
                         .ToList();
                     foreach (var transaction in transactionsToUpdate)
                     {
-                        using (var dbContextTransaction = context.Database.BeginTransaction())
-                        {
                             try
                             {
                                 Account giverParentAccount = null;
                                 var giverParentId = transaction.Giver.UserInfo.ParentId;
+                                string giverParentEmail = null;
+                                string giverParentAccountId = null;
                                 if (!string.IsNullOrEmpty(giverParentId))
                                 {
                                     var giverParentAuthAccount = authContext.Users
@@ -403,6 +406,11 @@ namespace BSE365.Helper
                                         giverParentAccount = context.Accounts
                                             .Include(x => x.UserInfo)
                                             .FirstOrDefault(x => x.UserName == giverParentAuthAccount.UserName);
+                                        if (giverParentAccount != null)
+                                        {
+                                            giverParentEmail = giverParentAccount.UserInfo.Email;
+                                            giverParentAccountId = giverParentAccount.UserName;
+                                        }
                                     }
                                 }
 
@@ -412,12 +420,11 @@ namespace BSE365.Helper
                                 BackgroundJob.Enqueue(() => NotificationHelper.NotifyTransactionNotTransfered(
                                     transaction.Id,
                                     transaction.GiverId, transaction.ReceiverId,
-                                    giverParentId));
-                                var giverParentEmail = giverParentAccount?.UserInfo.Email;
+                                    giverParentAccountId));
                                 BackgroundJob.Enqueue(() => EmailHelper.NotifyTransactionNotTransfered(transaction.Id,
                                     transaction.GiverId, transaction.Giver.UserInfo.Email,
                                     transaction.ReceiverId, transaction.Receiver.UserInfo.Email,
-                                    giverParentId, giverParentEmail));
+                                    giverParentAccountId, giverParentEmail));
 
                                 context.SaveChanges();
 
@@ -441,7 +448,9 @@ namespace BSE365.Helper
                 {
                     var timeBase = DateTime.Now;
                     timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                    var transactionsToUpdate = context.MoneyTransactions
+                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                    {
+                        var transactionsToUpdate = context.MoneyTransactions
                         .Include(x => x.Giver.UserInfo)
                         .Include(x => x.Receiver.UserInfo)
                         .Include(x => x.Giver.WaitingGivers)
@@ -454,8 +463,6 @@ namespace BSE365.Helper
                         .ToList();
                     foreach (var transaction in transactionsToUpdate)
                     {
-                        using (var dbContextTransaction = context.Database.BeginTransaction())
-                        {
                             try
                             {
                                 var otherGivingTransactionsInCurrentTransaction = relatedTransactions.Where(x =>
@@ -505,7 +512,9 @@ namespace BSE365.Helper
         {
             using (var context = new BSE365Context())
             {
-                var accountCanQueueReceives = context.Accounts
+                using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                {
+                    var accountCanQueueReceives = context.Accounts
                     .Include(x => x.UserInfo)
                     .Where(x =>
                         x.State == AccountState.Gave &&
@@ -516,8 +525,6 @@ namespace BSE365.Helper
                 var accountToQueues = accountCanQueueReceives.GroupBy(x => x.UserInfoId).Select(x => x.First());
                 foreach (var account in accountToQueues)
                 {
-                    using (var dbContextTransaction = context.Database.BeginTransaction())
-                    {
                         WaitingReceiver waitingqueue = null;
                         try
                         {
