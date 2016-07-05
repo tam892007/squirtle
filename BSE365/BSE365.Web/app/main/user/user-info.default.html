@@ -37,7 +37,7 @@
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" name="email" ng-model="currentUser.email" required>
+                <input type="email" class="form-control" name="email" ng-model="currentUser.email" required readonly>
                 <div ng-messages="userForm.email.$error" class="error-messages">
                     <div ng-messages-include="validation-messages"></div>
                 </div>
@@ -45,7 +45,7 @@
             <div class="form-group">
                 <label for="bankNumber">Bank Number:</label>
                 <input type="text" class="form-control" name="bankNumber" ng-model="currentUser.bankNumber" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
-                       required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13" ng-pattern="/^\d+$/">
+                       required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13" ng-pattern="/^\d+$/" readonly>
                 <div ng-messages="userForm.bankNumber.$error" class="error-messages">
                     <div ng-messages-include="validation-messages"></div>
                     <div ng-message="unknown">This bank number has been used</div>
@@ -53,14 +53,14 @@
             </div>
             <div class="form-group">
                 <label for="bankName">Bank Name:</label>
-                <input type="text" class="form-control" name="bankName" ng-model="currentUser.bankName" required>
+                <input type="text" class="form-control" name="bankName" ng-model="currentUser.bankName" required readonly>
                 <div ng-messages="userForm.bankName.$error" class="error-messages">
                     <div ng-messages-include="validation-messages"></div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="bankBranch">Bank Branch:</label>
-                <input type="text" class="form-control" name="bankBranch" ng-model="currentUser.bankBranch" required>
+                <input type="text" class="form-control" name="bankBranch" ng-model="currentUser.bankBranch" required readonly>
                 <div ng-messages="userForm.bankBranch.$error" class="error-messages">
                     <div ng-messages-include="validation-messages"></div>
                 </div>
