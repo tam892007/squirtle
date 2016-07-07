@@ -42,6 +42,11 @@ mainApp.controller('waitingReceiverController',
                         $scope.message = 'Not enough Givers!';
                         Notification.success('Not enough Givers!');
                     } else {
+                        var index = $scope.data.indexOf($scope.target);
+                        if (index > -1) {
+                            delete $scope.data[index];
+                            $scope.data.splice(index, 1);
+                        }
                         $scope.target = {};
                         $scope.selected = false;
                         Notification.success('Map successful!');
