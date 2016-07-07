@@ -512,7 +512,7 @@ namespace BSE365.Helper
         {
             using (var context = new BSE365Context())
             {
-                using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
                     var accountCanQueueReceives = context.Accounts
                     .Include(x => x.UserInfo)
@@ -521,32 +521,24 @@ namespace BSE365.Helper
                         x.UserInfo.State == UserState.Default &&
                         x.UserInfo.GiveOver >= TransactionConfig.GiveOverToQueueReceive).ToList();
 
-                // select one account for each user
-                var accountToQueues = accountCanQueueReceives.GroupBy(x => x.UserInfoId).Select(x => x.First());
-                foreach (var account in accountToQueues)
-                {
+                    // select one account for each user
+                    var accountToQueues = accountCanQueueReceives.GroupBy(x => x.UserInfoId).Select(x => x.First());
+                    foreach (var account in accountToQueues)
+                    {
                         WaitingReceiver waitingqueue = null;
-                        try
-                        {
-                            waitingqueue = account.QueueReceive();
-
-                            context.SaveChanges();
-
-                            dbContextTransaction.Commit();
-                        }
-                        catch (Exception)
-                        {
-                            dbContextTransaction.Rollback();
-
-                            account.ObjectState = ObjectState.Unchanged;
-
-                            account.UserInfo.ObjectState = ObjectState.Unchanged;
-
-                            if (waitingqueue != null)
-                                waitingqueue.ObjectState = ObjectState.Unchanged;
-                        }
+                        waitingqueue = account.QueueReceive();                        
                     }
-                }
+
+                    try
+                    {
+                        context.SaveChanges();
+                        dbContextTransaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        dbContextTransaction.Rollback();                        
+                    }
+                }                
             }
         }
     }

@@ -40,51 +40,51 @@
                 <ul data-ng-hide="!authentication.isAuth" class="nav navbar-nav navbar-nav--custom">
                     <li ui-sref-active-eq='active'><a ui-sref="home" active-link="active" data-toggle="collapse" data-target=".navbar-collapse.in" data-i18n="_Layout_Home_"></a></li>
                     <li class="dropdown" ui-sref-active="{'active': 'pin'}">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wallet <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_Wallet_"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="pin.transfer" data-toggle="collapse" data-target=".navbar-collapse.in">Transfer</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="pin.rate" data-toggle="collapse" data-target=".navbar-collapse.in">Buy</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="pin.transfer" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_Wallet_Transfer_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="pin.rate" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_Wallet_Buy_"></span></a></li>
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'ga'}">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Give / Accept <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_GiveAccept_"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in">Current State</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="currentTransaction" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_GiveAccept_CurrentState_"></span></a></li>
                             <li role="separator" class="divider"></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="transaction.history" data-toggle="collapse" data-target=".navbar-collapse.in">Transaction History</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="transaction.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="transaction.bonus" data-toggle="collapse" data-target=".navbar-collapse.in">Bonus Transaction</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="transaction.history" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_GiveAccept_TransactionHistory_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="transaction.punishment" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_GiveAccept_PunishmentTransaction_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="transaction.bonus" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_GiveAccept_BonusTransaction_"></span></a></li>
                             @*<li ui-sref-active-eq='active'><a ui-sref="trade.history" data-toggle="collapse" data-target=".navbar-collapse.in">Transaction History</a></li>
                                 <li ui-sref-active-eq='active'><a ui-sref="trade.punishment" data-toggle="collapse" data-target=".navbar-collapse.in">Punishment Transaction</a></li>
                                 <li ui-sref-active-eq='active'><a ui-sref="trade.bonus" data-toggle="collapse" data-target=".navbar-collapse.in">Bonus Transaction</a></li>*@
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forAdmin()">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account Management <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_AccountManagement_"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in">Accounts</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="allTransactions" data-toggle="collapse" data-target=".navbar-collapse.in">All Transactions</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="reportedTransactions" data-toggle="collapse" data-target=".navbar-collapse.in">Reported Transactions</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_Accounts_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="allTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_AllTransactions_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="reportedTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ReportedTransactions_"></span></a></li>
                             <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Waiting Accounts</li>
-                            <li ui-sref-active-eq='active'><a ui-sref="waitinggiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Givers</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="waitingreceiver" data-toggle="collapse" data-target=".navbar-collapse.in">Waiting Receivers</a></li>
-                            <li class="dropdown-header">Administration</li>
-                            <li ui-sref-active-eq='active'><a ui-sref="forceResetPassword" data-toggle="collapse" data-target=".navbar-collapse.in">Reset Password</a></li>
+                            <li class="dropdown-header"><span data-i18n="_Layout_AccountManagement_WaitingAccounts_"></span></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="waitinggiver" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_WaitingGivers_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="waitingreceiver" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_WaitingReceivers_"></span></a></li>
+                            <li class="dropdown-header"><span data-i18n="_Layout_AccountManagement_Administration_"></span></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="forceResetPassword" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ResetPassword_"></span></a></li>
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'user'}">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User Management <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_UserManagement_"></span> <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in">Information</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in">Introduction</a></li>
-                            <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in">Tree Expansion</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="user.default" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_UserManagement_Information_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="user.register" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_UserManagement_Introduction_"></span></a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="user.tree" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_UserManagement_TreeExpansion_"></span></a></li>
                         </ul>
                     </li>
                 </ul>
                 <ng-include src="'@Url.Content("~/app/main/index/notification-container.html")'" ng-if="authentication.isAuth"></ng-include>
                 <ul class="nav navbar-nav navbar-right navbar-right--custom navbar-nav--custom">
-                    <li data-ng-hide="authentication.isAuth"> <a ui-sref="login">Login</a></li>
+                    <li data-ng-hide="authentication.isAuth"> <a ui-sref="login"><span data-i18n="_Layout_Login_"></span></a></li>
                     <li class="dropdown" data-ng-hide="!authentication.isAuth">
                         <a class="dropdown-toggle dropdown-toggle--custom" id="userNameDropdown" data-toggle="dropdown">
                             <img http-src="{{userContext.avatar.url}}" class="img-circle nav-right--custom__avatar" />
@@ -94,8 +94,8 @@
                             </div>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a ui-sref="association">Associated Accounts</a></li>
-                            <li><a href="#" data-ng-click="logOut()">Logout</a></li>
+                            <li><a ui-sref="association"><span data-i18n="_Layout_AssociatedAccounts_"></span></a></li>
+                            <li><a href="#" data-ng-click="logOut()"><span data-i18n="_Layout_Logout_"></span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -118,7 +118,7 @@
                         <a href="" ng-click="changeLanguage('vi-VN')"> Tiếng Việt </a> <span class="text-muted"> | </span> <a href="" ng-click="changeLanguage('en-US')"> English </a>
                     </div>
                     <div class="col-md-4">
-                        <p class="text-muted pull-right">© 2016 MAXX. All rights reserved</p>
+                        <p class="text-muted pull-right"><span data-i18n="_Layout_Copyright_"></span></p>
                     </div>
                 </div>
             </div>

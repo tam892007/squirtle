@@ -15,7 +15,7 @@
         /// <summary>
         /// in millisecond
         /// </summary>
-        public static double WaitingHelperTimeout = /*60*60*1000;*/ 12*60*1000; //for test
+        public static double WaitingHelperTimeout = /*60*60*1000;*/ 30*60*1000; //for test
 
         /// <summary>
         /// Time for each step of Transaction in hours

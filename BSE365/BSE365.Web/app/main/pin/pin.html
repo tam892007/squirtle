@@ -100,6 +100,7 @@
                                 <th>Amount</th>
                                 <th>Type</th>
                                 <th>Time</th>
+                                <th>Note</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -110,11 +111,12 @@
                                 <td><span data-ng-bind="transaction.amount"></span></td>
                                 <td><span ng-class="{'glyphicon glyphicon-arrow-up text-success' : transaction.type == 2, 'glyphicon glyphicon-arrow-down text-danger' : transaction.type == 1}"></span></td>
                                 <td><span data-ng-bind="transaction.createdDate"></span></td>
+                                <td><span data-ng-bind="transaction.note"></span></td>
                             </tr>
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="6"></td>
+                                <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="7"></td>
                             </tr>
                         </tfoot>
                     </table>
