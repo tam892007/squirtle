@@ -29,7 +29,7 @@ namespace BSE365.Api
             HttpResponseMessage response = null;
             if (id == 0)
             {
-                var defaultPic = string.Format(@"{0}\Content\image\{1}", System.AppDomain.CurrentDomain.BaseDirectory, SystemAdmin.UserDefautPic);
+                var defaultPic = string.Format(@"{0}\Content\images\{1}", System.AppDomain.CurrentDomain.BaseDirectory, SystemAdmin.UserDefautPic);
                 var content = System.IO.File.ReadAllBytes(defaultPic);
                 response = new HttpResponseMessage { Content = new ByteArrayContent(content) };
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue(Utilities.GetImageContentType(defaultPic.Split('.').Last()));

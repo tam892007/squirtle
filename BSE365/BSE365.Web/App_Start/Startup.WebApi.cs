@@ -25,12 +25,12 @@ namespace BSE365.Web
                 );
 
             // enable elmah
-            config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
-            config.Filters.Add(new ElmahHandleErrorApiAttribute());
+            //config.Services.Add(typeof(IExceptionLogger), new ElmahExceptionLogger());
+            //config.Filters.Add(new ElmahHandleErrorApiAttribute());
 
             //log4net
-            log4net.Config.XmlConfigurator.Configure();
-            config.MessageHandlers.Add(new LogRequestAndResponseHandler());
+            //log4net.Config.XmlConfigurator.Configure();
+            //config.MessageHandlers.Add(new LogRequestAndResponseHandler());
         }
     }
 }

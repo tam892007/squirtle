@@ -8,6 +8,7 @@ using System.Web.Http;
 using BSE365.Base.Infrastructures;
 using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork.Contracts;
+using BSE365.Common.Constants;
 using BSE365.Mappings;
 using BSE365.Model.Entities;
 using BSE365.Model.Enum;
@@ -30,6 +31,7 @@ namespace BSE365.Api
         private readonly IUnitOfWorkAsync _unitOfWork;
         private readonly IRepositoryAsync<WaitingGiver> _waitingGiverRepo;
         private readonly IRepositoryAsync<WaitingReceiver> _waitingReceiverRepo;
+        private readonly IRepositoryAsync<Message> _messageRepo;
 
         private UserProfileRepository _userRepo;
 
@@ -38,7 +40,8 @@ namespace BSE365.Api
             IRepositoryAsync<Account> accountRepo,
             IRepositoryAsync<MoneyTransaction> transactionRepo,
             IRepositoryAsync<WaitingGiver> waitingGiverRepo,
-            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo)
+            IRepositoryAsync<WaitingReceiver> waitingReceiverRepo,
+            IRepositoryAsync<Message> messageRepo)
         {
             _unitOfWork = unitOfWork;
             _accountRepo = accountRepo;
@@ -46,6 +49,7 @@ namespace BSE365.Api
             _waitingGiverRepo = waitingGiverRepo;
             _waitingReceiverRepo = waitingReceiverRepo;
 
+            _messageRepo = messageRepo;
 
             _userRepo = new UserProfileRepository();
         }
@@ -216,9 +220,17 @@ namespace BSE365.Api
                 .Where(x => x.UserName == username).FirstAsync();
             if (account.IsAllowChangeState())
             {
+                var log = Message.NewLog("[Account]-[ChangeState]:");
                 try
                 {
+                    log.Messsage += string.Format("",
+                        account.UserName, account.State,
+                        account.UserInfo.DisplayName, account.UserInfo.State, account.UserInfo.GiveOver);
                     account.ChangeState(state.State);
+                    log.Messsage += string.Format("",
+                        account.UserName, account.State,
+                        account.UserInfo.DisplayName, account.UserInfo.State, account.UserInfo.GiveOver);
+                    //_messageRepo.Insert(log);
                     await _unitOfWork.SaveChangesAsync();
                     _unitOfWork.Commit();
                 }
@@ -244,7 +256,6 @@ namespace BSE365.Api
 
             if (account.IsAllowQueueGive())
             {
-
                 var userId = User.Identity.GetUserId();
                 var _ctx = new BSE365AuthContext();
 

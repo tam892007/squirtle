@@ -38,7 +38,8 @@ mainApp.factory('messageService',
         var hub = new Hub('Message', hubOptions);
         data.hub = hub;
 
-        data.initHub = function() {
+        data.initHub = function () {
+            return;
             data.promise = data.hub.promise = data.hub.connect();
             data.hub.promise.done(function () {
                 data.getCurrentAccount();
