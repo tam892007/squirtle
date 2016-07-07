@@ -19,5 +19,7 @@
         public const int StartId = 31121315;
         public const string TreePathSplitter = ";";
         public const string DefaultPassword = "123456";
+
+        public const string SystemLog = "system-log";
     }
 }

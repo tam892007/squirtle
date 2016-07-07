@@ -1,4 +1,4 @@
-﻿<div class="chat-container" ng-controller="chatController">
+﻿<div class="chat-container" ng-controller="chatController" ng-show="isHubInitialed()">
     <div class="chat-control" ng-show="!isShowNewChatWith">
         <button class="btn btn-success" ng-click="isShowNewChatWith = true">
             <span class="glyphicon glyphicon-plus"></span>

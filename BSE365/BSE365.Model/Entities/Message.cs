@@ -39,5 +39,18 @@ namespace BSE365.Model.Entities
 
         [NotMapped]
         public ObjectState ObjectState { get; set; }
+
+        public static Message NewLog(string message = "")
+        {
+            var log = new Message
+            {
+                FromAccount = Common.Constants.SystemAdmin.SystemLog,
+                ToAccount = Common.Constants.SystemAdmin.SystemLog,
+                Type = MessageType.Log,
+                Messsage = message,
+                ObjectState = ObjectState.Added,
+            };
+            return log;
+        }
     }
 }

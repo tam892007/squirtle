@@ -29,6 +29,10 @@ mainApp.controller('notificationController',
                 });
             });
 
+        $scope.isHubInitialed = function () {
+            return messageService.isInitialed;
+        }
+
         function initData() {
             if (!messageService.isInitialed) {
                 messageService.initHub();

@@ -6,12 +6,14 @@ mainApp.controller('chatController',
         $scope.messageData = messageService;
 
         $scope.newChat = function(targetAccount) {
-            messageService.validAccount(targetAccount)
-                .done(function(result) {
-                    if (result) {
-                        messageService.getChat(targetAccount);
-                    }
-                });
+            if (targetAccount) {
+                messageService.validAccount(targetAccount)
+                    .done(function(result) {
+                        if (result) {
+                            messageService.getChat(targetAccount);
+                        }
+                    });
+            }
         }
 
         $scope.sendMessageTo = function(chat) {
@@ -76,6 +78,10 @@ mainApp.controller('chatController',
                     messageService.getUnreadMessages();
                 });
             });
+
+        $scope.isHubInitialed = function() {
+            return messageService.isInitialed;
+        }
 
         function initData() {
             $scope.MessageState = MessageState;

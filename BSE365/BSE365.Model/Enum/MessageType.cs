@@ -4,5 +4,6 @@
     {
         Message = 0,
         Notification = 1,
+        Log = 2,
     }
 }
