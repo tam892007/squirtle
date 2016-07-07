@@ -215,6 +215,8 @@ namespace BSE365.Model.Entities
 
         public bool IsAllowClaimBonus()
         {
+            return false;
+            // todo: enable claim bonus
             return UserInfo.IsAllowClaimBonus();
         }
 
@@ -250,7 +252,7 @@ namespace BSE365.Model.Entities
             {
                 if (otherGivingTransactionsInCurrentTransaction.All(x => x.IsEnd) &&
                     State == AccountState.InGiveTransaction &&
-                    WaitingGivers.Count == 0)
+                    WaitingGivers.All(x => x.Type != WaitingType.Default))
                 {
                     State = AccountState.Gave;
                     CurrentTransactionGroupId = null;
@@ -272,7 +274,7 @@ namespace BSE365.Model.Entities
             {
                 if (otherReceivingTransactionsInCurrentTransaction.All(x => x.IsEnd) &&
                     State == AccountState.InReceiveTransaction &&
-                    WaitingReceivers.Count == 0)
+                    WaitingReceivers.All(x => x.Type != WaitingType.Default))
                 {
                     State = AccountState.Default;
                     CurrentTransactionGroupId = null;
@@ -339,8 +341,8 @@ namespace BSE365.Model.Entities
         /// <param name="transaction"></param>
         public WaitingReceiver ReQueueWaitingListForAbandonTransaction(MoneyTransaction transaction)
         {
-            WaitingReceiver waitingqueue = null;
-            if (WaitingReceivers.Count == 0)
+            var waitingqueue = WaitingReceivers.FirstOrDefault(x => x.Type == WaitingType.Default);
+            if (waitingqueue == null)
             {
                 waitingqueue = new WaitingReceiver
                 {
@@ -354,7 +356,6 @@ namespace BSE365.Model.Entities
             }
             else
             {
-                waitingqueue = WaitingReceivers.First();
                 waitingqueue.Amount++;
                 waitingqueue.Priority = PriorityLevel.High;
                 waitingqueue.ObjectState = ObjectState.Modified;
