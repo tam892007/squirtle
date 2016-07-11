@@ -22,7 +22,7 @@ using BSE365.Helper;
 
 namespace BSE365.Api
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/trade")]
     public class TradeController : ApiController
     {
@@ -54,6 +54,7 @@ namespace BSE365.Api
             _userRepo = new UserProfileRepository();
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("QueryAccount")]
         public async Task<IHttpActionResult> QueryAccount(FilterVM filter)
@@ -74,6 +75,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("SetAccountPriority")]
         public async Task<IHttpActionResult> SetAccountPriority(TradeAccountVM.SetPriorityVM priority)
@@ -82,6 +84,7 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("SetAccountState")]
         public async Task<IHttpActionResult> SetAccountState(TradeAccountVM.SetStateVM state)
@@ -122,6 +125,7 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("QueryWaitingGivers")]
         public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
@@ -130,6 +134,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("QueryWaitingReceivers")]
         public async Task<IHttpActionResult> QueryWaitingReceivers(FilterVM filter)
@@ -146,6 +151,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("MapForReceiver")]
         public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)

@@ -20,7 +20,7 @@
         /// <summary>
         /// Time for each step of Transaction in hours
         /// </summary>
-        public static int TimeForEachStepInHours = 32;
+        public static int TimeForEachStepInHours = 48;
 
         public static int GiveAmountDefault = 2;
         public static int GiveAmountAbandon = 1;

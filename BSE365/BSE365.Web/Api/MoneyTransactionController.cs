@@ -16,6 +16,7 @@ using BSE365.Base.Infrastructures;
 using BSE365.Base.Repositories.Contracts;
 using BSE365.Base.UnitOfWork;
 using BSE365.Base.UnitOfWork.Contracts;
+using BSE365.Common.Constants;
 using BSE365.Common.Helper;
 using BSE365.Helper;
 using BSE365.Mappings;
@@ -29,7 +30,7 @@ using LinqKit;
 
 namespace BSE365.Api
 {
-    //[Authorize]
+    [Authorize]
     [RoutePrefix("api/transaction")]
     public class MoneyTransactionController : ApiController
     {
@@ -202,6 +203,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("QueryUserPunishment")]
         public async Task<IHttpActionResult> QueryUserPunishment(FilterVM filter)
@@ -210,6 +212,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin)]
         [HttpPost]
         [Route("QueryUserBonus")]
         public async Task<IHttpActionResult> QueryUserBonus(FilterVM filter)

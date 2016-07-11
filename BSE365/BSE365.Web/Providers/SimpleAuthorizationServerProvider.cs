@@ -86,6 +86,7 @@ namespace BSE365.Web.Providers
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] {allowedOrigin});
 
             var userId = string.Empty;
+            IList<string> roles = new List<string>();
             using (AuthRepository _repo = new AuthRepository())
             {
                 var user = await _repo.FindUser(context.UserName, context.Password);
@@ -102,11 +103,13 @@ namespace BSE365.Web.Providers
                 }
 
                 userId = user.Id;
+                roles = await _repo.GetRolesForUser(user.Id);
             }
 
             var identity = new ClaimsIdentity(context.Options.AuthenticationType);
             identity.AddClaim(new Claim(ClaimTypes.Name, context.UserName.ToUpper()));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId));  ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, userId)); ////If you want to use User.Identity.GetUserId in Web API, you need a NameIdentifier claim.
+            identity.AddClaim(new Claim(ClaimTypes.Role, string.Join(",", roles)));
 
             var props = new AuthenticationProperties(new Dictionary<string, string>
             {

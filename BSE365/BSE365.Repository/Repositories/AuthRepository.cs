@@ -26,8 +26,9 @@ namespace BSE365.Repository.Repositories
             _ctx = new BSE365AuthContext();
             _userManager = new UserManager<User>(new UserStore<User>(_ctx));
         }
+
         public AuthRepository(IDataProtectionProvider provider) : this()
-        {           
+        {
             _userManager.UserTokenProvider = new DataProtectorTokenProvider<User>(provider.Create("ResetPassword"));
         }
 
@@ -194,12 +195,18 @@ namespace BSE365.Repository.Repositories
             var result = await _userManager.ResetPasswordAsync(user.Id, code, newPassword);
             return result;
         }
+
         public async Task<IdentityResult> ForceResetPassword(User user)
         {
             if (user == null) return null;
             var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
             var result = await _userManager.ResetPasswordAsync(user.Id, code, SystemAdmin.DefaultPassword);
             return result;
+        }
+
+        public async Task<IList<string>> GetRolesForUser(string userId)
+        {
+            return await _userManager.GetRolesAsync(userId);
         }
     }
 }

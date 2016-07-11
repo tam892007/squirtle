@@ -22,6 +22,7 @@ using System.Web.Http;
 
 namespace BSE365.Api
 {
+    [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {

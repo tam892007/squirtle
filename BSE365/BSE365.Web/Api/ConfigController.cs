@@ -6,6 +6,7 @@ using System.Web.Http;
 
 namespace BSE365.Api
 {
+    [Authorize]
     [RoutePrefix("api/Config")]
     public class ConfigController : BaseController
     {
