@@ -34,7 +34,7 @@ namespace BSE365.Web
             ConfigureTimer(config);
 
             ////HangFire
-            //ConfigureHangFire(app);
+            ConfigureHangFire(app);
 
 
             ////SignalR

@@ -394,12 +394,6 @@ code {
 .panel-form .panel-body .col-xs-12 {
   padding: 0px 5px 0px 5px;
 }
-.panel-form .panel-body .rating-custom .glyphicon-star {
-  color: #FFA500;
-}
-.panel-form .panel-body .rating-custom .glyphicon-star-empty {
-  color: black;
-}
 .panel-form .panel-body .user-detail {
   border: 1px solid #4b2218;
   margin: 5px 0 5px 0;
@@ -427,6 +421,10 @@ code {
   background-image: url('images/complete-logo.png');
   margin-top: -10px;
   margin-right: 10px;
+}
+.panel-small-padding .col-md-6 {
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .crop-area {
   height: 295px;
@@ -876,6 +874,12 @@ textarea.ng-dirty.ng-valid,
 }
 .transaction-account-info td:first-child {
   white-space: nowrap;
+}
+.rating-custom .glyphicon-star {
+  color: #FFA500;
+}
+.rating-custom .glyphicon-star-empty {
+  color: black;
 }
 .chat-container {
   /*position: absolute;

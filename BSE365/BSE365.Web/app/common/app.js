@@ -1,8 +1,9 @@
 ﻿var commonApp = angular.module('commonApp', ['ngResource', 'ui.router', 'ui.bootstrap']);
 
-var serviceBase = 'http://maxxpg.com/';
+//var serviceBase = 'http://maxxpg.com/';
 //var serviceBase = 'http://new.maxxpg.com/';
 //var serviceBase = 'http://localhost:2736/';
+var serviceBase = '/';
 commonApp.constant('ngAuthSettings',
 {
     apiServiceBaseUri: serviceBase,

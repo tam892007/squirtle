@@ -1,4 +1,4 @@
-﻿<div class="panel" ng-show="selected" ng-class="{'panel-warning': target.isGiving, 'panel-success': target.isReceiving}">
+﻿<div class="panel panel-small-padding" ng-show="selected" ng-class="{'panel-warning': target.isGiving, 'panel-success': target.isReceiving}">
     <div class="panel-heading">
         <span class="badge pull-right">ID: {{target.id}}</span>
         <h3 class="panel-title">
@@ -27,13 +27,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 rating-custom">
                 <label>Member</label>
                 <p>
                     <uib-rating ng-model="target.giverRating" max="6" read-only="true"></uib-rating>
                 </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 rating-custom">
                 <label>Member</label>
                 <p>
                     <uib-rating ng-model="target.receiverRating" max="6" read-only="true"></uib-rating>
