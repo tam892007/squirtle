@@ -37,7 +37,7 @@ namespace BSE365.Api
             if (result.IsSuccessful)
             {
                 return Ok(result.Result);
-            }               
+            }
             else
             {
                 return BadRequest("err_server");
@@ -56,10 +56,10 @@ namespace BSE365.Api
         {
             int totalPageCount;
             var userId = User.Identity.GetUserName();
-            var transactionHistories = await _historyRepo.Query(x=>x.FromName == userId || x.ToId == userId)
+            var transactionHistories = await _historyRepo.Query(x => x.FromName == userId || x.ToId == userId)
                 .OrderBy(x => x.OrderByDescending(i => i.CreatedDate))
-                .SelectPage(filter.Pagination.Start / filter.Pagination.Number + 1, filter.Pagination.Number,
-                            out totalPageCount).ToListAsync();
+                .SelectPage(filter.Pagination.Start/filter.Pagination.Number + 1, filter.Pagination.Number,
+                    out totalPageCount).ToListAsync();
 
             var data = transactionHistories.Select(x => x.ToViewModel(userId));
 
@@ -75,7 +75,7 @@ namespace BSE365.Api
         private async Task<ResultViewModel<PinBalanceViewModel>> TransferAsync(PinTransactionViewModel transactionVM)
         {
             var pinTransaction = transactionVM.ToModel();
-            
+
             ////ensure from current user
             pinTransaction.FromId = User.Identity.GetUserId();
             pinTransaction.FromName = User.Identity.GetUserName();
@@ -83,7 +83,6 @@ namespace BSE365.Api
             var result = await _repo.TransferPin(pinTransaction);
 
             return result.ToResultViewModel<PinBalanceViewModel, User>((x) => { return x.ToPinBalanceViewModel(); });
-        } 
+        }
     }
 }
-

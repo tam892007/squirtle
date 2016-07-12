@@ -38,8 +38,6 @@ namespace BSE365.Api
             _repo = new AuthRepository(Startup.DataProtectionProvider);
         }
 
-        // POST api/Account/Register
-        [Authorize]
         [Route("Register")]
         public async Task<IHttpActionResult> Register(RegisterUserViewModel userModel)
         {
@@ -47,15 +45,15 @@ namespace BSE365.Api
             userInfo.ParentId = User.Identity.GetUserId();
 
             var result = await _repo.RegisterUser(userModel.UserName, userModel.Password, userInfo);
-        
+
             if (!result.IsSuccessful)
             {
                 return BadRequest();
             }
 
-            return Ok(result.Result.Select(x=>x.ToViewModel()));
+            return Ok(result.Result.Select(x => x.ToViewModel()));
         }
-       
+
         [AllowAnonymous]
         [HttpGet]
         [Route("ForgotPassword")]
@@ -66,24 +64,25 @@ namespace BSE365.Api
 
             var code = await _repo.ForgotPassword(user);
             if (string.IsNullOrEmpty(code)) return Ok(false);
-            
+
             ////Send Email
             var request = System.Web.HttpContext.Current.Request;
             var baseUri = request.Url.AbsoluteUri.Replace(request.Url.PathAndQuery, string.Empty);
             BackgroundJob.Enqueue(() => EmailHelper.SendLinkResetPassword(code, user.UserInfo.Email, userName, baseUri));
-            
+
             return Ok(true);
         }
-        
+
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo)]
         [HttpGet]
-        //[Authorize(Roles=UserRolesText.SuperAdmin)]
         [Route("ForceResetPassword")]
         public async Task<IHttpActionResult> ForceResetPassword(string id)
         {
             var user = await _repo.FindUserByName(id);
             if (user == null) return BadRequest("Wrong user id");
 
-            var result = await _repo.ForceResetPassword(user);           
+            var result = await _repo.ForceResetPassword(user);
 
             if (result.Succeeded) return Ok(result);
             else return BadRequest();
@@ -142,19 +141,20 @@ namespace BSE365.Api
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
+            IdentityUser user =
+                await _repo.FindAsync(new UserLoginInfo(externalLogin.LoginProvider, externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
 
-            redirectUri = string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
-                                            redirectUri,
-                                            externalLogin.ExternalAccessToken,
-                                            externalLogin.LoginProvider,
-                                            hasRegistered.ToString(),
-                                            externalLogin.UserName);
+            redirectUri =
+                string.Format("{0}#external_access_token={1}&provider={2}&haslocalaccount={3}&external_user_name={4}",
+                    redirectUri,
+                    externalLogin.ExternalAccessToken,
+                    externalLogin.LoginProvider,
+                    hasRegistered.ToString(),
+                    externalLogin.UserName);
 
             return Redirect(redirectUri);
-
         }
 
         // POST api/Account/RegisterExternal
@@ -162,7 +162,6 @@ namespace BSE365.Api
         [Route("RegisterExternal")]
         public async Task<IHttpActionResult> RegisterExternal(RegisterExternalBindingModel model)
         {
-
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -183,7 +182,7 @@ namespace BSE365.Api
                 return BadRequest("External user is already registered");
             }
 
-            user = new User() { UserName = model.UserName };
+            user = new User() {UserName = model.UserName};
 
             IdentityResult result = await _repo.CreateAsync(user);
             if (!result.Succeeded)
@@ -214,7 +213,6 @@ namespace BSE365.Api
         [Route("ObtainLocalAccessToken")]
         public async Task<IHttpActionResult> ObtainLocalAccessToken(string provider, string externalAccessToken)
         {
-
             if (string.IsNullOrWhiteSpace(provider) || string.IsNullOrWhiteSpace(externalAccessToken))
             {
                 return BadRequest("Provider or external access token is not sent");
@@ -239,7 +237,6 @@ namespace BSE365.Api
             var accessTokenResponse = GenerateLocalAccessTokenResponse(user.UserName);
 
             return Ok(accessTokenResponse);
-
         }
 
         protected override void Dispose(bool disposing)
@@ -285,7 +282,6 @@ namespace BSE365.Api
 
         private string ValidateClientAndRedirectUri(HttpRequestMessage request, ref string redirectUriOutput)
         {
-
             Uri redirectUri;
 
             var redirectUriString = GetQueryString(Request, "redirect_uri");
@@ -316,7 +312,9 @@ namespace BSE365.Api
                 return string.Format("Client_id '{0}' is not registered in the system.", clientId);
             }
 
-            if (!string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority), StringComparison.OrdinalIgnoreCase))
+            if (
+                !string.Equals(client.AllowedOrigin, redirectUri.GetLeftPart(UriPartial.Authority),
+                    StringComparison.OrdinalIgnoreCase))
             {
                 return string.Format("The given URL is not allowed by Client_id '{0}' configuration.", clientId);
             }
@@ -324,7 +322,6 @@ namespace BSE365.Api
             redirectUriOutput = redirectUri.AbsoluteUri;
 
             return string.Empty;
-
         }
 
         private string GetQueryString(HttpRequestMessage request, string key)
@@ -351,11 +348,14 @@ namespace BSE365.Api
                 //You can get it from here: https://developers.facebook.com/tools/accesstoken/
                 //More about debug_tokn here: http://stackoverflow.com/questions/16641083/how-does-one-get-the-app-access-token-for-debug-token-inspection-on-facebook
                 var appToken = "xxxxxx";
-                verifyTokenEndPoint = string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken, appToken);
+                verifyTokenEndPoint =
+                    string.Format("https://graph.facebook.com/debug_token?input_token={0}&access_token={1}", accessToken,
+                        appToken);
             }
             else if (provider == "Google")
             {
-                verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}", accessToken);
+                verifyTokenEndPoint = string.Format("https://www.googleapis.com/oauth2/v1/tokeninfo?access_token={0}",
+                    accessToken);
             }
             else
             {
@@ -370,7 +370,7 @@ namespace BSE365.Api
             {
                 var content = await response.Content.ReadAsStringAsync();
 
-                dynamic jObj = (JObject)Newtonsoft.Json.JsonConvert.DeserializeObject(content);
+                dynamic jObj = (JObject) Newtonsoft.Json.JsonConvert.DeserializeObject(content);
 
                 parsedToken = new ParsedExternalAccessToken();
 
@@ -379,7 +379,9 @@ namespace BSE365.Api
                     parsedToken.user_id = jObj["data"]["user_id"];
                     parsedToken.app_id = jObj["data"]["app_id"];
 
-                    if (!string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                    if (
+                        !string.Equals(Startup.facebookAuthOptions.AppId, parsedToken.app_id,
+                            StringComparison.OrdinalIgnoreCase))
                     {
                         return null;
                     }
@@ -389,13 +391,13 @@ namespace BSE365.Api
                     parsedToken.user_id = jObj["user_id"];
                     parsedToken.app_id = jObj["audience"];
 
-                    if (!string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id, StringComparison.OrdinalIgnoreCase))
+                    if (
+                        !string.Equals(Startup.googleAuthOptions.ClientId, parsedToken.app_id,
+                            StringComparison.OrdinalIgnoreCase))
                     {
                         return null;
                     }
-
                 }
-
             }
 
             return parsedToken;
@@ -403,7 +405,6 @@ namespace BSE365.Api
 
         private JObject GenerateLocalAccessTokenResponse(string userName)
         {
-
             var tokenExpiration = TimeSpan.FromDays(1);
 
             ClaimsIdentity identity = new ClaimsIdentity(OAuthDefaults.AuthenticationType);
@@ -422,13 +423,13 @@ namespace BSE365.Api
             var accessToken = Startup.OAuthBearerOptions.AccessTokenFormat.Protect(ticket);
 
             JObject tokenResponse = new JObject(
-                                        new JProperty("userName", userName),
-                                        new JProperty("access_token", accessToken),
-                                        new JProperty("token_type", "bearer"),
-                                        new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
-                                        new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
-                                        new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
-        );
+                new JProperty("userName", userName),
+                new JProperty("access_token", accessToken),
+                new JProperty("token_type", "bearer"),
+                new JProperty("expires_in", tokenExpiration.TotalSeconds.ToString()),
+                new JProperty(".issued", ticket.Properties.IssuedUtc.ToString()),
+                new JProperty(".expires", ticket.Properties.ExpiresUtc.ToString())
+                );
 
             return tokenResponse;
         }
@@ -449,7 +450,8 @@ namespace BSE365.Api
 
                 Claim providerKeyClaim = identity.FindFirst(ClaimTypes.NameIdentifier);
 
-                if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer) || String.IsNullOrEmpty(providerKeyClaim.Value))
+                if (providerKeyClaim == null || String.IsNullOrEmpty(providerKeyClaim.Issuer) ||
+                    String.IsNullOrEmpty(providerKeyClaim.Value))
                 {
                     return null;
                 }
@@ -472,4 +474,3 @@ namespace BSE365.Api
         #endregion
     }
 }
-

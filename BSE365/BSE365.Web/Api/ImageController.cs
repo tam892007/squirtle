@@ -15,7 +15,7 @@ namespace BSE365.Api
     [RoutePrefix("api/image")]
     public class ImageController : ApiController
     {
-        private IRepositoryAsync<Image> _repo = null; 
+        private IRepositoryAsync<Image> _repo = null;
 
         public ImageController(IRepositoryAsync<Image> repo)
         {
@@ -29,23 +29,25 @@ namespace BSE365.Api
             HttpResponseMessage response = null;
             if (id == 0)
             {
-                var defaultPic = string.Format(@"{0}\Content\images\{1}", System.AppDomain.CurrentDomain.BaseDirectory, SystemAdmin.UserDefautPic);
+                var defaultPic = string.Format(@"{0}\Content\images\{1}", System.AppDomain.CurrentDomain.BaseDirectory,
+                    SystemAdmin.UserDefautPic);
                 var content = System.IO.File.ReadAllBytes(defaultPic);
-                response = new HttpResponseMessage { Content = new ByteArrayContent(content) };
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue(Utilities.GetImageContentType(defaultPic.Split('.').Last()));
+                response = new HttpResponseMessage {Content = new ByteArrayContent(content)};
+                response.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue(Utilities.GetImageContentType(defaultPic.Split('.').Last()));
                 response.Content.Headers.ContentLength = content.Length;
             }
             else
             {
                 var image = await _repo.FindAsync(id);
                 if (image == null) throw new HttpResponseException(HttpStatusCode.NotFound);
-                response = new HttpResponseMessage { Content = new ByteArrayContent(image.Content) };
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue(Utilities.GetImageContentType(image.Extension));
-                response.Content.Headers.ContentLength = image.Content.Length;              
+                response = new HttpResponseMessage {Content = new ByteArrayContent(image.Content)};
+                response.Content.Headers.ContentType =
+                    new MediaTypeHeaderValue(Utilities.GetImageContentType(image.Extension));
+                response.Content.Headers.ContentLength = image.Content.Length;
             }
 
             return response;
         }
     }
 }
-

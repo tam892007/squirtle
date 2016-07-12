@@ -16,8 +16,8 @@ using Microsoft.AspNet.SignalR.Hubs;
 
 namespace BSE365.Hub
 {
-    [HubName("Message")]
     [Authorize]
+    [HubName("Message")]
     public class MessageHub : Microsoft.AspNet.SignalR.Hub
     {
         private readonly IUnitOfWork _unitOfWork;

@@ -155,6 +155,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryTransaction")]
         public async Task<IHttpActionResult> QueryTransaction(FilterVM filter)
@@ -163,6 +165,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("ReportedTransactions")]
         public async Task<IHttpActionResult> ReportedTransactions(FilterVM filter)
@@ -171,6 +175,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin 
+            + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("ApplyReport")]
         public async Task<IHttpActionResult> ApplyReport(MoneyTransactionVM.Reported instance)
@@ -179,6 +185,8 @@ namespace BSE365.Api
             return Ok();
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryPunishment")]
         public async Task<IHttpActionResult> QueryPunishment(FilterVM filter)
@@ -187,6 +195,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryBonus")]
         public async Task<IHttpActionResult> QueryBonus(FilterVM filter)
@@ -202,8 +212,7 @@ namespace BSE365.Api
             var result = await QueryUserHistoryAsync(filter);
             return Ok(result);
         }
-
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        
         [HttpPost]
         [Route("QueryUserPunishment")]
         public async Task<IHttpActionResult> QueryUserPunishment(FilterVM filter)
@@ -212,7 +221,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        
         [HttpPost]
         [Route("QueryUserBonus")]
         public async Task<IHttpActionResult> QueryUserBonus(FilterVM filter)
@@ -262,9 +271,9 @@ namespace BSE365.Api
             try
             {
                 transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Receiver.UserInfo)
-                .FirstAsync(x => x.Id == tran.Id);
+                    .Include(x => x.Giver.UserInfo)
+                    .Include(x => x.Receiver.UserInfo)
+                    .FirstAsync(x => x.Id == tran.Id);
                 transaction.MoneyTransfered(tran.AttachmentUrl);
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();
@@ -304,7 +313,8 @@ namespace BSE365.Api
                 var otherReceivingTransactionsInCurrentTransaction = await _transactionRepo.Queryable()
                     .Where(x => x.WaitingReceiverId == transaction.WaitingReceiverId && x.Id != transaction.Id)
                     .ToListAsync();
-                var giverParentInfoIds = await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
+                var giverParentInfoIds =
+                    await _userRepo.GetParentInfoIdsFromTreePath(transaction.Giver.UserInfo.TreePath);
                 var giverParentInfos = await _userInfoRepo.Queryable()
                     .Where(x => giverParentInfoIds.Contains(x.Id)).ToListAsync();
                 transaction.MoneyReceived(otherGivingTransactionsInCurrentTransaction,
@@ -359,11 +369,11 @@ namespace BSE365.Api
             try
             {
                 transaction = await _transactionRepo.Queryable()
-                .Include(x => x.Giver.UserInfo)
-                .Include(x => x.Giver.WaitingGivers)
-                .Include(x => x.Receiver.UserInfo)
-                .Include(x => x.Receiver.WaitingReceivers)
-                .FirstAsync(x => x.Id == tran.Id);
+                    .Include(x => x.Giver.UserInfo)
+                    .Include(x => x.Giver.WaitingGivers)
+                    .Include(x => x.Receiver.UserInfo)
+                    .Include(x => x.Receiver.WaitingReceivers)
+                    .FirstAsync(x => x.Id == tran.Id);
                 transaction.Abandon();
                 await _unitOfWork.SaveChangesAsync();
                 _unitOfWork.Commit();

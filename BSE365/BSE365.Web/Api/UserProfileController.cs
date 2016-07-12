@@ -59,7 +59,7 @@ namespace BSE365.Api
         {
             var result = await GetChildrenAsync(id);
             return Ok(result);
-        }     
+        }
 
         [HttpGet]
         [Route("GetCurrentPin")]
@@ -82,7 +82,7 @@ namespace BSE365.Api
             string fileName = (fileNameParam == null) ? "" : fileNameParam.Value.Trim('"');
             byte[] file = await provider.Contents[0].ReadAsByteArrayAsync();
 
-            var id = User.Identity.GetUserId();        
+            var id = User.Identity.GetUserId();
             var image = new Image
             {
                 Content = file,
@@ -101,7 +101,7 @@ namespace BSE365.Api
             return Ok(result);
         }
 
-        [HttpGet] 
+        [HttpGet]
         [Route("CheckName")]
         public async Task<IHttpActionResult> CheckName(string name)
         {
@@ -136,7 +136,7 @@ namespace BSE365.Api
         }
 
         private async Task<UserInfoViewModel> GetCurrentUserProfile()
-        {            
+        {
             var userId = User.Identity.GetUserId();
             var user = await _repo.FindUser(userId);
             var viewModel = user.ToViewModel();
@@ -146,13 +146,13 @@ namespace BSE365.Api
                 var parentUser = await _repo.FindUser(user.UserInfo.ParentId);
                 viewModel.ParentName = parentUser.UserName;
             }
-            
+
             return viewModel;
         }
 
         private async Task<IEnumerable<UserTreeViewModel>> GetChildrenAsync(string id)
-        {            
-            var result = await _repo.FindChildren(id);  
+        {
+            var result = await _repo.FindChildren(id);
             return result.Select(x => x.ToViewModel());
         }
 
@@ -164,7 +164,7 @@ namespace BSE365.Api
         }
 
         private async Task<ResultViewModel<UserInfoViewModel>> UpdateCurrentAsync(UserInfoViewModel vm)
-        {            
+        {
             var userId = User.Identity.GetUserId();
             var result = await _repo.UpdateUserInfo(userId, vm.ToModel());
             return result.ToResultViewModel<UserInfoViewModel, User>(x => x.ToViewModel());
@@ -190,16 +190,18 @@ namespace BSE365.Api
             var user = await _repo.FindUserByName(name);
             if (user == null)
             {
-                return new ResultViewModel<UserInfoViewModel> { IsSuccessful = false, Result = null, };
+                return new ResultViewModel<UserInfoViewModel> {IsSuccessful = false, Result = null,};
             }
             else
-            {            
+            {
                 result.Result = user.ToViewModel();
                 var treePath = user.UserInfo.TreePath == null ? string.Empty : user.UserInfo.TreePath;
-                var parentIds = treePath.Split(new string[] { BSE365.Common.Constants.SystemAdmin.TreePathSplitter }, System.StringSplitOptions.RemoveEmptyEntries);
-                result.IsSuccessful = parentUser.UserInfo.Id == user.UserInfo.Id || parentIds.Contains(parentId);  ////same user or in tree
+                var parentIds = treePath.Split(new string[] {BSE365.Common.Constants.SystemAdmin.TreePathSplitter},
+                    System.StringSplitOptions.RemoveEmptyEntries);
+                result.IsSuccessful = parentUser.UserInfo.Id == user.UserInfo.Id || parentIds.Contains(parentId);
+                    ////same user or in tree
             }
-            
+
             return result;
         }
 
@@ -236,4 +238,3 @@ namespace BSE365.Api
         }
     }
 }
-

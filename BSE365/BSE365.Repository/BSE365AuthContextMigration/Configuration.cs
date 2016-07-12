@@ -28,6 +28,9 @@ namespace BSE365.Repository.BSE365AuthContextMigration
                 var _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
                 _roleManager.Create(new IdentityRole {Name = UserRolesText.SuperAdmin});
                 _roleManager.Create(new IdentityRole {Name = UserRolesText.User});
+                _roleManager.Create(new IdentityRole {Name = UserRolesText.ManageUserInfo});
+                _roleManager.Create(new IdentityRole {Name = UserRolesText.ManageTransaction});
+                _roleManager.Create(new IdentityRole {Name = UserRolesText.MapTransaction});
 
                 var _userManager = new UserManager<User>(new UserStore<User>(context));
                 User user = new User

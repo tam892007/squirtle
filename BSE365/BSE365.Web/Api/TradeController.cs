@@ -54,7 +54,8 @@ namespace BSE365.Api
             _userRepo = new UserProfileRepository();
         }
 
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryAccount")]
         public async Task<IHttpActionResult> QueryAccount(FilterVM filter)
@@ -125,7 +126,8 @@ namespace BSE365.Api
             return Ok();
         }
 
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryWaitingGivers")]
         public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
@@ -134,7 +136,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryWaitingReceivers")]
         public async Task<IHttpActionResult> QueryWaitingReceivers(FilterVM filter)
@@ -151,7 +154,8 @@ namespace BSE365.Api
             return Ok(result);
         }
 
-        [Authorize(Roles = UserRolesText.SuperAdmin)]
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.MapTransaction)]
         [HttpPost]
         [Route("MapForReceiver")]
         public async Task<IHttpActionResult> MapForReceiver(WaitingAccountVM instance)
