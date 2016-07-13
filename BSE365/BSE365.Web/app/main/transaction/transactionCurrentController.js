@@ -277,6 +277,19 @@ mainApp.controller('transactionCurrentController',
         }
 
 
+        $scope.viewParentInfo = function (parentId) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/account/account-info-parent.html',
+                size: 'lg',
+                controller: 'accountInfoParentController',
+                resolve: {
+                    targetData: function () {
+                        return { parentId: parentId };
+                    }
+                },
+            });
+        }
+
         $scope.init = function() {
             $scope.grState = '';
             $scope.giverInfoTemplateUrl = 'app/main/transaction/info-giver.html';

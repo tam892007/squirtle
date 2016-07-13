@@ -83,37 +83,6 @@ mainApp.config([
                 templateUrl: 'app/main/user/user-info.tree.html',
                 controller: 'userTreeController'
             })
-            .state('trade',
-            {
-                abstract: true,
-                url: "/trade",
-                templateUrl: 'app/main/trade/trade-info.html',
-                controller: 'tradeInfoController'
-            })
-            .state('trade.statistic',
-            {
-                url: "/",
-                templateUrl: 'app/main/trade/trade-statistic.html',
-                controller: 'tradeStatisticController'
-            })
-            .state('trade.history',
-            {
-                url: "/history",
-                templateUrl: 'app/main/trade/trade-history.html',
-                controller: 'tradeHistoryController'
-            })
-            .state('trade.punishment',
-            {
-                url: "/punishment",
-                templateUrl: 'app/main/trade/trade-punishment.html',
-                controller: 'tradePunishmentController'
-            })
-            .state('trade.bonus',
-            {
-                url: "/bonus",
-                templateUrl: 'app/main/trade/trade-bonus.html',
-                controller: 'tradeBonusController'
-            })
             .state('transaction',
             {
                 abstract: true,

@@ -16,7 +16,9 @@
             queryWaitingReceivers: { method: 'POST', params: { path: 'api/trade/queryWaitingReceivers' } },
 
             mapForReceiver: { method: 'POST', params: { path: 'api/trade/mapForReceiver' } },
-            forceResetPassword: { method: 'GET', params: { path: 'api/Account/ForceResetPassword', id: 'id' } },
+            forceResetPassword: { method: 'GET', params: { path: 'api/account/ForceResetPassword', id: 'id' } },
+
+            parentAccount: { method: 'GET', params: { path: 'api/trade/parentAccount', id: 'id' } },
         });
     }
 ]);

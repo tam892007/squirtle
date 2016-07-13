@@ -55,7 +55,8 @@ namespace BSE365.Api
         }
 
         [Authorize(Roles = UserRolesText.SuperAdmin
-                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," +
+                           UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryAccount")]
         public async Task<IHttpActionResult> QueryAccount(FilterVM filter)
@@ -73,6 +74,14 @@ namespace BSE365.Api
         public async Task<IHttpActionResult> AccountStatus(string key = null)
         {
             var result = await AccountStatusAsync(key);
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("ParentAccount")]
+        public async Task<IHttpActionResult> ParentAccount(string id)
+        {
+            var result = await ParentAccountAsync(id);
             return Ok(result);
         }
 
@@ -127,7 +136,8 @@ namespace BSE365.Api
         }
 
         [Authorize(Roles = UserRolesText.SuperAdmin
-                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," +
+                           UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryWaitingGivers")]
         public async Task<IHttpActionResult> QueryWaitingGivers(FilterVM filter)
@@ -137,7 +147,8 @@ namespace BSE365.Api
         }
 
         [Authorize(Roles = UserRolesText.SuperAdmin
-                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," + UserRolesText.ManageTransaction)]
+                           + "," + UserRolesText.ManageUserInfo + "," + UserRolesText.MapTransaction + "," +
+                           UserRolesText.ManageTransaction)]
         [HttpPost]
         [Route("QueryWaitingReceivers")]
         public async Task<IHttpActionResult> QueryWaitingReceivers(FilterVM filter)
@@ -207,6 +218,19 @@ namespace BSE365.Api
                 result.NotAllowGiveReason.Add("Not enough Pin.");
             }
             return result;
+        }
+
+        private async Task<TradeAccountInfoVM> ParentAccountAsync(string id)
+        {
+            using (var _ctx = new BSE365AuthContext())
+            {
+                var expression = TradeAccountVMMapping.GetExpToVM();
+                var result = await _ctx.Users.Include(x => x.UserInfo)
+                    .Where(x => x.Id == id)
+                    .Select(expression)
+                    .FirstAsync();
+                return result;
+            }
         }
 
         private async Task SetAccountPriorityAsync(TradeAccountVM.SetPriorityVM priority)

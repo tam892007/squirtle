@@ -1,0 +1,71 @@
+﻿<div class="panel panel-default panel-table">
+    <div class="panel-heading">
+        <h3 class="panel-title"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> &nbsp; Edit Information</h3>
+    </div>
+    <div class="panel-body">
+        <form role="form" novalidate ng-submit="updateProfile()" name="userForm">
+            <div class="form-group">
+                <label for="id">ID:</label>
+                <input type="text" class="form-control" id="id" ng-model="currentUser.userName" readonly>
+            </div>
+            <div class="form-group">
+                <label for="parentId">Introducing ID:</label>
+                <input type="text" class="form-control" name="parentId" ng-model="currentUser.parentName" readonly>
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <div class="input-group ">
+                    <input type="password" class="form-control" name="pwd" value="*********************" readonly>
+                    <span class="input-group-btn">
+                        <input type="button" class="btn btn-danger" value="Change" ng-click="changePassword()">
+                    </span>
+                </div>
+            </div>            
+            <div class="form-group">
+                <label for="dispName">Display Name:</label>
+                <input type="text" class="form-control" name="dispName" ng-model="currentUser.displayName" required readonly>
+                <div ng-messages="userForm.dispName.$error">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="tel" class="form-control" name="phone" ng-model="currentUser.phoneNumber" required readonly>
+                <div ng-messages="userForm.phone.$error" class="error-messages">                    
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" name="email" ng-model="currentUser.email" required readonly>
+                <div ng-messages="userForm.email.$error" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bankNumber">Bank Number:</label>
+                <input type="text" class="form-control" name="bankNumber" ng-model="currentUser.bankNumber" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
+                       required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13" maxlength="13" ng-pattern="/^\d+$/" readonly>
+                <div ng-messages="userForm.bankNumber.$error" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                    <div ng-message="unknown">This bank number has been used</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bankName">Bank Name:</label>
+                <input type="text" class="form-control" name="bankName" ng-model="currentUser.bankName" required readonly>
+                <div ng-messages="userForm.bankName.$error" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bankBranch">Bank Branch:</label>
+                <input type="text" class="form-control" name="bankBranch" ng-model="currentUser.bankBranch" required readonly>
+                <div ng-messages="userForm.bankBranch.$error" class="error-messages">
+                    <div ng-messages-include="validation-messages"></div>
+                </div>
+            </div>
+            <button disabled="disabled" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>

@@ -63,6 +63,7 @@ namespace BSE365.ViewModels
             public string BankName { get; set; }
             public string BankBranch { get; set; }
             public int Rating { get; set; }
+            public string ParentId { get; set; }
 
             public int Countdown
             {
@@ -105,6 +106,7 @@ namespace BSE365.ViewModels
             public string GiverBankName { get; set; }
             public string GiverBankBranch { get; set; }
             public int GiverRating { get; set; }
+            public string GiverParentId { get; set; }
 
 
             public string ReceiverId { get; set; }
@@ -115,6 +117,7 @@ namespace BSE365.ViewModels
             public string ReceiverBankName { get; set; }
             public string ReceiverBankBranch { get; set; }
             public int ReceiverRating { get; set; }
+            public string ReceiverParentId { get; set; }
 
 
             public DateTime Created { get; set; }

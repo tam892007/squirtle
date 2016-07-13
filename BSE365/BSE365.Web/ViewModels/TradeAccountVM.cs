@@ -5,11 +5,8 @@ using BSE365.Model.Enum;
 
 namespace BSE365.ViewModels
 {
-    public class TradeAccountVM
+    public class TradeAccountVM : TradeAccountInfoVM
     {
-        public string UserName { get; set; }
-        public string DisplayName { get; set; }
-
         public int PinBalance { get; set; }
 
         public bool IsAllowGive { get; set; }
@@ -35,27 +32,6 @@ namespace BSE365.ViewModels
         public bool IsAllowAbandonOne { get; set; }
         public string RelatedAccount { get; set; }
 
-        public int? AvatarId { get; set; }
-
-        public string AvatarUrl
-        {
-            get
-            {
-                var result = ImageViewModel.ImageUrl + (AvatarId ?? 0);
-                return result;
-            }
-        }
-
-        public string Email { get; set; }
-        public string ParentId { get; set; }
-        public string PhoneNumber { get; set; }
-        public string BankNumber { get; set; }
-        public string BankName { get; set; }
-        public string BankBranch { get; set; }
-
-        public int Rating { get; set; }
-        public int Level { get; set; }
-        public string TreePath { get; set; }
 
         public int BonusPoint { get; set; }
         public int TotalBonusPoint { get; set; }
@@ -86,7 +62,6 @@ namespace BSE365.ViewModels
         {
             get { return TransactionConfig.MoneyCurrency; }
         }
-
 
         public class SetPriorityVM
         {

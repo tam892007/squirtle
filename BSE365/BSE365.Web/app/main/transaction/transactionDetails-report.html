@@ -18,6 +18,14 @@
         </div>
         <div class="row">
             <div class="col-md-6">
+                <button class="btn" ng-click="viewParentInfo(target.giverParentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn" ng-click="viewParentInfo(target.receiverParentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <label>Name</label>
                 <p class="form-control-static" data-ng-bind="target.giverDisplayName"></p>
             </div>

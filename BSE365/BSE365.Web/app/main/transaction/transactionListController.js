@@ -1,10 +1,18 @@
 ﻿'use strict';
 mainApp.controller('transactionListController',
 [
-    '$scope', '$state', 'transactionService', 'Notification', 'TransactionType', 'TransactionState', 'ConfigData',
-    function($scope, $state, transactionService, Notification, TransactionType, TransactionState, ConfigData) {
+    '$scope', '$uibModal', '$state', 'transactionService', 'Notification', 'TransactionType', 'TransactionState',
+    'ConfigData',
+    function($scope,
+        $uibModal,
+        $state,
+        transactionService,
+        Notification,
+        TransactionType,
+        TransactionState,
+        ConfigData) {
 
-        $scope.loadData = function (tableState) {
+        $scope.loadData = function(tableState) {
             if (tableState) {
                 $scope.tableState = tableState;
             } else {
@@ -12,7 +20,7 @@ mainApp.controller('transactionListController',
             }
             $scope.data = [];
             transactionService.queryTransaction(JSON.stringify(tableState),
-                function (response) {
+                function(response) {
                     console.log(response);
                     $scope.data = response.data;
                     tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);
@@ -32,6 +40,19 @@ mainApp.controller('transactionListController',
 
             $scope.target = target;
             $scope.selected = true;
+        }
+
+        $scope.viewParentInfo = function(parentId) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/account/account-info-parent.html',
+                size: 'lg',
+                controller: 'accountInfoParentController',
+                resolve: {
+                    targetData: function() {
+                        return { parentId: parentId };
+                    }
+                },
+            });
         }
 
         $scope.init = function() {

@@ -169,8 +169,8 @@ namespace BSE365.Helper
                 ObjectState = ObjectState.Added,
             };
             dataContext.Messages.Add(notification);
-            var notificationHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
-            notificationHub.Clients.User(targetAccount).notify(notification);
+            /*var notificationHub = GlobalHost.ConnectionManager.GetHubContext<MessageHub>();
+            notificationHub.Clients.User(targetAccount).notify(notification);*/
             return notification;
         }
     }

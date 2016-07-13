@@ -1,10 +1,19 @@
 ﻿'use strict';
 mainApp.controller('transactionReportedController',
 [
-    '$scope', '$state', 'transactionService', 'Notification', 'TransactionState', 'TransactionType', 'ReportResult', 'ConfigData',
-    function($scope, $state, transactionService, Notification, TransactionState, TransactionType, ReportResult, ConfigData) {
+    '$scope', '$uibModal', '$state', 'transactionService', 'Notification', 'TransactionState', 'TransactionType', 'ReportResult',
+    'ConfigData',
+    function ($scope,
+        $uibModal,
+        $state,
+        transactionService,
+        Notification,
+        TransactionState,
+        TransactionType,
+        ReportResult,
+        ConfigData) {
 
-        $scope.loadData = function (tableState) {
+        $scope.loadData = function(tableState) {
             if (tableState) {
                 $scope.tableState = tableState;
             } else {
@@ -12,7 +21,7 @@ mainApp.controller('transactionReportedController',
             }
             $scope.data = [];
             transactionService.reportedTransactions(JSON.stringify(tableState),
-                function (response) {
+                function(response) {
                     console.log(response);
                     $scope.data = response.data;
                     tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);
@@ -56,7 +65,20 @@ mainApp.controller('transactionReportedController',
                     $scope.reload();
                 });
         }
-        
+
+        $scope.viewParentInfo = function (parentId) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/account/account-info-parent.html',
+                size: 'lg',
+                controller: 'accountInfoParentController',
+                resolve: {
+                    targetData: function () {
+                        return { parentId: parentId };
+                    }
+                },
+            });
+        }
+
         $scope.init = function() {
             $scope.ConfigData = ConfigData;
             $scope.TransactionType = TransactionType;

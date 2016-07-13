@@ -22,7 +22,7 @@ mainApp.controller('transactionInfoHistoryController',
 
         function loadTransaction(transactions) {
             _.each(transactions,
-                function (item) {
+                function(item) {
                     item.isGiving = item.currentAccount == item.giverId;
                     item.isReceiving = item.currentAccount == item.receiverId;
 

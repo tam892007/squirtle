@@ -50,5 +50,46 @@ namespace BSE365.Mappings
             };
             return result;
         }
+
+        public static TradeAccountInfoVM ToVM(this User target)
+        {
+            var result = new TradeAccountInfoVM
+            {
+                UserName = target.UserName,
+                DisplayName = target.UserInfo.DisplayName,
+                AvatarId = target.UserInfo.AvatarId,
+                ParentId = target.UserInfo.ParentId,
+                PhoneNumber = target.UserInfo.PhoneNumber,
+                Email = target.UserInfo.Email,
+                BankNumber = target.UserInfo.BankNumber,
+                BankName = target.UserInfo.BankName,
+                BankBranch = target.UserInfo.BankBranch,
+                Rating = target.UserInfo.Rating,
+                Level = target.UserInfo.Level,
+                TreePath = target.UserInfo.TreePath,
+            };
+            return result;
+        }
+
+        public static Expression<Func<User, TradeAccountInfoVM>> GetExpToVM()
+        {
+            Expression<Func<User, TradeAccountInfoVM>> result =
+                x => new TradeAccountInfoVM
+                {
+                    UserName = x.UserName,
+                    DisplayName = x.UserInfo.DisplayName,
+                    AvatarId = x.UserInfo.AvatarId,
+                    ParentId = x.UserInfo.ParentId,
+                    PhoneNumber = x.UserInfo.PhoneNumber,
+                    Email = x.UserInfo.Email,
+                    BankNumber = x.UserInfo.BankNumber,
+                    BankName = x.UserInfo.BankName,
+                    BankBranch = x.UserInfo.BankBranch,
+                    Rating = x.UserInfo.Rating,
+                    Level = x.UserInfo.Level,
+                    TreePath = x.UserInfo.TreePath,
+                };
+            return result;
+        }
     }
 }

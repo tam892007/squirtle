@@ -1,0 +1,71 @@
+﻿<div class="">
+    <div class="modal-header">
+        <span class="badge pull-right">ID: {{parent.userName}}</span>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; Parent parentrmation
+        </h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-3">
+                <label>User</label>
+                <p class="form-control-static" data-ng-bind="parent.displayName"></p>
+            </div>
+            <div class="col-md-2 rating-custom">
+                <label>Member</label>
+                <p>
+                    <uib-rating ng-model="parent.rating" max="6" read-only="true"></uib-rating>
+                </p>
+            </div>
+            <div class="col-md-1">
+                <label>Level</label>
+                <p class="form-control-static" data-ng-bind="parent.level"></p>
+            </div>
+            <div class="col-md-3">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="parent.phoneNumber"></p>
+            </div>
+            <div class="col-md-3">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="parent.email"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Account State</label>
+                <p class="form-control-static" data-ng-bind="AccountState.display(parent.state)"></p>
+            </div>
+            <div class="col-md-2">
+                <label>User State</label>
+                <p class="form-control-static" data-ng-bind="UserState.display(parent.userState)"></p>
+            </div>
+            <div class="col-md-2" ng-show="parent.userState!=UserState.Default">
+                <label>Related Account</label>
+                <p class="form-control-static" data-ng-bind="parent.relatedAccount"></p>
+            </div>
+            <div class="col-md-2" ng-show="parent.userState!=UserState.Default">
+                <label>Related Transaction</label>
+                <p class="form-control-static" data-ng-bind="parent.relatedTransaction"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label>Bank Name</label>
+                <p class="form-control-static" data-ng-bind="parent.bankName"></p>
+            </div>
+            <div class="col-md-2">
+                <label>Bank Number</label>
+                <p class="form-control-static" data-ng-bind="parent.bankNumber"></p>
+            </div>
+            <div class="col-md-2">
+                <label>Bank Branch</label>
+                <p class="form-control-static" data-ng-bind="parent.bankBranch"></p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div>
+            <button class="btn btn-default" ng-click="close()"><span class="glyphicon glyphicon-eye-close"></span>&ensp;<span>Close</span></button>
+        </div>
+    </div>
+</div>

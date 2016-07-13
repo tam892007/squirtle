@@ -34,7 +34,8 @@ namespace BSE365.Mappings
                     BankNumber = x.Giver.UserInfo.BankNumber,
                     BankName = x.Giver.UserInfo.BankName,
                     BankBranch = x.Giver.UserInfo.BankBranch,
-                    Rating = x.Giver.UserInfo.Rating
+                    Rating = x.Giver.UserInfo.Rating,
+                    ParentId = x.Giver.UserInfo.ParentId,
                 };
             return result;
         }
@@ -63,7 +64,8 @@ namespace BSE365.Mappings
                     BankNumber = x.Receiver.UserInfo.BankNumber,
                     BankName = x.Receiver.UserInfo.BankName,
                     BankBranch = x.Receiver.UserInfo.BankBranch,
-                    Rating = x.Receiver.UserInfo.Rating
+                    Rating = x.Receiver.UserInfo.Rating,
+                    ParentId = x.Receiver.UserInfo.ParentId,
                 };
             return result;
         }
@@ -93,6 +95,7 @@ namespace BSE365.Mappings
                     BankName = x.Receiver.UserInfo.BankName,
                     BankBranch = x.Receiver.UserInfo.BankBranch,
                     Rating = x.Receiver.UserInfo.Rating,
+                    ParentId = x.Receiver.UserInfo.ParentId,
                     RelatedTransactionId = x.RelatedTransactionId,
                     ForAccount = x.RelatedTransaction.GiverId,
                     ForUser = x.RelatedTransaction.Giver.UserInfo.DisplayName,
@@ -143,6 +146,7 @@ namespace BSE365.Mappings
                     GiverBankName = x.Giver.UserInfo.BankName,
                     GiverBankBranch = x.Giver.UserInfo.BankBranch,
                     GiverRating = x.Giver.UserInfo.Rating,
+                    GiverParentId = x.Receiver.UserInfo.ParentId,
                     ReceiverDisplayName = x.Receiver.UserInfo.DisplayName,
                     ReceiverEmail = x.Receiver.UserInfo.Email,
                     ReceiverPhoneNumber = x.Receiver.UserInfo.PhoneNumber,
@@ -150,6 +154,7 @@ namespace BSE365.Mappings
                     ReceiverBankName = x.Receiver.UserInfo.BankName,
                     ReceiverBankBranch = x.Receiver.UserInfo.BankBranch,
                     ReceiverRating = x.Receiver.UserInfo.Rating,
+                    ReceiverParentId = x.Receiver.UserInfo.ParentId,
                     CurrentAccount = currentAccount,
                 };
             return result;

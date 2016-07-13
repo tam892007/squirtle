@@ -55,6 +55,9 @@
                 <label>Last Cycle Date</label>
                 <p class="form-control-static" data-ng-bind="info.lastCycleDate|date:ConfigData.dateFormat"></p>
             </div>
+            <div class="col-md-2">
+                <button class="btn" ng-click="viewParentInfo(info.parentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-2">

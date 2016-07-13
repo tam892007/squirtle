@@ -17,6 +17,10 @@
             <td>{{item.displayName}}</td>
         </tr>
         <tr>
+            <td>Parent</td>
+            <td><button class="btn" ng-click="viewParentInfo(item.parentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button></td>
+        </tr>
+        <tr>
             <td>Member</td>
             <td class="rating-custom"><uib-rating ng-model="item.rating" max="6" read-only="true"></uib-rating></td>
         </tr>

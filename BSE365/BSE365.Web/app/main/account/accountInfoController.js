@@ -1,8 +1,8 @@
 ﻿'use strict';
 mainApp.controller('accountInfoController',
 [
-    '$scope', '$stateParams', 'accountService', 'Notification', 'AccountState', 'PriorityLevel', 'UserState',
-    function($scope, $stateParams, accountService, Notification, AccountState, PriorityLevel, UserState) {
+    '$scope', '$uibModal', '$stateParams', 'accountService', 'Notification', 'AccountState', 'PriorityLevel', 'UserState',
+    function ($scope, $uibModal, $stateParams, accountService, Notification, AccountState, PriorityLevel, UserState) {
 
         $scope.getData = function() {
             accountService.status({ key: $stateParams.key },
@@ -61,6 +61,19 @@ mainApp.controller('accountInfoController',
                     Notification.success('State Changed!');
                     $scope.getData();
                 });
+        }
+
+        $scope.viewParentInfo = function (parentId) {
+            var modalInstance = $uibModal.open({
+                templateUrl: 'app/main/account/account-info-parent.html',
+                size: 'lg',
+                controller: 'accountInfoParentController',
+                resolve: {
+                    targetData: function () {
+                        return { parentId: parentId };
+                    }
+                },
+            });
         }
 
         $scope.init = function() {
