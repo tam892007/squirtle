@@ -33,9 +33,9 @@
         public static int MoneyPerTransaction = 1500000;
         public static string MoneyCurrency = "VND";
 
-        public static int BonusPointToParent = 12;
+        public static int BonusPointToParent = 6;
         public static int BonusPointToTreePath = 1;
-        public static int BonusMaxLevel = 9;
+        public static int BonusMaxLevel = 5;
 
         public static int BonusPointToExchange = 100;
     }
