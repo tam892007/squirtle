@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -202,6 +203,19 @@ namespace BSE365.Repository.Repositories
             var code = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
             var result = await _userManager.ResetPasswordAsync(user.Id, code, SystemAdmin.DefaultPassword);
             return result;
+        }
+
+        public async Task<bool> ForceChangeUserPassword(string userPrefix, string password)
+        {
+            var usernames = Utilities.GetRangeUserName(userPrefix);
+            var users = await _ctx.Users.Where(x => usernames.Contains(x.UserName)).ToListAsync();
+            if (users.Count == 0) return false;
+            foreach (var user in users)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user.Id);
+                var flag = await _userManager.ResetPasswordAsync(user.Id, token, password);
+            }
+            return true;
         }
 
         public async Task<IList<string>> GetRolesForUser(string userId)

@@ -44,6 +44,10 @@
         "value": "Hoa hồng"
     },
     {
+        "key": "_Layout_AccountManagement_UserInfoes_",
+        "value": "Quản lý tài khoản"
+    },
+    {
         "key": "_Layout_AccountManagement_Accounts_",
         "value": "Tất cả Tài khoản"
     },
@@ -74,6 +78,10 @@
     {
         "key": "_Layout_AccountManagement_ResetPassword_",
         "value": "Cài lại mật khẩu"
+    },
+    {
+        "key": "_Layout_AccountManagement_ChangeUserPassword_",
+        "value": "Đổi mật khẩu của người dùng"
     },
     {
         "key": "_Layout_UserManagement_Information_",

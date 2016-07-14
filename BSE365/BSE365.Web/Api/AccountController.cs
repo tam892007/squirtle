@@ -19,6 +19,7 @@ using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BSE365.Common.Helper;
 
 namespace BSE365.Api
 {
@@ -85,6 +86,18 @@ namespace BSE365.Api
             var result = await _repo.ForceResetPassword(user);
 
             if (result.Succeeded) return Ok(result);
+            else return BadRequest();
+        }
+
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo)]
+        [HttpPost]
+        [Route("ForceChangeUserPassword")]
+        public async Task<IHttpActionResult> ForceChangeUserPassword(ForceResetPasswordVM vm)
+        {
+            var result = await _repo.ForceChangeUserPassword(vm.UserPrefix, vm.Password);
+
+            if (result) return Ok();
             else return BadRequest();
         }
 

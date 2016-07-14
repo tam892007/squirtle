@@ -59,7 +59,7 @@
                     <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forManager()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_AccountManagement_"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ui-sref-active-eq='active'><a ui-sref="userinfo" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_Accounts_"></span> Info</a></li>
+                            <li ui-sref-active-eq='active'><a ui-sref="userinfo" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_UserInfoes_"></span></a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_Accounts_"></span></a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="allTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_AllTransactions_"></span></a></li>
                             <li ui-sref-active-eq='active' ng-if="isInRole([UserRolesText.ManageTransaction])"><a ui-sref="reportedTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ReportedTransactions_"></span></a></li>
@@ -72,6 +72,7 @@
                             <li role="separator" class="divider" ng-if="isInRole([UserRolesText.ManageUserInfo])"></li>
                             <li class="dropdown-header" ng-if="isInRole([UserRolesText.ManageUserInfo])"><span data-i18n="_Layout_AccountManagement_Administration_"></span></li>
                             <li ui-sref-active-eq='active' ng-if="isInRole([UserRolesText.ManageUserInfo])"><a ui-sref="forceResetPassword" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ResetPassword_"></span></a></li>
+                            <li ui-sref-active-eq='active' ng-if="isInRole([UserRolesText.ManageUserInfo])"><a ui-sref="forceChangePassword" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ChangeUserPassword_"></span></a></li>
                         </ul>
                     </li>
                     <li class="dropdown" ui-sref-active="{'active' : 'user'}" ng-if="authentication.isAuth">

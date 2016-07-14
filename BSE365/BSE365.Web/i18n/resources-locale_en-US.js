@@ -44,6 +44,10 @@
         "value": "By Bonus"
     },
     {
+        "key": "_Layout_AccountManagement_UserInfoes_",
+        "value": "Manage User Info"
+    },
+    {
         "key": "_Layout_AccountManagement_Accounts_",
         "value": "All Accounts"
     },
@@ -74,6 +78,10 @@
     {
         "key": "_Layout_AccountManagement_ResetPassword_",
         "value": "Reset Password"
+    },
+    {
+        "key": "_Layout_AccountManagement_ChangeUserPassword_",
+        "value": "Change User's Password"
     },
     {
         "key": "_Layout_UserManagement_Information_",
