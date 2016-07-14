@@ -49,9 +49,9 @@ namespace BSE365.Model.Entities
         public string BankBranch { get; set; }
 
         public int? AvatarId { get; set; }
-        
+
         public string UserPrefix { get; set; }
-        
+
         public DateTime Created { get; set; }
 
         #endregion

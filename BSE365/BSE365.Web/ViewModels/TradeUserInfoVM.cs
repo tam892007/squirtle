@@ -5,6 +5,8 @@ namespace BSE365.ViewModels
 {
     public class TradeUserInfoVM
     {
+        public int Id { get; set; }
+
         #region user's infomations
 
         public string DisplayName { get; set; }

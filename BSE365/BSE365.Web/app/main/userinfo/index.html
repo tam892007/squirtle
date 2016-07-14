@@ -70,9 +70,11 @@
             <div class="panel-body" ng-show="showUserInfo">
                 <ng-include src="'/app/main/userinfo/info-horizontal.html'"></ng-include>
                 <div class="row">
-                    <div class="col-md-6">
-                        <button class="btn btn-success" ng-click="loadTransactions()"><span class="glyphicon glyphicon-th-list"></span>&nbsp;Load Transactions Infomations</button>
-                        <button class="btn btn-success" ng-click="loadWaitings()"><span class="glyphicon glyphicon-align-left"></span>&nbsp;Load Waitings Infomations</button>
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-danger" ng-click="loadTransactions()"><span class="glyphicon glyphicon-th-list"></span>&nbsp;Load Transactions Infomations</button>
+                    </div>
+                    <div class="col-md-6 text-left">
+                        <button class="btn btn-danger" ng-click="loadWaitings()"><span class="glyphicon glyphicon-align-left"></span>&nbsp;Load Waitings Infomations</button>
                     </div>
                 </div>
                 <div class="row" ng-if="showWaitings">

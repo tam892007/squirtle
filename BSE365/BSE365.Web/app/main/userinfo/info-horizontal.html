@@ -1,82 +1,110 @@
 ﻿
-<div class="row">
-    <div class="col-md-2">
-        <label>Account</label>
-        <p class="form-control-static" data-ng-bind="info.userPrefix"></p>
+
+<form role="form" novalidate ng-submit="update()" name="userForm">
+    <div class="row">
+        <div class="col-md-2">
+            <label>Account</label>
+            <p class="form-control-static" data-ng-bind="info.userPrefix"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Display Name</label>
+            <!--<p class="form-control-static" data-ng-bind="info.displayName"></p>-->
+            <input type="text" class="form-control" name="dispName" ng-model="info.displayName" required>
+            <div ng-messages="userForm.dispName.$error">
+                <div ng-messages-include="validation-messages"></div>
+            </div>
+        </div>
+        <div class="col-md-2 rating-custom">
+            <label>Member</label>
+            <p>
+                <uib-rating ng-model="info.rating" max="6" read-only="true"></uib-rating>
+            </p>
+        </div>
+        <div class="col-md-2">
+            <button class="btn" ng-click="viewParentInfo(info.parentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+        </div>
     </div>
-    <div class="col-md-2">
-        <label>Display Name</label>
-        <p class="form-control-static" data-ng-bind="info.displayName"></p>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Phone Number</label>
+            <!--<p class="form-control-static" data-ng-bind="info.phoneNumber"></p>-->
+            <input type="tel" class="form-control" name="phone" ng-model="info.phoneNumber" required>
+            <div ng-messages="userForm.phone.$error" class="error-messages">
+                <div ng-messages-include="validation-messages"></div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Email</label>
+            <!--<p class="form-control-static" data-ng-bind="info.email"></p>-->
+            <input type="email" class="form-control" name="email" ng-model="info.email" required>
+            <div ng-messages="userForm.email.$error" class="error-messages">
+                <div ng-messages-include="validation-messages"></div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Join Date</label>
+            <p class="form-control-static" data-ng-bind="info.created|date:ConfigData.dateFormat"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Priority Level</label>
+            <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.level)"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Level</label>
+            <p class="form-control-static" data-ng-bind="info.level"></p>
+        </div>
     </div>
-    <div class="col-md-2 rating-custom">
-        <label>Member</label>
-        <p>
-            <uib-rating ng-model="info.rating" max="6" read-only="true"></uib-rating>
-        </p>
+    <div class="row">
+        <div class="col-md-2">
+            <label>User State</label>
+            <p class="form-control-static" data-ng-bind="UserState.display(info.state)"></p>
+        </div>
+        <div class="col-md-2" ng-show="info.userState!=UserState.Default">
+            <label>Related Account</label>
+            <p class="form-control-static" data-ng-bind="info.relatedAccount"></p>
+        </div>
+        <div class="col-md-2" ng-show="info.userState!=UserState.Default">
+            <label>Related Transaction</label>
+            <p class="form-control-static" data-ng-bind="info.relatedTransaction"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Last Give Date</label>
+            <p class="form-control-static" data-ng-bind="info.lastGiveDate|date:ConfigData.dateFormat"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Bonus Points</label>
+            <p class="form-control-static" data-ng-bind="info.bonusMoney|currency:info.moneyCurrency:0"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Allow Claim Bonus</label>
+            <p class="form-control-static" data-ng-bind="info.isAllowClaimBonus|yesno"></p>
+        </div>
     </div>
-    <div class="col-md-2">
-        <button class="btn" ng-click="viewParentInfo(info.parentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Bank Name</label>
+            <p class="form-control-static" data-ng-bind="info.bankName"></p>
+        </div>
+        <div class="col-md-2">
+            <label>Bank Number</label>
+            <!--<p class="form-control-static" data-ng-bind="info.bankNumber"></p>-->
+            <input type="text" class="form-control" name="bankNumber" ng-model="info.bankNumber" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1500, 'blur': 0 } }"
+                   required ui-validate-async="{unknown: 'validateBankNumber($modelValue)' }" ng-minlength="13" maxlength="13" ng-pattern="/^\d+$/">
+            <div ng-messages="userForm.bankNumber.$error" class="error-messages">
+                <div ng-messages-include="validation-messages"></div>
+                <div ng-message="unknown">This bank number has been used</div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <label>Bank Branch</label>
+            <!--<p class="form-control-static" data-ng-bind="info.bankBranch"></p>-->
+            <input type="text" class="form-control" name="bankBranch" ng-model="info.bankBranch" required>
+            <div ng-messages="userForm.bankBranch.$error" class="error-messages">
+                <div ng-messages-include="validation-messages"></div>
+            </div>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-2">
-        <label>Phone Number</label>
-        <p class="form-control-static" data-ng-bind="info.phoneNumber"></p>
+    <div class="row">
+        <button class="btn btn-success" type="submit" ng-if="!userForm.$invalid"><span class="glyphicon glyphicon-save"></span>&nbsp;Save UserInfo</button>
     </div>
-    <div class="col-md-2">
-        <label>Email</label>
-        <p class="form-control-static" data-ng-bind="info.email"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Join Date</label>
-        <p class="form-control-static" data-ng-bind="info.created|date:ConfigData.dateFormat"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Priority Level</label>
-        <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.level)"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Level</label>
-        <p class="form-control-static" data-ng-bind="info.level"></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2">
-        <label>User State</label>
-        <p class="form-control-static" data-ng-bind="UserState.display(info.state)"></p>
-    </div>
-    <div class="col-md-2" ng-show="info.userState!=UserState.Default">
-        <label>Related Account</label>
-        <p class="form-control-static" data-ng-bind="info.relatedAccount"></p>
-    </div>
-    <div class="col-md-2" ng-show="info.userState!=UserState.Default">
-        <label>Related Transaction</label>
-        <p class="form-control-static" data-ng-bind="info.relatedTransaction"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Last Give Date</label>
-        <p class="form-control-static" data-ng-bind="info.lastGiveDate|date:ConfigData.dateFormat"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Bonus Points</label>
-        <p class="form-control-static" data-ng-bind="info.bonusMoney|currency:info.moneyCurrency:0"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Allow Claim Bonus</label>
-        <p class="form-control-static" data-ng-bind="info.isAllowClaimBonus|yesno"></p>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-2">
-        <label>Bank Name</label>
-        <p class="form-control-static" data-ng-bind="info.bankName"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Bank Number</label>
-        <p class="form-control-static" data-ng-bind="info.bankNumber"></p>
-    </div>
-    <div class="col-md-2">
-        <label>Bank Branch</label>
-        <p class="form-control-static" data-ng-bind="info.bankBranch"></p>
-    </div>
-</div>
+</form>

@@ -1,12 +1,13 @@
 ﻿'use strict';
 mainApp.controller('userinfoController',
 [
-    '$scope', '$state', '$uibModal', 'Notification', 'userinfoService',
+    '$scope', '$state', '$uibModal', '$q', 'Notification', 'userinfoService',
     'AccountState', 'TransactionState', 'TransactionType', 'PriorityLevel', 'UserState',
     'ConfigData',
     function($scope,
         $state,
         $uibModal,
+        $q,
         Notification,
         userinfoService,
         AccountState,
@@ -76,6 +77,7 @@ mainApp.controller('userinfoController',
 
         $scope.loadTransactions = function() {
             $scope.showTransactions = true;
+            $scope.reloadTransaction();
         }
 
         $scope.loadWaitings = function() {
@@ -90,7 +92,7 @@ mainApp.controller('userinfoController',
 
 
         $scope.loadTransactionData = function(tableState) {
-            
+
             if (!$scope.info.firstLoad) {
                 $scope.info.firstLoad = true;
                 $scope.info.tableState = tableState;
@@ -108,7 +110,6 @@ mainApp.controller('userinfoController',
             $scope.info.transactionData = [];
             userinfoService.queryTransaction(JSON.stringify(tableState),
                 function(response) {
-                    console.log(response);
                     $scope.info.transactionData = response.data;
                     tableState.pagination.numberOfPages = Math.ceil(response.totalItems / tableState.pagination.number);
                 });
@@ -128,6 +129,25 @@ mainApp.controller('userinfoController',
 
             $scope.info.targetTransaction = target;
             $scope.info.transactionSelected = true;
+        }
+
+        $scope.update = function() {
+            userinfoService.updateUserInfo($scope.info, function(response) { console.log(response); });
+        }
+
+        $scope.validateBankNumber = function(number) {
+            var deferred = $q.defer();
+
+            userinfoService.checkBankNumber({ number: number, userid: $scope.info.id },
+                function(res) {
+                    if (res) {
+                        deferred.resolve(res);
+                    } else {
+                        deferred.reject(res);
+                    }
+                });
+
+            return deferred.promise;
         }
 
         $scope.init = function() {

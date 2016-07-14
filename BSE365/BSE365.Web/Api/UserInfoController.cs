@@ -79,6 +79,25 @@ namespace BSE365.Api
             return Ok(result);
         }
 
+
+        [Authorize(Roles = UserRolesText.SuperAdmin
+                           + "," + UserRolesText.ManageUserInfo)]
+        [HttpPost]
+        [Route("UpdateUserInfo")]
+        public async Task<IHttpActionResult> UpdateUserInfo(TradeUserInfoVM instance)
+        {
+            await UpdateUserInfoAsync(instance);
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("CheckBankNumber")]
+        public async Task<IHttpActionResult> CheckBankNumber(string number, int userid)
+        {
+            var result = await CheckBankNumberAsync(number, userid);
+            return Ok(result);
+        }
+
         #region internal method
 
         private async Task<PageViewModel<TradeUserInfoVM>> QueryInfoAsync(FilterVM filter)
@@ -167,6 +186,28 @@ namespace BSE365.Api
             };
 
             return page;
+        }
+
+        private async Task UpdateUserInfoAsync(TradeUserInfoVM instance)
+        {
+            var user = await _infoRepo.FindAsync(instance.Id);
+
+            ////Only update legal information
+            user.DisplayName = instance.DisplayName;
+            user.PhoneNumber = instance.PhoneNumber;
+            user.Email = instance.Email;
+            user.BankBranch = instance.BankBranch;
+            user.BankNumber = instance.BankNumber;
+            user.ObjectState = ObjectState.Modified;
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        private async Task<bool> CheckBankNumberAsync(string number, int userid)
+        {
+            var result = await _infoRepo.Queryable()
+                //.AllAsync(x => x.Id == userid || x.BankNumber != number);
+                .AnyAsync(x => x.Id != userid && x.BankNumber == number);
+            return result;
         }
 
         #endregion

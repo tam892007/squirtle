@@ -14,6 +14,7 @@ namespace BSE365.Mappings
         {
             var result = new TradeUserInfoVM
             {
+                Id = target.Id,
                 DisplayName = target.DisplayName,
                 Email = target.Email,
                 PhoneNumber = target.PhoneNumber,
@@ -47,6 +48,7 @@ namespace BSE365.Mappings
             Expression<Func<UserInfo, TradeUserInfoVM>> result =
                 x => new TradeUserInfoVM
                 {
+                    Id = x.Id,
                     DisplayName = x.DisplayName,
                     Email = x.Email,
                     PhoneNumber = x.PhoneNumber,
