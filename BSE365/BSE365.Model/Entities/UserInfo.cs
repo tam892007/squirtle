@@ -191,7 +191,7 @@ namespace BSE365.Model.Entities
         /// <summary>
         ///     A transaction give money successed
         /// </summary>
-        public void MoneyGave(List<UserInfo> parentInfos)
+        public void MoneyGave(Account account, List<UserInfo> parentInfos)
         {
             Rating += 1;
 
@@ -200,7 +200,8 @@ namespace BSE365.Model.Entities
 
             ObjectState = ObjectState.Modified;
 
-            AddBonusPointToParents(parentInfos);
+            if (account.UserName.Contains("A"))
+                AddBonusPointToParents(parentInfos);
         }
 
         /// <summary>

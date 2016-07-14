@@ -260,7 +260,7 @@ namespace BSE365.Model.Entities
 
                     UserInfo.ResetAbandonStatus();
                 }
-                UserInfo.MoneyGave(parentInfos);
+                UserInfo.MoneyGave(this, parentInfos);
             }
         }
 
