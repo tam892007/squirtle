@@ -1,0 +1,153 @@
+﻿<div class="panel panel-small-padding" ng-show="info.transactionSelected" ng-class="{'panel-warning': info.targetTransaction.isGiving, 'panel-success': info.targetTransaction.isReceiving}">
+    <div class="panel-heading">
+        <span class="badge pull-right">ID: {{info.targetTransaction.id}}</span>
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span> &nbsp; Transaction Information
+        </h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label>Giver Account</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverId"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Receiver Account</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverId"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn" ng-click="viewParentInfo(info.targetTransaction.giverParentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn" ng-click="viewParentInfo(info.targetTransaction.receiverParentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverDisplayName"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Name</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverDisplayName"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 rating-custom">
+                <label>Member</label>
+                <p>
+                    <uib-rating ng-model="info.targetTransaction.giverRating" max="6" read-only="true"></uib-rating>
+                </p>
+            </div>
+            <div class="col-md-6 rating-custom">
+                <label>Member</label>
+                <p>
+                    <uib-rating ng-model="info.targetTransaction.receiverRating" max="6" read-only="true"></uib-rating>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverPhoneNumber"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Phone Number</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverPhoneNumber"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverEmail"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Email</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverEmail"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Bank Name</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverBankName"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Bank Name</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverBankName"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Bank Number</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.giverBankNumber"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Bank Number</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receiverBankNumber"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Type</label>
+            <p class="form-control-static" data-ng-bind="TransactionType.display(info.targetTransaction.type)"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>State</label>
+                <br />
+                <p class="form-control-static label label-success" data-ng-bind="TransactionState.display(info.targetTransaction.state)"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Ended</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.isEnd|yesno"></p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            <p class="form-control-static" data-ng-bind="info.targetTransaction.amount|currency:info.targetTransaction.moneyCurrency:0"></p>
+        </div>
+        <div class="form-group" ng-show="!info.targetTransaction.isAllowAttachment">
+            <img class="transaction-attachment-file" ng-show="info.targetTransaction.attachmentUrl" src="{{info.targetTransaction.attachmentUrl}}" />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label>Transfered Date</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.transferedDate|date:ConfigData.dateTimeFormat"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Received Date</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.receivedDate|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Created</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.created|date:ConfigData.dateTimeFormat"></p>
+            </div>
+            <div class="col-md-6">
+                <label>Last Modified</label>
+                <p class="form-control-static" data-ng-bind="info.targetTransaction.lastModified|date:ConfigData.dateTimeFormat"></p>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div ng-show="info.targetTransaction.countdown>0 && !info.targetTransaction.isAbandoned">
+                <label>Time left</label>
+                <p>
+                    <timer interval="1000" countdown="info.targetTransaction.countdown" ng-if="info.targetTransaction.countdown>0">
+                        {{days}} day-{{hhours}}:{{mminutes}}:{{sseconds}}
+                    </timer>
+                </p>
+            </div>
+            <div ng-show="info.targetTransaction.countdown==0 && !info.targetTransaction.isAbandoned">
+                <p colspan="2" class="text-center">Time ended</p>
+            </div>
+        </div>
+        <div class="panel-body transaction-account-info-container">
+            <img class="transaction-attachment-file" ng-show="info.targetTransaction.attachmentUrl" src="{{info.targetTransaction.attachmentUrl}}" />
+        </div>
+    </div>
+</div>

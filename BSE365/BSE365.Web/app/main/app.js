@@ -1,9 +1,9 @@
 ﻿var mainApp = angular.module('mainApp',
 [
     'ui.router', 'ui.bootstrap', 'authApp', 'ngResource', 'ui.tree', 'smart-table', 'underscore', 'angularFileUpload',
-    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification', 'ngSanitize',
+    'ngImgCrop', 'ngMessages', 'angular-loading-bar', 'ui.validate', 'reCAPTCHA', 'commonApp', 'ui-notification',
+    'ngSanitize',
     'timer', 'SignalR', 'localization'
-
 ]);
 
 mainApp.config([
@@ -156,6 +156,12 @@ mainApp.config([
                 url: "/:key",
                 templateUrl: 'app/main/account/account-edit.html',
                 controller: 'accountInfoController'
+            })
+            .state('userinfo',
+            {
+                url: "/userinfo",
+                templateUrl: 'app/main/userinfo/index.html',
+                controller: 'userinfoController'
             })
             .state('currentTransaction',
             {
@@ -442,6 +448,7 @@ mainApp.factory('UserState',
             /// Must give 
             /// </summary>
             Default: 0,
+            Locked: 1,
 
             NotGive: 21,
             NotConfirm: 22,
@@ -450,6 +457,8 @@ mainApp.factory('UserState',
             switch (value) {
             case data.Default:
                 return 'Default';
+            case data.Locked:
+                return 'Locked';
             case data.NotGive:
                 return 'Not Give';
             case data.NotConfirm:
@@ -522,6 +531,8 @@ mainApp.config([
     }
 ]);
 
-mainApp.run(['$anchorScroll', function ($anchorScroll) {
-    $anchorScroll.yOffset = 50;   // always scroll by 50 extra pixels
-}])
+mainApp.run([
+    '$anchorScroll', function($anchorScroll) {
+        $anchorScroll.yOffset = 50; // always scroll by 50 extra pixels
+    }
+])

@@ -144,6 +144,10 @@
     <Compile Include="BSE365AuthContextMigration\201607031451237_AddELMAH.Designer.cs">
       <DependentUpon>201607031451237_AddELMAH.cs</DependentUpon>
     </Compile>
+    <Compile Include="BSE365AuthContextMigration\201607141054257_AddUserPrefix.cs" />
+    <Compile Include="BSE365AuthContextMigration\201607141054257_AddUserPrefix.Designer.cs">
+      <DependentUpon>201607141054257_AddUserPrefix.cs</DependentUpon>
+    </Compile>
     <Compile Include="BSE365AuthContextMigration\Configuration.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.cs" />
     <Compile Include="BSE365ContextMigration\201605270938338_Initial.Designer.cs">
@@ -188,6 +192,10 @@
     <Compile Include="BSE365ContextMigration\201607031451030_AddELMAH.cs" />
     <Compile Include="BSE365ContextMigration\201607031451030_AddELMAH.Designer.cs">
       <DependentUpon>201607031451030_AddELMAH.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BSE365ContextMigration\201607141054007_AddUserPrefix.cs" />
+    <Compile Include="BSE365ContextMigration\201607141054007_AddUserPrefix.Designer.cs">
+      <DependentUpon>201607141054007_AddUserPrefix.cs</DependentUpon>
     </Compile>
     <Compile Include="BSE365ContextMigration\Configuration.cs" />
     <Compile Include="DataContext\BSE365AuthContext.cs" />
@@ -234,6 +242,9 @@
     <EmbeddedResource Include="BSE365AuthContextMigration\201607031451237_AddELMAH.resx">
       <DependentUpon>201607031451237_AddELMAH.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="BSE365AuthContextMigration\201607141054257_AddUserPrefix.resx">
+      <DependentUpon>201607141054257_AddUserPrefix.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201605270938338_Initial.resx">
       <DependentUpon>201605270938338_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BSE365ContextMigration\201607031451030_AddELMAH.resx">
       <DependentUpon>201607031451030_AddELMAH.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BSE365ContextMigration\201607141054007_AddUserPrefix.resx">
+      <DependentUpon>201607141054007_AddUserPrefix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

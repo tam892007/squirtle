@@ -269,6 +269,8 @@
     <Content Include="app\main\account\waiting-details.html" />
     <Content Include="app\main\account\accountService.js" />
     <Content Include="app\main\account\accountInfoController.js" />
+    <Content Include="app\main\account\waiting-list-for-userinfo-receiver.html" />
+    <Content Include="app\main\account\waiting-list-for-userinfo-giver.html" />
     <Content Include="app\main\account\waiting-list.html" />
     <Content Include="app\main\account\waitingGiver.html" />
     <Content Include="app\main\account\waitingReceiver.html" />
@@ -295,6 +297,8 @@
     <Content Include="app\main\transaction\info-punishment.html" />
     <Content Include="app\main\transaction\info.html" />
     <Content Include="app\main\transaction\tradeService.js" />
+    <Content Include="app\main\transaction\transactionDetails-details-for-userinfo.html" />
+    <Content Include="app\main\transaction\transactionDetails-list-for-userinfo.html" />
     <Content Include="app\main\transaction\transactionDetails-list-for-user.html" />
     <Content Include="app\main\transaction\transactionInfoDetailsController.js" />
     <Content Include="app\main\transaction\transactionInfoBonusController.js" />
@@ -322,6 +326,10 @@
     <Content Include="app\main\transaction\current.html" />
     <Content Include="app\main\transaction\transactionService.js" />
     <Content Include="app\main\transaction\transactionCurrentController.js" />
+    <Content Include="app\main\userinfo\info-horizontal.html" />
+    <Content Include="app\main\userinfo\userinfoService.js" />
+    <Content Include="app\main\userinfo\index.html" />
+    <Content Include="app\main\userinfo\userinfoController.js" />
     <Content Include="app\main\user\dlg-change-avatar.html" />
     <Content Include="app\main\user\dlg-change-password.html" />
     <Content Include="app\main\user\dlgChangeAvatarController.js" />
@@ -396,6 +404,7 @@
     <Content Include="SQL\SpUpdateNotTransferedTransactions.sql" />
     <Content Include="SQL\SpUpdateTransactions.sql" />
     <Content Include="SQL\SpUpdateTransaction_Drop.sql" />
+    <Content Include="Uploads\img\TaiKhoanAo.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -403,6 +412,7 @@
   <ItemGroup>
     <Compile Include="Api\ImageController.cs" />
     <Compile Include="Api\MoneyTransactionController.cs" />
+    <Compile Include="Api\UserInfoController.cs" />
     <Compile Include="Api\TradeController.cs" />
     <Compile Include="Api\PinController.cs" />
     <Compile Include="Api\UserProfileController.cs" />
@@ -416,6 +426,7 @@
     <Compile Include="Helper\EmailHelper.cs" />
     <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Hub\MessageHub.cs" />
+    <Compile Include="Mappings\TradeUserInfoVMMapping.cs" />
     <Compile Include="Mappings\UserTreeVMMapping.cs" />
     <Compile Include="Helper\NotificationHelper.cs" />
     <Compile Include="Helper\StoreHelper.cs" />
@@ -425,6 +436,7 @@
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="Mappings\TransactionHistoryVMMapping.cs" />
+    <Compile Include="ViewModels\TradeUserInfoVM.cs" />
     <Compile Include="ViewModels\TradeAccountInfoVM.cs" />
     <Compile Include="ViewModels\TransactionHistoryVm.cs" />
     <Compile Include="ViewModels\UserTreeViewModel.cs" />

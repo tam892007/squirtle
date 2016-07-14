@@ -199,7 +199,7 @@ namespace BSE365.Api
                 var parentIds = treePath.Split(new string[] {BSE365.Common.Constants.SystemAdmin.TreePathSplitter},
                     System.StringSplitOptions.RemoveEmptyEntries);
                 result.IsSuccessful = parentUser.UserInfo.Id == user.UserInfo.Id || parentIds.Contains(parentId);
-                    ////same user or in tree
+                ////same user or in tree
             }
 
             return result;

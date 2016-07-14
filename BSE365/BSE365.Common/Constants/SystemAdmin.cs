@@ -21,5 +21,6 @@
         public const string DefaultPassword = "123456";
 
         public const string SystemLog = "system-log";
+        public static string[] AccountSuffixes = { "A", "B", "C", "D", "E", "F" };
     }
 }

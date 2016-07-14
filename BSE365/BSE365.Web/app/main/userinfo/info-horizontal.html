@@ -1,0 +1,82 @@
+﻿
+<div class="row">
+    <div class="col-md-2">
+        <label>Account</label>
+        <p class="form-control-static" data-ng-bind="info.userPrefix"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Display Name</label>
+        <p class="form-control-static" data-ng-bind="info.displayName"></p>
+    </div>
+    <div class="col-md-2 rating-custom">
+        <label>Member</label>
+        <p>
+            <uib-rating ng-model="info.rating" max="6" read-only="true"></uib-rating>
+        </p>
+    </div>
+    <div class="col-md-2">
+        <button class="btn" ng-click="viewParentInfo(info.parentId)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp; View Parent Info</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label>Phone Number</label>
+        <p class="form-control-static" data-ng-bind="info.phoneNumber"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Email</label>
+        <p class="form-control-static" data-ng-bind="info.email"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Join Date</label>
+        <p class="form-control-static" data-ng-bind="info.created|date:ConfigData.dateFormat"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Priority Level</label>
+        <p class="form-control-static" data-ng-bind="PriorityLevel.display(info.level)"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Level</label>
+        <p class="form-control-static" data-ng-bind="info.level"></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label>User State</label>
+        <p class="form-control-static" data-ng-bind="UserState.display(info.state)"></p>
+    </div>
+    <div class="col-md-2" ng-show="info.userState!=UserState.Default">
+        <label>Related Account</label>
+        <p class="form-control-static" data-ng-bind="info.relatedAccount"></p>
+    </div>
+    <div class="col-md-2" ng-show="info.userState!=UserState.Default">
+        <label>Related Transaction</label>
+        <p class="form-control-static" data-ng-bind="info.relatedTransaction"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Last Give Date</label>
+        <p class="form-control-static" data-ng-bind="info.lastGiveDate|date:ConfigData.dateFormat"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Bonus Points</label>
+        <p class="form-control-static" data-ng-bind="info.bonusMoney|currency:info.moneyCurrency:0"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Allow Claim Bonus</label>
+        <p class="form-control-static" data-ng-bind="info.isAllowClaimBonus|yesno"></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label>Bank Name</label>
+        <p class="form-control-static" data-ng-bind="info.bankName"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Bank Number</label>
+        <p class="form-control-static" data-ng-bind="info.bankNumber"></p>
+    </div>
+    <div class="col-md-2">
+        <label>Bank Branch</label>
+        <p class="form-control-static" data-ng-bind="info.bankBranch"></p>
+    </div>
+</div>

@@ -36,6 +36,17 @@ namespace BSE365.Common.Helper
             return result;
         }
 
+        public static List<string> GetRangeUserName(string userPrefix)
+        {
+            var result = new List<string>();
+            for (char i = 'A'; i <= 'F'; i++)
+            {
+                result.Add(userPrefix + i);
+            }
+
+            return result;
+        }
+
         public static string GetImageContentType(string extension)
         {
             var ext = extension.ToLower();

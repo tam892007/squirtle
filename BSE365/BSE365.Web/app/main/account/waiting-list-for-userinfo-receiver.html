@@ -1,0 +1,42 @@
+﻿<div class="panel panel-default panel-table">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> &nbsp; Waiting Reiceivers
+        </h3>
+    </div>
+    <div class="panel-body">
+        <table st-table="data" st-pipe="loadData" class="table">
+            <thead>
+                <tr>
+                    <th st-sort="accountId">Account</th>
+                    <th st-sort="amount">Amount</th>
+                    <th st-sort="priority">Priority</th>
+                    <th st-sort="type">Type</th>
+                    <th st-sort="created">Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in info.receiverData" ng-class="{'info':item.selected, 'success': item.type==WaitingType.Bonus, 'warning': item.type==WaitingType.Abandon}">
+                    <td>
+                        <span data-ng-bind="item.accountId"></span>
+                    </td>
+                    <td>
+                        <span data-ng-bind="item.amount"></span>
+                    </td>
+                    <td>
+                        <span data-ng-bind="PriorityLevel.display(item.priority)"></span>
+                    </td>
+                    <td>
+                        <span data-ng-bind="WaitingType.display(item.type)"></span>
+                    </td>
+                    <td>
+                        <span data-ng-bind="item.created|date:ConfigData.dateFormat"></span>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            </tfoot>
+        </table>
+        </table>
+    </div>
+</div>

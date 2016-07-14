@@ -51,5 +51,33 @@ namespace BSE365.Mappings
                 };
             return result;
         }
+
+        public static Expression<Func<WaitingGiver, WaitingAccountVM>> GetExpToSimpleGiverVM()
+        {
+            Expression<Func<WaitingGiver, WaitingAccountVM>> result =
+                x => new WaitingAccountVM
+                {
+                    Id = x.Id,
+                    Priority = x.Priority,
+                    Type = x.Type,
+                    Created = x.Created,
+                    Amount = x.Amount,
+                };
+            return result;
+        }
+
+        public static Expression<Func<WaitingReceiver, WaitingAccountVM>> GetExpToSimpleReceiverVM()
+        {
+            Expression<Func<WaitingReceiver, WaitingAccountVM>> result =
+                x => new WaitingAccountVM
+                {
+                    Id = x.Id,
+                    Priority = x.Priority,
+                    Type = x.Type,
+                    Created = x.Created,
+                    Amount = x.Amount,
+                };
+            return result;
+        }
     }
 }

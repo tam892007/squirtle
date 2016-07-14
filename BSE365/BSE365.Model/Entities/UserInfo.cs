@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using BSE365.Base.Infrastructures;
 using BSE365.Common.Constants;
@@ -17,6 +18,7 @@ namespace BSE365.Model.Entities
             LastGiveDate = DateTime.Now.AddDays(-1).Date;
             DayBonusTemp = DateTime.Now.AddDays(-1).Date;
             LastClaimBonusDate = DateTime.Now.AddDays(-1).Date;
+            Created = DateTime.Now;
             Accounts = new HashSet<Account>();
         }
 
@@ -47,6 +49,10 @@ namespace BSE365.Model.Entities
         public string BankBranch { get; set; }
 
         public int? AvatarId { get; set; }
+        
+        public string UserPrefix { get; set; }
+        
+        public DateTime Created { get; set; }
 
         #endregion
 

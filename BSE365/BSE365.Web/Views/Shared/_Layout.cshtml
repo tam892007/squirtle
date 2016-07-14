@@ -59,10 +59,11 @@
                     <li class="dropdown" ui-sref-active="{'active' : 'acc'}" ng-if="forManager()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span data-i18n="_Layout_AccountManagement_"></span><span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li ui-sref-active-eq='active'><a ui-sref="userinfo" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_Accounts_"></span> Info</a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="account.default" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_Accounts_"></span></a></li>
                             <li ui-sref-active-eq='active'><a ui-sref="allTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_AllTransactions_"></span></a></li>
                             <li ui-sref-active-eq='active' ng-if="isInRole([UserRolesText.ManageTransaction])"><a ui-sref="reportedTransactions" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_ReportedTransactions_"></span></a></li>
-                            
+
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header"><span data-i18n="_Layout_AccountManagement_WaitingAccounts_"></span></li>
                             <li ui-sref-active-eq='active'><a ui-sref="waitinggiver" data-toggle="collapse" data-target=".navbar-collapse.in"><span data-i18n="_Layout_AccountManagement_WaitingGivers_"></span></a></li>

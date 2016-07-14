@@ -146,7 +146,7 @@ namespace BSE365.Mappings
                     GiverBankName = x.Giver.UserInfo.BankName,
                     GiverBankBranch = x.Giver.UserInfo.BankBranch,
                     GiverRating = x.Giver.UserInfo.Rating,
-                    GiverParentId = x.Receiver.UserInfo.ParentId,
+                    GiverParentId = x.Giver.UserInfo.ParentId,
                     ReceiverDisplayName = x.Receiver.UserInfo.DisplayName,
                     ReceiverEmail = x.Receiver.UserInfo.Email,
                     ReceiverPhoneNumber = x.Receiver.UserInfo.PhoneNumber,

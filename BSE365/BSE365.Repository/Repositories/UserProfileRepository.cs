@@ -100,8 +100,9 @@ namespace BSE365.Repository.Repositories
         {
             //var users = await _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).ToListAsync();
 
-            var users = _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).Select(x => new UserTree 
-                { 
+            var users =
+                _ctx.Users.Where(x => x.UserInfo.ParentId == id).OrderBy(x => x.UserName).Select(x => new UserTree
+                {
                     UserName = x.UserName,
                     NumberOfChildren = _ctx.UserInfos.Where(y => y.TreePath.Contains(x.Id)).Count(),
                     UserId = x.Id,

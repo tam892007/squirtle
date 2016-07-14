@@ -14,7 +14,7 @@ angular.module('localization', ['LocalStorageModule'])
     .provider('localize', function localizeProvider() {
 
         this.languages = ['en-US', 'vi-VN'];
-        this.defaultLanguage = 'en-US';
+        this.defaultLanguage = 'vi-VN';
         this.ext = 'js';
         this.baseUrl = 'i18n/';
 

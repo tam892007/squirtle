@@ -1,0 +1,112 @@
+﻿<div>
+    <div class="row">
+        <div class="panel panel-default panel-form">
+            <div class="panel-heading">
+                <span class="pull-right text-success glyphicon" ng-class="{'glyphicon-collapse-up':!showUserInfo, 'glyphicon-collapse-down':showUserInfo}" ng-click="toggleView()" ng-if="info"></span>
+                <h3 class="panel-title">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp; User Infomations
+                </h3>
+            </div>
+            <div class="panel-body" ng-show="!showUserInfo">
+                <table st-table="data" st-pipe="loadData" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>User Prefix</th>
+                            <th>Display Name</th>
+                            <th>Rating</th>
+                            <th>Bank Number</th>
+                            <th>Bank Branch</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7">
+                                <div class="form-inline">
+                                    <input st-search="" class="form-control" placeholder="Search user id ..." />
+                                    <button class="btn btn-success" ng-click="reload()">
+                                        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr ng-repeat="item in data" ng-click="viewDefails(item)" ng-class="{'info':item.selected}">
+                            <td>
+                                <span data-ng-bind="item.userPrefix"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.displayName"></span>
+                            </td>
+                            <td class="rating-custom">
+                                <uib-rating ng-model="item.rating" max="6" read-only="true"></uib-rating>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.bankNumber"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.bankBranch"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.email"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.phoneNumber"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="UserState.display(item.state)"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="text-center" st-pagination="" st-items-by-page="" st-displayed-pages="" colspan="8"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <hr />
+            </div>
+            <div class="panel-body" ng-show="showUserInfo">
+                <ng-include src="'/app/main/userinfo/info-horizontal.html'"></ng-include>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-success" ng-click="loadTransactions()"><span class="glyphicon glyphicon-th-list"></span>&nbsp;Load Transactions Infomations</button>
+                        <button class="btn btn-success" ng-click="loadWaitings()"><span class="glyphicon glyphicon-align-left"></span>&nbsp;Load Waitings Infomations</button>
+                    </div>
+                </div>
+                <div class="row" ng-if="showWaitings">
+                    <div class="col-md-6">
+                        <ng-include src="'/app/main/account/waiting-list-for-userinfo-giver.html'"></ng-include>
+                    </div>
+                    <div class="col-md-6">
+                        <ng-include src="'/app/main/account/waiting-list-for-userinfo-receiver.html'"></ng-include>
+                    </div>
+                </div>
+                <hr />
+                <div class="row" ng-if="showTransactions">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="panel panel-default panel-form">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> &nbsp; All Transactions
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <ng-include src="'/app/main/transaction/transactionDetails-list-for-userinfo.html'">
+                                    </ng-include>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <ng-include src="'/app/main/transaction/transactionDetails-details-for-userinfo.html'">
+                            </ng-include>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
