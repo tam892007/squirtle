@@ -133,7 +133,7 @@ namespace BSE365.Helper
                     }
                     catch (Exception)
                     {
-                        dbContextTransaction.Rollback();
+                        //dbContextTransaction.Rollback();
                         throw;
                     }
                 }
@@ -297,7 +297,7 @@ namespace BSE365.Helper
                         }
                         catch (Exception)
                         {
-                            dbContextTransaction.Rollback();
+                            //dbContextTransaction.Rollback();
 
                             transaction.ObjectState = ObjectState.Unchanged;
 
@@ -382,7 +382,7 @@ namespace BSE365.Helper
                 {
                     var timeBase = DateTime.Now;
                     timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
                     {
                         var transactionsToUpdate = context.MoneyTransactions
                         .Include(x => x.Giver.UserInfo)
@@ -432,7 +432,7 @@ namespace BSE365.Helper
                             }
                             catch (Exception)
                             {
-                                dbContextTransaction.Rollback();
+                                //dbContextTransaction.Rollback();
                             }
                         }
                     }
@@ -448,7 +448,7 @@ namespace BSE365.Helper
                 {
                     var timeBase = DateTime.Now;
                     timeBase = timeBase.AddHours(-TransactionConfig.TimeForEachStepInHours);
-                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.RepeatableRead))
+                    using (var dbContextTransaction = context.Database.BeginTransaction(IsolationLevel.ReadCommitted))
                     {
                         var transactionsToUpdate = context.MoneyTransactions
                         .Include(x => x.Giver.UserInfo)
@@ -499,7 +499,7 @@ namespace BSE365.Helper
                             }
                             catch (Exception)
                             {
-                                dbContextTransaction.Rollback();
+                                //dbContextTransaction.Rollback();
                             }
                         }
                     }
@@ -536,7 +536,7 @@ namespace BSE365.Helper
                     }
                     catch (Exception)
                     {
-                        dbContextTransaction.Rollback();                        
+                        //dbContextTransaction.Rollback();                        
                     }
                 }                
             }

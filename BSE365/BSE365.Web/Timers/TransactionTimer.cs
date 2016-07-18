@@ -18,8 +18,7 @@ namespace BSE365.Timers
         {
             if (!IsRunning)
             {
-                IsRunning = true;
-                timer_Elapsed(null, null);
+                IsRunning = true;            
                 this._timer = new System.Timers.Timer(TransactionConfig.TransactionCheckerTimeout);
                 this._timer.AutoReset = true;
                 this._timer.Elapsed += new System.Timers.ElapsedEventHandler(this.timer_Elapsed);
